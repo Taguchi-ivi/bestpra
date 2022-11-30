@@ -1,11 +1,12 @@
 version: '3'
 
 services:
+    
     web:
         build: 
             context: .
             dockerfile: ./docker/web/Dockerfile
-        command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+        command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3020 -b '0.0.0.0'"
         volumes: 
             - .:/app:cached
             - public:/app/public
@@ -18,26 +19,11 @@ services:
             DB_PASSWORD: password
             TZ: Asia/Tokyo
             DB_HOST: db
-            RAILS_ENV: development
+            # RAILS_ENV: development
         depends_on: 
             - db
         ports:
             - "3000:3000"
-
-    db:
-        container_name: db
-        image: mysql:8.0.31
-        environment: 
-            - MYSQL_DATABASE=app_development
-            - MYSQL_USER=user
-            - MYSQL_PASSWORD=password
-            - MYSQL_ROOT_PASSWORD=pass
-            - TZ=Asia/Tokyo
-        ports: 
-            - '3306:3306'
-        command: --default-authentication-plugin=mysql_native_password
-        volumes: 
-            - mysql-data:/var/lib/mysql
         
 
 volumes:
