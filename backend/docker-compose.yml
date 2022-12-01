@@ -13,12 +13,12 @@ services:
         stdin_open: true
         tty: true
         environment: 
-            DB_ROOT_USERNAME: root
-            DB_USERNAME: user
-            DB_PASSWORD: password
-            TZ: Asia/Tokyo
+            MYSQL_ROOT_PASSWORD: password
             DB_HOST: db
-            RAILS_ENV: development
+            TZ: Asia/Tokyo
+            # RAILS_ENV: development
+            # DB_USERNAME: user
+            # DB_PASSWORD: password
         depends_on: 
             - db
         ports:
@@ -28,11 +28,11 @@ services:
         container_name: db
         image: mysql:8.0.31
         environment: 
-            - MYSQL_DATABASE=app_development
-            - MYSQL_USER=user
-            - MYSQL_PASSWORD=password
-            - MYSQL_ROOT_PASSWORD=pass
-            - TZ=Asia/Tokyo
+            MYSQL_ROOT_PASSWORD: password
+            TZ: Asia/Tokyo
+            # MYSQL_DATABASE: app_development
+            # MYSQL_USER: user
+            # MYSQL_PASSWORD: password
         ports: 
             - '3306:3306'
         command: --default-authentication-plugin=mysql_native_password
