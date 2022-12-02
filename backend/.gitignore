@@ -30,3 +30,4 @@
 
 # add
 .env
+.DS_store
