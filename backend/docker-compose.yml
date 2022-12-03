@@ -1,4 +1,5 @@
-version: '3'
+# version: '3'
+version: '3.8'
 
 services:
     web:
@@ -13,8 +14,8 @@ services:
         stdin_open: true
         tty: true
         environment: 
-            MYSQL_ROOT_PASSWORD: password
-            DB_HOST: db
+            MYSQL_ROOT_PASSWORD: "password"
+            DB_HOST: "db"
             TZ: Asia/Tokyo
             # RAILS_ENV: development
             # DB_USERNAME: user
@@ -26,10 +27,13 @@ services:
 
     db:
         container_name: db
+        # 急にDBを作成できない問題発生したためダウングレード
         image: mysql:8.0.31
+        # image: mysql:8.0.21
         environment: 
-            MYSQL_ROOT_PASSWORD: password
+            MYSQL_ROOT_PASSWORD: "password"
             TZ: Asia/Tokyo
+            # MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
             # MYSQL_DATABASE: app_development
             # MYSQL_USER: user
             # MYSQL_PASSWORD: password
@@ -37,7 +41,8 @@ services:
             - '3306:3306'
         command: --default-authentication-plugin=mysql_native_password
         volumes: 
-            - mysql-data:/var/lib/mysql
+            - ./tmp/db:/var/lib/mysql
+            # - mysql-data:/var/lib/mysql
         
 
 volumes:
