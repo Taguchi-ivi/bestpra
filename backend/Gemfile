@@ -57,6 +57,7 @@ group :development, :test do
   gem 'rubocop-rails'
 
   # rspec
+  # bundle exec rspec
   gem 'rspec-rails'	
 
 end
