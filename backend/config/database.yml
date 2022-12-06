@@ -15,12 +15,12 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
   password: "password"
-  host: db
+  host: "db"
+  # local環境switch
+  # host: localhost
 
   # username: <%= ENV['DB_USERNAME_ROOT'] %>
   # password: <%= ENV['DB_PASSWORD_ROOT'] %>
-  # local環境switch
-  # host: localhost
 
 development:
   <<: *default

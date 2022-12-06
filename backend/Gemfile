@@ -37,7 +37,7 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem "rack-cors"
+gem "rack-cors"
 
 # add
 # モデルに現在のDB構造をメモする機能
@@ -57,6 +57,7 @@ group :development, :test do
   gem 'rubocop-rails'
 
   # rspec
+  # bundle exec rspec
   gem 'rspec-rails'	
 
 end

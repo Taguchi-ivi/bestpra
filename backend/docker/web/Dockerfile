@@ -29,6 +29,9 @@ COPY ./docker/web/entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 
+RUN mkdir -p tmp/sockets
+RUN mkdir -p tmp/pids
+
 EXPOSE 3000
 
 # 起動の度にデフォルトでrails sする（entrypoint.shに持たせても良い）
