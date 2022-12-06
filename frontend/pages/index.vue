@@ -1,5 +1,8 @@
 <template>
   <div>
+    <dir>
+      <p>Test vue!!</p>
+    </dir>
     <button
       type="button"
       name="button"
@@ -12,9 +15,6 @@
       :key="i"
     >
       {{ msg }}
-    </div>
-    <div>
-      <p>testtest</p>
     </div>
   </div>
 </template>

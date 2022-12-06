@@ -1,4 +1,3 @@
-// 挙動を見えるように
 export default ({ $axios }) => {
     // リクエストログ
     $axios.onRequest((config) => {

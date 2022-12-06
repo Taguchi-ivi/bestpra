@@ -7,6 +7,8 @@
 		}
 	},
 	"answers": {
-		"e77e80fe__npm__": {}
+		"e77e80fe__npm__": {
+			"gitUsername": "taguchi-ivi"
+		}
 	}
 }
