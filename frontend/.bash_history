@@ -48,3 +48,7 @@ yarn add @vue/vue3-jest --dev
 yarn add babel-jest --dev
 yarn test
 exit
+yarn test
+yarn test
+yarn test
+exit
