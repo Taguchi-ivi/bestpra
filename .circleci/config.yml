@@ -1,7 +1,6 @@
 
 version: 2.1
 
-# 必要性確認
 orbs:
     ruby: circleci/ruby@1.4.0
     node: circleci/node@5.0.3
@@ -51,7 +50,7 @@ jobs:
                 name: frontend test
                 command: docker-compose -f ./frontend/docker-compose.yml run frontend yarn test
             
-            # 後処理
+            # down
             - run:
                 name: frontend down
                 command: docker-compose -f ./frontend/docker-compose.yml down
