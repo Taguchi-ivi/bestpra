@@ -9,7 +9,7 @@ orbs:
 jobs:
     build:
         machine:
-            image: circleci/classic:edge
+            image: ubuntu-2004:2022.10.1
         steps:
             - checkout
             - run:
@@ -21,7 +21,7 @@ jobs:
     
     test:
         machine:
-            image: circleci/classic:edge
+            image: ubuntu-2004:2022.10.1
         steps:
             - checkout
             - run:
