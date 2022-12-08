@@ -8,8 +8,8 @@ orbs:
 
 jobs:
     build:
-        # machine:
-        #     image: circleci/classic:edge
+        machine:
+            image: circleci/classic:edge
         steps:
             - checkout
             - run:
@@ -20,8 +20,8 @@ jobs:
                 command: docker-compose -f ./frontend/docker-compose.yml build
     
     test:
-        # machine:
-        #     image: circleci/classic:edge
+        machine:
+            image: circleci/classic:edge
         steps:
             - checkout
             - run:
