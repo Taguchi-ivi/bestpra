@@ -1,0 +1,68 @@
+
+version: 2.1
+
+orbs:
+    ruby: circleci/ruby@1.4.0
+    node: circleci/node@5.0.3
+
+jobs:
+    build:
+        # machine:
+        #     image: circleci/classic:edge
+        steps:
+            - checkout
+            - run:
+                name: backend build
+                command: docker-compose -f ./backend/docker-compose.yml build
+            - run:
+                name: frontend build
+                command: docker-compose -f ./frontend/docker-compose.yml build
+    
+    test:
+        # machine:
+        #     image: circleci/classic:edge
+        steps:
+            - checkout
+            - run:
+                name: backend container
+                command: docker-compose -f ./backend/docker-compose.yml up -d
+            - run:
+                name: frontend container
+                command: docker-compose -f ./frontend/docker-compose.yml up -d
+            - run: sleep 20
+            
+            # backend test
+            - run:
+                name: backend db create
+                command: docker-compose -f ./backend/docker-compose.yml run web rails db:create RAILS_ENV=test
+            - run:
+                name: backend db migrate
+                command: docker-compose -f ./backend/docker-compose.yml run web rails db:migrate RAILS_ENV=test
+            - run:
+                name: backend test 
+                command: docker-compose -f ./backend/docker-compose.yml run web bundle exec rspec
+            
+            # frontend test
+            - run:
+                name: frontend yarn install
+                command: docker-compose -f ./frontend/docker-compose.yml run frontend yarn install
+            - run:
+                name: frontend test
+                command: docker-compose -f ./frontend/docker-compose.yml run frontend yarn test
+            
+            # 後処理
+            - run:
+                name: frontend down
+                command: docker-compose -f ./frontend/docker-compose.yml down
+            - run:
+                name: backend down
+                command: docker-compose -f ./backend/docker-compose.yml down
+
+# 順序を整理
+workflows:
+    build_and_test:
+        jobs:
+            - build
+            - test:
+                requires:
+                    - build
