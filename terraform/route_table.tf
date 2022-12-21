@@ -7,7 +7,7 @@ resource "aws_route_table" "public_rtb" {
     route {
         cidr_block = "0.0.0.0/0"
         gateway_id = aws_internet_gateway.this.id
-    } 
+    }
     tags = {
         Name = "${local.app_name}-public-rtb"
     }
@@ -27,10 +27,10 @@ resource "aws_route_table_association" "public1c_to_ig" {
     route_table_id = aws_route_table.public_rtb.id
 }
 
-resource "aws_route_table_association" "public1d_to_ig" {
-    subnet_id      = aws_subnet.public_1d.id
-    route_table_id = aws_route_table.public_rtb.id
-}
+# resource "aws_route_table_association" "public1d_to_ig" {
+#     subnet_id      = aws_subnet.public_1d.id
+#     route_table_id = aws_route_table.public_rtb.id
+# }
 
 #######################################
 # private subnet routeTable

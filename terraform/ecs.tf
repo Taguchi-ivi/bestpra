@@ -164,7 +164,7 @@ resource "aws_ecs_service" "frontend" {
     network_configuration {
         assign_public_ip = true
         subnets = [
-            aws_subnet.public_1a.id,
+            aws_subnet.public_1a.id
         ]
         security_groups = [
             aws_security_group.app.id
@@ -196,7 +196,7 @@ resource "aws_ecs_service" "backend" {
     network_configuration {
         assign_public_ip = true
         subnets = [
-            aws_subnet.public_1c.id,
+            aws_subnet.public_1c.id
         ]
         security_groups = [
             aws_security_group.app.id

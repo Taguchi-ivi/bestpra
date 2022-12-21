@@ -20,14 +20,14 @@ resource "aws_subnet" "public_1c" {
     }
 }
 
-resource "aws_subnet" "public_1d" {
-    vpc_id            = aws_vpc.this.id
-    cidr_block        = "10.0.3.0/24"
-    availability_zone = "ap-northeast-1d"
-    tags = {
-        Name = "${local.app_name}-public-1d"
-    }
-}
+# resource "aws_subnet" "public_1d" {
+#     vpc_id            = aws_vpc.this.id
+#     cidr_block        = "10.0.3.0/24"
+#     availability_zone = "ap-northeast-1d"
+#     tags = {
+#         Name = "${local.app_name}-public-1d"
+#     }
+# }
 
 ######################################
 # private subnet
@@ -51,14 +51,14 @@ resource "aws_subnet" "private_1c" {
     }
 }
 
-resource "aws_subnet" "private_1d" {
-    vpc_id            = aws_vpc.this.id
-    cidr_block        = "10.0.12.0/24"
-    availability_zone = "ap-northeast-1d"
-    tags = {
-        Name = "${local.app_name}-private-1d"
-    }
-}
+# resource "aws_subnet" "private_1d" {
+#     vpc_id            = aws_vpc.this.id
+#     cidr_block        = "10.0.12.0/24"
+#     availability_zone = "ap-northeast-1d"
+#     tags = {
+#         Name = "${local.app_name}-private-1d"
+#     }
+# }
 
 ######################################
 # subnet group (RDS)
@@ -69,7 +69,7 @@ resource "aws_db_subnet_group" "rds_sg_group" {
     description = "${local.app_name}-rds-subnet-group"
     subnet_ids = [
         aws_subnet.private_1a.id,
-        aws_subnet.private_1c.id,
-        aws_subnet.private_1d.id,
-    ] 
+        aws_subnet.private_1c.id
+        # ,aws_subnet.private_1d.id,
+    ]
 }

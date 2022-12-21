@@ -7,5 +7,4 @@ resource "aws_internet_gateway" "this" {
     tags   = {
         Name = "${local.app_name}-igw"
     }
-    
 }
