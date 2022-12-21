@@ -11,7 +11,8 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
         # localhost:300とsample.comを許可
         # origins 'localhost:3000','https://www.sample.com'
         # frontendドメインを許可
-        origins "localhost:8080" # || ""
+        # origins "localhost:8080"
+        origins ['http://best-pra.com', 'localhost:8080']
 
         resource "*",
         headers: :any,
