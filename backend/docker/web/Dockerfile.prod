@@ -30,6 +30,9 @@ ENTRYPOINT ["entrypoint.sh"]
 RUN mkdir -p tmp/sockets
 RUN mkdir -p tmp/pids
 
+VOLUME $APP_ROOT/public
+VOLUME $APP_ROOT/tmp
+
 # EXPOSE 3000
 
 # 起動の度にデフォルトでrails sする(entrypoint.sh)に持たせても良い
