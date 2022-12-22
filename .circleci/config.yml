@@ -75,13 +75,15 @@ workflows:
                 repo: 'bestpra/backend-nginx'
                 region: '${AWS_REGION}'
                 tag: "${CIRCLE_SHA1}"
-                path: '../backend/docker/nginx'
+                path: './backend/docker/nginx'
                 dockerfile: Dockerfile.prod
+                backend/docker/nginx/Dockerfile.prod
                 requires:
                     - test
                 filters:
                     branches:
                         only:
+                            - ciecleci-CD
                             - main
             - aws-ecr/build-and-push-image:
                 name: 'build-and-push-image-backend-rails'
@@ -91,14 +93,15 @@ workflows:
                 repo: 'bestpra/backend-rails'
                 region: '${AWS_REGION}'
                 tag: "${CIRCLE_SHA1}"
-                path: '../backend//docker/web'
+                path: './backend/docker/web'
                 dockerfile: Dockerfile.prod
                 requires:
                     - test
                 filters:
                     branches:
                         only:
-                            - main
+                            - ciecleci-CD
+                            # - main
             - aws-ecr/build-and-push-image:
                 name: 'build-and-push-image-frontend'
                 # aws-access-key-id: AWS_ACCESS_KEY_ID
@@ -107,11 +110,12 @@ workflows:
                 repo: 'bestpra/frontend'
                 region: '${AWS_REGION}'
                 tag: "${CIRCLE_SHA1}"
-                path: '../frontend/'
+                path: './frontend'
                 dockerfile: Dockerfile.prod
                 requires:
                     - test
                 filters:
                     branches:
                         only:
-                            - main
+                            - ciecleci-CD
+                            # - main
