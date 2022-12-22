@@ -62,41 +62,41 @@ jobs:
     build_and_push_image_backend_nginx:
         machine:
             image: ubuntu-2004:2022.10.1
-            steps:
-                - checkout
-                - aws-ecr/build-and-push-image:
-                    account-url: AWS_ACCOUNT_URL
-                    repo: 'bestpra/backend-nginx'
-                    region: AWS_REGION
-                    tag: "${CIRCLE_SHA1}"
-                    path: '../backend/docker/nginx'
-                    dockerfile: Dockerfile.prod
+        steps:
+            - checkout
+            - aws-ecr/build-and-push-image:
+                account-url: AWS_ACCOUNT_URL
+                repo: 'bestpra/backend-nginx'
+                region: AWS_REGION
+                tag: "${CIRCLE_SHA1}"
+                path: '../backend/docker/nginx'
+                dockerfile: Dockerfile.prod
 
     build_and_push_image_backend_rails:
         machine:
             image: ubuntu-2004:2022.10.1
-            steps:
-                - checkout
-                - aws-ecr/build-and-push-image:
-                    account-url: AWS_ACCOUNT_URL
-                    repo: 'bestpra/backend-rails'
-                    region: AWS_REGION
-                    tag: "${CIRCLE_SHA1}"
-                    path: '../backend//docker/web'
-                    dockerfile: Dockerfile.prod
+        steps:
+            - checkout
+            - aws-ecr/build-and-push-image:
+                account-url: AWS_ACCOUNT_URL
+                repo: 'bestpra/backend-rails'
+                region: AWS_REGION
+                tag: "${CIRCLE_SHA1}"
+                path: '../backend//docker/web'
+                dockerfile: Dockerfile.prod
 
     build_and_push_image_frontend:
         machine:
             image: ubuntu-2004:2022.10.1
-            steps:
-                - checkout
-                - aws-ecr/build-and-push-image:
-                    account-url: AWS_ACCOUNT_URL
-                    repo: 'bestpra/frontend'
-                    region: AWS_REGION
-                    tag: "${CIRCLE_SHA1}"
-                    path: '../frontend/'
-                    dockerfile: Dockerfile.prod
+        steps:
+            - checkout
+            - aws-ecr/build-and-push-image:
+                account-url: AWS_ACCOUNT_URL
+                repo: 'bestpra/frontend'
+                region: AWS_REGION
+                tag: "${CIRCLE_SHA1}"
+                path: '../frontend/'
+                dockerfile: Dockerfile.prod
 
 # 順序を整理
 workflows:
