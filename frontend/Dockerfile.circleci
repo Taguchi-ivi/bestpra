@@ -15,13 +15,12 @@ ENV HOME=/$HOMEDIR \
 # RUN echo $CONTAINER_PORT
 
 WORKDIR $HOMEDIR
-# COPY ./ ./
-COPY . .
+COPY ./ ./
 RUN apk update && apk add bash
 
 RUN yarn install
 RUN yarn run build
 
-EXPOSE 8080
+EXPOSE 3000
 
 CMD ["yarn", "start"]

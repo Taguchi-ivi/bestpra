@@ -69,31 +69,27 @@ workflows:
                     - build
             - aws-ecr/build-and-push-image:
                 name: 'build-and-push-image-backend-nginx'
-                # aws-access-key-id: AWS_ACCESS_KEY_ID
-                # aws-secret-access-key: AWS_SECRET_ACCESS_KEY
                 registry-id: AWS_ECR_REGISTRY_ID
                 repo: 'bestpra/backend-nginx'
                 region: '${AWS_REGION}'
                 tag: "${CIRCLE_SHA1}"
                 path: './backend/docker/nginx'
-                dockerfile: Dockerfile.prod
+                dockerfile: Dockerfile.circleci
                 requires:
                     - test
                 filters:
                     branches:
                         only:
                             - ciecleci-CD
-                            - main
+                            # - main
             - aws-ecr/build-and-push-image:
                 name: 'build-and-push-image-backend-rails'
-                # aws-access-key-id: AWS_ACCESS_KEY_ID
-                # aws-secret-access-key: AWS_SECRET_ACCESS_KEY
                 registry-id: AWS_ECR_REGISTRY_ID
                 repo: 'bestpra/backend-rails'
                 region: '${AWS_REGION}'
                 tag: "${CIRCLE_SHA1}"
                 path: './backend/docker/web'
-                dockerfile: Dockerfile.prod
+                dockerfile: Dockerfile.circleci
                 requires:
                     - test
                 filters:
@@ -103,14 +99,12 @@ workflows:
                             # - main
             - aws-ecr/build-and-push-image:
                 name: 'build-and-push-image-frontend'
-                # aws-access-key-id: AWS_ACCESS_KEY_ID
-                # aws-secret-access-key: AWS_SECRET_ACCESS_KEY
                 registry-id: AWS_ECR_REGISTRY_ID
                 repo: 'bestpra/frontend'
                 region: '${AWS_REGION}'
                 tag: "${CIRCLE_SHA1}"
                 path: './frontend'
-                dockerfile: Dockerfile.prod
+                dockerfile: Dockerfile.circleci
                 requires:
                     - test
                 filters:

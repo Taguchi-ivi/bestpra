@@ -23,7 +23,7 @@ RUN bundle install
 COPY . $APP_ROOT
 
 # add a script to be executed every time the container starts.
-COPY ./docker/web/entrypoint.sh /usr/bin/
+COPY ./backend/docker/web/entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 
