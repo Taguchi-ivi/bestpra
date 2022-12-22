@@ -74,7 +74,7 @@ jobs:
 
     build_and_push_image_backend_rails:
         machine:
-            images: ubuntu-2004:2022.10.1
+            image: ubuntu-2004:2022.10.1
             steps:
                 - checkout
                 - aws-ecr/build-and-push-image:
@@ -87,7 +87,7 @@ jobs:
 
     build_and_push_image_frontend:
         machine:
-            images: ubuntu-2004:2022.10.1
+            image: ubuntu-2004:2022.10.1
             steps:
                 - checkout
                 - aws-ecr/build-and-push-image:
