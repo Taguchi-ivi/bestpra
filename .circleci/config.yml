@@ -4,6 +4,7 @@ version: 2.1
 orbs:
     ruby: circleci/ruby@1.4.0
     node: circleci/node@5.0.3
+    aws-ecr: circleci/aws-ecr@8.2.1
 
 jobs:
     build:
@@ -17,7 +18,7 @@ jobs:
             - run:
                 name: frontend build
                 command: docker-compose -f ./frontend/docker-compose.yml build
-    
+
     test:
         machine:
             image: ubuntu-2004:2022.10.1
@@ -30,7 +31,7 @@ jobs:
                 name: frontend container
                 command: docker-compose -f ./frontend/docker-compose.yml up -d
             - run: sleep 20
-            
+
             # backend test
             - run:
                 name: backend db create
@@ -39,9 +40,9 @@ jobs:
                 name: backend db migrate
                 command: docker-compose -f ./backend/docker-compose.yml run web rails db:migrate RAILS_ENV=test
             - run:
-                name: backend test 
+                name: backend test
                 command: docker-compose -f ./backend/docker-compose.yml run web bundle exec rspec
-            
+
             # frontend test
             - run:
                 name: frontend yarn install
@@ -49,7 +50,7 @@ jobs:
             - run:
                 name: frontend test
                 command: docker-compose -f ./frontend/docker-compose.yml run frontend yarn test
-            
+
             # down
             - run:
                 name: frontend down
@@ -60,9 +61,54 @@ jobs:
 
 # 順序を整理
 workflows:
-    build_and_test:
+    build_test_deploy:
         jobs:
             - build
             - test:
                 requires:
                     - build
+            - aws-ecr/build-and-push-image:
+                name: 'build-and-push-image-backend-nginx'
+                # account-url: AWS_ACCOUNT_URL
+                registry-id: AWS_ACCOUNT_ID
+                repo: 'bestpra/backend-nginx'
+                region: AWS_REGION
+                tag: "${CIRCLE_SHA1}"
+                path: '../backend/docker/nginx'
+                dockerfile: Dockerfile.prod
+                requires:
+                    - test
+                filters:
+                    branches:
+                        only:
+                            - main
+            - aws-ecr/build-and-push-image:
+                name: 'build-and-push-image-backend-rails'
+                # account-url: AWS_ACCOUNT_URL
+                registry-id: AWS_ACCOUNT_ID
+                repo: 'bestpra/backend-rails'
+                region: AWS_REGION
+                tag: "${CIRCLE_SHA1}"
+                path: '../backend//docker/web'
+                dockerfile: Dockerfile.prod
+                requires:
+                    - test
+                filters:
+                    branches:
+                        only:
+                            - main
+            - aws-ecr/build-and-push-image:
+                name: 'build-and-push-image-frontend'
+                # account-url: AWS_ACCOUNT_URL
+                registry-id: AWS_ACCOUNT_ID
+                repo: 'bestpra/frontend'
+                region: AWS_REGION
+                tag: "${CIRCLE_SHA1}"
+                path: '../frontend/'
+                dockerfile: Dockerfile.prod
+                requires:
+                    - test
+                filters:
+                    branches:
+                        only:
+                            - main
