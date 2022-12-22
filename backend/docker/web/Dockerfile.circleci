@@ -11,8 +11,10 @@ ENV BUNDLER_VERSION 2.3.25
 RUN mkdir $APP_ROOT
 WORKDIR $APP_ROOT
 
-COPY Gemfile $APP_ROOT/Gemfile
-COPY Gemfile.lock $APP_ROOT/Gemfile.lock
+COPY ./backend/Gemfile $APP_ROOT/Gemfile
+COPY ./backend/Gemfile.lock $APP_ROOT/Gemfile.lock
+
+
 # ADD Gemfile $APP_ROOT/Gemfile
 # ADD Gemfile.lock $APP_ROOT/Gemfile.lock
 
