@@ -2,6 +2,8 @@ FROM node:18.12.1-alpine
 # FROM node:18.12.1
 
 ARG HOMEDIR="app"
+# ecr検証用
+ARG HOMEAPP="apppppppp"
 
 ENV HOME=/$HOMEDIR \
     LANG=C.UTF-8 \

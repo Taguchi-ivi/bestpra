@@ -1,6 +1,9 @@
 # FROM nginx:1.23.2
 FROM nginx:latest
 
+# ecr検証用
+ARG HOMEAPP="apppppppp"
+
 ENV TZ Asia/Tokyo
 
 # デフォルトで用意されている個別設定ファイルを削除

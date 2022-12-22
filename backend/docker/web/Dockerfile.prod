@@ -1,6 +1,9 @@
 # FROM ruby:3.1.2-alpine
 FROM ruby:3.1.2
 
+# ecr検証用
+ARG HOMEAPP="apppppppp"
+
 ENV LANG C.UTF-8
 ENV APP_ROOT /app
 ENV BUNDLE_JOBS 4
