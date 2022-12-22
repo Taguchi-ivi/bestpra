@@ -69,7 +69,8 @@ workflows:
                     - build
             - aws-ecr/build-and-push-image:
                 name: 'build-and-push-image-backend-nginx'
-                # account-url: AWS_ACCOUNT_URL
+                aws-access-key-id: AWS_ACCESS_KEY_ID
+                aws-secret-access-key: AWS_SECRET_ACCESS_KEY
                 registry-id: AWS_ACCOUNT_ID
                 repo: 'bestpra/backend-nginx'
                 region: AWS_REGION
@@ -84,7 +85,8 @@ workflows:
                             - main
             - aws-ecr/build-and-push-image:
                 name: 'build-and-push-image-backend-rails'
-                # account-url: AWS_ACCOUNT_URL
+                aws-access-key-id: AWS_ACCESS_KEY_ID
+                aws-secret-access-key: AWS_SECRET_ACCESS_KEY
                 registry-id: AWS_ACCOUNT_ID
                 repo: 'bestpra/backend-rails'
                 region: AWS_REGION
@@ -99,7 +101,8 @@ workflows:
                             - main
             - aws-ecr/build-and-push-image:
                 name: 'build-and-push-image-frontend'
-                # account-url: AWS_ACCOUNT_URL
+                aws-access-key-id: AWS_ACCESS_KEY_ID
+                aws-secret-access-key: AWS_SECRET_ACCESS_KEY
                 registry-id: AWS_ACCOUNT_ID
                 repo: 'bestpra/frontend'
                 region: AWS_REGION
