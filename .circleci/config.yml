@@ -77,7 +77,6 @@ workflows:
                 tag: "${CIRCLE_SHA1}"
                 path: './backend/docker/nginx'
                 dockerfile: Dockerfile.prod
-                backend/docker/nginx/Dockerfile.prod
                 requires:
                     - test
                 filters:
