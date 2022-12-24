@@ -162,23 +162,13 @@ workflows:
                             # - main
             - aws-ecs/deploy-service-update:
                 cluster:  '${MY_APP_PREFIX}-cluster'
-                container-image-name-updates: 'container=${CONTAINER_MIDDLEWARE_NAME},tag=${CIRCLE_SHA1}'
                 family: '${FAMILY_NAME_BACKEND}'
                 service-name: '${SERVICE_NAME_BACKEND}'
+                container-image-name-updates: 'container=${CONTAINER_MIDDLEWARE_NAME},tag=${CIRCLE_SHA1},container=${CONTAINER_APP_NAME},tag=${CIRCLE_SHA1}'
                 requires:
                     - 'build-and-push-image-backend-nginx'
-                filters:
-                    branches:
-                        only:
-                            - ciecleci-CD
-                            # - main
-            - aws-ecs/deploy-service-update:
-                cluster:  '${MY_APP_PREFIX}-cluster'
-                container-image-name-updates: 'container=${CONTAINER_APP_NAME},tag=${CIRCLE_SHA1}'
-                family: '${FAMILY_NAME_BACKEND}'
-                service-name: '${SERVICE_NAME_BACKEND}'
-                requires:
                     - 'build-and-push-image-backend-rails'
+                    - 'build-and-push-image-frontend'
                 filters:
                     branches:
                         only:
@@ -186,10 +176,12 @@ workflows:
                             # - main
             - aws-ecs/deploy-service-update:
                 cluster:  '${MY_APP_PREFIX}-cluster'
-                container-image-name-updates: 'container=${CONTAINER_FRONTEND_NAME},tag=${CIRCLE_SHA1}'
                 family: '${FAMILY_NAME_FRONTEND}'
                 service-name: '${SERVICE_NAME_FRONTEND}'
+                container-image-name-updates: 'container=${CONTAINER_FRONTEND_NAME},tag=${CIRCLE_SHA1}'
                 requires:
+                    - 'build-and-push-image-backend-nginx'
+                    - 'build-and-push-image-backend-rails'
                     - 'build-and-push-image-frontend'
                 filters:
                     branches:
