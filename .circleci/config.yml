@@ -4,6 +4,7 @@ version: 2.1
 orbs:
     aws-ecr: circleci/aws-ecr@8.2.1
     aws-ecs: circleci/aws-ecs@3.2.0
+    # slack: circleci/slack@4.12.0
     # ruby: circleci/ruby@1.4.0
     # node: circleci/node@5.0.3
 
@@ -59,6 +60,52 @@ jobs:
             - run:
                 name: backend down
                 command: docker-compose -f ./backend/docker-compose.yml down
+
+    #         - slack/notify:
+    #             event: fail
+    #             custom: |
+    #                 {
+    #                     "blocks": [
+    #                         {
+    #                             "type": "section",
+    #                             "fields": [
+    #                                 {
+    #                                     "type": "plain_text",
+    #                                     "text": "test faild...",
+    #                                     "emoji": true
+    #                                 }
+    #                             ]
+    #                         }
+    #                     ]
+    #                 }
+    #         - slack/notify:
+    #             event: pass
+    #             custom: |
+    #                 {
+    #                     "blocks": [
+    #                         {
+    #                             "type": "section",
+    #                             "fields": [
+    #                                 {
+    #                                     "type": "plain_text",
+    #                                     "text": "test complate!!",
+    #                                     "emoji": true
+    #                                 }
+    #                             ]
+    #                         }
+    #                     ]
+    #                 }
+
+    # deploy-result-slack:
+    #     steps:
+    #         - slack/notify:
+    #             event: fail
+    #             channel: $SLACK_DEFAULT_CHANNEL
+    #             template: basic_fail_1
+    #         - slack/notify:
+    #             event: pass
+    #             channel: $SLACK_DEFAULT_CHANNEL
+    #             template: success_tagged_deploy_1
 
 # 順序を整理
 workflows:
@@ -146,3 +193,6 @@ workflows:
                         only:
                             - ciecleci-CD
                             # - main
+            # - deploy-result-slack:
+            #     requires:
+            #         - aws-ecs/deploy-service-update
