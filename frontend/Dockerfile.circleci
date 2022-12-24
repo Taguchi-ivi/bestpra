@@ -17,7 +17,7 @@ ENV HOME=/$HOMEDIR \
 WORKDIR $HOMEDIR
 # COPY ./ ./
 COPY ./frontend/package.json .
-COPY ./frontend ./frontend
+COPY ./ ./
 
 RUN apk update && apk add bash
 
