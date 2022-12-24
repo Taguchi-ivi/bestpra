@@ -164,6 +164,7 @@ workflows:
                 cluster:  '${MY_APP_PREFIX}-cluster'
                 container-image-name-updates: 'container=${CONTAINER_MIDDLEWARE_NAME},tag=${CIRCLE_SHA1}'
                 family: '${FAMILY_NAME_BACKEND}'
+                service-name: '${SERVICE_NAME_BACKEND}'
                 requires:
                     - 'build-and-push-image-backend-nginx'
                 filters:
@@ -175,6 +176,7 @@ workflows:
                 cluster:  '${MY_APP_PREFIX}-cluster'
                 container-image-name-updates: 'container=${CONTAINER_APP_NAME},tag=${CIRCLE_SHA1}'
                 family: '${FAMILY_NAME_BACKEND}'
+                service-name: '${SERVICE_NAME_BACKEND}'
                 requires:
                     - 'build-and-push-image-backend-rails'
                 filters:
@@ -186,6 +188,7 @@ workflows:
                 cluster:  '${MY_APP_PREFIX}-cluster'
                 container-image-name-updates: 'container=${CONTAINER_FRONTEND_NAME},tag=${CIRCLE_SHA1}'
                 family: '${FAMILY_NAME_FRONTEND}'
+                service-name: '${SERVICE_NAME_FRONTEND}'
                 requires:
                     - 'build-and-push-image-frontend'
                 filters:
