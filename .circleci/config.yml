@@ -2,9 +2,10 @@
 version: 2.1
 
 orbs:
-    ruby: circleci/ruby@1.4.0
-    node: circleci/node@5.0.3
     aws-ecr: circleci/aws-ecr@8.2.1
+    aws-ecs: circleci/aws-ecs@3.2.0
+    # ruby: circleci/ruby@1.4.0
+    # node: circleci/node@5.0.3
 
 jobs:
     build:
@@ -107,6 +108,39 @@ workflows:
                 dockerfile: Dockerfile.circleci
                 requires:
                     - test
+                filters:
+                    branches:
+                        only:
+                            - ciecleci-CD
+                            # - main
+            - aws-ecs/deploy-service-update:
+                cluster:  '${MY_APP_PREFIX}-cluster'
+                container-image-name-updates: 'container=${CONTAINER_MIDDLEWARE_NAME},tag=${CIRCLE_SHA1}'
+                family: '${FAMILY_NAME_BACKEND}'
+                requires:
+                    - 'build-and-push-image-backend-nginx'
+                filters:
+                    branches:
+                        only:
+                            - ciecleci-CD
+                            # - main
+            - aws-ecs/deploy-service-update:
+                cluster:  '${MY_APP_PREFIX}-cluster'
+                container-image-name-updates: 'container=${CONTAINER_APP_NAME},tag=${CIRCLE_SHA1}'
+                family: '${FAMILY_NAME_BACKEND}'
+                requires:
+                    - 'build-and-push-image-backend-rails'
+                filters:
+                    branches:
+                        only:
+                            - ciecleci-CD
+                            # - main
+            - aws-ecs/deploy-service-update:
+                cluster:  '${MY_APP_PREFIX}-cluster'
+                container-image-name-updates: 'container=${CONTAINER_FRONTEND_NAME},tag=${CIRCLE_SHA1}'
+                family: '${FAMILY_NAME_FRONTEND}'
+                requires:
+                    - 'build-and-push-image-frontend'
                 filters:
                     branches:
                         only:
