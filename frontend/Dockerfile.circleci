@@ -15,9 +15,9 @@ ENV HOME=/$HOMEDIR \
 # RUN echo $CONTAINER_PORT
 
 WORKDIR $HOMEDIR
-# COPY ./ ./
+
 COPY ./frontend/package.json .
-COPY ./ ./
+COPY ./frontend .
 
 RUN apk update && apk add bash
 
