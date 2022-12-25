@@ -2,9 +2,9 @@
 version: 2.1
 
 orbs:
-    ruby: circleci/ruby@1.4.0
-    node: circleci/node@5.0.3
     aws-ecr: circleci/aws-ecr@8.2.1
+    aws-ecs: circleci/aws-ecs@3.2.0
+    # slack: circleci/slack@4.12.0
 
 jobs:
     build:
@@ -59,6 +59,52 @@ jobs:
                 name: backend down
                 command: docker-compose -f ./backend/docker-compose.yml down
 
+    #         - slack/notify:
+    #             event: fail
+    #             custom: |
+    #                 {
+    #                     "blocks": [
+    #                         {
+    #                             "type": "section",
+    #                             "fields": [
+    #                                 {
+    #                                     "type": "plain_text",
+    #                                     "text": "test faild...",
+    #                                     "emoji": true
+    #                                 }
+    #                             ]
+    #                         }
+    #                     ]
+    #                 }
+    #         - slack/notify:
+    #             event: pass
+    #             custom: |
+    #                 {
+    #                     "blocks": [
+    #                         {
+    #                             "type": "section",
+    #                             "fields": [
+    #                                 {
+    #                                     "type": "plain_text",
+    #                                     "text": "test complate!!",
+    #                                     "emoji": true
+    #                                 }
+    #                             ]
+    #                         }
+    #                     ]
+    #                 }
+
+    # deploy-result-slack:
+    #     steps:
+    #         - slack/notify:
+    #             event: fail
+    #             channel: $SLACK_DEFAULT_CHANNEL
+    #             template: basic_fail_1
+    #         - slack/notify:
+    #             event: pass
+    #             channel: $SLACK_DEFAULT_CHANNEL
+    #             template: success_tagged_deploy_1
+
 # 順序を整理
 workflows:
     build_test_deploy:
@@ -69,14 +115,12 @@ workflows:
                     - build
             - aws-ecr/build-and-push-image:
                 name: 'build-and-push-image-backend-nginx'
-                # aws-access-key-id: AWS_ACCESS_KEY_ID
-                # aws-secret-access-key: AWS_SECRET_ACCESS_KEY
                 registry-id: AWS_ECR_REGISTRY_ID
                 repo: 'bestpra/backend-nginx'
                 region: '${AWS_REGION}'
                 tag: "${CIRCLE_SHA1}"
-                path: '../backend/docker/nginx'
-                dockerfile: Dockerfile.prod
+                path: './backend/docker/nginx'
+                dockerfile: Dockerfile.circleci
                 requires:
                     - test
                 filters:
@@ -85,14 +129,12 @@ workflows:
                             - main
             - aws-ecr/build-and-push-image:
                 name: 'build-and-push-image-backend-rails'
-                # aws-access-key-id: AWS_ACCESS_KEY_ID
-                # aws-secret-access-key: AWS_SECRET_ACCESS_KEY
                 registry-id: AWS_ECR_REGISTRY_ID
                 repo: 'bestpra/backend-rails'
                 region: '${AWS_REGION}'
                 tag: "${CIRCLE_SHA1}"
-                path: '../backend//docker/web'
-                dockerfile: Dockerfile.prod
+                path: './backend/docker/web'
+                dockerfile: Dockerfile.circleci
                 requires:
                     - test
                 filters:
@@ -101,17 +143,44 @@ workflows:
                             - main
             - aws-ecr/build-and-push-image:
                 name: 'build-and-push-image-frontend'
-                # aws-access-key-id: AWS_ACCESS_KEY_ID
-                # aws-secret-access-key: AWS_SECRET_ACCESS_KEY
                 registry-id: AWS_ECR_REGISTRY_ID
                 repo: 'bestpra/frontend'
                 region: '${AWS_REGION}'
                 tag: "${CIRCLE_SHA1}"
-                path: '../frontend/'
-                dockerfile: Dockerfile.prod
+                path: './frontend'
+                dockerfile: Dockerfile.circleci
                 requires:
                     - test
                 filters:
                     branches:
                         only:
                             - main
+            - aws-ecs/deploy-service-update:
+                cluster:  '${MY_APP_PREFIX}-cluster'
+                family: '${FAMILY_NAME_BACKEND}'
+                service-name: '${SERVICE_NAME_BACKEND}'
+                container-image-name-updates: 'container=${CONTAINER_MIDDLEWARE_NAME},tag=${CIRCLE_SHA1},container=${CONTAINER_APP_NAME},tag=${CIRCLE_SHA1}'
+                requires:
+                    - 'build-and-push-image-backend-nginx'
+                    - 'build-and-push-image-backend-rails'
+                    - 'build-and-push-image-frontend'
+                filters:
+                    branches:
+                        only:
+                            - main
+            - aws-ecs/deploy-service-update:
+                cluster:  '${MY_APP_PREFIX}-cluster'
+                family: '${FAMILY_NAME_FRONTEND}'
+                service-name: '${SERVICE_NAME_FRONTEND}'
+                container-image-name-updates: 'container=${CONTAINER_FRONTEND_NAME},tag=${CIRCLE_SHA1}'
+                requires:
+                    - 'build-and-push-image-backend-nginx'
+                    - 'build-and-push-image-backend-rails'
+                    - 'build-and-push-image-frontend'
+                filters:
+                    branches:
+                        only:
+                            - main
+            # - deploy-result-slack:
+            #     requires:
+            #         - aws-ecs/deploy-service-update
