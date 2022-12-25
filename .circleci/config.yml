@@ -126,8 +126,7 @@ workflows:
                 filters:
                     branches:
                         only:
-                            - ciecleci-CD
-                            # - main
+                            - main
             - aws-ecr/build-and-push-image:
                 name: 'build-and-push-image-backend-rails'
                 registry-id: AWS_ECR_REGISTRY_ID
@@ -141,8 +140,7 @@ workflows:
                 filters:
                     branches:
                         only:
-                            - ciecleci-CD
-                            # - main
+                            - main
             - aws-ecr/build-and-push-image:
                 name: 'build-and-push-image-frontend'
                 registry-id: AWS_ECR_REGISTRY_ID
@@ -156,8 +154,7 @@ workflows:
                 filters:
                     branches:
                         only:
-                            - ciecleci-CD
-                            # - main
+                            - main
             - aws-ecs/deploy-service-update:
                 cluster:  '${MY_APP_PREFIX}-cluster'
                 family: '${FAMILY_NAME_BACKEND}'
@@ -170,8 +167,7 @@ workflows:
                 filters:
                     branches:
                         only:
-                            - ciecleci-CD
-                            # - main
+                            - main
             - aws-ecs/deploy-service-update:
                 cluster:  '${MY_APP_PREFIX}-cluster'
                 family: '${FAMILY_NAME_FRONTEND}'
@@ -184,8 +180,7 @@ workflows:
                 filters:
                     branches:
                         only:
-                            - ciecleci-CD
-                            # - main
+                            - main
             # - deploy-result-slack:
             #     requires:
             #         - aws-ecs/deploy-service-update

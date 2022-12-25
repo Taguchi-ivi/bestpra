@@ -2,7 +2,6 @@
   <div>
     <dir>
       <p>Test vue!!</p>
-      <p>この文が自動デプロイにより出力されることを確認</p>
     </dir>
     <button
       type="button"
