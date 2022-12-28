@@ -8,7 +8,7 @@ jobs:
   test_backend:
     runs-on: ubuntu-latest
     env:
-      RIALS_ENV: test
+      RAILS_ENV: test
     defaults:
       run:
         working-directory: backend
@@ -37,7 +37,7 @@ jobs:
       - name: Rspec
         run: bundle exec rspec
   test_front:
-    name: test-frontend
+    name: test_frontend
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -47,7 +47,7 @@ jobs:
       - name: set up Node
         uses: actions/setup-node@v3
         with:
-          node-version: "14.3.0"
+          node-version: "18.12.1"
           cache: "yarn"
           cache-dependency-path: "frontend/package.json"
       - name: install
