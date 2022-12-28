@@ -1,0 +1,57 @@
+name: build-and-test
+on:
+  push:
+    branches:
+      - github-actions-dev
+
+jobs:
+  test_backend:
+    runs-on: ubuntu-latest
+    env:
+      RIALS_ENV: test
+    defaults:
+      run:
+        working-directory: backend
+    services:
+      mysql:
+        image: mysql: 8.0.31
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          BIND-ADDRESS: 0.0.0.0
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - uses: actions/checkout@v3
+      - name: set up ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.1.2"
+          bundler-cache: true
+          working-directory: backend
+      - name: DB migration
+        run: |
+          cp config/database.yml.ci config/database.yml
+          bundle exec rails db:create
+          bundle exec rails db:migrate
+      - name: Rspec
+        run: bundle exec rspec
+  test_front:
+    name: test-frontend
+    runs-om: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v3
+      - name: set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "14.3.0"
+          cache: "yarn"
+          cache-dependency-path: "frontend/package.json"
+      - name: install
+        run: yarn install
+      - name: jest
+        run: yarn run test
+
