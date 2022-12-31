@@ -120,7 +120,7 @@ workflows:
                 region: '${AWS_REGION}'
                 tag: "${CIRCLE_SHA1}"
                 path: './backend/docker/nginx'
-                dockerfile: Dockerfile.circleci
+                dockerfile: Dockerfile.cd
                 requires:
                     - test
                 filters:
@@ -134,7 +134,7 @@ workflows:
                 region: '${AWS_REGION}'
                 tag: "${CIRCLE_SHA1}"
                 path: './backend/docker/web'
-                dockerfile: Dockerfile.circleci
+                dockerfile: Dockerfile.cd
                 requires:
                     - test
                 filters:
