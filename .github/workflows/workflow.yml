@@ -73,9 +73,9 @@ jobs:
     name: deploy_ecr_backend_nginx
     runs-on: ubuntu-latest
     environment: production
-    defaults:
-      run:
-        working-directory: backend/docker/nginx
+    # defaults:
+    #   run:
+    #     working-directory: backend/docker/nginx
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -104,9 +104,9 @@ jobs:
     name: deploy_ecr_backend_rails
     runs-on: ubuntu-latest
     environment: production
-    defaults:
-      run:
-        working-directory: backend/docker/web
+    # defaults:
+    #   run:
+    #     working-directory: backend/docker/web
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -135,9 +135,9 @@ jobs:
     name: deploy_ecr_frontend
     runs-on: ubuntu-latest
     environment: production
-    defaults:
-      run:
-        working-directory: frontend
+    # defaults:
+    #   run:
+    #     working-directory: frontend
     steps:
       - name: checkout
         uses: actions/checkout@v3
