@@ -8,7 +8,7 @@ env:
   AWS_REGION: ap-northeast-1
   # ECS_CLUSTER:
   ECS_SERVICE_BACKEND: bestpra-app-task-frontend
-  ECS_SERVICE_FRONTEND: -app-task-backend
+  ECS_SERVICE_FRONTEND: bestpra-app-task-backend
   # ECS_TASK_DEFINITION:
   CONTAINER_NAME_BACKEND_NGINX: bestpra-app-container-nginx-backend
   CONTAINER_NAME_BACKEND_RAILS: bestpra-app-container-rails-backend
@@ -95,7 +95,7 @@ jobs:
           REPOSITORY: ${{ secrets.ECR_REPOSITORY_BACKEND_NGINX }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f backend/docker/nginx/Dockerfile.prod .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile.prod .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
@@ -126,7 +126,7 @@ jobs:
           REPOSITORY: ${{ secrets.ECR_REPOSITORY_BACKEND_RAILS }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f backend/docker/web/Dockerfile.prod .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile.prod .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
@@ -157,7 +157,7 @@ jobs:
           REPOSITORY: ${{ secrets.ECR_REPOSITORY_FRONTEND }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f frontend/Dockerfile.prod .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile.prod .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
