@@ -103,35 +103,35 @@ jobs:
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
     deploy_ecr_backend_rails:
-    needs: [test_backend, test_front]
-    name: deploy_ecr_backend_rails
-    runs-on: ubuntu-latest
-    environment: production
-    defaults:
-      run:
-        working-directory: backend/docker/web
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-      - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-      - name: login ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-      - name: build,tag and push docker image ECR
-        id: build-image
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: ${{ env.ECR_REPOSITORY_BACKEND_RAILS }}
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f backend/docker/web/Dockerfile.prod .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+      needs: [test_backend, test_front]
+      name: deploy_ecr_backend_rails
+      runs-on: ubuntu-latest
+      environment: production
+      defaults:
+        run:
+          working-directory: backend/docker/web
+      steps:
+        - name: checkout
+          uses: actions/checkout@v3
+        - name: configure aws credentials
+          uses: aws-actions/configure-aws-credentials@v1-node16
+          with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: ${{ env.AWS_REGION }}
+        - name: login ECR
+          id: login-ecr
+          uses: aws-actions/amazon-ecr-login@v1
+        - name: build,tag and push docker image ECR
+          id: build-image
+          env:
+            REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+            REPOSITORY: ${{ env.ECR_REPOSITORY_BACKEND_RAILS }}
+            IMAGE_TAG: ${{ github.sha }}
+          run: |
+            docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f backend/docker/web/Dockerfile.prod .
+            docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+            echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
   deploy_ecr_frontend:
     needs: [test_backend, test_front]
