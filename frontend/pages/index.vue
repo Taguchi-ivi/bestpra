@@ -2,6 +2,7 @@
   <div>
     <dir>
       <p>Test vue!!</p>
+      <p class="lime accent-1">Github Actionsから自動更新完了!!</p>
     </dir>
     <button
       type="button"
