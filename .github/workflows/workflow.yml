@@ -212,7 +212,7 @@ jobs:
           cluster: ${{ secrets.ECS_CLUSTER }}
           wait-for-service-stability: true
 
-ecs_update_frontend:
+  ecs_update_frontend:
     needs: [deploy_ecr_backend_nginx,deploy_ecr_backend_rails, deploy_ecr_frontend]
     runs-on: ubuntu-latest
     # environment: production
