@@ -9,7 +9,8 @@ env:
   # ECS_CLUSTER:
   ECS_SERVICE_BACKEND: bestpra-app-task-frontend
   ECS_SERVICE_FRONTEND: bestpra-app-task-backend
-  # ECS_TASK_DEFINITION:
+  ECS_TASK_DEFINITION_BACKEND: bestpra-app-task-backend
+  ECS_TASK_DEFINITION_FRONTEND: bestpra-app-task-frontend
   CONTAINER_NAME_BACKEND_NGINX: bestpra-app-container-nginx-backend
   CONTAINER_NAME_BACKEND_RAILS: bestpra-app-container-rails-backend
   CONTAINER_NAME_FRONTEND: bestpra-app-container-frontend
@@ -73,6 +74,8 @@ jobs:
     name: deploy_ecr_backend_nginx
     runs-on: ubuntu-latest
     environment: production
+    outputs:
+      backend-nginx-image: ${{ steps.build-image.outputs.image }}
     defaults:
       run:
         working-directory: backend
@@ -97,13 +100,15 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f docker/nginx/Dockerfile.prod .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
   deploy_ecr_backend_rails:
     needs: [test_backend, test_front]
     name: deploy_ecr_backend_rails
     runs-on: ubuntu-latest
     environment: production
+    outputs:
+      backend-rails-image: ${{ steps.build-image.outputs.image }}
     defaults:
       run:
         working-directory: backend
@@ -128,13 +133,15 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f docker/web/Dockerfile.prod .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
   deploy_ecr_frontend:
     needs: [test_backend, test_front]
     name: deploy_ecr_frontend
     runs-on: ubuntu-latest
     environment: production
+    outputs:
+      frontend-image: ${{ steps.build-image.outputs.image }}
     defaults:
       run:
         working-directory: frontend
@@ -159,58 +166,86 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile.prod .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
   # ECS update
-  # ecs_update_backend:
-  #   needs: [deploy_ecr_backend_nginx,deploy_ecr_backend_rails, deploy_ecr_frontend]
-  #   name: ecs_update_backend
-  #   runs-on: ubuntu-latest
-  #   environment: production
-  #   steps:
-  #     - name: checkout
-  #       uses: actions/checkout@v3
-  #     - name: configure aws credentials
-  #       uses: aws-actions/configure-aws-credentials@v1-node16
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: ${{ env.AWS_REGION }}
+  ecs_update:
+    needs: [deploy_ecr_backend_nginx, deploy_ecr_backend_rails, deploy_ecr_frontend]
+    runs-on: ubuntu-latest
+    # environment: production
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: login ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: download task definition
+        run: |
+          aws ecs describe-task-definition --task-definition $ECS_TASK_DEFINITION_BACKEND --query taskDefinition > task-definition-backend.json
 
-# ecs_update_frontend:
-  #   needs: [deploy_ecr_backend_nginx,deploy_ecr_backend_rails, deploy_ecr_frontend]
-  #   name: ecs_update_frontend
-  #   runs-on: ubuntu-latest
-  #   environment: production
-  #   steps:
+      - name: render ecs task definition for first container
+        id: render-container-backend-nginx
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition-backend.json
+          container-name: ${{ env.CONTAINER_NAME_BACKEND_NGINX }}
+          image: ${{ needs.deploy_ecr_backend_nginx.outputs.backend-nginx-image }}
 
-# - name: Login to Amazon ECR
-#   id: login-ecr
-#   uses: aws-actions/amazon-ecr-login@v1
-# - name: Download task definition
-#   run: |
-#     aws ecs describe-task-definition --task-definition $ECS_TASK_DEFINITION --query taskDefinition > task-definition.json
-# - name: Render Amazon ECS task definition for first container
-#   id: render-container-httpd
-#   uses: aws-actions/amazon-ecs-render-task-definition@v1
-#   with:
-#     task-definition: task-definition.json
-#     container-name: ${{ env.CONTAINER_NAME_HTTPD }}
-#     image: ${{ steps.login-ecr.outputs.registry }}/${{ needs.Build1.outputs.image }}
-# - name: Modify Amazon ECS task definition with second container
-#   id: render-container-node
-#   uses: aws-actions/amazon-ecs-render-task-definition@v1
-#   with:
-#     task-definition: ${{ steps.render-container-httpd.outputs.task-definition }}
-#     container-name: ${{ env.CONTAINER_NAME_NODE }}
-#     image: ${{ steps.login-ecr.outputs.registry }}/${{ needs.Build2.outputs.image }}
+      - name: render ecs task definition for second container
+        id: render-container-backend-rails
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-container-backend-nginx.outputs.task-definition }}
+          container-name: ${{ env.CONTAINER_NAME_BACKEND_RAILS }}
+          image: ${{ needs.deploy_ecr_backend_rails.outputs.backend-rails-image }}
+      - name: Deploy ECS task backend
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-container-backend-rails.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE_BACKEND }}
+          cluster: ${{ secrets.ECS_CLUSTER }}
+          wait-for-service-stability: true
 
-# - name: Deploy Amazon ECS task definition
-#   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-#   with:
-#     task-definition: ${{ steps.render-container-node.outputs.task-definition }}
-#     service: ${{ env.ECS_SERVICE }}
-#     cluster: ${{ env.ECS_CLUSTER }}
-#     wait-for-service-stability: true
+ecs_update_frontend:
+    needs: [deploy_ecr_backend_nginx,deploy_ecr_backend_rails, deploy_ecr_frontend]
+    runs-on: ubuntu-latest
+    # environment: production
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: login ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: download task definition
+        run: |
+          aws ecs describe-task-definition --task-definition $ECS_TASK_DEFINITION_FRONTEND --query taskDefinition > task-definition-frontend.json
+
+      - name: render ecs task definition for frontend container
+        id: render-container-frontend
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition-frontend.json
+          container-name: ${{ env.CONTAINER_NAME_FRONTEND }}
+          image: ${{ needs.deploy_ecr_frontend.outputs.frontend-image }}
+
+      - name: Deploy ECS task frontend
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-container-frontend.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE_FRONTEND }}
+          cluster: ${{ secrets.ECS_CLUSTER }}
+          wait-for-service-stability: true
 
 # slack
