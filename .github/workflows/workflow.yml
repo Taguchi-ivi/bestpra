@@ -207,6 +207,8 @@ jobs:
           task-definition: task-definition-backend.json
           container-name: ${{ env.CONTAINER_NAME_BACKEND_RAILS }}
           image: ${{ steps.login-ecr.outputs.registry }}/${{ needs.deploy_ecr_backend_rails.outputs.backend-rails-image }}
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
       - name: Deploy ECS task backend
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
@@ -216,6 +218,8 @@ jobs:
           service: ${{ env.ECS_SERVICE_BACKEND }}
           cluster: ${{ secrets.ECS_CLUSTER }}
           wait-for-service-stability: true
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
   ecs_update_frontend:
     needs: [deploy_ecr_backend_nginx,deploy_ecr_backend_rails, deploy_ecr_frontend]

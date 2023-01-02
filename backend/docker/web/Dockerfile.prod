@@ -27,6 +27,8 @@ RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 
 RUN mkdir -p tmp/sockets
+# add
+RUN touch tmp/sockets/puma.sock
 RUN mkdir -p tmp/pids
 
 VOLUME $APP_ROOT/public
