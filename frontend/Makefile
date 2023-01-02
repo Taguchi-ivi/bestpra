@@ -9,7 +9,6 @@ version:
 
 docker-local:
 	docker-compose build --no-cache
-	docker-compose run web rails db:create
 	docker-compose up
 
 docker-prod:
