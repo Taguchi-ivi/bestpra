@@ -11,7 +11,6 @@ ENV BUNDLER_VERSION 2.3.25
 RUN mkdir $APP_ROOT
 WORKDIR $APP_ROOT
 
-# 手動(ecr_push_nginx)
 COPY Gemfile $APP_ROOT/Gemfile
 COPY Gemfile.lock $APP_ROOT/Gemfile.lock
 

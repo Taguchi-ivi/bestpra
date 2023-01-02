@@ -2,11 +2,12 @@
   <div>
     <dir>
       <p>Test vue!!</p>
-      <p class="lime accent-1">Github Actionsから自動更新完了!!</p>
+      <p><span class="lime accent-1"> Actionsから自動更新完了!!</span></p>
     </dir>
     <button
       type="button"
       name="button"
+      class="yellow lighten-4"
       @click="getMsg"
     >
       RailsからAPIを取得する
