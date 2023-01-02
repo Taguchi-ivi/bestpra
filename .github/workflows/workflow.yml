@@ -175,7 +175,7 @@ jobs:
   ecs_update_backend:
     needs: [deploy_ecr_backend_nginx, deploy_ecr_backend_rails, deploy_ecr_frontend]
     runs-on: ubuntu-latest
-    # environment: production
+    environment: production
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -199,18 +199,20 @@ jobs:
           task-definition: task-definition-backend.json
           container-name: ${{ env.CONTAINER_NAME_BACKEND_NGINX }}
           image: ${{ steps.login-ecr.outputs.registry }}/${{ needs.deploy_ecr_backend_nginx.outputs.backend-nginx-image }}
-
       - name: render ecs task definition for second container
         id: render-container-backend-rails
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: ${{ steps.render-container-backend-nginx.outputs.task-definition }}
+          # task-definition: ${{ steps.render-container-backend-nginx.outputs.task-definition }}
+          task-definition: task-definition-backend.json
           container-name: ${{ env.CONTAINER_NAME_BACKEND_RAILS }}
           image: ${{ steps.login-ecr.outputs.registry }}/${{ needs.deploy_ecr_backend_rails.outputs.backend-rails-image }}
+
       - name: Deploy ECS task backend
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          task-definition: ${{ steps.render-container-backend-rails.outputs.task-definition }}
+          # task-definition: ${{ steps.render-container-backend-rails.outputs.task-definition }}
+          task-definition: task-definition-backend.json
           service: ${{ env.ECS_SERVICE_BACKEND }}
           cluster: ${{ secrets.ECS_CLUSTER }}
           wait-for-service-stability: true
@@ -218,7 +220,7 @@ jobs:
   ecs_update_frontend:
     needs: [deploy_ecr_backend_nginx,deploy_ecr_backend_rails, deploy_ecr_frontend]
     runs-on: ubuntu-latest
-    # environment: production
+    environment: production
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -246,7 +248,8 @@ jobs:
       - name: Deploy ECS task frontend
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          task-definition: ${{ steps.render-container-frontend.outputs.task-definition }}
+          # task-definition: ${{ steps.render-container-frontend.outputs.task-definition }}
+          task-definition: task-definition-frontend.json
           service: ${{ env.ECS_SERVICE_FRONTEND }}
           cluster: ${{ secrets.ECS_CLUSTER }}
           wait-for-service-stability: true
