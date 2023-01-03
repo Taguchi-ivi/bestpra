@@ -16,6 +16,7 @@ env:
   CONTAINER_NAME_BACKEND_NGINX: bestpra-app-container-nginx-backend
   CONTAINER_NAME_BACKEND_RAILS: bestpra-app-container-rails-backend
   CONTAINER_NAME_FRONTEND: bestpra-app-container-frontend
+  IMAGE_TAG: ${{ github.sha }}
 
 jobs:
   # test
@@ -98,11 +99,10 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_BACKEND_NGINX }}
-          IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f docker/nginx/Dockerfile.prod .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "image=$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }} -f docker/nginx/Dockerfile.prod .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}
+          echo "image=$ECR_REPOSITORY:${{ env.IMAGE_TAG }}" >> $GITHUB_OUTPUT
 
   deploy_ecr_backend_rails:
     needs: [test_backend, test_front]
@@ -131,11 +131,10 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_BACKEND_RAILS }}
-          IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f docker/web/Dockerfile.prod .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "image=$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }} -f docker/web/Dockerfile.prod .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}
+          echo "image=$ECR_REPOSITORY:${{ env.IMAGE_TAG }}" >> $GITHUB_OUTPUT
 
   deploy_ecr_frontend:
     needs: [test_backend, test_front]
@@ -164,11 +163,10 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_FRONTEND }}
-          IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile.prod .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "image=$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }} -f Dockerfile.prod .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.IMAGE_TAG }}
+          echo "image=$ECR_REPOSITORY:${{ env.IMAGE_TAG }}" >> $GITHUB_OUTPUT
 
   # ECS update
   ecs_update_backend:
@@ -202,16 +200,14 @@ jobs:
         id: render-container-backend-rails
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          # task-definition: ${{ steps.render-container-backend-nginx.outputs.task-definition }}
-          task-definition: task-definition-backend.json
+          task-definition: ${{ steps.render-container-backend-nginx.outputs.task-definition }}
           container-name: ${{ env.CONTAINER_NAME_BACKEND_RAILS }}
           image: ${{ steps.login-ecr.outputs.registry }}/${{ needs.deploy_ecr_backend_rails.outputs.backend-rails-image }}
 
       - name: Deploy ECS task backend
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          # task-definition: ${{ steps.render-container-backend-rails.outputs.task-definition }}
-          task-definition: task-definition-backend.json
+          task-definition: ${{ steps.render-container-backend-rails.outputs.task-definition }}
           service: ${{ env.ECS_SERVICE_BACKEND }}
           cluster: ${{ secrets.ECS_CLUSTER }}
           wait-for-service-stability: true
@@ -247,8 +243,7 @@ jobs:
       - name: Deploy ECS task frontend
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          # task-definition: ${{ steps.render-container-frontend.outputs.task-definition }}
-          task-definition: task-definition-frontend.json
+          task-definition: ${{ steps.render-container-frontend.outputs.task-definition }}
           service: ${{ env.ECS_SERVICE_FRONTEND }}
           cluster: ${{ secrets.ECS_CLUSTER }}
           wait-for-service-stability: true
