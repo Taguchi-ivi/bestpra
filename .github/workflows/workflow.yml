@@ -2,7 +2,7 @@ name: build-and-test
 on:
   push:
     branches:
-      - main
+      - github-actions-dev
 
 env:
   AWS_REGION: ap-northeast-1
@@ -194,18 +194,26 @@ jobs:
       - name: render ecs task definition for first container
         id: render-container-backend-nginx
         uses: aws-actions/amazon-ecs-render-task-definition@v1
+        env:
+          ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_BACKEND_NGINX }}
+          IMAGE_TAG: ${{ github.sha }}
         with:
           task-definition: task-definition-backend.json
           container-name: ${{ env.CONTAINER_NAME_BACKEND_NGINX }}
-          image: ${{ steps.login-ecr.outputs.registry }}/${{ needs.deploy_ecr_backend_nginx.outputs.backend-nginx-image }}
+          # image: ${{ steps.login-ecr.outputs.registry }}/${{ needs.deploy_ecr_backend_nginx.outputs.backend-nginx-image }}
+          image: ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
       - name: render ecs task definition for second container
         id: render-container-backend-rails
         uses: aws-actions/amazon-ecs-render-task-definition@v1
+        env:
+          ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_BACKEND_RAILS }}
+          IMAGE_TAG: ${{ github.sha }}
         with:
           # task-definition: ${{ steps.render-container-backend-nginx.outputs.task-definition }}
+          # image: ${{ steps.login-ecr.outputs.registry }}/${{ needs.deploy_ecr_backend_rails.outputs.backend-rails-image }}
           task-definition: task-definition-backend.json
           container-name: ${{ env.CONTAINER_NAME_BACKEND_RAILS }}
-          image: ${{ steps.login-ecr.outputs.registry }}/${{ needs.deploy_ecr_backend_rails.outputs.backend-rails-image }}
+          image: ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
 
       - name: Deploy ECS task backend
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
@@ -239,11 +247,14 @@ jobs:
       - name: render ecs task definition for frontend container
         id: render-container-frontend
         uses: aws-actions/amazon-ecs-render-task-definition@v1
+        env:
+          ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_FRONTEND }}
+          IMAGE_TAG: ${{ github.sha }}
         with:
           task-definition: task-definition-frontend.json
           container-name: ${{ env.CONTAINER_NAME_FRONTEND }}
-          image: ${{ steps.login-ecr.outputs.registry }}/${{ needs.deploy_ecr_frontend.outputs.frontend-image }}
-
+          # image: ${{ steps.login-ecr.outputs.registry }}/${{ needs.deploy_ecr_frontend.outputs.frontend-image }}
+          image: ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
       - name: Deploy ECS task frontend
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:

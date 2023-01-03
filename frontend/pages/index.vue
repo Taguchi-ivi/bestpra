@@ -2,6 +2,7 @@
   <div>
     <dir>
       <p>Test vue!!</p>
+      <p>自動デプロイ確認</p>
     </dir>
     <button
       type="button"
