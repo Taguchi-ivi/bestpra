@@ -6,7 +6,7 @@ include ../.env
 version:
 	@ echo ${ECR_REPOURL}
 	@ echo '{"Version": "$(APP_VERSION)"}'
-	
+
 docker-local:
 	docker-compose build --no-cache
 	docker-compose run web rails db:create

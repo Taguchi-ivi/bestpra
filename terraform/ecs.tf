@@ -108,7 +108,7 @@ resource "aws_ecs_task_definition" "backend" {
                     valueFrom: data.aws_ssm_parameter.app_env.arn
                 },
                 {
-                    name: "APP_KEY"
+                    name: "RAILS_MASTER_KEY"
                     valueFrom: data.aws_ssm_parameter.app_key.arn
                 },
                 {
