@@ -31,7 +31,7 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
 
 # dotenv
-  gem 'dotenv-rails'
+gem 'dotenv-rails'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -42,6 +42,14 @@ gem "rack-cors"
 # add
 # モデルに現在のDB構造をメモする機能
 gem 'annotate'
+
+# add
+# コンソールの出力結果を見やすく表示する (日本語翻訳用gemも)
+gem 'hirb', '~> 0.7.3'
+gem 'hirb-unicode-steakknife', '~> 0.0.9'
+
+# パスワードを暗号化する
+gem 'bcrypt', '~> 3.1', '>= 3.1.18'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -58,7 +66,7 @@ group :development, :test do
 
   # rspec
   # bundle exec rspec
-  gem 'rspec-rails'	
+  gem 'rspec-rails'
 
 end
 
