@@ -1,92 +1,105 @@
 <template>
-  <v-app dark>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
+  <v-app>
+    <!-- <v-app-bar>
+    </v-app-bar> -->
+    <v-app-bar
+      color="primary"
       fixed
-      app
+      elevate-on-scroll
     >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
+      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
+      <nuxt-link to="/about">
+        <v-img width="50" src="/header-logo.png"></v-img>
+      </nuxt-link>
+      <v-toolbar-title>bestpra</v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <div class="my-auto">
+        <v-text-field
+          label="Filled"
+          placeholder="Dense & Rounded"
+          filled
+          rounded
+          dense
+          ></v-text-field>
+      </div>
+      <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
       </v-btn>
-      <v-btn icon @click.stop="clipped = !clipped">
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title>{{ title }}</v-toolbar-title>
-      <v-spacer />
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-menu</v-icon>
+
+      <!-- <v-btn icon>
+        <v-icon>mdi-heart</v-icon>
+      </v-btn> -->
+
+      <v-btn icon>
+        <v-icon>mdi-dots-vertical</v-icon>
       </v-btn>
     </v-app-bar>
     <v-main>
-      <v-container>
-        <Nuxt />
-      </v-container>
+    <!-- <v-container> -->
+      <Nuxt />
+    <!-- </v-container> -->
     </v-main>
-    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light> mdi-repeat </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+    <div class="footer-m my-15"></div>
+    <div class="footer-m my-15"></div>
+    <!-- v-bind="localAttrs" -->
+    <v-footer
+      :padless="padless"
+      color="accent"
+      absolute
+    >
+      <v-card
+        flat
+        tile
+        width="100%"
+        class="accent text-center"
+      >
+        <v-card-text>
+          <v-btn
+            v-for="icon in icons"
+            :key="icon"
+            class="mx-4"
+            icon
+          >
+            <v-icon size="24px">
+              {{ icon }}
+            </v-icon>
+          </v-btn>
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-text class="white--text">
+          <!-- {{ new Date().getFullYear() }} — <strong>Vuetify</strong> -->
+          <strong>portfolio | k.t</strong>
+        </v-card-text>
+      </v-card>
     </v-footer>
   </v-app>
 </template>
-
+<!--
+<script src="https://kit.fontawesome.com/14a540a64c.js" crossorigin="anonymous">
+-->
 <script>
 export default {
-  name: 'DefaultLayout',
-  data() {
-    return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/',
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire',
-        },
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js',
-    }
-  },
+  data: () => ({
+    icons: [
+      'mdi-home',
+      'mdi-email',
+      'mdi-calendar',
+      'mdi-delete',
+    ],
+    items: [
+      'default',
+      'absolute',
+      'fixed',
+    ],
+    padless: false,
+    variant: 'default',
+    drawer: false,
+      group: null,
+  }),
+
 }
 </script>

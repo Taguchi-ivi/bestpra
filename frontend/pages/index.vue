@@ -1,16 +1,20 @@
 <template>
   <div>
-    <dir>
+    <div class="my-2">
       <p>Test vue!!</p>
       <p>自動デプロイ確認</p>
-    </dir>
-    <button
-      type="button"
-      name="button"
-      @click="getMsg"
-    >
-      RailsからAPIを取得する
-    </button>
+    </div>
+    <div class="pa-1">
+      <button
+        type="button"
+        name="button"
+        class="p-1"
+        width="200px"
+        @click="getMsg"
+      >
+        RailsからAPIを取得する
+      </button>
+    </div>
     <div
       v-for="(msg, i) in msgs"
       :key="i"
