@@ -11,11 +11,12 @@
       <nuxt-link to="/about">
         <v-img width="50" src="/header-logo.png"></v-img>
       </nuxt-link>
-      <v-toolbar-title>bestpra</v-toolbar-title>
+      <v-toolbar-title class="ml-3">bestpra</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
-      <div class="my-auto">
+      <!-- 検索 -->
+      <!-- <div class="my-auto">
         <v-text-field
           label="Filled"
           placeholder="Dense & Rounded"
@@ -26,7 +27,17 @@
       </div>
       <v-btn icon>
         <v-icon>mdi-magnify</v-icon>
+      </v-btn> -->
+
+      <v-btn
+        elevation="4"
+        large
+        outlined
+        color="indigo"
+      >
+        ログイン
       </v-btn>
+      <!-- if profile -->
 
       <!-- <v-btn icon>
         <v-icon>mdi-heart</v-icon>

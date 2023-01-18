@@ -1,6 +1,16 @@
 import colors from 'vuetify/es5/util/colors'
 
+// env切り替え
+// const environment = process.env.NODE_ENV || 'development';
+// const envSet = require(`./env.${environment}.js`);
+
 export default {
+
+  // env: envSet,
+  env: {
+    ApiKey: process.env.FIREBASE_API_KEY
+
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s | bestpra',
