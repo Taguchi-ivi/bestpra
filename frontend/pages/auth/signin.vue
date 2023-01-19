@@ -1,3 +1,3 @@
 <template>
-    <h1>siginin</h1>
+    <h1 class="mt-16">signin（再ログイン）</h1>
 </template>

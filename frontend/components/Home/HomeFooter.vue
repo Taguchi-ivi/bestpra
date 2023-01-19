@@ -1,0 +1,43 @@
+<template>
+    <div>
+        <div class="footer-m my-15"></div>
+        <div class="footer-m my-15"></div>
+        <!-- v-bind="localAttrs" -->
+        <v-footer
+            :padless="padless"
+            color="accent"
+            absolute
+        >
+            <v-card
+                flat
+                tile
+                width="100%"
+                class="accent text-center"
+            >
+                <v-card-text>
+                <v-btn
+                    v-for="icon in icons"
+                    :key="icon"
+                    class="mx-4"
+                    icon
+                >
+                    <v-icon size="24px">
+                        {{ icon }}
+                    </v-icon>
+                </v-btn>
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-text class="white--text">
+                <!-- {{ new Date().getFullYear() }} — <strong>Vuetify</strong> -->
+                <strong>portfolio | k.t</strong>
+                </v-card-text>
+            </v-card>
+        </v-footer>
+    </div>
+</template>
+<script>
+export default {
+}
+</script>

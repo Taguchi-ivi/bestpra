@@ -1,3 +1,5 @@
+# 目次
+
 # bestpraとは
 
 # 作成背景
@@ -37,9 +39,19 @@
 | docker / docker-compose  |
 | terraform(インフラをコード化) |
 | AWS (Route53,ALB,VPC,subnet,ECR,ECS,RDS,ACM,SSM,cloudWatch) |
-| GithubActions |
 | Circleci(デプロイ完成後GithubActionsへ移行) |
+| GithubActions |
+<br />
 
+
+| 認証系
+----|
+| firebase 9.15.0  |
+| firebase authentication |
+| JWT |
+
+
+# 機能一覧
 
 # 工夫した点
 ## バックエンド
@@ -48,4 +60,10 @@
 
 ## インフラ周り
 
-# 機能一覧
+
+<!--
+ファイルの命名規則
+・component   => PascalCase
+・その他       => kebab-case
+・DOM         => kebab-case
+ -->
