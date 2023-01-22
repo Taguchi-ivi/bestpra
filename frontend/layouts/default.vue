@@ -15,29 +15,41 @@
 -->
 <script>
 import HomeHeader from '~/components/Home/HomeHeader'
-import HomeFotter from '~/components/Home/HomeFooter'
+import HomeFooter from '~/components/Home/HomeFooter'
+
 export default {
   component: {
     HomeHeader,
     HomeFooter
   },
   data: () => ({
-    icons: [
-      'mdi-home',
-      'mdi-email',
-      'mdi-calendar',
-      'mdi-delete',
-    ],
-    items: [
-      'default',
-      'absolute',
-      'fixed',
-    ],
-    padless: false,
-    variant: 'default',
-    drawer: false,
-      group: null,
+    // icons: [
+    //   'mdi-home',
+    //   'mdi-email',
+    //   'mdi-calendar',
+    //   'mdi-delete',
+    // ],
+    // items: [
+    //   'default',
+    //   'absolute',
+    //   'fixed',
+    // ],
+    // padless: false,
+    // variant: 'default',
+    // drawer: false,
+    // group: null,
   }),
+  // vue.new() => vueインスタンス
+  // マウントされた後 => vueの実行準備が完全に整った後
+  // vueファイルが読み込まれた後
+  mounted () {
+  },
+  // vueインスタンスが破壊される前に実行される
+  // この画面が表示されなくなったら
+  beforeDestroy() {
+  },
+  methods: {
+  },
 
 }
 </script>

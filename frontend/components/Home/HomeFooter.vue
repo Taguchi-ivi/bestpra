@@ -1,12 +1,14 @@
 <template>
-    <div>
-        <div class="footer-m my-15"></div>
-        <div class="footer-m my-15"></div>
+    <div class="my-16">
+        <div class="footer-m my-16"></div>
+        <div class="footer-m my-16"></div>
+        <div class="footer-m my-16"></div>
         <!-- v-bind="localAttrs" -->
         <v-footer
             :padless="padless"
             color="accent"
             absolute
+            class="mt-16"
         >
             <v-card
                 flat
@@ -39,5 +41,22 @@
 </template>
 <script>
 export default {
+    data: () => ({
+        icons: [
+            'mdi-home',
+            'mdi-email',
+            'mdi-calendar',
+            'mdi-delete',
+        ],
+        items: [
+            'default',
+            'absolute',
+            'fixed',
+        ],
+        padless: false,
+        variant: 'default',
+        drawer: false,
+        group: null,
+    }),
 }
 </script>

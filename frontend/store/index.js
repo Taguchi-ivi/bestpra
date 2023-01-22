@@ -1,5 +1,26 @@
-import Vuex from 'vuex';
-import axios from 'axios';
+// import axios from 'axios';
+
+// 共通変数 => vue file = data
+// export const state = () => ({
+//     styles: {
+//         homeAppBarHeight: 56
+//     },
+//     homeAppBarHeight: 56
+// })
+
+// 算出プロパティ => vue file = computed
+// export const getters = {
+//     styles(state) {
+//         return state.styles
+//     },
+//     homeAppBarHeight: state => state.homeAppBarHeight
+// }
+
+// stateの値を変更する場所
+// export const mutations = {}
+
+// アプリ全体のメソッドを置く => vue file = methods
+// export const actions = {}
 
 // const createStore = () => {
 //     return new Vuex.Store({
@@ -47,4 +68,19 @@ import axios from 'axios';
 //     })
 // }
 
-export default createStore;
+// const createStore = () => {
+//     return new Vuex.Store({
+//         state: {
+//             token: "",
+//             user: {},
+//             styles: {
+//                 homeAppBarHeight: 56
+//             }
+//         },
+//         getters: {
+
+//         },
+//     })
+// }
+
+// export default createStore;
