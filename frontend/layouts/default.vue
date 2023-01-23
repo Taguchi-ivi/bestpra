@@ -14,8 +14,8 @@
 <script src="https://kit.fontawesome.com/14a540a64c.js" crossorigin="anonymous">
 -->
 <script>
-import HomeHeader from '~/components/Home/HomeHeader'
-import HomeFooter from '~/components/Home/HomeFooter'
+import HomeHeader from '~/components/Templates/HomeHeader'
+import HomeFooter from '~/components/Templates/HomeFooter'
 
 export default {
   component: {

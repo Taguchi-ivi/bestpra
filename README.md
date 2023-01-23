@@ -25,7 +25,7 @@
 | フロントエンド
 ----|
 | Nuxt.js 2.15.8(SSR mode)  |
-| Vuetify |
+| Vuetify 2.6.12 |
 | axios |
 | eslint/prettier(静的解析、フォーマッター) |
 | Jest(自動テスト) |

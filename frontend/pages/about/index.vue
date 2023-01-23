@@ -28,7 +28,7 @@
                         large
                         elevation="13"
                         rounded
-                        to="/login" nuxt
+                        to="/auth/signup" nuxt
                         >
                             始める
                             <v-icon right>
@@ -41,7 +41,7 @@
                         large
                         elevation="13"
                         rounded
-                        to="/login" nuxt
+                        to="/auth/signup" nuxt
                         >
                             練習メニュを覗く
                             <v-icon right>
@@ -256,6 +256,7 @@
     text-align: center;
 }
 
+/*  */
 .subtitle:before {
     position: absolute;
     bottom: 15px;

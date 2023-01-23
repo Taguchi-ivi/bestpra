@@ -11,7 +11,7 @@
         <nuxt-link to="/about">
             <v-img width="50" src="/header-logo.png"></v-img>
         </nuxt-link>
-        <v-toolbar-title class="ml-3">bestpra</v-toolbar-title>
+        <v-toolbar-title class="ml-3 hidden-mobile-and-down">bestpra</v-toolbar-title>
 
         <v-spacer></v-spacer>
 
@@ -36,6 +36,14 @@
             outlined
             color="indigo"
             to="/auth/signup" nuxt
+        >
+            会員登録
+        </v-btn>
+        <v-btn
+            large
+            text
+            color="indigo"
+            to="/auth/signin" nuxt
         >
             ログイン
         </v-btn>
@@ -69,8 +77,17 @@ export default {
             return this.scrollY > (500 - 56)
         },
         toolbarStyle () {
-            const color = this.isScrollPoint ? 'white' : 'transparent'
-            const elevation = this.isScrollPoint ? 4 : 0
+            let color = 'white'
+            let elevation = 4
+            // console.log('page name!!')
+            console.log(this.$route.name)
+
+            if(this.$route.name === 'about') {
+                // color = this.isScrollPoint ? 'white' : 'transparent'
+                // elevation = this.isScrollPoint ? 4 : 0
+                if (!this.isScrollPoint) color = 'transparent';
+                if (!this.isScrollPoint) elevation = 0;
+            }
             return { color, elevation }
         }
     },

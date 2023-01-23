@@ -33,7 +33,7 @@
 
                 <v-card-text class="white--text">
                 <!-- {{ new Date().getFullYear() }} — <strong>Vuetify</strong> -->
-                <strong>portfolio | k.t</strong>
+                <strong>&copy;portfolio | k.t</strong>
                 </v-card-text>
             </v-card>
         </v-footer>
