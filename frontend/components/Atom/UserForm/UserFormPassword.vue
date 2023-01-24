@@ -1,11 +1,11 @@
 <template>
-    <!-- clearable -->
+    <!-- clearable toString() -->
     <v-text-field
         v-model="setPassword"
         :rules="form.rules"
-        :hint="form.hint.toString()"
+        :hint="form.hint"
         label="パスワードを入力"
-        :placeholder="form.placeholder.toString()"
+        :placeholder="form.placeholder"
         :hide-details="!setValidation"
         :counter="setValidation"
         color="blue"
@@ -48,8 +48,11 @@ export default {
             const format = v => /^[\w-]{8,72}$/.test(v) || msg
 
             const rules = this.setValidation ? [format] : [required]
-            const hint = this.setValidation ? [msg] : undefined
-            const placeholder = this.setValidation ? [min] : undefined
+            let hint = this.setValidation ? [msg] : undefined
+            let placeholder = this.setValidation ? [min] : undefined
+            hint = hint.toString()
+            placeholder = placeholder.toString()
+
             return { rules, hint, placeholder }
         },
         toggle() {
