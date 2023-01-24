@@ -3,10 +3,20 @@
         <template #user-form-card-content>
             <v-form
                 v-model="isValid"
-            >
-                <user-form-name />
-                <user-form-email />
-                <user-form-password />
+                >
+                <!-- .sync => @input="name = $event" -->
+                <user-form-name
+                    :name.sync="params.user.name"
+                />
+                name => {{ params.user.name }}
+                <user-form-email
+                    :email.sync="params.user.email"
+                />
+                name => {{ params.user.email }}
+                <user-form-password
+                    :password.sync="params.user.password"
+                />
+                name => {{ params.user.password }}
                 <v-btn
                     :disabled="!isValid"
                     block
@@ -35,7 +45,8 @@ export default {
     },
     data() {
         return {
-            isValid: false
+            isValid: false,
+            params: {user: { name: '', email: '', password: ''} }
         }
     }
 }
