@@ -6,7 +6,6 @@
       <Nuxt />
     <!-- </v-container> -->
     </v-main>
-    <!-- <footer></footer> -->
     <home-footer />
   </v-app>
 </template>
@@ -14,11 +13,13 @@
 <script src="https://kit.fontawesome.com/14a540a64c.js" crossorigin="anonymous">
 -->
 <script>
-import HomeHeader from '~/components/Templates/HomeHeader'
-import HomeFooter from '~/components/Templates/HomeFooter'
+import HomeHeader from '~/components/Organisms/HomeHeader.vue'
+import HomeFooter from '~/components/Organisms/HomeFooter.vue'
 
 export default {
-  component: {
+  components: {
+    // 'home-header': HomeHeader,
+    // 'home-footer': HomeFooter
     HomeHeader,
     HomeFooter
   },
