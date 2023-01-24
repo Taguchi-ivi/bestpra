@@ -3,9 +3,9 @@
     <v-text-field
         v-model="setPassword"
         :rules="form.rules"
-        :hint="form.hint"
+        :hint="form.hint.toString()"
         label="パスワードを入力"
-        :placeholder="form.placeholder"
+        :placeholder="form.placeholder.toString()"
         :hide-details="!setValidation"
         :counter="setValidation"
         color="blue"
