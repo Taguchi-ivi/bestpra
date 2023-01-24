@@ -4,19 +4,17 @@
             <v-form
                 v-model="isValid"
                 >
-                <!-- .sync => @input="name = $event" -->
                 <user-form-name
                     :name.sync="params.user.name"
                 />
-                name => {{ params.user.name }}
                 <user-form-email
                     :email.sync="params.user.email"
+                    placeholder
                 />
-                name => {{ params.user.email }}
                 <user-form-password
                     :password.sync="params.user.password"
+                    set-validation
                 />
-                name => {{ params.user.password }}
                 <v-btn
                     :disabled="!isValid"
                     block
@@ -25,6 +23,7 @@
                 >
                     登録
                 </v-btn>
+                <!-- {{ params.user }} -->
             </v-form>
         </template>
     </user-form-card>
