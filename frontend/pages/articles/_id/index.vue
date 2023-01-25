@@ -1,5 +1,7 @@
 <template>
-    {{ $route.fullPath }}
+    <div>
+        {{ $route.fullPath }}
+    </div>
 </template>
 
 <script>

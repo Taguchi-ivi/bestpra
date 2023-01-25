@@ -7,8 +7,8 @@
 
 <script>
 export default {
-    validate({ route }) {
-        return route.name !== 'articles'
-    }
+    // validate({ route }) {
+    //     return route.name !== 'articles'
+    // }
 }
 </script>
