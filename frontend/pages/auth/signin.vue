@@ -51,6 +51,7 @@ export default {
         UserFormEmail,
         UserFormPassword,
     },
+    layout: 'beforeLogin',
     data() {
         return {
             isValid: false,

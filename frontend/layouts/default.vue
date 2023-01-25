@@ -1,27 +1,29 @@
 <template>
   <v-app>
-    <home-header />
+    <logged-in-home-header />
     <v-main>
     <!-- <v-container> -->
+      <div class="mt-16"></div>
+      <div class="mt-16"></div>
       <Nuxt />
+      <div class="mb-16"></div>
+      <div class="mb-16"></div>
     <!-- </v-container> -->
     </v-main>
-    <home-footer />
+    <logged-in-home-footer />
   </v-app>
 </template>
 <!--
 <script src="https://kit.fontawesome.com/14a540a64c.js" crossorigin="anonymous">
 -->
 <script>
-import HomeHeader from '~/components/Organisms/HomeHeader.vue'
-import HomeFooter from '~/components/Organisms/HomeFooter.vue'
+import LoggedInHomeHeader from '~/components/Organisms/LoggedIn/LoggedInHomeHeader.vue'
+import LoggedInHomeFooter from '~/components/Organisms/LoggedIn/LoggedInHomeFooter.vue'
 
 export default {
   components: {
-    // 'home-header': HomeHeader,
-    // 'home-footer': HomeFooter
-    HomeHeader,
-    HomeFooter
+    LoggedInHomeHeader,
+    LoggedInHomeFooter
   },
   data: () => ({
     // icons: [

@@ -213,6 +213,7 @@
 
 <script>
     export default {
+        layout: 'before-login',
         data () {
             return {
                 e6: 1,
