@@ -1,19 +1,29 @@
 <template>
-  <v-app dark>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
-    </h1>
-    <h1 v-else>
-      {{ otherError }}
-    </h1>
-    <NuxtLink to="/"> Home page </NuxtLink>
+  <v-app>
+    <!-- gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)" -->
+    <!-- :aspect-ratio="16/9" -->
+    <v-img
+      :src="errorImg"
+      alt="error-pictore"
+      width="500"
+    >
+      <h1 v-if="error.statusCode === 404">
+        {{ pageNotFound }}
+      </h1>
+      <h1 v-else>
+        {{ otherError }}
+      </h1>
+      <NuxtLink to="/about"> go Home page!! </NuxtLink>
+    </v-img>
   </v-app>
 </template>
 
 <script>
+import errorImg from '~/assets/img/error/error-img.png'
+
 export default {
   name: 'EmptyLayout',
-  layout: 'empty',
+  layout: 'before-login',
   props: {
     error: {
       type: Object,
@@ -22,8 +32,9 @@ export default {
   },
   data() {
     return {
-      pageNotFound: '404 Not Found',
+      pageNotFound: 'Sorry... 404 Not Found',
       otherError: 'An error occurred',
+      errorImg
     }
   },
   head() {
