@@ -8,7 +8,7 @@
 <script>
 export default {
     validate({ route }) {
-        return route.name !== 'article'
+        return route.name !== 'notes'
     }
 }
 </script>
