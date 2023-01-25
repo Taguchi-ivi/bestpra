@@ -70,7 +70,7 @@
 
                     <v-list-item
                         :key="`menu-list-${i}`"
-                        :to="{ name: menu.name }"
+                        :to="menu.path"
                     >
                         <v-list-item-icon
                             class="mr-2"
@@ -101,9 +101,9 @@ export default {
         return {
             on: false,
             Menus: [
-                { name: 'アカウント設定', icon: 'mdi-account-cog' },
-                { name: 'パスワード変更', icon: 'mdi-lock-outline' },
-                { name: 'ログアウト', icon: 'mdi-logout-variant', divider: true }
+                { name: 'アカウント設定', icon: 'mdi-account-cog', divider: false, path: '/account/edit' },
+                { name: 'パスワード変更', icon: 'mdi-lock-outline', divider: false, path: '/account/password'},
+                { name: 'ログアウト', icon: 'mdi-logout-variant', divider: true, path: '/logout' }
             ]
         }
     },

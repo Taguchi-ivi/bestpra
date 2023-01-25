@@ -61,6 +61,7 @@ export default {
                 this.loading = false
 
             }, 1500)
+            this.$router.push('/home')
         },
         formReset() {
             this.$refs.form.reset()

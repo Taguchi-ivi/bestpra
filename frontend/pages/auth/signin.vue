@@ -62,7 +62,8 @@ export default {
     methods: {
         login() {
             this.loading = true
-            setTimeout(() => {this.loading = false}, 1500)
+            // setTimeout(() => {this.loading = false}, 1500)
+            this.$router.push('/home')
         }
     },
 }
