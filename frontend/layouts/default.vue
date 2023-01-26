@@ -3,11 +3,9 @@
     <logged-in-home-header />
     <v-main>
     <!-- <v-container> -->
-      <div class="mt-16"></div>
-      <div class="mt-16"></div>
+      <margin-top />
       <Nuxt />
-      <div class="mb-16"></div>
-      <div class="mb-16"></div>
+      <margin-bottom />
     <!-- </v-container> -->
     </v-main>
     <logged-in-home-footer />
@@ -19,11 +17,15 @@
 <script>
 import LoggedInHomeHeader from '~/components/Organisms/LoggedIn/LoggedInHomeHeader.vue'
 import LoggedInHomeFooter from '~/components/Organisms/LoggedIn/LoggedInHomeFooter.vue'
+import marginTop from '~/components/Atom/margin/marginTop.vue'
+import marginBottom from '~/components/Atom/margin/marginBottom.vue'
 
 export default {
   components: {
     LoggedInHomeHeader,
-    LoggedInHomeFooter
+    LoggedInHomeFooter,
+    marginTop,
+    marginBottom
   },
   data: () => ({
     // icons: [

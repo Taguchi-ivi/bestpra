@@ -2,6 +2,7 @@
     <v-app-bar
         fixed
     >
+        <slot name="navigation-toggle-button" />
         <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
         <nuxt-link to="/about">
             <v-img width="50" src="/header-logo.png"></v-img>
