@@ -4,7 +4,8 @@
             <v-form
                 ref="form"
                 v-model="isValid"
-                >
+                @submit.prevent="signup"
+            >
                 <user-form-name
                     :name.sync="params.user.name"
                 />
@@ -17,12 +18,12 @@
                     set-validation
                 />
                 <v-btn
+                    type="submit"
                     :disabled="!isValid || loading"
                     :loading="loading"
                     block
                     class="white--text"
                     color="blue"
-                    @click="signup"
                 >
                     登録
                 </v-btn>
