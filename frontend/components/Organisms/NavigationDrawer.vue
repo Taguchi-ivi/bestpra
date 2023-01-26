@@ -9,7 +9,7 @@
         <v-list>
             <!-- close botton -->
             <template
-                v-if="isBreakpoint"
+                v-if="isMoblieBreakpointLessThan"
             >
                 <v-list-item
                     @click="$emit('update:drawer', false)"
@@ -83,7 +83,7 @@ import marginTop from '~/components/Atom/margin/marginTop.vue'
                 get(){ return this.drawer },
                 set(newVal){ return this.$emit('update:drawer', newVal )}
             },
-            isBreakpoint() {
+            isMoblieBreakpointLessThan() {
                 const windowWidth = this.$vuetify.breakpoint.width
                 return this.mobileBreakPoint > windowWidth
             }

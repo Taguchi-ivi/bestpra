@@ -6,6 +6,7 @@
 
 <script>
 export default {
+    // middleware: 'get-article-current',
     layout: 'home',
 }
 </script>
