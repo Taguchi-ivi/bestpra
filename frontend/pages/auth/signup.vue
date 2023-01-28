@@ -34,7 +34,7 @@
 </template>
 
 <script>
-// import firebaseApp from '@/plugins/firebase'
+
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 import UserFormCard from '~/components/Molecules/UserFormCard'
 import UserFormName from '~/components/Atom/UserForm/UserFormName'
@@ -64,24 +64,27 @@ export default {
             //     this.loading = false
 
             // }, 1500)
+            console.log(this.params.user.email)
+            console.log(this.params.user.password)
             const auth = getAuth();
-            createUserWithEmailAndPassword(auth, params.user.email, params.user.password)
-            .then((userCredential) => {
-                // Signed in
-                const user = userCredential.user;
-                console.log(user);
-                // ...
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode);
-                console.log(errorMessage);
-                // ..
-            });
+            console.log('ここまでOK')
+            createUserWithEmailAndPassword(auth, this.params.user.email, this.params.user.password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    console.log(user);
+                    // ...
+                    this.formReset();
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorCode);
+                    console.log(errorMessage);
+                    // ..
 
-            this.formReset();
-            this.loading = false
+                    this.formReset();
+                });
             // this.$router.push('/home')
         },
         formReset() {
@@ -89,6 +92,7 @@ export default {
             for (const key in this.params.user) {
                 this.params.user[key] = ''
             }
+            this.loading = false
         }
     },
 }

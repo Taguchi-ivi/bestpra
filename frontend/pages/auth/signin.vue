@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import UserFormCard from '~/components/Molecules/UserFormCard'
 import UserFormEmail from '~/components/Atom/UserForm/UserFormEmail'
 import UserFormPassword from '~/components/Atom/UserForm/UserFormPassword'
@@ -67,7 +67,7 @@ export default {
             // setTimeout(() => {this.loading = false}, 1500)
 
             const auth = getAuth();
-            signInWithEmailAndPassword(auth, params.user.email, params.user.password)
+            signInWithEmailAndPassword(auth, this.params.user.email, this.params.user.password)
             .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user;
