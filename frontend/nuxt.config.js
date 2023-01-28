@@ -44,6 +44,7 @@ export default {
   plugins: [
     'plugins/axios',
     'plugins/firebase',
+    'plugins/authentication',
     // 'plugins/my-inject'
   ],
 

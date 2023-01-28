@@ -4,7 +4,7 @@
             <v-form
                 ref="form"
                 v-model="isValid"
-                @submit.prevent="signup"
+                @submit.prevent="formSignup"
             >
                 <user-form-name
                     :name.sync="params.user.name"
@@ -57,7 +57,7 @@ export default {
         }
     },
     methods: {
-        signup() {
+        formSignup() {
             this.loading = true
             // setTimeout(() => {
             //     this.formReset()

@@ -4,7 +4,7 @@
             <v-form
                 ref="form"
                 v-model="isValid"
-                @submit.prevent="login"
+                @submit.prevent="formLogin"
             >
                 <user-form-email
                     :email.sync="params.user.email"
@@ -62,7 +62,7 @@ export default {
         }
     },
     methods: {
-        login() {
+        formLogin() {
             this.loading = true
             // setTimeout(() => {this.loading = false}, 1500)
 
