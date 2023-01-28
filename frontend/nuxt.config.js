@@ -8,7 +8,13 @@ export default {
 
   // env: envSet,
   env: {
-    ApiKey: process.env.FIREBASE_API_KEY
+    ApiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.FIREBASE_PROJECTID,
+    storageBucket: process.env.FIREBASE_STORAGEBUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID,
+    appId: process.env.FIREBASE_APPID,
+    measurementId: process.env.FIREBASE_MEASUREMENTID
 
   },
   // Global page headers: https://go.nuxtjs.dev/config-head

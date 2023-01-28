@@ -48,16 +48,8 @@ export default {
             const format = v => /^[\w-]{8,72}$/.test(v) || msg
 
             const rules = this.setValidation ? [format] : [required]
-            // const strHint = this.setValidation ? [msg] : undefined
-            // const strPlaceholder = this.setValidation ? [min] : undefined
-            const hint = this.setValidation ? [msg] : ''
-            const placeholder = this.setValidation ? [min] : ''
-            // let hint = this.setValidation ? [msg] : undefined
-            // let placeholder = this.setValidation ? [min] : undefined
-            // hint = hint.toString()
-            // placeholder = placeholder.toString()
-            // strHint !== false ? hint = strHint.toString() : hint = '';
-            // strPlaceholder !== false ? placeholder = strPlaceholder.toString() : placeholder = '';
+            const hint = this.setValidation ? msg : ''
+            const placeholder = this.setValidation ? min : ''
 
             return { rules, hint, placeholder }
         },

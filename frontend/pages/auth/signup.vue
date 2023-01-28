@@ -34,6 +34,8 @@
 </template>
 
 <script>
+// import firebaseApp from '@/plugins/firebase'
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 import UserFormCard from '~/components/Molecules/UserFormCard'
 import UserFormName from '~/components/Atom/UserForm/UserFormName'
 import UserFormEmail from '~/components/Atom/UserForm/UserFormEmail'
@@ -57,12 +59,30 @@ export default {
     methods: {
         signup() {
             this.loading = true
-            setTimeout(() => {
-                this.formReset()
-                this.loading = false
+            // setTimeout(() => {
+            //     this.formReset()
+            //     this.loading = false
 
-            }, 1500)
-            this.$router.push('/home')
+            // }, 1500)
+            const auth = getAuth();
+            createUserWithEmailAndPassword(auth, params.user.email, params.user.password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                console.log(user);
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode);
+                console.log(errorMessage);
+                // ..
+            });
+
+            this.formReset();
+            this.loading = false
+            // this.$router.push('/home')
         },
         formReset() {
             this.$refs.form.reset()
