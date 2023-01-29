@@ -51,6 +51,7 @@ export default {
         UserFormPassword,
     },
     layout: 'beforeLogin',
+    middleware: ['logged-in-user'],
     data() {
         return {
             isValid: false,
@@ -69,10 +70,10 @@ export default {
             //     this.loading = false
 
             // }, 1500)
-            console.log(this.params.user.email)
-            console.log(this.params.user.password)
+            // console.log(this.params.user.email)
+            // console.log(this.params.user.password)
             const auth = getAuth();
-            console.log('ここまでOK')
+            // console.log('ここまでOK')
             await createUserWithEmailAndPassword(auth, this.params.user.email, this.params.user.password)
                 .then((userCredential) => {
                     // Signed in
@@ -82,7 +83,6 @@ export default {
                     this.login(user);
 
                     this.$router.push('/home')
-                    // ...
                     this.formReset();
                 })
                 .catch((error) => {

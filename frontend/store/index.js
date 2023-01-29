@@ -1,4 +1,5 @@
 // import axios from 'axios';
+import { getUserFromCookie } from '@/helpers'
 
 // 共通変数 => vue file = data
 export const state = () => ({
@@ -25,9 +26,6 @@ export const getters = {
 //     },
 //     homeAppBarHeight: state => state.homeAppBarHeight
     // getUser: state => state.user
-    getUser(state) {
-        return state.user
-    }
 }
 
 
@@ -40,23 +38,18 @@ export const actions = {
     //     const currentArtcile = state.article.list.find(article => article.id === id) || null
     //     commit('setCurrentArticle', currentArtcile)
     // }
-    // async login({ dispatch, state }, user) {
-    async login({ commit }, user) {
-        // console.log('token取得')
-        const auth = getAuth()
-        const firebaseUser = auth.currentUser
-        const token = await getIdToken(firebaseUser, true)
-        // console.log(token)
-        const userInfo = {
-            name: user.displayName,
-            email: user.email,
-            uid: user.uid
-        }
-        // console.log(userInfo)
-        Cookies.set('access_token', token)
-        await commit('setUser', userInfo)
 
+    async nuxtServerInit ({ commit }, { req }) {
+        const user = getUserFromCookie(req)
+        if(user) {
+            const userInfo = {
+                email: user.email,
+                uid: user.user_id
+            }
+            await commit('modules/user/setUser', userInfo)
+        }
     }
+
 }
 
 // stateの値を変更する場所
@@ -65,15 +58,6 @@ export const mutations = {
     //     state.article.current = payload
     // }
 
-    setUser(state, payload) {
-        // state.user.name = payload.name
-        // state.user.email = payload.email
-        // state.user.uid = payload.uid
-        state.user = payload
-        console.log('mutations action!')
-        console.log(state.user)
-
-    },
     // setUid(state, payload) {
     //     state.user = payload
     // }

@@ -16,9 +16,12 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/i18n": "^7.3.1",
+    "cookie-parser": "^1.4.6",
+    "cookieparser": "^0.1.0",
     "core-js": "^3.25.3",
     "firebase": "^9.16.0",
     "js-cookie": "^3.0.1",
+    "jwt-decode": "^3.1.2",
     "nuxt": "^2.15.8",
     "vue": "^2.7.10",
     "vue-server-renderer": "^2.7.10",

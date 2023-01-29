@@ -88,6 +88,84 @@
                         </v-list-item-title>
                     </v-list-item>
                 </template>
+                <v-divider />
+                <v-dialog
+                    v-model="dialog"
+                    max-width="290"
+                >
+                    <template #activator="{ on, attrs }">
+                        <!-- <v-btn
+                            color="primary"
+                            dark
+                            v-bind="attrs"
+                            v-on="on"
+                        >
+                            Open Dialog
+                        </v-btn> -->
+                        <v-list-item
+                            v-bind="attrs"
+                            v-on="on"
+                        >
+                            <v-list-item-icon
+                                class="mr-2"
+                            >
+                                <v-icon
+                                    size="22"
+                                >
+                                    mdi-logout-variant
+                                </v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-title>
+                                ログアウト
+                            </v-list-item-title>
+                        </v-list-item>
+                    </template>
+                    <v-card>
+                        <v-card-title class="text-h5">
+                            <!-- se Google's location service? -->
+                            本当に<br />ログアウトしますか？
+                        </v-card-title>
+                        <v-card-text>
+                            <!-- Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.
+                            -->
+                            ログアウトした場合<br />再度ログインが必要となります。
+                        </v-card-text>
+                        <v-card-actions>
+                        <v-spacer />
+                        <!-- color="green darken-1" -->
+                        <v-btn
+                            color="blue"
+                            text
+                            @click="dialog = false"
+                        >
+                            キャンセル
+                        </v-btn>
+                        <v-btn
+                            color="red"
+                            text
+                            @click="appLogout"
+                        >
+                            ログアウト
+                        </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+                <!-- <v-list-item
+                    to="#"
+                >
+                    <v-list-item-icon
+                        class="mr-2"
+                    >
+                        <v-icon
+                            size="22"
+                        >
+                            mdi-logout-variant
+                        </v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title>
+                        ログアウト
+                    </v-list-item-title>
+                </v-list-item> -->
             </v-list>
         </v-menu>
     </v-app-bar>
@@ -95,17 +173,33 @@
 
 <script>
 
-// import { mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
     data ({ $config: $store }) {
         return {
             on: false,
+            dialog: false,
             Menus: [
                 { name: 'アカウント設定', icon: 'mdi-account-cog', divider: false, path: '/account/edit' },
                 { name: 'パスワード変更', icon: 'mdi-lock-outline', divider: false, path: '/account/password'},
-                { name: 'ログアウト', icon: 'mdi-logout-variant', divider: true, path: '/logout' }
+                // { name: 'ログアウト', icon: 'mdi-logout-variant', divider: true, path: '/logout' }
             ]
+        }
+    },
+    methods: {
+        ...mapActions({
+            logout: 'modules/user/logout',
+        }),
+        // ...mapGetters({
+        //     getUser: 'modules/user/getUser',
+        // }),
+
+        async appLogout() {
+            const userInfo = this.$store.getters['modules/user/getUser']
+            // console.log(userInfo)
+            await this.logout(userInfo)
+            this.$router.push('/about')
         }
     },
 }

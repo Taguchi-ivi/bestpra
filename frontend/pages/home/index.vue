@@ -8,5 +8,6 @@
 export default {
     // middleware: 'get-article-current',
     layout: 'home',
+    middleware: ['before-login-user'],
 }
 </script>
