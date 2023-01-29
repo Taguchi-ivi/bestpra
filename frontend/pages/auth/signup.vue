@@ -1,6 +1,15 @@
 <template>
     <user-form-card >
         <template #user-form-card-content>
+            <p v-if="errMsg">
+                <v-alert
+                    border="left"
+                    color="pink darken-1"
+                    dark
+                    >
+                    {{ errMsg }}
+                </v-alert>
+            </p>
             <v-form
                 ref="form"
                 v-model="isValid"
@@ -16,6 +25,9 @@
                 <user-form-password
                     :password.sync="params.user.password"
                     set-validation
+                />
+                <user-form-password-again
+                    :password-again.sync="params.user.passwordAgain"
                 />
                 <v-btn
                     type="submit"
@@ -41,6 +53,7 @@ import UserFormCard from '~/components/Molecules/UserFormCard'
 import UserFormName from '~/components/Atom/UserForm/UserFormName'
 import UserFormEmail from '~/components/Atom/UserForm/UserFormEmail'
 import UserFormPassword from '~/components/Atom/UserForm/UserFormPassword'
+import UserFormPasswordAgain from '~/components/Atom/UserForm/UserFormPasswordAgain'
 
 export default {
     name: 'singup',
@@ -49,6 +62,7 @@ export default {
         UserFormName,
         UserFormEmail,
         UserFormPassword,
+        UserFormPasswordAgain
     },
     layout: 'beforeLogin',
     middleware: ['logged-in-user'],
@@ -56,7 +70,8 @@ export default {
         return {
             isValid: false,
             loading: false,
-            params: {user: { name: '', email: '', password: ''} }
+            errMsg: '',
+            params: {user: { name: '', email: '', password: '', passwordAgain: ''} }
         }
     },
     methods: {
@@ -64,6 +79,13 @@ export default {
             login: 'modules/user/login',
         }),
         async formSignup() {
+
+            const password = this.params.user.password
+            const passwordAgain = this.params.user.passwordAgain
+            if(password !== passwordAgain) {
+                this.errMsg = 'パスワードと確認用パスワードが一致しません'
+                return
+            }
             this.loading = true
             // setTimeout(() => {
             //     this.formReset()
