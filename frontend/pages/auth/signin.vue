@@ -43,11 +43,13 @@
 
 <script>
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { mapActions } from 'vuex'
 import UserFormCard from '~/components/Molecules/UserFormCard'
 import UserFormEmail from '~/components/Atom/UserForm/UserFormEmail'
 import UserFormPassword from '~/components/Atom/UserForm/UserFormPassword'
 
 export default {
+    name: 'singin',
     components: {
         UserFormCard,
         UserFormEmail,
@@ -62,6 +64,9 @@ export default {
         }
     },
     methods: {
+        ...mapActions({
+            login: 'modules/user/login',
+        }),
         formLogin() {
             this.loading = true
             // setTimeout(() => {this.loading = false}, 1500)
@@ -72,6 +77,9 @@ export default {
                 // Signed in
                 const user = userCredential.user;
                 console.log(user);
+                this.login(user)
+
+                this.$router.push('/home')
                 // ...
             })
             .catch((error) => {

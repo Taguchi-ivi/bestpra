@@ -1,6 +1,4 @@
 // import axios from 'axios';
-import firebase from '~/plugins/firebase'
-import { getAuth } from "firebase/auth"
 
 // 共通変数 => vue file = data
 export const state = () => ({
@@ -18,8 +16,6 @@ export const state = () => ({
     //         {id: 5, name: 'article01', updateAt: '2023-01-30-01T12:00:00+09:00'},
     //     ]
     // }
-    // userデータ
-    user: {}
 })
 
 // 算出プロパティ => vue file = computed
@@ -44,14 +40,21 @@ export const actions = {
     //     const currentArtcile = state.article.list.find(article => article.id === id) || null
     //     commit('setCurrentArticle', currentArtcile)
     // }
-    async login({ dispatch, state }, user) {
-        console.log('token取得')
-        const token = await firebaseApp.auth().currentUser.getIdToken(true)
+    // async login({ dispatch, state }, user) {
+    async login({ commit }, user) {
+        // console.log('token取得')
+        const auth = getAuth()
+        const firebaseUser = auth.currentUser
+        const token = await getIdToken(firebaseUser, true)
+        // console.log(token)
         const userInfo = {
             name: user.displayName,
             email: user.email,
             uid: user.uid
         }
+        // console.log(userInfo)
+        Cookies.set('access_token', token)
+        await commit('setUser', userInfo)
 
     }
 }
@@ -63,6 +66,15 @@ export const mutations = {
     // }
 
     setUser(state, payload) {
+        // state.user.name = payload.name
+        // state.user.email = payload.email
+        // state.user.uid = payload.uid
         state.user = payload
-    }
+        console.log('mutations action!')
+        console.log(state.user)
+
+    },
+    // setUid(state, payload) {
+    //     state.user = payload
+    // }
 }

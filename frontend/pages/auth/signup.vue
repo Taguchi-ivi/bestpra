@@ -36,12 +36,14 @@
 <script>
 
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
+import { mapActions } from 'vuex'
 import UserFormCard from '~/components/Molecules/UserFormCard'
 import UserFormName from '~/components/Atom/UserForm/UserFormName'
 import UserFormEmail from '~/components/Atom/UserForm/UserFormEmail'
 import UserFormPassword from '~/components/Atom/UserForm/UserFormPassword'
 
 export default {
+    name: 'singup',
     components: {
         UserFormCard,
         UserFormName,
@@ -57,7 +59,10 @@ export default {
         }
     },
     methods: {
-        formSignup() {
+        ...mapActions({
+            login: 'modules/user/login',
+        }),
+        async formSignup() {
             this.loading = true
             // setTimeout(() => {
             //     this.formReset()
@@ -68,11 +73,15 @@ export default {
             console.log(this.params.user.password)
             const auth = getAuth();
             console.log('ここまでOK')
-            createUserWithEmailAndPassword(auth, this.params.user.email, this.params.user.password)
+            await createUserWithEmailAndPassword(auth, this.params.user.email, this.params.user.password)
                 .then((userCredential) => {
                     // Signed in
                     const user = userCredential.user;
-                    console.log(user);
+                    // user.displayName = this.params.user.name
+                    // console.log(user);
+                    this.login(user);
+
+                    this.$router.push('/home')
                     // ...
                     this.formReset();
                 })
@@ -83,16 +92,16 @@ export default {
                     console.log(errorMessage);
                     // ..
 
-                    this.formReset();
+                    // this.formReset();
                 });
-            // this.$router.push('/home')
         },
         formReset() {
+            this.loading = false
             this.$refs.form.reset()
             for (const key in this.params.user) {
                 this.params.user[key] = ''
             }
-            this.loading = false
+
         }
     },
 }
