@@ -1,12 +1,10 @@
-# FROM ruby:3.1.2-alpine
-FROM ruby:3.1.2
+# FROM ruby:3.1.2
+FROM ruby:3.1.2-alpine
 
 ENV LANG C.UTF-8
 ENV APP_ROOT /app
 ENV BUNDLE_JOBS 4
-
-ENV BUNDLER_VERSION 2.3.25
-# RUN apk update -qq && apk install -y build-essential libpq-dev nodejs
+# ENV BUNDLER_VERSION 2.3.25
 
 RUN mkdir $APP_ROOT
 WORKDIR $APP_ROOT
@@ -14,9 +12,16 @@ WORKDIR $APP_ROOT
 COPY Gemfile $APP_ROOT/Gemfile
 COPY Gemfile.lock $APP_ROOT/Gemfile.lock
 
-RUN gem install bundler -v $BUNDLER_VERSION
-RUN bundle -v
-RUN bundle install
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache linux-headers libxml2-dev make gcc libc-dev nodejs yarn tzdata bash mysql-dev && \
+    apk add --no-cache -t .build-packages --no-cache build-base curl-dev mysql-client && \
+    bundle install -j4 && \
+    apk del --purge .build-packages
+
+# RUN gem install bundler -v $BUNDLER_VERSION
+# RUN bundle -v
+# RUN bundle install
 
 COPY . $APP_ROOT
 
