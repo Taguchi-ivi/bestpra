@@ -2,3 +2,28 @@
 //
 // The variables you want to modify
 // $font-size-root: 20px;
+// custom変数 => https://vuetifyjs.com/en/customization/sass-variables/#sass-variables
+// lightテーマをカスタマイズする変数
+$material-light: (
+    'background': #f6f6f4
+);
+
+// 独自のブレイクポイントを追加する変数 必要性確認
+$grid-breakpoints: (
+    'ipad': 768px,
+    'mobile': 426px
+);
+
+// 独自のブレイクポイントで表示/非表示を切り替えるcssクラスを定義
+$display-breakpoints: (
+    // 768px未満
+    'ipad-and-down':
+    'only screen and (max-width: #{map-get($grid-breakpoints, 'ipad') - 1})',
+    // 768px以上
+    'ipad-and-up':
+    'only screen and (min-width: #{map-get($grid-breakpoints, 'ipad')})',
+    'mobile-and-down':
+    'only screen and (max-width: #{map-get($grid-breakpoints, 'mobile') - 1})',
+    'mobile-and-up':
+    'only screen and (min-width: #{map-get($grid-breakpoints, 'mobile')})'
+);

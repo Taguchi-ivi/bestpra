@@ -1,5 +1,5 @@
-# FROM nginx:1.23.2
-FROM nginx:latest
+# FROM nginx:latest
+FROM nginx:stable-alpine
 
 ENV TZ Asia/Tokyo
 
