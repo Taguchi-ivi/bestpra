@@ -31,3 +31,6 @@
 # add
 .env
 .DS_store
+
+# add carrierwave
+/public/uploads
