@@ -74,6 +74,11 @@ export default {
     baseURL: process.env.NODE_ENV === 'production' ? 'https://api.best-pra.com' : 'http://localhost:3000'
   },
 
+  // localでの作業効率化のため、defultの3000から変更
+  server: {
+    port: 8080
+  },
+
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     // カスタムcssのパス

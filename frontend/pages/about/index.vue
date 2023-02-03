@@ -258,6 +258,7 @@ import memoImg from '~/assets/img/about/memo-img.png'
 import articleImg from '~/assets/img/about/article-img.png'
 
     export default {
+        name: 'about',
         layout: 'beforeLogin',
         data () {
             return {

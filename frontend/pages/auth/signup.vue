@@ -39,7 +39,15 @@
                 >
                     登録
                 </v-btn>
+                <!-- <v-btn
+                    class="white--text"
+                    color="blue"
+                    @click="testBtn"
+                >
+                    テスト
+                </v-btn> -->
                 <!-- {{ params.user }} -->
+                <!-- {{ users }} -->
             </v-form>
         </template>
     </user-form-card>
@@ -71,13 +79,30 @@ export default {
             isValid: false,
             loading: false,
             errMsg: '',
-            params: {user: { name: '', email: '', password: '', passwordAgain: ''} }
+            params: {user: { name: '', email: '', password: '', passwordAgain: ''} },
+            // users: {}
         }
     },
     methods: {
         ...mapActions({
             login: 'modules/user/login',
         }),
+        // testBtn() {
+        //     // const user = {
+        //     //     nickname: this.params.user.name,
+        //     //     email: this.params.user.email,
+        //     //     uid: 'aaaaaaaaaa'
+        //     // }
+        //     // this.$axios.post('/api/v1/users', { user })
+        //     //     .then(response => {
+        //     //             console.log(response)
+        //     //         })
+        //     this.$axios.get('/api/v1/users')
+        //         .then(response => {
+        //             const users = response
+        //             return users
+        //         })
+        // },
         async formSignup() {
 
             const password = this.params.user.password
@@ -99,10 +124,19 @@ export default {
             await createUserWithEmailAndPassword(auth, this.params.user.email, this.params.user.password)
                 .then((userCredential) => {
                     // Signed in
-                    const user = userCredential.user;
+                    const firebaseAuthUser = userCredential.user;
                     // user.displayName = this.params.user.name
                     // console.log(user);
-                    this.login(user);
+                    this.login(firebaseAuthUser);
+                    // const user = {
+                    //     nickname: this.params.user.name,
+                    //     email: firebaseAuthUser.email,
+                    //     uid: firebaseAuthUser.uid
+                    // }
+                    // this.$axios.post('/api/v1/users', { user })
+                    //     .then(response => {
+                    //         // console.log(response)
+                    //     })
 
                     this.$router.push('/home')
                     this.formReset();

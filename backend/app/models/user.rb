@@ -4,7 +4,7 @@ class User < ApplicationRecord
 
     # validate
     validates :nickname, presence: true
-    validates :email, presence: true, presence: true, uniqueness: true
+    validates :email, presence: true, uniqueness: true
     validates :uid, presence: true
 
 end

@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       # api test action
       resources :hello,only:[:index]
 
-      resources :users, only:[:index, :show, :create , :update, :destroy]
+      resources :users, only:[:index, :show, :create , :edit, :update, :destroy]
     end
 
     # helth check

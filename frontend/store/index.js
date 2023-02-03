@@ -40,7 +40,12 @@ export const actions = {
     // }
 
     async nuxtServerInit ({ commit }, { req }) {
+        // console.log('ここまではどう？')
+        // console.log(req)
         const user = getUserFromCookie(req)
+        // console.log('---')
+        // console.log(user)
+        // console.log('--- cokkie情報')
         if(user) {
             const userInfo = {
                 email: user.email,

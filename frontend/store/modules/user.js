@@ -1,5 +1,7 @@
 import Cookies from 'js-cookie'
+// import { getAuth, getIdToken, signOut } from "firebase/auth"
 import { getAuth, getIdToken, signOut } from "firebase/auth"
+// import jwtDecode from 'jwt-decode'
 // import firebaseApp from '~/plugins/firebase'
 
 export const state = () => ({
@@ -24,7 +26,10 @@ export const actions = {
         const auth = getAuth()
         const firebaseUser = auth.currentUser
         const token = getIdToken(firebaseUser, true)
-        // console.log(token)
+        // console.log(token.PromiseResult)
+        // console.log('↓でdecode')
+        // const decodeToken = jwtDecode(token)
+        // console.log(token.access_token)
         const userInfo = {
             email: user.email,
             uid: user.uid
