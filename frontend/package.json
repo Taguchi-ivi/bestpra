@@ -20,6 +20,7 @@
     "cookieparser": "^0.1.0",
     "core-js": "^3.25.3",
     "firebase": "^9.16.0",
+    "firebase-admin": "^11.5.0",
     "js-cookie": "^3.0.1",
     "jwt-decode": "^3.1.2",
     "nuxt": "^2.15.8",
