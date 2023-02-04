@@ -1,5 +1,11 @@
 // import axios from 'axios';
-import { getUserFromCookie } from '@/helpers'
+// import { getUserFromCookie } from '@/helpers'
+import {
+    getAuth,
+    onAuthStateChanged,
+    // getIdToken,
+    // signInWithEmailAndPassword,
+} from 'firebase/auth'
 
 // 共通変数 => vue file = data
 export const state = () => ({
@@ -39,20 +45,51 @@ export const actions = {
     //     commit('setCurrentArticle', currentArtcile)
     // }
 
-    async nuxtServerInit ({ commit }, { req }) {
+    nuxtServerInit ({ commit }, { req }) {
         // console.log('ここまではどう？')
         // console.log(req)
-        const user = getUserFromCookie(req)
+        // const user = getUserFromCookie(req)
         // console.log('---')
         // console.log(user)
         // console.log('--- cokkie情報')
-        if(user) {
-            const userInfo = {
-                email: user.email,
-                uid: user.user_id
+        // if(user) {
+        //     const userInfo = {
+        //         email: user.email,
+        //         uid: user.user_id
+        //     }
+        //     await commit('modules/user/setUser', userInfo)
+        // }
+        console.log('server-init')
+        if (process.server && process.static) return
+        const auth = getAuth()
+        const userInfo = auth.currentUser;
+        console.log("userInfo =>" + userInfo)
+        onAuthStateChanged(auth,(user) => {
+            console.log("user => " + user)
+            if (user) {
+                user
+                    .getIdToken()
+                        .then((idToken) => {
+                            console.log(idToken)
+                            console.log(user.uid)
+                            commit('modules/user/setUser', user.uid)
+                        })
+                    .catch()
+            } else {
+                // token.value = null
+                commit('modules/user/setUser', null)
             }
-            await commit('modules/user/setUser', userInfo)
-        }
+        },
+        (error) => {
+            console.log(error)
+        })
+        // if (!process.server) {
+        // const { checkAuthState, user_uid } = useAuth()
+        // commit('modules/user/checkAuthState')
+        console.log('処理通っているか？')
+        // }
+        // console.log('uid これ')
+        // console.log(store.userUid)
     }
 
 }

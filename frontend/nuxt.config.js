@@ -15,6 +15,8 @@ export default {
     messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID,
     appId: process.env.FIREBASE_APPID,
     measurementId: process.env.FIREBASE_MEASUREMENTID
+    // privateKey: process.env.FIREBASE_PRIVATE_KEY,
+    // clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
 
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -47,6 +49,11 @@ export default {
     'plugins/authentication',
     // 'plugins/my-inject'
   ],
+
+  // middleware
+  // router: {
+  //   middleware: 'get-auth-state'
+  // },
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,

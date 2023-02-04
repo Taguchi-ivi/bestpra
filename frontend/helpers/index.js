@@ -1,4 +1,4 @@
-// import { auth } from "firebase/app";
+// import { auth } from "../plugins/firebase-admin";
 import { getAuth } from "firebase/auth"
 
 // import admin from "firebase-admin";
