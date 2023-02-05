@@ -10,7 +10,7 @@ export default {
     validate({ route }) {
         // console.log('↓')
         // console.log(route.name)
-        return route.name !== 'account'
+        return route.name !== 'usesrs'
     }
 }
 </script>
