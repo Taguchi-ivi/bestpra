@@ -15,7 +15,7 @@
             <!-- </v-responsive> -->
             <div class="main-container">
                 <h1 class="mb-12">
-                    <span>あなたにあった練習が分かる<br />
+                    <span>あなたにあった練習が見つかる<br />
                         それがbestpra</span>
                 </h1>
                 <div class="main-button text-center">
@@ -258,7 +258,7 @@ import memoImg from '~/assets/img/about/memo-img.png'
 import articleImg from '~/assets/img/about/article-img.png'
 
     export default {
-        name: 'about',
+        name: 'About',
         layout: 'beforeLogin',
         data () {
             return {

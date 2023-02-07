@@ -88,49 +88,45 @@
                 <v-col
                     cols="3"
                 >
-                <v-list
-                    rounded
-                    color="transparent"
-                    max-width="250"
-                >
-                    <v-list-item-group
-                        v-model="model"
-                        color="indigo"
+                    <v-list
+                        rounded
+                        color="transparent"
+                        max-width="250"
+                        class="toc-view"
                     >
-                        <v-list-item
-                            v-for="(item, i) in items"
-                            :key="i"
+                        <v-list-item-group
+                            v-model="model"
+                            color="indigo"
                         >
-                        <v-list-item-icon>
-                            <v-icon>
-                                {{ item.icon }}
-                            </v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title>
-                                {{ item.text }}
-                            </v-list-item-title>
-                        </v-list-item-content>
-                        </v-list-item>
-                    </v-list-item-group>
-                </v-list>
+                            <v-list-item
+                                v-for="(item, i) in items"
+                                :key="i"
+                            >
+                            <v-list-item-icon>
+                                <v-icon>
+                                    {{ item.icon }}
+                                </v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-content>
+                                <v-list-item-title>
+                                    {{ item.text }}
+                                </v-list-item-title>
+                            </v-list-item-content>
+                            </v-list-item>
+                        </v-list-item-group>
+                    </v-list>
                 </v-col>
                 <v-col
                     cols="9"
                 >
-                    <div
-                        class="d-flex justify-start mb-6"
-                    >
-                        <v-img
-                            :src="soccerBallImg"
-                            max-width="30"
-                        />
-                        <h2 class="ml-3">{{ tabTitle }}一覧</h2>
-                    </div>
+                    <MainTitle
+                        :title="tabTitle"
+                    />
                     <v-row>
                         <v-col
                             v-for="n in 4"
                             :key="n"
+                            class="d-flex justify-center"
                         >
                             <v-card
                                 max-width="300"
@@ -161,8 +157,12 @@
 <script>
 
 import soccerBallImg from '~/assets/img/ball/soccer-ball.png'
+import MainTitle from '~/components/Atom/MainTitle.vue'
 
 export default {
+    components: {
+        MainTitle,
+    },
     data() {
         return {
             tabTitle: 'フォロワー',
@@ -197,3 +197,12 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+.toc-view {
+    position: sticky;
+    top: 5rem;
+    max-height: 90vh;
+    // overflow: scroll;
+}
+</style>
