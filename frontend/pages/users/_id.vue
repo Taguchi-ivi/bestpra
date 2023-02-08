@@ -122,32 +122,7 @@
                     <MainTitle
                         :title="tabTitle"
                     />
-                    <v-row>
-                        <v-col
-                            v-for="n in 4"
-                            :key="n"
-                            class="d-flex justify-center"
-                        >
-                            <v-card
-                                max-width="300"
-                                to="/" nuxt
-                                hover
-                                rounded
-                            >
-                                <v-img
-                                    src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-                                    height="auto"
-                                >
-                                </v-img>
-                                <v-card-title>
-                                    this.title
-                                </v-card-title>
-                                <v-card-subtitle>
-                                    作成日: 2023/02/06
-                                </v-card-subtitle>
-                            </v-card>
-                        </v-col>
-                    </v-row>
+                    <CardArticle />
                 </v-col>
             </v-row>
         </v-container>
@@ -158,10 +133,12 @@
 
 import soccerBallImg from '~/assets/img/ball/soccer-ball.png'
 import MainTitle from '~/components/Atom/MainTitle.vue'
+import CardArticle from '~/components/Atom/Card/CardArticle.vue'
 
 export default {
     components: {
         MainTitle,
+        CardArticle
     },
     data() {
         return {

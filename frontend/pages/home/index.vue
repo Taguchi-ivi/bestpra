@@ -1,28 +1,64 @@
 <template>
     <div>
-        <h1>dashboard</h1>
-        <!-- <v-btn
-            class="white--text"
-            color="blue"
-            @click="testBtn"
-        >
-            テスト
-        </v-btn>
-        <p>
-            {{ users }}
-        </p> -->
+        <div v-if="loading">
+            <TheLoading />
+        </div>
+        <div v-else>
+            <MainTitle
+                title="練習メニュー"
+            />
+            <CardArticle />
+            <div class="d-flex justify-center my-10">
+                <nuxt-link
+                    to="/articles"
+                >
+                    <v-icon>
+                        mdi-chevron-double-right
+                    </v-icon>
+                </nuxt-link>
+            </div>
+            <MainTitle
+                title="練習ノート"
+            />
+            <CardNote />
+            <div class="d-flex justify-center my-10">
+                <nuxt-link
+                    to="/articles"
+                >
+                    <v-icon>
+                        mdi-chevron-double-right
+                    </v-icon>
+                </nuxt-link>
+            </div>
+        </div>
     </div>
 </template>
 
+
 <script>
+import MainTitle from '~/components/Atom/MainTitle.vue'
+import CardArticle from '~/components/Atom/Card/CardArticle.vue'
+import CardNote from '~/components/Atom/Card/CardNote.vue'
+import TheLoading from '~/components/Organisms/Application/TheLoading.vue'
+
 export default {
     // middleware: 'get-article-current',
+    // middleware: ['before-login-user'],
+    components: {
+        MainTitle,
+        CardArticle,
+        CardNote,
+        TheLoading
+    },
     layout: 'home',
-    middleware: ['before-login-user'],
     data() {
         return {
-            users: {}
+            users: {},
+            loading: true
         }
+    },
+    created() {
+        this.loading = false
     },
     methods: {
         testBtn() {

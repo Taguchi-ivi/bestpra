@@ -1,0 +1,17 @@
+<template>
+    <div class="text-center">
+        <!-- color="#117768" -->
+        <v-progress-circular
+            indeterminate
+            color="indigo"
+            :size="50"
+            style="height: 80vh"
+        />
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'TheLoading'
+}
+</script>

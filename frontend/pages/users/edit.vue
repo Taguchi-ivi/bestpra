@@ -108,7 +108,8 @@
                 >
                 <!-- :disabled="!valid" -->
                     <v-btn
-                        color="success"
+                        dark
+                        color="indigo"
                         class="mr-4"
                         @click="updateUser"
                     >
