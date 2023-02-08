@@ -27,7 +27,7 @@
 <script>
 import LoggedInHomeHeader from '~/components/Organisms/LoggedIn/LoggedInHomeHeader.vue'
 import LoggedInHomeFooter from '~/components/Organisms/LoggedIn/LoggedInHomeFooter.vue'
-import NavigationDrawer from '~/components/Organisms/NavigationDrawer.vue'
+import NavigationDrawer from '~/components/Organisms/Application/NavigationDrawer.vue'
 import marginTop from '~/components/Atom/margin/marginTop.vue'
 import marginBottom from '~/components/Atom/margin/marginBottom.vue'
 

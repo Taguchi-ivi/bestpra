@@ -1,6 +1,6 @@
 <template>
     <div
-        class="d-flex justify-start mb-6"
+        class="d-flex justify-start ml-3 my-6"
     >
         <v-img
             :src="soccerBallImg"
@@ -14,19 +14,19 @@
 import soccerBallImg from '~/assets/img/ball/soccer-ball.png'
 
 export default {
-    data() {
-        return {
-            soccerBallImg,
-            currentTitle: this.title
-        }
-    },
     props: {
         title: {
             type: String,
             default: ''
         }
     },
+    data() {
+        return {
+            soccerBallImg,
+            currentTitle: this.title
+        }
+    },
     methods: {
-            },
+    },
 }
 </script>
