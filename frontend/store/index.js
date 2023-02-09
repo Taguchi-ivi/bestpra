@@ -1,8 +1,8 @@
 // import axios from 'axios';
 // import { getUserFromCookie } from '@/helpers'
 import {
-    getAuth,
-    onAuthStateChanged,
+    // getAuth,
+    // onAuthStateChanged,
     // getIdToken,
     // signInWithEmailAndPassword,
 } from 'firebase/auth'

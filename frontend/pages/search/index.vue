@@ -6,7 +6,7 @@
                 class="indigo"
                 dark
             >
-                <v-icon>mdi-magnify</v-icon>
+                <!-- <v-icon>mdi-magnify</v-icon> -->
                 <v-toolbar-title>検索</v-toolbar-title>
 
                 <v-spacer></v-spacer>
@@ -15,27 +15,31 @@
                     <v-tabs
                         v-model="tabs"
                         fixed-tabs
+                        icons-and-text
                     >
                     <v-tabs-slider></v-tabs-slider>
                         <v-tab
                             href="#mobile-tabs-5-1"
-                            class="indigo"
+                            class="pb-2"
                         >
-                            <v-icon>mdi-note</v-icon>
+                            練習メニュ
+                            <v-icon dense>mdi-note</v-icon>
                         </v-tab>
 
                         <v-tab
                             href="#mobile-tabs-5-2"
-                            class="indigo"
+                            class="pb-2"
                         >
-                            <v-icon>mdi-book-open-blank-variant</v-icon>
+                            練習ノート
+                            <v-icon dense>mdi-book-open-blank-variant</v-icon>
                         </v-tab>
 
                         <v-tab
                             href="#mobile-tabs-5-3"
-                            class="indigo"
+                            class="pb-2"
                         >
-                            <v-icon>mdi-account-multiple</v-icon>
+                            ユーザー
+                            <v-icon dense>mdi-account-multiple</v-icon>
                         </v-tab>
                         </v-tabs>
                 </template>
@@ -47,9 +51,33 @@
                     :key="i"
                     :value="'mobile-tabs-5-' + i"
                 >
-                    <v-card flat>
+                    <!-- <v-card flat>
                         <v-card-text>{{ text  }}</v-card-text>
-                    </v-card>
+                    </v-card> -->
+                        <!-- <v-text-field
+                            v-model="searchText"
+                            solo
+                            label="検索!!"
+                            clearable
+                            append-outer-icon="mdi-magnify"
+                            class="mt-8"
+                        >
+                        </v-text-field> -->
+                        <v-card
+                            max-width="80%"
+                            class="mx-auto"
+                            color="transparent"
+                            flat
+                        >
+                            <v-text-field
+                                label="検索!!"
+                                solo
+                                prepend-inner-icon="mdi-magnify"
+                                color="indigo"
+                                class="mx-auto mt-8"
+                            >
+                            </v-text-field>
+                        </v-card>
                     <MainTitle title="hello"/>
                     <CardArticle />
                     <CardNote />
@@ -83,6 +111,7 @@ export default {
     data () {
         return {
             tabs: null,
+            searchText: 'hello!!',
             text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
         }
     },
