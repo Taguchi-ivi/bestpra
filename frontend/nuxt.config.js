@@ -1,5 +1,10 @@
 import colors from 'vuetify/es5/util/colors'
 
+// CkEditor
+const path = require('path')
+const CKEditorWebpackPlugin = require("@ckeditor/ckeditor5-dev-webpack-plugin")
+const CKEditorStyles = require("@ckeditor/ckeditor5-dev-utils").styles
+
 // env切り替え
 // const environment = process.env.NODE_ENV || 'development';
 // const envSet = require(`./env.${environment}.js`);
@@ -44,9 +49,10 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    'plugins/axios',
-    'plugins/firebase',
-    'plugins/authentication',
+    { src: '~/plugins/axios.js'},
+    { src: '~/plugins/firebase.js'},
+    { src: '~/plugins/authentication.js'},
+    { src: '~/plugins/ckeditor.js', mode: 'client'}
     // 'plugins/my-inject'
   ],
 
@@ -56,7 +62,8 @@ export default {
   // },
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  // components: true,
+  components: false,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
@@ -139,5 +146,27 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+
+    // CkEditor
+    plugins: [
+      // If you set ssr: true that will cause the following error. This error does not affect the operation.
+      // ERROR  [CKEditorWebpackPlugin] Error: No translation has been found for the zh language.
+      new CKEditorWebpackPlugin({
+        // See https://ckeditor.com/docs/ckeditor5/latest/features/ui-language.html
+        language: "ja",
+        additionalLanguages: 'all',
+        addMainLanguageTranslationsToAllAssets: true,
+      })
+    ],
+
+    // If you don't add postcss, the CKEditor css will not work.
+    postcss: CKEditorStyles.getPostCssConfig({
+      themeImporter: {
+        themePath: require.resolve("@ckeditor/ckeditor5-theme-lark")
+      },
+      minify: true
+    }),
+
+  },
 }
