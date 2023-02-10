@@ -35,7 +35,9 @@ import CKEditor from '@ckeditor/ckeditor5-vue2'
 // import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter'
 
 // --
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ClassicEditor from '@ckeditor/ckeditor5-build-balloon';
+
 // import CKeditor from '@ckeditor/ckeditor5-build-classic';
 // import "@ckeditor/ckeditor5-build-classic/build/translations/ja.js";
 
@@ -93,12 +95,12 @@ export default {
                 toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
                 heading: {
                     options: [
-                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-                        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
-                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
+                        { model: 'paragraph', title: '見出し', class: 'ck-heading_paragraph' },
+                        { model: 'heading1', view: '大見出し', title: 'Heading 1', class: 'ck-heading_heading1' },
+                        { model: 'heading2', view: '小見出し', title: 'Heading 2', class: 'ck-heading_heading2' }
                     ]
                 },
-                language: 'ja',
+                // language: 'ja',
             },
         }
     },

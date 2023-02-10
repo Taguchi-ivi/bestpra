@@ -1004,6 +1004,32 @@
   dependencies:
     ckeditor5 "^36.0.1"
 
+"@ckeditor/ckeditor5-build-balloon@^36.0.1":
+  version "36.0.1"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-build-balloon/-/ckeditor5-build-balloon-36.0.1.tgz#06cac64f5466a7a1c152697e1184548740dc2a56"
+  integrity sha512-kWLWWY2kBWJzY8xhGxW5hRH8r+J7xhV7YcMhTL8IMjgBvkOhL7DwYf44f/SsRlUBbLx1O4KhHUqpwQC1VOXygw==
+  dependencies:
+    "@ckeditor/ckeditor5-adapter-ckfinder" "^36.0.1"
+    "@ckeditor/ckeditor5-autoformat" "^36.0.1"
+    "@ckeditor/ckeditor5-basic-styles" "^36.0.1"
+    "@ckeditor/ckeditor5-block-quote" "^36.0.1"
+    "@ckeditor/ckeditor5-ckbox" "^36.0.1"
+    "@ckeditor/ckeditor5-ckfinder" "^36.0.1"
+    "@ckeditor/ckeditor5-cloud-services" "^36.0.1"
+    "@ckeditor/ckeditor5-easy-image" "^36.0.1"
+    "@ckeditor/ckeditor5-editor-balloon" "^36.0.1"
+    "@ckeditor/ckeditor5-essentials" "^36.0.1"
+    "@ckeditor/ckeditor5-heading" "^36.0.1"
+    "@ckeditor/ckeditor5-image" "^36.0.1"
+    "@ckeditor/ckeditor5-indent" "^36.0.1"
+    "@ckeditor/ckeditor5-link" "^36.0.1"
+    "@ckeditor/ckeditor5-list" "^36.0.1"
+    "@ckeditor/ckeditor5-media-embed" "^36.0.1"
+    "@ckeditor/ckeditor5-paragraph" "^36.0.1"
+    "@ckeditor/ckeditor5-paste-from-office" "^36.0.1"
+    "@ckeditor/ckeditor5-table" "^36.0.1"
+    "@ckeditor/ckeditor5-typing" "^36.0.1"
+
 "@ckeditor/ckeditor5-build-classic@^36.0.1":
   version "36.0.1"
   resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-build-classic/-/ckeditor5-build-classic-36.0.1.tgz#6f4b54720dae494d5a22d8db061a5c541a7ca64e"
@@ -1155,6 +1181,14 @@
   integrity sha512-t74s840xNPaWibgI1YcC/lHcigCY4zUyXzpXhepWe9qw4zfg58H2wK6a0AwBN+yy8mXcotDUmjXkOXgnNkJp0Q==
   dependencies:
     ckeditor5 "^36.0.1"
+
+"@ckeditor/ckeditor5-editor-balloon@^36.0.1":
+  version "36.0.1"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-editor-balloon/-/ckeditor5-editor-balloon-36.0.1.tgz#06d72a2a1f1c55badaca945ba489095883339c52"
+  integrity sha512-S8fIoqQ/A7lGyvEMUY1paZHVNevBWHJ4AvwRfYSgsG/XNjxLJClD7LRk/vT0btyTUg6KAQ9r7oAiSkaU/MfgFg==
+  dependencies:
+    ckeditor5 "^36.0.1"
+    lodash-es "^4.17.15"
 
 "@ckeditor/ckeditor5-editor-classic@^36.0.1":
   version "36.0.1"

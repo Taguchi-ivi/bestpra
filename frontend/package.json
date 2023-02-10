@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-basic-styles": "^36.0.1",
+    "@ckeditor/ckeditor5-build-balloon": "^36.0.1",
     "@ckeditor/ckeditor5-build-classic": "^36.0.1",
     "@ckeditor/ckeditor5-dev-utils": "^33.0.0",
     "@ckeditor/ckeditor5-dev-webpack-plugin": "^31.1.13",
