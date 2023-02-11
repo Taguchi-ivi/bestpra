@@ -1,9 +1,4 @@
 <template>
-    <!-- <ckeditor
-        v-model="ckeditorValue"
-        v-bind="ckeditorConfig"
-        @ready="ckeditorReady"
-    /> -->
     <div class="ckeditor">
         <ckeditor
             v-model="editorData"
@@ -124,10 +119,11 @@ export default {
 
 <style lang="scss" scoped>
 .ckeditor {
-    width: 80%;
+    width: 100%;
     max-width: 800px;
     height: 500px;
     margin: 0 auto;
+    border: 1px solid #9E9E9E;
 }
 
 </style>
