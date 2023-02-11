@@ -44,9 +44,9 @@
                     />
                     <CardArticle />
                     <MainTitle
-                        title="練習ノート"
+                        title="タグ"
                     />
-                    <CardNote />
+                    <CardTag />
                     <MainTitle
                         title="ユーザー"
                     />
@@ -62,7 +62,7 @@
 <script>
 import MainTitle from '~/components/Atom/MainTitle.vue'
 import CardArticle from '~/components/Atom/Card/CardArticle.vue'
-import CardNote from '~/components/Atom/Card/CardNote.vue'
+import CardTag from '~/components/Atom/Card/CardTag.vue'
 import CardUser from '~/components/Atom/Card/CardUser.vue'
 import TheLoading from '~/components/Organisms/Application/TheLoading.vue'
 
@@ -72,7 +72,7 @@ export default {
     components: {
         MainTitle,
         CardArticle,
-        CardNote,
+        CardTag,
         CardUser,
         TheLoading
     },

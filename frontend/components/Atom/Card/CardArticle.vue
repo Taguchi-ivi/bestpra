@@ -16,14 +16,55 @@
                     height="auto"
                 >
                 </v-img>
-                <v-list-item-avatar
-                    color="indigo"
-                    class="ml-3"
+                <v-row
+                    class="mt-2"
                 >
-                    <v-icon dark>
-                        mdi-account-circle
-                    </v-icon>
-                </v-list-item-avatar>
+                    <v-col
+                        cols="3"
+                    >
+                        <v-list-item-avatar
+                            color="indigo"
+                            class="ml-3"
+                            >
+                            <v-icon dark>
+                                mdi-account-circle
+                            </v-icon>
+                        </v-list-item-avatar>
+                    </v-col>
+                    <v-col
+                        cols="9"
+                    >
+                        <div>
+                            <v-chip
+                                color="indigo"
+                                dark
+                                label
+                                small
+                            >
+                                <v-icon left>
+                                    mdi-label
+                                </v-icon>
+                                大学生以上
+                            </v-chip>
+                        </div>
+                        <div class="mt-1">
+                            <v-icon>
+                                mdi-tag-multiple
+                            </v-icon>
+                            <v-chip
+                                v-for="i in 2"
+                                :key="i"
+                                outlined
+                                color="indigo"
+                                class="ml-1"
+                                dark
+                                small
+                            >
+                                シュート
+                            </v-chip>
+                        </div>
+                    </v-col>
+                </v-row>
                 <!-- <v-divider /> -->
                 <v-card-title>
                     this.title

@@ -1,5 +1,6 @@
 <template>
     <v-container>
+        <MainTitle title="練習メニュ作成" />
         <v-form
             ref="form"
             v-model="valid"
@@ -12,6 +13,7 @@
                 <div v-if="!image">
                         <v-file-input
                             v-model="selectFile"
+                            prepend-icon="mdi-image-plus"
                             hide-input
                             @change="fileClick"
                         >
@@ -55,12 +57,12 @@
                         color="indigo"
                         item-color="indigo"
                         menu-props="auto"
-                        label="Select"
+                        label="対象者を選択"
                         hide-details
                         prepend-icon="mdi-label"
                         single-line
                         chips
-                        placeholder="対象者選択"
+                        placeholder="対象者を選択してください"
                     >
                     </v-select>
                 </v-card>
@@ -76,6 +78,7 @@
                     chips
                     clearable
                     label="タグを選択"
+                    color="indigo"
                     multiple
                     prepend-icon="mdi-tag-multiple"
                     solo
@@ -113,18 +116,22 @@
 
 <script>
 // import Ckeditor from '~/components/Ckeditor.vue'
+import MainTitle from '~/components/Atom/MainTitle.vue'
 
 export default {
     // components: {
     //     Ckeditor,
     // },
+    components: {
+        MainTitle
+    },
     data() {
         return {
             valid: true,
             title: '',
             selectFile: [],
             image: '',
-            selectItem: 'all',
+            selectItem: '',
             states: [
                 'all',
                 '小学生',
