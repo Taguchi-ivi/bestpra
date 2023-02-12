@@ -80,7 +80,7 @@
                         </v-card>
                     <MainTitle title="hello"/>
                     <CardArticle />
-                    <CardNote />
+                    <CardTag />
                     <CardUser />
                     <MarginBottom />
                 </v-tab-item>
@@ -93,9 +93,9 @@
 <script>
 
 import MainTitle from '~/components/Atom/MainTitle.vue'
-import CardArticle from '~/components/Atom/Card/CardArticle.vue'
-import CardNote from '~/components/Atom/Card/CardNote.vue'
-import CardUser from '~/components/Atom/Card/CardUser.vue'
+import CardArticle from '~/components/Organisms/Card/CardArticle.vue'
+import CardTag from '~/components/Organisms/Card/CardTag.vue'
+import CardUser from '~/components/Organisms/Card/CardUser.vue'
 import MarginBottom from '~/components/Atom/margin/marginBottom.vue'
 import PageTop from '~/components/Atom/PageTop.vue'
 
@@ -103,7 +103,7 @@ export default {
     components: {
             MainTitle,
             CardArticle,
-            CardNote,
+            CardTag,
             CardUser,
             MarginBottom,
             PageTop

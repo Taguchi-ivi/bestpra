@@ -133,7 +133,7 @@
 
 import soccerBallImg from '~/assets/img/ball/soccer-ball.png'
 import MainTitle from '~/components/Atom/MainTitle.vue'
-import CardArticle from '~/components/Atom/Card/CardArticle.vue'
+import CardArticle from '~/components/Organisms/Card/CardArticle.vue'
 
 export default {
     components: {

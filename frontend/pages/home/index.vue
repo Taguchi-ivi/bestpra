@@ -61,9 +61,9 @@
 
 <script>
 import MainTitle from '~/components/Atom/MainTitle.vue'
-import CardArticle from '~/components/Atom/Card/CardArticle.vue'
-import CardTag from '~/components/Atom/Card/CardTag.vue'
-import CardUser from '~/components/Atom/Card/CardUser.vue'
+import CardArticle from '~/components/Organisms/Card/CardArticle.vue'
+import CardTag from '~/components/Organisms/Card/CardTag.vue'
+import CardUser from '~/components/Organisms/Card/CardUser.vue'
 import TheLoading from '~/components/Organisms/Application/TheLoading.vue'
 
 export default {
