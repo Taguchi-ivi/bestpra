@@ -15,7 +15,6 @@
                 <div class="d-flex justify-end">
                     <v-btn
                         icon
-                        class="mr-5"
                     >
                         <v-icon
                             size="30"
@@ -38,7 +37,7 @@
                                 v-on="on"
                             >
                                 <v-icon size="25">
-                                    ･･･
+                                    mdi-dots-vertical
                                 </v-icon>
                             </v-btn>
                         </template>
@@ -80,6 +79,7 @@
                 </div>
                 <h1 class="mt-5 text-center">タイトルを表示</h1>
                 <UserCardTag />
+                <p class="ml-2">this.name</p>
                 <div
                     class="d-flex mt-5"
                 >

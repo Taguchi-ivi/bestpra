@@ -19,12 +19,13 @@
                 <v-card-text>
                 <v-btn
                     v-for="icon in icons"
-                    :key="icon"
+                    :key="icon.name "
                     class="mx-4"
                     icon
+                    :to="icon.path" nuxt
                 >
                     <v-icon size="24px">
-                        {{ icon }}
+                        {{ icon.name }}
                     </v-icon>
                 </v-btn>
                 </v-card-text>
@@ -43,10 +44,10 @@
 export default {
     data: () => ({
         icons: [
-            'mdi-home',
-            'mdi-email',
-            'mdi-calendar',
-            'mdi-delete',
+            {name: 'mdi-home', path: '/home'},
+            {name: 'mdi-account-cog', path: '/users/edit'},
+            {name: 'mdi-magnify', path: '/search'},
+            {name: 'mdi-pencil', path: '/articles/new'},
         ],
         items: [
             'default',

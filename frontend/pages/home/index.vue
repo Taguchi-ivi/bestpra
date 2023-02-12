@@ -51,7 +51,6 @@
                         title="ユーザー"
                     />
                     <CardUser />
-                    </div>
                 </div>
             </v-col>
         </v-row>

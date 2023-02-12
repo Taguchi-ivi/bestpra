@@ -1,29 +1,24 @@
 <template>
     <div>
         <div class="main">
-                <!-- :width="width" -->
-                <!-- lazy-src="/about-main.svg" -->
-                <!-- src="/about-main.svg" -->
-                <!-- lazy-src="/about-main.svg" -->
             <v-img
                 :aspect-ratio="2/1"
                 alt="aboutImg"
                 :src="aboutImgMain"
             >
             </v-img>
-            <!-- <img src="/about-main.svg" alt="練習風景"> -->
-            <!-- </v-responsive> -->
             <div class="main-container">
                 <h1 class="mb-12">
-                    <span>あなたにあった練習が見つかる<br />
-                        それがbestpra</span>
+                    <span>
+                        あなたにあった練習が見つかる<br />
+                        それがbestpra
+                    </span>
                 </h1>
                 <div class="main-button text-center">
                     <v-row
                         align="center"
                         justify="space-around"
                     >
-                        <!-- <v-btn to="/pass/to/link" nuxt>リンク</ v-btn> -->
                         <v-btn
                             color="accent"
                             class="px-8"
@@ -43,7 +38,7 @@
                             large
                             elevation="13"
                             rounded
-                            to="/auth/signup" nuxt
+                            to="/home" nuxt
                         >
                             練習メニュを覗く
                             <v-icon right>
@@ -80,14 +75,16 @@
                         </v-img>
                     </v-col>
                     <v-col>
-                        <p>
-                            bestpraとは<br />
-                            サッカーの練習メニュを<br />共有するサービスです。
-                        </p>
-                        <p>
-                            練習メニュを考える時間を練習に<br />
-                            そんなサービスを心掛けています。
-                        </p>
+                        <div class="text-center">
+                            <h3>
+                                bestpraとは<br />
+                                サッカーの練習メニュを<br />共有するサービスです。
+                            </h3>
+                            <h3 class="mt-8">
+                                練習メニュを考える時間を練習に<br />
+                                そんなサービスを心掛けています。
+                            </h3>
+                        </div>
                     </v-col>
                     <v-col class="ml-auto">
                         <v-img
@@ -127,22 +124,21 @@
                                 step="1"
                                 color="accent"
                             >
-                                まずはログインしよう！
+                                まずは登録しよう！
                             <small>Please singup or login</small>
                             </v-stepper-step>
 
                             <v-stepper-content step="1">
-                                <!-- <v-card
-                                    color="grey"
-                                    class="mb-12"
-                                    height="200px"
-                                ></v-card> -->
                                 <v-img
                                     :src="loginImg"
                                     :aspect-ratio="16/9"
+                                    max-width="500"
                                 />
-                                <v-btn color="secondary">
-                                    ログイン
+                                <v-btn
+                                    color="secondary"
+                                    to="/auth/signup" nuxt
+                                >
+                                    会員登録
                                 </v-btn>
                                 <v-btn
                                     text
@@ -163,17 +159,16 @@
                             </v-stepper-step>
 
                             <v-stepper-content step="2">
-                                <!-- <v-card
-                                    color="grey"
-                                    class="mb-12"
-                                    height="200px"
-                                ></v-card> -->
                                 <v-img
                                     :src="searchImg"
                                     :aspect-ratio="16/9"
+                                    max-width="500"
                                 />
-                                <v-btn color="secondary">
-                                    トップページへ
+                                <v-btn
+                                    color="secondary"
+                                    to="/search" nuxt
+                                >
+                                    検索ページへ
                                 </v-btn>
                                 <v-btn
                                     text
@@ -183,7 +178,7 @@
                                 </v-btn>
                             </v-stepper-content>
 
-                            <v-stepper-step
+                            <!-- <v-stepper-step
                                 :complete="e6 > 3"
                                 step="3"
                                 color="accent"
@@ -192,17 +187,15 @@
                                 <small>training menus memo</small>
                             </v-stepper-step>
                             <v-stepper-content step="3">
-                                <!-- <v-card
-                                    color="grey"
-                                    class="mb-12"
-                                    height="200px"
-                                >
-                                </v-card> -->
                                 <v-img
                                     :src="memoImg"
                                     :aspect-ratio="16/9"
+                                    max-width="500"
                                 />
-                                <v-btn color="secondary">
+                                <v-btn
+                                    color="secondary"
+                                    to="/home"
+                                >
                                     練習メニュを投稿
                                 </v-btn>
                                 <v-btn
@@ -211,24 +204,22 @@
                                 >
                                     次へ
                                 </v-btn>
-                            </v-stepper-content>
+                            </v-stepper-content> -->
 
-                            <v-stepper-step step="4" color="accent">
+                            <v-stepper-step step="3" color="accent">
                                 自分の練習メニュを投稿してみよう！
                                 <small>post training menus</small>
                             </v-stepper-step>
-                            <v-stepper-content step="4">
-                                <!-- <v-card
-                                    color="grey"
-                                    class="mb-12"
-                                    height="200px"
-                                >
-                                </v-card> -->
+                            <v-stepper-content step="3">
                                 <v-img
                                     :src="articleImg"
                                     :aspect-ratio="16/9"
+                                    max-width="500"
                                 />
-                                <v-btn color="secondary">
+                                <v-btn
+                                    color="secondary"
+                                    to="articles/new"
+                                >
                                     投稿する
                                 </v-btn>
                                 <v-btn

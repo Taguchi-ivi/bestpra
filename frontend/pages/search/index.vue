@@ -30,12 +30,20 @@
                             href="#mobile-tabs-5-2"
                             class="pb-2"
                         >
-                            練習ノート
-                            <v-icon dense>mdi-book-open-blank-variant</v-icon>
+                            タグ
+                            <v-icon dense>mdi-tag</v-icon>
                         </v-tab>
 
                         <v-tab
                             href="#mobile-tabs-5-3"
+                            class="pb-2"
+                        >
+                            対象者
+                            <v-icon dense>mdi-label</v-icon>
+                        </v-tab>
+
+                        <v-tab
+                            href="#mobile-tabs-5-4"
                             class="pb-2"
                         >
                             ユーザー

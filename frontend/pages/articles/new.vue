@@ -29,11 +29,11 @@
                             mdi-delete-circle
                         </v-icon>
                     </div>
-                    <!-- aspect-ratio="2/1"
-                    height="100%"
-                    width="100%" -->
                     <v-img
+                        :aspect-ratio="16/9"
                         :src="image"
+                        contain
+                        max-height="400"
                     >
                     </v-img>
                 </div>

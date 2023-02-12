@@ -3,7 +3,6 @@
         <div class="footer-m my-16"></div>
         <div class="footer-m my-16"></div>
         <div class="footer-m my-16"></div>
-        <!-- v-bind="localAttrs" -->
         <v-footer
             :padless="padless"
             color="accent"

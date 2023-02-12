@@ -1,13 +1,9 @@
 <template>
-    <!-- elevate-on-scroll -->
-    <!-- color="primary" -->
-    <!-- :height="homeAppBarHeight" -->
 <v-app-bar
     fixed
     :color="toolbarStyle.color"
     :elevation="toolbarStyle.elevation"
 >
-    <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
     <nuxt-link to="/about">
         <v-img width="50" src="/header-logo.png"></v-img>
     </nuxt-link>
@@ -15,21 +11,6 @@
 
     <v-spacer></v-spacer>
 
-    <!-- 検索 -->
-    <!-- <div class="my-auto">
-        <v-text-field
-        label="Filled"
-        placeholder="Dense & Rounded"
-        filled
-        rounded
-        dense
-        ></v-text-field>
-    </div>
-    <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-    </v-btn> -->
-    <!-- <div class="sy my-auto">{{ scrollY }}</div> -->
-    <!-- <div class="sy my-auto">{{ isScrollPoint }}</div> -->
     <v-btn
         elevation="4"
         large
@@ -46,15 +27,6 @@
         to="/auth/signin" nuxt
     >
         ログイン
-    </v-btn>
-    <!-- if profile -->
-
-    <!-- <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
-    </v-btn> -->
-
-    <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
     </v-btn>
 </v-app-bar>
 </template>
