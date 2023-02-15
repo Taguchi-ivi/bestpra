@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       # api test action
       resources :hello,only: [:index]
 
-      resource :authentication, only: [:create]
+      # resource :authentication, only: [:create]
 
       resources :users, only: [:index, :show, :create , :edit, :update, :destroy]
     end
