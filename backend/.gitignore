@@ -34,3 +34,7 @@
 
 # add carrierwave
 /public/uploads
+
+# add history
+.irb-history
+.byebug_history
