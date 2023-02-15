@@ -1,6 +1,7 @@
 <template>
     <user-form-card >
         <template #user-form-card-content>
+            <UserFormGoogle />
             <v-form
                 ref="form"
                 v-model="isValid"
@@ -47,6 +48,7 @@ import { mapActions } from 'vuex'
 import UserFormCard from '~/components/Molecules/UserFormCard'
 import UserFormEmail from '~/components/Atom/UserForm/UserFormEmail'
 import UserFormPassword from '~/components/Atom/UserForm/UserFormPassword'
+import UserFormGoogle from '~/components/Atom/UserForm/UserFormGoogle.vue'
 
 export default {
     name: 'singin',
@@ -54,6 +56,7 @@ export default {
         UserFormCard,
         UserFormEmail,
         UserFormPassword,
+        UserFormGoogle
     },
     layout: 'beforeLogin',
     middleware: ['logged-in-user'],

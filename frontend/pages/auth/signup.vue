@@ -1,6 +1,7 @@
 <template>
     <user-form-card >
         <template #user-form-card-content>
+            <UserFormGoogle />
             <p v-if="errMsg">
                 <v-alert
                     border="left"
@@ -55,22 +56,30 @@
 
 <script>
 
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 import { mapActions } from 'vuex'
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithPopup,
+    GoogleAuthProvider
+} from 'firebase/auth'
+import { auth } from '@/plugins/firebase'
 import UserFormCard from '~/components/Molecules/UserFormCard'
 import UserFormName from '~/components/Atom/UserForm/UserFormName'
 import UserFormEmail from '~/components/Atom/UserForm/UserFormEmail'
 import UserFormPassword from '~/components/Atom/UserForm/UserFormPassword'
 import UserFormPasswordAgain from '~/components/Atom/UserForm/UserFormPasswordAgain'
+import UserFormGoogle from '~/components/Atom/UserForm/UserFormGoogle.vue'
 
 export default {
-    name: 'singup',
+    name: 'singUp',
     components: {
         UserFormCard,
         UserFormName,
         UserFormEmail,
         UserFormPassword,
-        UserFormPasswordAgain
+        UserFormPasswordAgain,
+        UserFormGoogle,
     },
     layout: 'beforeLogin',
     middleware: ['logged-in-user'],
@@ -128,15 +137,16 @@ export default {
                     // user.displayName = this.params.user.name
                     // console.log(user);
                     this.login(firebaseAuthUser);
-                    // const user = {
-                    //     nickname: this.params.user.name,
-                    //     email: firebaseAuthUser.email,
-                    //     uid: firebaseAuthUser.uid
-                    // }
+                    const user = {
+                        nickname: this.params.user.name,
+                        email: firebaseAuthUser.email,
+                        uid: firebaseAuthUser.uid
+                    }
                     // this.$axios.post('/api/v1/users', { user })
                     //     .then(response => {
-                    //         // console.log(response)
+                    //         console.log('返却データ=>' + response)
                     //     })
+                    console.log(user)
 
                     this.$router.push('/home')
                     this.formReset();

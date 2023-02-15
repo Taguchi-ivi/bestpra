@@ -6,9 +6,11 @@ Rails.application.routes.draw do
     # namespace :v1 do
     namespace :v1, default: { format: :json } do
       # api test action
-      resources :hello,only:[:index]
+      resources :hello,only: [:index]
 
-      resources :users, only:[:index, :show, :create , :edit, :update, :destroy]
+      resource :authentication, only: [:create]
+
+      resources :users, only: [:index, :show, :create , :edit, :update, :destroy]
     end
 
     # helth check

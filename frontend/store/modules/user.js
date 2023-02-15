@@ -4,7 +4,7 @@
 import {
     getAuth,
     signOut,
-    // onAuthStateChanged,
+    onAuthStateChanged,
     // getIdToken,
     // signInWithEmailAndPassword,
 } from 'firebase/auth'
@@ -62,29 +62,38 @@ export const actions = {
         })
     },
 
-    // checkAuthState({ commit }) {
-    //     // client only
-    //     if (process.server) return
-    //     const auth = getAuth()
-    //     onAuthStateChanged(auth,(user) => {
-    //         if (user) {
-    //             user
-    //                 .getIdToken()
-    //                     .then((idToken) => {
-    //                         console.log(idToken)
-    //                         console.log(user.uid)
-    //                         commit('setUser', user.uid)
-    //                     })
-    //                 .catch()
-    //         } else {
-    //             // token.value = null
-    //             commit('setUser', null)
-    //         }
-    //     },
-    //     (error) => {
-    //         console.log(error)
-    //     })
-    // }
+    checkAuthState({ commit }) {
+        // client only
+        console.log("ここの情報が欲しいです")
+        if (process.server) return
+        const auth = getAuth()
+        onAuthStateChanged(auth,(user) => {
+            if (user) {
+                user
+                    .getIdToken()
+                        .then((idToken) => {
+                            console.log(idToken)
+                            console.log(user.uid)
+                            commit('setUser', user.uid)
+                        })
+                    .catch()
+            } else {
+                // token.value = null
+                commit('setUser', null)
+            }
+        },
+        (error) => {
+            console.log(error)
+        })
+    },
+
+    onAuthStateChangedAction({ commit}, { authUser }) {
+        if (authUser === null) {
+            commit('setUser', null);
+            return;
+        }
+        commit('setUser', authUser.uid)
+    }
 }
 
 export const mutations = {

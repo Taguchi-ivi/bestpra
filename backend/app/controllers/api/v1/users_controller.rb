@@ -1,4 +1,6 @@
-class Api::V1::UsersController < ApplicationController
+# class Api::V1::UsersController < ApplicationController
+class Api::V1::UsersController < Api::V1::BaseController
+    skip_before_action :authenticate
     before_action :set_user, only: [:show, :edit, :update]
 
     def index
@@ -11,19 +13,19 @@ class Api::V1::UsersController < ApplicationController
         render json: 'Usersshow'
     end
 
-    def create
-        @user = User.new(user_params)
-        if @user.save
-        #   flash[:success] = "Object successfully created"
-        #   redirect_to @user
-            render json: @user
-        else
-        #   flash[:error] = "Something went wrong"
-        #   render 'new'
-            # render json: status: 'error'
-        end
-        # render json: 'Userscreate'
-    end
+    # def create
+    #     @user = User.new(user_params)
+    #     if @user.save
+    #     #   flash[:success] = "Object successfully created"
+    #     #   redirect_to @user
+    #         render json: @user
+    #     else
+    #     #   flash[:error] = "Something went wrong"
+    #     #   render 'new'
+    #         # render json: status: 'error'
+    #     end
+    #     # render json: 'Userscreate'
+    # end
 
     def edit
         # @user = User.find(params[:id])

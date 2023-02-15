@@ -44,6 +44,10 @@ gem "rack-cors"
 gem 'annotate'
 
 # add
+# jwt
+gem 'jwt', '~> 2.7'
+
+# add
 # コンソールの出力結果を見やすく表示する (日本語翻訳用gemも)
 gem 'hirb', '~> 0.7.3'
 gem 'hirb-unicode-steakknife', '~> 0.0.9'

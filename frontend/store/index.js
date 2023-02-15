@@ -1,14 +1,16 @@
 // import axios from 'axios';
 // import { getUserFromCookie } from '@/helpers'
 import {
-    // getAuth,
-    // onAuthStateChanged,
+    getAuth,
+    onAuthStateChanged,
+    // User
     // getIdToken,
     // signInWithEmailAndPassword,
 } from 'firebase/auth'
 
 // 共通変数 => vue file = data
 export const state = () => ({
+    // currentUser: null
     // styles: {
     //     homeAppBarHeight: 56
     // },
@@ -44,6 +46,39 @@ export const actions = {
     //     const currentArtcile = state.article.list.find(article => article.id === id) || null
     //     commit('setCurrentArticle', currentArtcile)
     // }
+    checkAuthState({ commit }) {
+        if (process.server && process.static) return
+        // commit('setCurrentUser', User)
+        const auth = getAuth()
+        const userInfo = auth.currentUser;
+        console.log("userInfo =>" + userInfo)
+        onAuthStateChanged(auth,(user) => {
+            console.log("user => " + user)
+            if (user) {
+                user
+                    .getIdToken()
+                        .then((idToken) => {
+                            console.log(idToken)
+                            console.log(user.uid)
+                            commit('modules/user/setUser', user.uid)
+                        })
+                    .catch()
+            } else {
+                // token.value = null
+                commit('modules/user/setUser', null)
+            }
+        },
+        (error) => {
+            console.log(error)
+        })
+        // if (!process.server) {
+        // const { checkAuthState, user_uid } = useAuth()
+        // commit('modules/user/checkAuthState')
+        console.log('処理通っているか？')
+        // }
+        // console.log('uid これ')
+        // console.log(store.userUid)
+    },
 
     // nuxtServerInit ({ commit }, { req }) {
     //     // console.log('ここまではどう？')
@@ -96,6 +131,9 @@ export const actions = {
 
 // stateの値を変更する場所
 export const mutations = {
+    setCurrentUser(state,payload) {
+        state.currentUser = payload
+    }
     // setCurrentArticle(state, payload) {
     //     state.article.current = payload
     // }

@@ -16,10 +16,10 @@ export default {
     ApiKey: process.env.FIREBASE_API_KEY,
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,
     projectId: process.env.FIREBASE_PROJECTID,
-    storageBucket: process.env.FIREBASE_STORAGEBUCKET,
-    messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID,
-    appId: process.env.FIREBASE_APPID,
-    measurementId: process.env.FIREBASE_MEASUREMENTID
+    // storageBucket: process.env.FIREBASE_STORAGEBUCKET,
+    // messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID,
+    // appId: process.env.FIREBASE_APPID,
+    // measurementId: process.env.FIREBASE_MEASUREMENTID
     // privateKey: process.env.FIREBASE_PRIVATE_KEY,
     // clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
 
@@ -50,16 +50,16 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/axios.js'},
-    { src: '~/plugins/firebase.js'},
+    { src: '~/plugins/firebase.js', mode: 'client'},
     { src: '~/plugins/authentication.js'},
     { src: '~/plugins/ckeditor.js', mode: 'client'}
     // 'plugins/my-inject'
   ],
 
   // middleware
-  // router: {
-  //   middleware: 'get-auth-state'
-  // },
+  router: {
+    middleware: 'get-auth-state'
+  },
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   // components: true,
