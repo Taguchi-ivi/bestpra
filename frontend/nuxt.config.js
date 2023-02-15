@@ -13,9 +13,9 @@ export default {
 
   // env: envSet,
   env: {
-    ApiKey: process.env.FIREBASE_API_KEY,
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.FIREBASE_PROJECTID,
+    // ApiKey: process.env.FIREBASE_API_KEY,
+    // authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    // projectId: process.env.FIREBASE_PROJECTID,
     // storageBucket: process.env.FIREBASE_STORAGEBUCKET,
     // messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID,
     // appId: process.env.FIREBASE_APPID,
@@ -50,9 +50,9 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/axios.js'},
-    { src: '~/plugins/firebase.js', mode: 'client'},
-    { src: '~/plugins/authentication.js'},
     { src: '~/plugins/ckeditor.js', mode: 'client'}
+    // { src: '~/plugins/firebase.js', mode: 'client'},
+    // { src: '~/plugins/authentication.js'},
     // 'plugins/my-inject'
   ],
 

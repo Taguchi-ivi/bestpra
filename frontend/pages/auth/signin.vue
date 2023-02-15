@@ -1,7 +1,6 @@
 <template>
     <user-form-card >
         <template #user-form-card-content>
-            <UserFormGoogle />
             <v-form
                 ref="form"
                 v-model="isValid"
@@ -43,12 +42,10 @@
 </template>
 
 <script>
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { mapActions } from 'vuex'
 import UserFormCard from '~/components/Molecules/UserFormCard'
 import UserFormEmail from '~/components/Atom/UserForm/UserFormEmail'
 import UserFormPassword from '~/components/Atom/UserForm/UserFormPassword'
-import UserFormGoogle from '~/components/Atom/UserForm/UserFormGoogle.vue'
 
 export default {
     name: 'singin',
@@ -56,7 +53,6 @@ export default {
         UserFormCard,
         UserFormEmail,
         UserFormPassword,
-        UserFormGoogle
     },
     layout: 'beforeLogin',
     middleware: ['logged-in-user'],
@@ -75,23 +71,7 @@ export default {
             this.loading = true
             // setTimeout(() => {this.loading = false}, 1500)
 
-            const auth = getAuth();
-            signInWithEmailAndPassword(auth, this.params.user.email, this.params.user.password)
-            .then((userCredential) => {
-                // Signed in
-                const user = userCredential.user;
-                console.log(user);
-                this.login(user)
 
-                this.$router.push('/home')
-                // ...
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode)
-                console.log(errorMessage)
-            });
             this.loading = false
             // this.$router.push('/home')
         }

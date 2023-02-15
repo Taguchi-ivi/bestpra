@@ -1,7 +1,6 @@
 <template>
     <user-form-card >
         <template #user-form-card-content>
-            <UserFormGoogle />
             <p v-if="errMsg">
                 <v-alert
                     border="left"
@@ -57,19 +56,11 @@
 <script>
 
 import { mapActions } from 'vuex'
-import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithPopup,
-    GoogleAuthProvider
-} from 'firebase/auth'
-import { auth } from '@/plugins/firebase'
 import UserFormCard from '~/components/Molecules/UserFormCard'
 import UserFormName from '~/components/Atom/UserForm/UserFormName'
 import UserFormEmail from '~/components/Atom/UserForm/UserFormEmail'
 import UserFormPassword from '~/components/Atom/UserForm/UserFormPassword'
 import UserFormPasswordAgain from '~/components/Atom/UserForm/UserFormPasswordAgain'
-import UserFormGoogle from '~/components/Atom/UserForm/UserFormGoogle.vue'
 
 export default {
     name: 'singUp',
@@ -79,7 +70,6 @@ export default {
         UserFormEmail,
         UserFormPassword,
         UserFormPasswordAgain,
-        UserFormGoogle,
     },
     layout: 'beforeLogin',
     middleware: ['logged-in-user'],
@@ -128,38 +118,6 @@ export default {
             // }, 1500)
             // console.log(this.params.user.email)
             // console.log(this.params.user.password)
-            const auth = getAuth();
-            // console.log('ここまでOK')
-            await createUserWithEmailAndPassword(auth, this.params.user.email, this.params.user.password)
-                .then((userCredential) => {
-                    // Signed in
-                    const firebaseAuthUser = userCredential.user;
-                    // user.displayName = this.params.user.name
-                    // console.log(user);
-                    this.login(firebaseAuthUser);
-                    const user = {
-                        nickname: this.params.user.name,
-                        email: firebaseAuthUser.email,
-                        uid: firebaseAuthUser.uid
-                    }
-                    // this.$axios.post('/api/v1/users', { user })
-                    //     .then(response => {
-                    //         console.log('返却データ=>' + response)
-                    //     })
-                    console.log(user)
-
-                    this.$router.push('/home')
-                    this.formReset();
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.log(errorCode);
-                    console.log(errorMessage);
-                    // ..
-
-                    // this.formReset();
-                });
         },
         formReset() {
             this.loading = false

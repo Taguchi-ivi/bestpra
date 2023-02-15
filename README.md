@@ -59,13 +59,11 @@ bestpraとは、**サッカーの練習メニュを共有するサービスと�
 
 | 認証系
 ----|
-| firebase 9.15.0  |
-| firebase authentication |
 | JWT |
 
 
 # 機能一覧
-- firebase AuthenticationとJWTによるログイン/ログアウト機能実装
+- JWTによるログイン/ログアウト機能実装
 - middlewareによるログイン状態によった画面遷移を実施
 
 # 工夫した点
