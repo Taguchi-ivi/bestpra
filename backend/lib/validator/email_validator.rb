@@ -1,9 +1,9 @@
 class EmailValidator < ActiveModel::EachValidator
 
     # record    => userオブジェクト
-    # attrubute => 属性(email)
+    # attribute => 属性(email)
     # value     => 値を取得(test@a.a)
-    def validate_each(record, attrubute, value)
+    def validate_each(record, attribute, value)
         # byebug
         # text length
         max = 255

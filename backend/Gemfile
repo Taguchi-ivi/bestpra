@@ -83,3 +83,9 @@ group :development do
   # gem "spring"
 end
 
+group :test do
+  # add
+  # testに色付けする
+  gem 'minitest-reporters', '~> 1.5'
+end
+

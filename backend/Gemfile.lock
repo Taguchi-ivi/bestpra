@@ -71,6 +71,7 @@ GEM
     annotate (3.2.0)
       activerecord (>= 3.2, < 8.0)
       rake (>= 10.4, < 14.0)
+    ansi (1.5.0)
     ast (2.4.2)
     bcrypt (3.1.18)
     bootsnap (1.15.0)
@@ -124,6 +125,11 @@ GEM
     mini_magick (4.12.0)
     mini_mime (1.1.2)
     minitest (5.16.3)
+    minitest-reporters (1.5.0)
+      ansi
+      builder
+      minitest (>= 5.0)
+      ruby-progressbar
     msgpack (1.6.0)
     mysql2 (0.5.4)
     net-imap (0.3.1)
@@ -250,6 +256,7 @@ DEPENDENCIES
   hirb (~> 0.7.3)
   hirb-unicode-steakknife (~> 0.0.9)
   jwt (~> 2.7)
+  minitest-reporters (~> 1.5)
   mysql2 (~> 0.5)
   pry-byebug
   puma (~> 5.0)
