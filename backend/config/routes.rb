@@ -19,6 +19,9 @@ Rails.application.routes.draw do
         delete :destroy, on: :collection
       end
 
+      # projects authenticateメソッド検証用
+      resources :projects, only:[:index]
+
     end
 
     # helth check
