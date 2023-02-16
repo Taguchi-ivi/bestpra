@@ -60,8 +60,8 @@ module UserAuth
         # Doc: https://openid-foundation-japan.github.io/draft-ietf-oauth-json-web-token-11.ja.html#typHdrDef
         def header_fields
             {
-            typ: "JWT",
-            alg: algorithm
+                typ: "JWT",
+                alg: algorithm
             }
         end
 

@@ -17,6 +17,7 @@ services:
             MYSQL_ROOT_PASSWORD: "password"
             DB_HOST: "db"
             TZ: Asia/Tokyo
+            BASE_URL: "http://localhost:3000"
             # RAILS_ENV: development
             # DB_USERNAME: user
             # DB_PASSWORD: password
