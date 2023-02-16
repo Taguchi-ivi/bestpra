@@ -7,10 +7,10 @@
                 @submit.prevent="formLogin"
             >
                 <user-form-email
-                    :email.sync="params.user.email"
+                    :email.sync="params.auth.email"
                 />
                 <user-form-password
-                    :password.sync="params.user.password"
+                    :password.sync="params.auth.password"
                 />
                 <!-- <v-card-actions>
                     <nuxt-link
@@ -60,20 +60,37 @@ export default {
         return {
             isValid: false,
             loading: false,
-            params: {user: { email: '', password: ''} }
+            params: { auth: { email: 'user0@example.com', password: 'password'} },
+            // params: {auth: { email: '', password: ''} }
         }
     },
     methods: {
         ...mapActions({
             login: 'modules/user/login',
         }),
-        formLogin() {
+        async formLogin() {
             this.loading = true
             // setTimeout(() => {this.loading = false}, 1500)
-
+            if(this.isValid) {
+                await this.$axios.$post('/api/v1/auth_token', this.params)
+                    .then(res => this.authSuccessful(res))
+                    .catch(err => this.authFailure(err))
+            }
 
             this.loading = false
-            // this.$router.push('/home')
+        },
+        authSuccessful(res) {
+            console.log('authSuccessful', res)
+            // TODO ログイン処理
+            // TODO 記憶ルートリダイレクト
+            this.$router.push('/home')
+        },
+        authFailure(err) {
+            if (err & err.states === 404) {
+                // TODO トースター出力
+
+            }
+            // TODO エラー処理
         }
     },
 }

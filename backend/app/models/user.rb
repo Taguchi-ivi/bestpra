@@ -45,19 +45,20 @@ class User < ApplicationRecord
     ## methods
     # メールのバリデーション設定(メールで検証link等の実装時に必要)
     # class method  ###########################
-    # class << self
-    #     # emailからアクティブなユーザーを返す
-    #     def find_by_activated(email)
-    #     find_by(email: email, activated: true)
-    #     end
-    # end
+    class << self
+        # emailからアクティブなユーザーを返す
+        def find_by_activated(email)
+            # find_by(email: email, activated: true)
+            find_by(email: email)
+        end
+    end
     # class method end #########################
 
     # 自分以外の同じemailのアクティブなユーザーがいる場合にtrueを返す
-    # def email_activated?
-    #     users = User.where.not(id: id)
-    #     users.find_by_activated(email).present?
-    # end
+    def email_activated?
+        users = User.where.not(id: id)
+        users.find_by_activated(email).present?
+    end
 
     # リフレッシュトークンのJWT IDを記憶する
     def remember(jti)
