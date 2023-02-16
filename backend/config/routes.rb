@@ -8,9 +8,17 @@ Rails.application.routes.draw do
       # api test action
       resources :hello,only: [:index]
 
-      # resource :authentication, only: [:create]
-
+      # users
+      # index不要かも
       resources :users, only: [:index, :show, :create , :edit, :update, :destroy]
+
+      # auth_token
+      # on collection => user_idがなくてもリクエストが可能に
+      resources :auth_token, only:[:create] do
+        post :refresh, on: :collection
+        delete :destroy, on: :collection
+      end
+
     end
 
     # helth check
