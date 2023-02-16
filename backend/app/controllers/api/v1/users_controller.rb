@@ -1,12 +1,14 @@
 class Api::V1::UsersController < ApplicationController
     # skip_before_action :authenticate
+    before_action :authenticate_user
     before_action :set_user, only: [:show, :edit, :update]
 
     def index
         users = User.all
         #avatar必要
         # as_json => ハッシュの形でJSONデータを返す {"id" => 1, "nickname" => "test", ...}
-        render json: users.as_json(only: [:id, :nickname, :email, :created_at])
+        # render json: users.as_json(only: [:id, :nickname, :email, :created_at])
+        render json: current_user.as_json(only: [:id, :nickname, :email, :created_at])
     end
 
     def show
