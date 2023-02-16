@@ -42,13 +42,13 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+// import { mapActions } from 'vuex'
 import UserFormCard from '~/components/Molecules/UserFormCard'
 import UserFormEmail from '~/components/Atom/UserForm/UserFormEmail'
 import UserFormPassword from '~/components/Atom/UserForm/UserFormPassword'
 
 export default {
-    name: 'singin',
+    name: 'singIn',
     components: {
         UserFormCard,
         UserFormEmail,
@@ -65,9 +65,9 @@ export default {
         }
     },
     methods: {
-        ...mapActions({
-            login: 'modules/user/login',
-        }),
+        // ...mapActions({
+        //     login: 'modules/user/login',
+        // }),
         async formLogin() {
             this.loading = true
             // setTimeout(() => {this.loading = false}, 1500)
@@ -80,17 +80,22 @@ export default {
             this.loading = false
         },
         authSuccessful(res) {
-            console.log('authSuccessful', res)
-            // TODO ログイン処理
+            // console.log('authSuccessful', res)
+            this.$auth.login(res)
+            console.log('token',this.$auth.token)
+            console.log('expires',this.$auth.expires)
+            console.log('payload',this.$auth.payload)
+            console.log('user',this.$auth.user)
             // TODO 記憶ルートリダイレクト
             this.$router.push('/home')
         },
         authFailure(err) {
             if (err & err.states === 404) {
                 // TODO トースター出力
-
+                alert('404')
             }
             // TODO エラー処理
+            alert(err.states)
         }
     },
 }
