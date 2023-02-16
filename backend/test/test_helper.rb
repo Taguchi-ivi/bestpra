@@ -13,8 +13,9 @@ class ActiveSupport::TestCase
   # プロセスが分岐した直後に呼び出し
   parallelize_setup do |worker|
     # seedデータの読み込み
-    load "#{Rails.root}/db/seeds.rb"
+    load "#{Rails.root}/app/db/seeds.rb"
   end
+
 
 
   # 並行テストの有効化/無効化
@@ -29,6 +30,7 @@ class ActiveSupport::TestCase
 
   # アクティブなユーザを返す
   def active_user
-    User.find_by(activated: true)
+    # User.find_by(activated: true)
+    User.find_by(id: 1)
   end
 end

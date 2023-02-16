@@ -1,5 +1,6 @@
 
 # リフレッシュトークンを発行する
+# token_commonsからメソッドを使用
 
 require 'jwt'
 
@@ -13,6 +14,7 @@ module UserAuth
         if token.present?
             # decode
             @token = token
+            # [{payload}, {header}]が返されるため、一つ目だけで良い
             @payload = JWT.decode(@token.to_s, decode_key, true, verify_claims).first
             @user_id = get_user_id_from(@payload)
         else
