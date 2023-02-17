@@ -39,6 +39,7 @@
                     <TheLoading />
                 </div>
                 <div v-else>
+
                     <MainTitle
                         title="練習メニュー"
                     />
@@ -76,6 +77,7 @@ export default {
         TheLoading
     },
     layout: 'home',
+    middleware: ['get-project-list'],
     data() {
         return {
             users: {},

@@ -4,6 +4,10 @@ export const state = () => ({
     user: {
         current: null
     },
+    project: {
+        current: null,
+        list: []
+    },
     // currentUser: null,
     auth: {
         token: null,
@@ -29,6 +33,12 @@ export const getters = {
 // { state, getters, commit, dispatch, rootState, rootGetters}
 // rootState => ルート(store/index.js)のstateを取得(rootState = state) =>別ファイルのstateをもらう場合
 export const actions = {
+
+    getProjectList({ commit }, projects) {
+        projects = projects || []
+        commit('setProjectList', projects)
+    },
+
     getCurrentUser ({ commit }, user) {
         console.log('mutationsOK', user)
         commit('setCurrentUser', user)
@@ -54,6 +64,10 @@ export const mutations = {
     // setCurrentUser(state,payload) {
     //     state.currentUser = payload
     // }
+
+    setProjectList (state, payload) {
+        state.project.list = payload
+    },
 
     setCurrentUser (state, payload) {
         state.user.current = payload
