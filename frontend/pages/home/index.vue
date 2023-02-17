@@ -77,7 +77,7 @@ export default {
         TheLoading
     },
     layout: 'home',
-    middleware: ['get-project-list'],
+    middleware: ['authentication','get-project-list'],
     data() {
         return {
             users: {},
