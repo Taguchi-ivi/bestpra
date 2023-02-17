@@ -1,3 +1,4 @@
+// import $axios from 'axios'
 
 // 共通変数 => vue file = data
 export const state = () => ({
@@ -66,7 +67,45 @@ export const actions = {
     getAuthPayload ({ commit }, jwtPayload) {
         jwtPayload = jwtPayload || {}
         commit('setAuthPayload', jwtPayload)
-    }
+    },
+
+    // nuxtServerInit({ $auth, $axios }) {
+        // console.log('どうよNuxtServiceInit')
+    // ↓--
+    // async nuxtServerInit({ commit }, { req, app }) {
+    //     // export default async ({ $auth, $axios }) => {
+    //         // console.log('どうよNuxtServiceInit')
+    //         // await $axios.post
+    //         //     (
+    //         //         '/api/v1/auth_token/refresh',
+    //         //         {},
+    //         //         { validateStatus: status => $auth.resolveUnauthorized(status) }
+    //         //     )
+    //         //     .then(response => $auth.login(response))
+    //     // }
+    //     // await $axios({
+    //     //     url: '/api/v1/auth_token/refresh',
+    //     //     method: 'POST',
+    //     //     data: {},
+    //     //     config: { validateStatus: status => $auth.resolveUnauthorized(status) }
+    //     // })
+    //     //     .then(response => $auth.login(response))
+    //     // console.log('reqどうよ', req);
+    //     try {
+    //         const response = await this.$axios.post
+    //             (
+    //                 '/api/v1/auth_token/refresh',
+    //                 {},
+    //                 { validateStatus: status => app.$auth.resolveUnauthorized(status) }
+    //             )
+    //         app.$auth.login(response)
+    //         // レスポンスからデータを取り出してコミットする処理を記述する
+    //         // console.log(response)
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }
+    // ↑--
 }
 
 // stateの値を変更する場所

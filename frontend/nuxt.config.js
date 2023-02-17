@@ -51,7 +51,8 @@ export default {
   plugins: [
     { src: '~/plugins/auth.js'},
     { src: '~/plugins/axios.js'},
-    { src: '~/plugins/ckeditor.js', mode: 'client'}
+    { src: '~/plugins/nuxt-client-init.js'},
+    { src: '~/plugins/ckeditor.js', mode: 'client'},
     // { src: '~/plugins/firebase.js', mode: 'client'},
     // { src: '~/plugins/authentication.js'},
     // 'plugins/my-inject'
