@@ -1,6 +1,6 @@
 
 
-// export default async function({ store, redirect }) {
+// // export default async function({ store, redirect }) {
 export default async function({ store, redirect, $auth, $axios }) {
     console.log("get-auth-sateを実行")
     if(process.server) {

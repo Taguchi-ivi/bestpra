@@ -6,6 +6,7 @@ module UserAuth
 
     # access tokenの有効期限
     mattr_accessor :access_token_lifetime
+    # self.access_token_lifetime = 10.second
     self.access_token_lifetime = 30.minute
 
     # refresh tokenの有効期限
