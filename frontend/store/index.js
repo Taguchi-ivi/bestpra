@@ -39,6 +39,16 @@ export const actions = {
         commit('setProjectList', projects)
     },
 
+    getCurrentProject({ state, commit}, params) {
+        let currentProject = null
+        if (params && params.id) {
+            const id = Number(params.id)
+            currentProject = state.project.list.find(project => project.id === id) || null
+        }
+
+        commit('setCurrentProject', currentProject)
+    },
+
     getCurrentUser ({ commit }, user) {
         console.log('mutationsOK', user)
         commit('setCurrentUser', user)
@@ -67,6 +77,10 @@ export const mutations = {
 
     setProjectList (state, payload) {
         state.project.list = payload
+    },
+
+    setCurrentProject(state, payload) {
+        state.project.current = payload
     },
 
     setCurrentUser (state, payload) {

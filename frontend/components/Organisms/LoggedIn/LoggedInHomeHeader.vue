@@ -160,10 +160,12 @@ export default {
         ...mapActions({
             logout: 'modules/user/logout',
         }),
-        appLogout() {
-            const userInfo = this.$store.getters['modules/user/getUser']
+        async appLogout() {
+            // const userInfo = this.$store.getters['modules/user/getUser']
             // console.log(userInfo)
-            this.logout(userInfo)
+            // this.logout(userInfo)
+            // this.$auth.login(res)
+            await this.$auth.logout()
             this.$router.push('/about')
         }
     },
