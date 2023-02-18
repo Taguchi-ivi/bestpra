@@ -36,6 +36,7 @@ class Authentication {
 
     // ログイン業務
     login (response) {
+        // console.log('auth-login処理', response)
         this.setAuth(response)
     }
 

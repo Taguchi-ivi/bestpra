@@ -11,22 +11,22 @@
                 elevation="2"
             >
                 <div v-if="!image">
-                        <v-file-input
-                            v-model="selectFile"
-                            prepend-icon="mdi-image-plus"
-                            hide-input
-                            @change="fileClick"
-                        >
-                        </v-file-input>
-                        <!-- <input ref="view" type="file" @change="uploadFile"> -->
+                    <v-file-input
+                        v-model="selectFile"
+                        prepend-icon="mdi-image-plus"
+                        hide-input
+                        @change="fileClick"
+                    >
+                    </v-file-input>
+                    <!-- <input ref="view" type="file" @change="uploadFile"> -->
                 </div>
                 <div v-else class="img-active">
                     <div class="img-active-delete" @click="deleteView">
                         <v-icon
                             large
-                            color="indigo"
+                            color="grey darken-1"
                         >
-                            mdi-delete-circle
+                            mdi-alpha-x-circle
                         </v-icon>
                     </div>
                     <v-img
@@ -116,7 +116,7 @@
 
 <script>
 // import Ckeditor from '~/components/Ckeditor.vue'
-import MainTitle from '~/components/Atom/MainTitle.vue'
+import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 
 export default {
     // components: {

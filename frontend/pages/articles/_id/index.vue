@@ -132,9 +132,9 @@
 
 <script>
 
-import NoImg from '~/components/Atom/NoImg.vue'
+import NoImg from '~/components/Atom/App/AppNoImg.vue'
 import UserCardTag from '~/components/Molecules/UserCardTag.vue'
-import MainTitle from '~/components/Atom/MainTitle.vue'
+import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 import CardComment from '~/components/Organisms/Card/CardComment.vue'
 
 export default {

@@ -202,7 +202,7 @@
 </template>
 
 <script>
-import MainTitle from '~/components/Atom/MainTitle.vue'
+import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 
 export default {
     components: {

@@ -11,25 +11,25 @@ module UserAuth
         attr_reader :user_id, :payload, :token
 
         def initialize(user_id: nil, token: nil)
-        if token.present?
-            # decode
-            @token = token
-            # [{payload}, {header}]が返されるため、一つ目だけで良い
-            @payload = JWT.decode(@token.to_s, decode_key, true, verify_claims).first
-            @user_id = get_user_id_from(@payload)
-        else
-            # encode
-            @user_id = encrypt_for(user_id)
-            @payload = claims
-            @token = JWT.encode(@payload, secret_key, algorithm, header_fields)
-            remember_jti(user_id)
-        end
+            if token.present?
+                # decode
+                @token = token
+                # [{payload}, {header}]が返されるため、一つ目だけで良い
+                @payload = JWT.decode(@token.to_s, decode_key, true, verify_claims).first
+                @user_id = get_user_id_from(@payload)
+            else
+                # encode
+                @user_id = encrypt_for(user_id)
+                @payload = claims
+                @token = JWT.encode(@payload, secret_key, algorithm, header_fields)
+                remember_jti(user_id)
+            end
         end
 
         # 暗号化されたuserIDからユーザーを取得する
         def entity_for_user(id = nil)
-        id ||= @user_id
-        User.find(decrypt_for(id))
+            id ||= @user_id
+            User.find(decrypt_for(id))
         end
 
         private
@@ -54,9 +54,9 @@ module UserAuth
             # エンコード時のデフォルトクレーム
             def claims
                 {
-                user_claim => @user_id,
-                jti: jwt_id,
-                exp: token_expiration
+                    user_claim => @user_id,
+                    jti: jwt_id,
+                    exp: token_expiration
                 }
             end
 

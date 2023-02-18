@@ -25,7 +25,7 @@ class Api::V1::AuthTokenController < ApplicationController
         @user = session_user
         # 自動更新しない  => リフレッシュトークンの有効期限で再ログインを強制する場合は下記をコメントアウト
         # 自動更新する => 下記を実装して都度リフレッシュトークンを更新する
-        set_refresh_token_to_cookie
+        # set_refresh_token_to_cookie
         render json: login_response
     end
 

@@ -157,7 +157,7 @@
 <script>
 
 import soccerBallImg from '~/assets/img/ball/soccer-ball.png'
-import MainTitle from '~/components/Atom/MainTitle.vue'
+import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 import CardArticle from '~/components/Organisms/Card/CardArticle.vue'
 
 export default {

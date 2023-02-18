@@ -51,7 +51,7 @@ export default {
   plugins: [
     { src: '~/plugins/auth.js'},
     { src: '~/plugins/axios.js'},
-    { src: '~/plugins/nuxt-client-init.js'},
+    { src: '~/plugins/nuxt-server-init.js', mode: 'server'},
     { src: '~/plugins/ckeditor.js', mode: 'client'},
     // { src: '~/plugins/firebase.js', mode: 'client'},
     // { src: '~/plugins/authentication.js'},
@@ -60,8 +60,8 @@ export default {
 
   // middleware
   router: {
-    // middleware: ['silent-refresh-token']
-    middleware: ['silent-refresh-token','get-auth-state']
+    // middleware: ['silent-refresh-token','get-auth-state']
+    middleware: ['silent-refresh-token']
   },
 
   // Auto import components: https://go.nuxtjs.dev/config-components

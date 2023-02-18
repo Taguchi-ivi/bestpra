@@ -1,4 +1,3 @@
-# api/test/controllers/api/v1/auth_token_controller_test.rb
 # テスト成功要件
 # cookies[]の操作にはapplication.rbにCookieを処理するmeddlewareを追加
 # config.middleware.use ActionDispatch::Cookies
@@ -165,6 +164,11 @@ class Api::V1::AuthTokenControllerTest < ActionDispatch::IntegrationTest
         login(@params)
         assert_response 200
         new_refresh_token = cookies[@session_key]
+
+        # 3つ目のブラウザでログイン
+        # login(@params)
+        # assert_response 200
+        # therd_refresh_token = cookies[@session_key]
 
         # cookieに古いrefresh_tokenをセット
         cookies[@session_key] = old_refresh_token

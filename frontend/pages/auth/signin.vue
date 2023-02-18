@@ -74,7 +74,7 @@ export default {
             if(this.isValid) {
                 await this.$axios.$post('/api/v1/auth_token', this.params)
                     .then(res => this.authSuccessful(res))
-                    .catch(err => this.authFailure(err))
+                    .catch(error => this.authFailure(error))
             }
 
             this.loading = false
@@ -89,13 +89,17 @@ export default {
             // TODO 記憶ルートリダイレクト
             this.$router.push('/home')
         },
-        authFailure(err) {
-            if (err & err.states === 404) {
-                // TODO トースター出力
-                alert('404')
+        authFailure({ response }) {
+            if (response && response.status === 404) {
+                // トースター出力
+                // alert('404')
+                const status = true
+                const msg = 'ユーザが見つかりません'
+                const color = 'error'
+                return this.$store.dispatch('modules/toast/getToast', { status, msg, color })
             }
             // TODO エラー処理
-            alert(err.states)
+            // alert(response.status)
         }
     },
 }

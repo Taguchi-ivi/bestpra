@@ -14,7 +14,8 @@ export const state = () => ({
         token: null,
         expires: 0,
         payload: {}
-    }
+    },
+
 })
 
 // 算出プロパティ => vue file = computed
@@ -27,6 +28,10 @@ export const getters = {
         // return state.user
         return state.auth
     },
+
+    getToaster(state) {
+        return state.toast
+    }
 }
 
 
@@ -69,12 +74,18 @@ export const actions = {
         commit('setAuthPayload', jwtPayload)
     },
 
+    getToast({ commit }, { msg, color, timeout }) {
+        color = color || 'error'
+        timeout = timeout || 4000
+        commit('setToast', { msg, color, timeout })
+    },
+
     // nuxtServerInit({ $auth, $axios }) {
         // console.log('どうよNuxtServiceInit')
     // ↓--
     // async nuxtServerInit({ commit }, { req, app }) {
     //     // export default async ({ $auth, $axios }) => {
-    //         // console.log('どうよNuxtServiceInit')
+    //         console.log('どうよNuxtServiceInit')
     //         // await $axios.post
     //         //     (
     //         //         '/api/v1/auth_token/refresh',
@@ -98,11 +109,12 @@ export const actions = {
     //                 {},
     //                 { validateStatus: status => app.$auth.resolveUnauthorized(status) }
     //             )
+    //         // console.log(response)
     //         app.$auth.login(response)
     //         // レスポンスからデータを取り出してコミットする処理を記述する
     //         // console.log(response)
     //     } catch (error) {
-    //         console.error(error)
+    //         console.error('Nuxt-serverinit-error','err')
     //     }
     // }
     // ↑--
@@ -137,5 +149,9 @@ export const mutations = {
 
     setAuthPayload (state, payload) {
         state.auth.payload = payload
+    },
+
+    setToast (state, payload) {
+        state.Toast = payload
     }
 }

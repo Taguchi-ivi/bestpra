@@ -27,6 +27,7 @@ export default {
     marginTop,
     marginBottom
   },
+  // middleware: ['authentication'],
   data: () => ({
     // icons: [
     //   'mdi-home',

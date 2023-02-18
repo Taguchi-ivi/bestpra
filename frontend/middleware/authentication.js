@@ -17,10 +17,10 @@ export default async ({ $auth, store, route, redirect }) => {
 
         const msg = 'まずはログインしてください'
         const color = 'info'
-        // TODO test
-        console.log(msg, color)
-        // TODO トースター出力
-        // store.dispatch('getToast', { msg, color })
+        // const color = 'error'
+        const status = true
+        // トースター出力
+        store.dispatch('modules/toast/getToast', { status, msg, color })
         // TODO アクセスルート記憶
         // store.dispatch('getRememberPath', route)
         return redirect('/auth/signin')

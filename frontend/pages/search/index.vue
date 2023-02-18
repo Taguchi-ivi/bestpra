@@ -100,12 +100,12 @@
 
 <script>
 
-import MainTitle from '~/components/Atom/MainTitle.vue'
+import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 import CardArticle from '~/components/Organisms/Card/CardArticle.vue'
 import CardTag from '~/components/Organisms/Card/CardTag.vue'
 import CardUser from '~/components/Organisms/Card/CardUser.vue'
 import MarginBottom from '~/components/Atom/margin/marginBottom.vue'
-import PageTop from '~/components/Atom/PageTop.vue'
+import PageTop from '~/components/Atom/App/AppPageTop.vue'
 
 export default {
     components: {

@@ -116,7 +116,7 @@
 
 <script>
 // import Ckeditor from '~/components/Ckeditor.vue'
-import MainTitle from '~/components/Atom/MainTitle.vue'
+import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 
 export default {
     // components: {
