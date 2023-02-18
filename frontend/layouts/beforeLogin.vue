@@ -3,8 +3,8 @@
         <before-home-header />
         <v-main>
         <!-- <v-container> -->
-            <Nuxt />
             <AppToaster />
+            <Nuxt />
         <!-- </v-container> -->
         </v-main>
         <before-home-footer />

@@ -7,14 +7,17 @@ export const state = () => ({
     },
     // ログイン後アクセス不可のルートを列挙する
     redirectPaths: [
-        'auth/signup',
-        'auth/signin'
+        'auth-signup',
+        'auth-signin'
     ]
 })
 
 export const getters = {
     getRememberPath(state) {
         return state.rememberPath
+    },
+    getRedirectPaths(state) {
+        return state.redirectPaths
     }
 }
 

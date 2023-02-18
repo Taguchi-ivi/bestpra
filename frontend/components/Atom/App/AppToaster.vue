@@ -44,10 +44,10 @@ export default {
             set (val) { return this.resetToast() && val }
         }
     },
-    beforeDestroy () {
-        // Vueインスタンスが破棄される直前にVuexのtoast.msgを削除する(無期限toastに対応)
-        this.resetToast()
-    },
+    // beforeDestroy () {
+    //     // Vueインスタンスが破棄される直前にVuexのtoast.msgを削除する(無期限toastに対応)
+    //     this.resetToast()
+    // },
     methods: {
         // Vuexのtoast.msgの値を変更する
         resetToast () {

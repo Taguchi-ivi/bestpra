@@ -55,7 +55,7 @@ export default {
         UserFormPassword,
     },
     layout: 'beforeLogin',
-    middleware: ['logged-in-user'],
+    middleware: ['logged-in-redirect'],
     data() {
         return {
             isValid: false,

@@ -72,7 +72,7 @@ export default {
         UserFormPasswordAgain,
     },
     layout: 'beforeLogin',
-    middleware: ['logged-in-user'],
+    middleware: ['logged-in-redirect'],
     data() {
         return {
             isValid: false,
@@ -102,7 +102,8 @@ export default {
         //             return users
         //         })
         // },
-        async formSignup() {
+        // async formSignup() {
+        formSignup() {
 
             const password = this.params.user.password
             const passwordAgain = this.params.user.passwordAgain
