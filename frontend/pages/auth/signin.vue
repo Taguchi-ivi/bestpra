@@ -42,7 +42,7 @@
 </template>
 
 <script>
-// import { mapActions } from 'vuex'
+// import { mapGetters } from 'vuex'
 import UserFormCard from '~/components/Molecules/UserFormCard'
 import UserFormEmail from '~/components/Atom/UserForm/UserFormEmail'
 import UserFormPassword from '~/components/Atom/UserForm/UserFormPassword'
@@ -62,11 +62,13 @@ export default {
             loading: false,
             params: { auth: { email: 'user0@example.com', password: 'password'} },
             // params: {auth: { email: '', password: ''} }
+            // redirectPath: ''
+            // loggedInHomePath: 'home',
         }
     },
     methods: {
-        // ...mapActions({
-        //     login: 'modules/user/login',
+        // ...mapGetters({
+        //     redirectPath: 'modules/remember/getRememberPath',
         // }),
         async formLogin() {
             this.loading = true
@@ -81,13 +83,17 @@ export default {
         },
         authSuccessful(res) {
             // console.log('authSuccessful', res)
+            // console.log('token',this.$auth.token)
+            // console.log('expires',this.$auth.expires)
+            // console.log('payload',this.$auth.payload)
+            // console.log('user',this.$auth.user)
             this.$auth.login(res)
-            console.log('token',this.$auth.token)
-            console.log('expires',this.$auth.expires)
-            console.log('payload',this.$auth.payload)
-            console.log('user',this.$auth.user)
-            // TODO 記憶ルートリダイレクト
-            this.$router.push('/home')
+            // 記憶ルートリダイレクト
+            console.log('signin', this.redirectPath)
+            // this.$router.push(this.redirectPath)
+            const redirectPath = this.$route.query.redirect || '/home'
+            this.$router.push(redirectPath)
+            // this.$store.dispatch('modules/remember/getRememberPath', this.loggedInHomePath)
         },
         authFailure({ response }) {
             if (response && response.status === 404) {

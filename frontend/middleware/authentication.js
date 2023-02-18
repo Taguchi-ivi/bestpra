@@ -21,8 +21,9 @@ export default async ({ $auth, store, route, redirect }) => {
         const status = true
         // トースター出力
         store.dispatch('modules/toast/getToast', { status, msg, color })
-        // TODO アクセスルート記憶
-        // store.dispatch('getRememberPath', route)
-        return redirect('/auth/signin')
+        // アクセスルート記憶
+        // store.dispatch('modules/remember/getRememberPath', route)
+        // return redirect('/auth/signin')
+        return redirect(`/auth/signin?redirect=${route.fullPath}`)
     }
 }

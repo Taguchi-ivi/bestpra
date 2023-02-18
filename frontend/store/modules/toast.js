@@ -1,4 +1,3 @@
-
 export const state = () => ({
     toast: {
         status: false,
