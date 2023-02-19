@@ -1,22 +1,18 @@
 <template>
     <v-app>
         <logged-in-home-header>
-            <template #navigation-toggle-button>
-                <v-app-bar-nav-icon
-                    @click="drawer = !drawer"
-                >
+            <!-- <template #navigation-toggle-button>
+                <v-app-bar-nav-icon @click="drawer = !drawer">
                 </v-app-bar-nav-icon>
-            </template>
+            </template> -->
         </logged-in-home-header>
-        <navigation-drawer
+        <!-- <navigation-drawer
             :drawer.sync="drawer"
-        />
+        /> -->
         <v-main>
-        <!-- <v-container> -->
-        <margin-top />
-        <Nuxt />
-        <margin-bottom />
-        <!-- </v-container> -->
+            <margin-top />
+            <Nuxt />
+            <margin-bottom />
         </v-main>
         <logged-in-home-footer />
     </v-app>
@@ -27,17 +23,18 @@
 <script>
 import LoggedInHomeHeader from '~/components/Organisms/LoggedIn/LoggedInHomeHeader.vue'
 import LoggedInHomeFooter from '~/components/Organisms/LoggedIn/LoggedInHomeFooter.vue'
-import NavigationDrawer from '~/components/Organisms/NavigationDrawer.vue'
 import marginTop from '~/components/Atom/margin/marginTop.vue'
 import marginBottom from '~/components/Atom/margin/marginBottom.vue'
+// import NavigationDrawer from '~/components/Organisms/Application/NavigationDrawer.vue'
 
 export default {
+    name: 'LayoutHome',
     components: {
         LoggedInHomeHeader,
         LoggedInHomeFooter,
-        NavigationDrawer,
         marginTop,
         marginBottom
+        // NavigationDrawer,
     },
     data() {
         return {

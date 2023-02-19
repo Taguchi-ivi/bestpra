@@ -3,7 +3,6 @@
         fixed
     >
         <slot name="navigation-toggle-button" />
-        <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
         <nuxt-link to="/about">
             <v-img width="50" src="/header-logo.png"></v-img>
         </nuxt-link>
@@ -49,8 +48,7 @@
                 <v-list-item>
                     <v-list-item-content>
                         <v-list-item-subtitle>
-                        <!-- TODO -->
-                        ユーザー名が表示されます
+                            {{ $auth.user.nickname }}
                         </v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
@@ -60,34 +58,33 @@
                 <v-subheader>
                     アカウント
                 </v-subheader>
-
-                <template
+                <div
                     v-for="(menu, i) in Menus"
+                    :key="`menu-divider-${i}`"
                 >
-                    <v-divider
-                        v-if="menu.divider"
-                        :key="`menu-divider-${i}`"
-                    />
-
-                    <v-list-item
-                        :key="`menu-list-${i}`"
-                        :to="menu.path"
-                    >
-                        <v-list-item-icon
-                            class="mr-2"
+                    <template>
+                        <v-divider
+                            v-if="menu.divider"
+                        />
+                        <v-list-item
+                            :to="menu.path"
                         >
-                            <v-icon
-                                size="22"
+                            <v-list-item-icon
+                                class="mr-2"
                             >
-                                {{ menu.icon }}
-                            </v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-title>
-                            {{ menu.name }}
-                            <!-- {{ $my.pageTitle(menu.name) }} -->
-                        </v-list-item-title>
-                    </v-list-item>
-                </template>
+                                <v-icon
+                                    size="22"
+                                >
+                                    {{ menu.icon }}
+                                </v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-title>
+                                {{ menu.name }}
+                                <!-- {{ $my.pageTitle(menu.name) }} -->
+                            </v-list-item-title>
+                        </v-list-item>
+                    </template>
+                </div>
                 <v-divider />
                 <v-dialog
                     v-model="dialog"
@@ -154,8 +151,8 @@ export default {
             on: false,
             dialog: false,
             Menus: [
-                { name: 'アカウント設定', icon: 'mdi-account-cog', divider: false, path: '/account/edit' },
-                { name: 'パスワード変更', icon: 'mdi-lock-outline', divider: false, path: '/account/password'},
+                { name: 'アカウント設定', icon: 'mdi-account-cog', divider: false, path: '/users/edit' },
+                { name: 'help', icon: 'mdi-chat-question', divider: false, path: '/help'},
             ]
         }
     },
@@ -163,10 +160,12 @@ export default {
         ...mapActions({
             logout: 'modules/user/logout',
         }),
-        appLogout() {
-            const userInfo = this.$store.getters['modules/user/getUser']
+        async appLogout() {
+            // const userInfo = this.$store.getters['modules/user/getUser']
             // console.log(userInfo)
-            this.logout(userInfo)
+            // this.logout(userInfo)
+            // this.$auth.login(res)
+            await this.$auth.logout()
             this.$router.push('/about')
         }
     },

@@ -3,6 +3,7 @@ class MyInject {
     constructor (ctx) {
         // ctx => { app }
         this.app = ctx.app
+        this.error = ctx.error
     }
     // i18nページタイトル変換
     pageTitle (routeName){
@@ -25,13 +26,21 @@ class MyInject {
     projectLnkTo(id, name = 'project-id-dashboard') {
         return { name, params: { id } }
     }
+
+    // apiのエラーハンドリング
+    apiErrorHandler(response) {
+        // ネットワークエラーの場合はresponseが存在しないので500を代入
+        const statusCode = (response) ? response.status : 500
+        const message = (response) ? response.statusText : 'Network Error'
+        return this.error({statusCode, message})
+    }
 }
 
 // inject => オリジナルクラスを追加することができる
 // どこからでも呼び出し可能となる
 // export default (context, inject)
-export default ({ app }, inject) => {
+export default ({ app, error }, inject) => {
     // inject('呼び出し名', 'クラスのインスタンス(context),)
     // 'my' => $myで呼び出せる
-    inject('my', new MyInject({ app }))
+    inject('my', new MyInject({ app, error }))
 }

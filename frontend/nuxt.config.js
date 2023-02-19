@@ -1,5 +1,10 @@
 import colors from 'vuetify/es5/util/colors'
 
+// CkEditor
+const path = require('path')
+const CKEditorWebpackPlugin = require("@ckeditor/ckeditor5-dev-webpack-plugin")
+const CKEditorStyles = require("@ckeditor/ckeditor5-dev-utils").styles
+
 // env切り替え
 // const environment = process.env.NODE_ENV || 'development';
 // const envSet = require(`./env.${environment}.js`);
@@ -8,13 +13,15 @@ export default {
 
   // env: envSet,
   env: {
-    ApiKey: process.env.FIREBASE_API_KEY,
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.FIREBASE_PROJECTID,
-    storageBucket: process.env.FIREBASE_STORAGEBUCKET,
-    messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID,
-    appId: process.env.FIREBASE_APPID,
-    measurementId: process.env.FIREBASE_MEASUREMENTID
+    // ApiKey: process.env.FIREBASE_API_KEY,
+    // authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    // projectId: process.env.FIREBASE_PROJECTID,
+    // storageBucket: process.env.FIREBASE_STORAGEBUCKET,
+    // messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID,
+    // appId: process.env.FIREBASE_APPID,
+    // measurementId: process.env.FIREBASE_MEASUREMENTID
+    // privateKey: process.env.FIREBASE_PRIVATE_KEY,
+    // clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
 
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -42,14 +49,24 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    'plugins/axios',
-    'plugins/firebase',
-    'plugins/authentication',
+    { src: '~/plugins/auth.js'},
+    { src: '~/plugins/axios.js'},
+    { src: '~/plugins/nuxt-server-init.js', mode: 'server'},
+    { src: '~/plugins/ckeditor.js', mode: 'client'},
+    // { src: '~/plugins/firebase.js', mode: 'client'},
+    // { src: '~/plugins/authentication.js'},
     // 'plugins/my-inject'
   ],
 
+  // middleware
+  router: {
+    // middleware: ['silent-refresh-token','get-auth-state']
+    middleware: ['silent-refresh-token']
+  },
+
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  // components: true,
+  components: false,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
@@ -71,7 +88,16 @@ export default {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     // baseURL: '/',
     // baseURL: 'http://localhost:3000'
-    baseURL: process.env.NODE_ENV === 'production' ? 'https://api.best-pra.com' : 'http://localhost:3000'
+    baseURL: process.env.NODE_ENV === 'production' ? 'https://api.best-pra.com' : 'http://localhost:3000',
+
+    // credentials => session情報をRailsと共有する(クロスドメインで認証情報を共有)
+    // Doc:https://axios.nuxtjs.org/options/#credentials
+    credentials: true
+  },
+
+  // localでの作業効率化のため、defultの3000から変更
+  server: {
+    port: 8080
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -127,5 +153,27 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+
+    // CkEditor
+    plugins: [
+      // If you set ssr: true that will cause the following error. This error does not affect the operation.
+      // ERROR  [CKEditorWebpackPlugin] Error: No translation has been found for the zh language.
+      new CKEditorWebpackPlugin({
+        // See https://ckeditor.com/docs/ckeditor5/latest/features/ui-language.html
+        // language: "ja",
+        additionalLanguages: 'all',
+        addMainLanguageTranslationsToAllAssets: true,
+      })
+    ],
+
+    // If you don't add postcss, the CKEditor css will not work.
+    postcss: CKEditorStyles.getPostCssConfig({
+      themeImporter: {
+        themePath: require.resolve("@ckeditor/ckeditor5-theme-lark")
+      },
+      minify: true
+    }),
+
+  },
 }

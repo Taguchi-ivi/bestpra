@@ -1,31 +1,37 @@
-// import axios from 'axios';
-import { getUserFromCookie } from '@/helpers'
+// import $axios from 'axios'
 
 // 共通変数 => vue file = data
 export const state = () => ({
-    // styles: {
-    //     homeAppBarHeight: 56
-    // },
-    // homeAppBarHeight: 56
-    // article: {
-    //     current: null,
-    //     list: [
-    //         {id: 1, name: 'article01', updateAt: '2023-01-26-01T12:00:00+09:00'},
-    //         {id: 2, name: 'article01', updateAt: '2023-01-27-01T12:00:00+09:00'},
-    //         {id: 3, name: 'article01', updateAt: '2023-01-28-01T12:00:00+09:00'},
-    //         {id: 4, name: 'article01', updateAt: '2023-01-29-01T12:00:00+09:00'},
-    //         {id: 5, name: 'article01', updateAt: '2023-01-30-01T12:00:00+09:00'},
-    //     ]
-    // }
+    user: {
+        current: null
+    },
+    project: {
+        current: null,
+        list: []
+    },
+    // currentUser: null,
+    auth: {
+        token: null,
+        expires: 0,
+        payload: {}
+    },
+
 })
 
 // 算出プロパティ => vue file = computed
 export const getters = {
-//     styles(state) {
-//         return state.styles
-//     },
-//     homeAppBarHeight: state => state.homeAppBarHeight
-    // getUser: state => state.user
+    getUser(state) {
+        return state.user
+        // return state.currentUser
+    },
+    getAuth(state) {
+        // return state.user
+        return state.auth
+    },
+
+    getToaster(state) {
+        return state.toast
+    }
 }
 
 
@@ -33,32 +39,119 @@ export const getters = {
 // { state, getters, commit, dispatch, rootState, rootGetters}
 // rootState => ルート(store/index.js)のstateを取得(rootState = state) =>別ファイルのstateをもらう場合
 export const actions = {
-    // getCurrentArtcile ({ state, commit}, params) {
-    //     const id = Number(params.id)
-    //     const currentArtcile = state.article.list.find(article => article.id === id) || null
-    //     commit('setCurrentArticle', currentArtcile)
-    // }
 
-    async nuxtServerInit ({ commit }, { req }) {
-        const user = getUserFromCookie(req)
-        if(user) {
-            const userInfo = {
-                email: user.email,
-                uid: user.user_id
-            }
-            await commit('modules/user/setUser', userInfo)
+    getProjectList({ commit }, projects) {
+        projects = projects || []
+        commit('setProjectList', projects)
+    },
+
+    getCurrentProject({ state, commit}, params) {
+        let currentProject = null
+        if (params && params.id) {
+            const id = Number(params.id)
+            currentProject = state.project.list.find(project => project.id === id) || null
         }
-    }
 
+        commit('setCurrentProject', currentProject)
+    },
+
+    getCurrentUser ({ commit }, user) {
+        console.log('mutationsOK', user)
+        commit('setCurrentUser', user)
+    },
+
+    getAuthToken ({ commit }, token) {
+        commit('setAuthToken', token)
+    },
+
+    getAuthExpires ({ commit }, expires) {
+        expires = expires || 0
+        commit('setAuthExpires', expires)
+    },
+
+    getAuthPayload ({ commit }, jwtPayload) {
+        jwtPayload = jwtPayload || {}
+        commit('setAuthPayload', jwtPayload)
+    },
+
+    getToast({ commit }, { msg, color, timeout }) {
+        color = color || 'error'
+        timeout = timeout || 4000
+        commit('setToast', { msg, color, timeout })
+    },
+
+    // nuxtServerInit({ $auth, $axios }) {
+        // console.log('どうよNuxtServiceInit')
+    // ↓--
+    // async nuxtServerInit({ commit }, { req, app }) {
+    //     // export default async ({ $auth, $axios }) => {
+    //         console.log('どうよNuxtServiceInit')
+    //         // await $axios.post
+    //         //     (
+    //         //         '/api/v1/auth_token/refresh',
+    //         //         {},
+    //         //         { validateStatus: status => $auth.resolveUnauthorized(status) }
+    //         //     )
+    //         //     .then(response => $auth.login(response))
+    //     // }
+    //     // await $axios({
+    //     //     url: '/api/v1/auth_token/refresh',
+    //     //     method: 'POST',
+    //     //     data: {},
+    //     //     config: { validateStatus: status => $auth.resolveUnauthorized(status) }
+    //     // })
+    //     //     .then(response => $auth.login(response))
+    //     // console.log('reqどうよ', req);
+    //     try {
+    //         const response = await this.$axios.post
+    //             (
+    //                 '/api/v1/auth_token/refresh',
+    //                 {},
+    //                 { validateStatus: status => app.$auth.resolveUnauthorized(status) }
+    //             )
+    //         // console.log(response)
+    //         app.$auth.login(response)
+    //         // レスポンスからデータを取り出してコミットする処理を記述する
+    //         // console.log(response)
+    //     } catch (error) {
+    //         console.error('Nuxt-serverinit-error','err')
+    //     }
+    // }
+    // ↑--
 }
 
 // stateの値を変更する場所
 export const mutations = {
-    // setCurrentArticle(state, payload) {
-    //     state.article.current = payload
+    // setCurrentUser(state,payload) {
+    //     state.currentUser = payload
     // }
 
-    // setUid(state, payload) {
-    //     state.user = payload
-    // }
+    setProjectList (state, payload) {
+        state.project.list = payload
+    },
+
+    setCurrentProject(state, payload) {
+        state.project.current = payload
+    },
+
+    setCurrentUser (state, payload) {
+        state.user.current = payload
+        // state.currentUser = payload
+    },
+
+    setAuthToken (state, payload) {
+        state.auth.token = payload
+    },
+
+    setAuthExpires (state, payload) {
+        state.auth.expires = payload
+    },
+
+    setAuthPayload (state, payload) {
+        state.auth.payload = payload
+    },
+
+    setToast (state, payload) {
+        state.Toast = payload
+    }
 }

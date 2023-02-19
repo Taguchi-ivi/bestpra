@@ -20,7 +20,7 @@
 <script>
 export default {
     props: {
-        name: {
+        nickname: {
             type: String,
             default: ''
         }
@@ -40,8 +40,8 @@ export default {
     },
     computed: {
         setName: {
-            get() { return this.name },
-            set(newVal) { return this.$emit('update:name',newVal)}
+            get() { return this.nickname },
+            set(newVal) { return this.$emit('update:nickname',newVal)}
         }
     }
 }

@@ -3,6 +3,7 @@
     <logged-in-home-header />
     <v-main>
     <!-- <v-container> -->
+      <AppToaster />
       <margin-top />
       <Nuxt />
       <margin-bottom />
@@ -19,14 +20,18 @@ import LoggedInHomeHeader from '~/components/Organisms/LoggedIn/LoggedInHomeHead
 import LoggedInHomeFooter from '~/components/Organisms/LoggedIn/LoggedInHomeFooter.vue'
 import marginTop from '~/components/Atom/margin/marginTop.vue'
 import marginBottom from '~/components/Atom/margin/marginBottom.vue'
+import AppToaster from '~/components/Atom/App/AppToaster.vue'
 
 export default {
+  name: 'LayoutDefault',
   components: {
     LoggedInHomeHeader,
     LoggedInHomeFooter,
     marginTop,
-    marginBottom
+    marginBottom,
+    AppToaster
   },
+  middleware: ['authentication'],
   data: () => ({
     // icons: [
     //   'mdi-home',

@@ -1,7 +1,8 @@
 <script>
 export default {
     // ページをレンダリングする前に実行
-    middleware ({ redirect }) {
+    async middleware ({ $auth, redirect }) {
+        await $auth.logout()
         return redirect('/about')
     }
 }

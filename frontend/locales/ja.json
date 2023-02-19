@@ -2,5 +2,11 @@
     "title": {
         "signup": "新規登録",
         "login": "ログイン"
+    },
+    "error": {
+    "Unauthorized": "認証に失敗しました",
+    "Forbidden": "アクセスが拒否されました",
+    "This page could not be found": "ページが見つかりません",
+    "Network Error": "ネットワークエラーが発生しました"
     }
 }

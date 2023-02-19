@@ -3,6 +3,7 @@
         <before-home-header />
         <v-main>
         <!-- <v-container> -->
+            <AppToaster />
             <Nuxt />
         <!-- </v-container> -->
         </v-main>
@@ -15,13 +16,16 @@
 <script>
 import BeforeHomeHeader from '~/components/Organisms/BeforeLogin/BeforeHomeHeader.vue'
 import BeforeHomeFooter from '~/components/Organisms/BeforeLogin/BeforeHomeFooter.vue'
+import AppToaster from '~/components/Atom/App/AppToaster.vue'
 
 export default {
+    name: 'BeforeLogin',
     components: {
         // 'home-header': HomeHeader,
         // 'home-footer': HomeFooter
         BeforeHomeHeader,
-        BeforeHomeFooter
+        BeforeHomeFooter,
+        AppToaster
     },
     data: () => ({
       // icons: [
@@ -51,7 +55,6 @@ export default {
     },
     methods: {
     },
-  
-  }
-  </script>
-  
+
+}
+</script>

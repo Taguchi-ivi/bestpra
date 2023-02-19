@@ -14,8 +14,11 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
         # origins "localhost:8080"
         origins ['https://app.best-pra.com', 'localhost:8080']
 
+        # フロントへ認証情報を送信できるようにする
+        # access-control-allow-credentials: true => cokkieを含む認証情報は自動で送信されない
         resource "*",
         headers: :any,
-        methods: [:get, :post, :put, :patch, :delete, :options, :head]
+        methods: [:get, :post, :put, :patch, :delete, :options, :head],
+        credentials: true
     end
 end

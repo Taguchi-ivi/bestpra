@@ -7,10 +7,10 @@
                 @submit.prevent="formLogin"
             >
                 <user-form-email
-                    :email.sync="params.user.email"
+                    :email.sync="params.auth.email"
                 />
                 <user-form-password
-                    :password.sync="params.user.password"
+                    :password.sync="params.auth.password"
                 />
                 <!-- <v-card-actions>
                     <nuxt-link
@@ -42,55 +42,75 @@
 </template>
 
 <script>
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
-import { mapActions } from 'vuex'
+// import { mapGetters } from 'vuex'
 import UserFormCard from '~/components/Molecules/UserFormCard'
 import UserFormEmail from '~/components/Atom/UserForm/UserFormEmail'
 import UserFormPassword from '~/components/Atom/UserForm/UserFormPassword'
 
 export default {
-    name: 'singin',
+    name: 'singIn',
     components: {
         UserFormCard,
         UserFormEmail,
         UserFormPassword,
     },
     layout: 'beforeLogin',
-    middleware: ['logged-in-user'],
+    middleware: ['logged-in-redirect'],
     data() {
         return {
             isValid: false,
             loading: false,
-            params: {user: { email: '', password: ''} }
+            params: { auth: { email: 'user0@example.com', password: 'password'} },
+            // params: {auth: { email: '', password: ''} }
+            // redirectPath: ''
+            // loggedInHomePath: 'home',
         }
     },
     methods: {
-        ...mapActions({
-            login: 'modules/user/login',
-        }),
-        formLogin() {
+        // ...mapGetters({
+        //     redirectPath: 'modules/remember/getRememberPath',
+        // }),
+        async formLogin() {
             this.loading = true
             // setTimeout(() => {this.loading = false}, 1500)
+            if(this.isValid) {
+                await this.$axios.$post('/api/v1/auth_token/login', this.params)
+                    .then(res => this.authSuccessful(res))
+                    .catch(error => this.authFailure(error))
+            }
 
-            const auth = getAuth();
-            signInWithEmailAndPassword(auth, this.params.user.email, this.params.user.password)
-            .then((userCredential) => {
-                // Signed in
-                const user = userCredential.user;
-                console.log(user);
-                this.login(user)
-
-                this.$router.push('/home')
-                // ...
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode)
-                console.log(errorMessage)
-            });
             this.loading = false
-            // this.$router.push('/home')
+        },
+        authSuccessful(res) {
+            // console.log('authSuccessful', res)
+            // console.log('token',this.$auth.token)
+            // console.log('expires',this.$auth.expires)
+            // console.log('payload',this.$auth.payload)
+            // console.log('user',this.$auth.user)
+            this.$auth.login(res)
+            // 記憶ルートリダイレクト
+            // console.log('signin', this.redirectPath)
+            // this.$router.push(this.redirectPath)
+            const redirectPath = this.$route.query.redirect || '/home'
+            // const status = true
+            // const msg = 'ログインに成功しました!!'
+            // const color = 'info'
+
+            this.$router.push(redirectPath)
+            // this.$store.dispatch('modules/toast/getToast', { status, msg, color })
+            // this.$store.dispatch('modules/remember/getRememberPath', this.loggedInHomePath)
+        },
+        authFailure({ response }) {
+            if (response && response.status === 404) {
+                // トースター出力
+                // alert('404')
+                const status = true
+                const msg = 'ユーザが見つかりません'
+                const color = 'error'
+                return this.$store.dispatch('modules/toast/getToast', { status, msg, color })
+            }
+            // エラー処理
+            return this.$my.apiErrorHandler(response)
         }
     },
 }
