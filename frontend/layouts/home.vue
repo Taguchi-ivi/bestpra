@@ -28,6 +28,7 @@ import marginBottom from '~/components/Atom/margin/marginBottom.vue'
 // import NavigationDrawer from '~/components/Organisms/Application/NavigationDrawer.vue'
 
 export default {
+    name: 'LayoutHome',
     components: {
         LoggedInHomeHeader,
         LoggedInHomeFooter,

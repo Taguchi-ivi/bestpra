@@ -67,6 +67,7 @@ import CardUser from '~/components/Organisms/Card/CardUser.vue'
 import TheLoading from '~/components/Organisms/Application/TheLoading.vue'
 
 export default {
+    name: 'ClientHome',
     // middleware: 'get-article-current',
     // middleware: ['before-login-user'],
     components: {
@@ -76,7 +77,6 @@ export default {
         CardUser,
         TheLoading
     },
-    layout: 'home',
     middleware: ['authentication','get-project-list'],
     data() {
         return {

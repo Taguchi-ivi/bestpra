@@ -3,8 +3,10 @@
     <v-snackbar
         v-model="setSnackbar"
         transition="slide-x-reverse-transition"
+        class="toaster"
         right
         top
+        text
         :color="toast.color"
         :timeout="toast.timeout"
     >
@@ -14,7 +16,7 @@
         <template #action="{ attrs }">
             <v-btn
                 v-bind="attrs"
-                color="grey"
+                :color="toast.color"
                 @click="resetToast"
                 icon
             >
@@ -56,3 +58,10 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+.toaster {
+    position: fixed;
+    z-index: 9999;
+}
+</style>

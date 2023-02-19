@@ -7,14 +7,26 @@ class Api::V1::AuthTokenController < ApplicationController
     rescue_from JWT::InvalidJtiError, with: :invalid_jti
 
     # userのログイン情報を確認する
-    before_action :authenticate, only: [:create]
+    before_action :authenticate, only: [:login]
     # 処理前にsessionを削除する
-    before_action :delete_session, only: [:create]
+    before_action :delete_session, only: [:login]
     # session_userを取得、存在しない場合は401を返す
     before_action :sessionize_user, only: [:refresh, :destroy]
 
-    # ログイン
+    # 新規作成
     def create
+        @user = User.new(user_params)
+        if @user.save
+            # @user = login_user
+            set_refresh_token_to_cookie
+            render json: login_response
+        else
+            render @user.errors.full_messages
+        end
+    end
+
+    # ログイン
+    def login
         @user = login_user
         set_refresh_token_to_cookie
         render json: login_response
@@ -122,5 +134,10 @@ class Api::V1::AuthTokenController < ApplicationController
 
         def auth_params
             params.require(:auth).permit(:email, :password)
+        end
+
+        # user情報を取得
+        def user_params
+            params.require(:user).permit(:nickname, :email, :password, :avatar, :introduction, :birthday , :basecolor_id, :activated, :admin)
         end
 end

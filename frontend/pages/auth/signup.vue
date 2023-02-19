@@ -16,7 +16,7 @@
                 @submit.prevent="formSignup"
             >
                 <user-form-name
-                    :name.sync="params.user.name"
+                    :nickname.sync="params.user.nickname"
                 />
                 <user-form-email
                     :email.sync="params.user.email"
@@ -39,13 +39,13 @@
                 >
                     登録
                 </v-btn>
-                <!-- <v-btn
+                <v-btn
                     class="white--text"
                     color="blue"
                     @click="testBtn"
                 >
                     テスト
-                </v-btn> -->
+                </v-btn>
                 <!-- {{ params.user }} -->
                 <!-- {{ users }} -->
             </v-form>
@@ -81,7 +81,7 @@ export default {
             params: {
                 user:
                 {
-                    name: '',
+                    nickname: '',
                     email: '',
                     password: '',
                     activated: true,
@@ -96,20 +96,20 @@ export default {
             login: 'modules/user/login',
         }),
         // testBtn() {
-        //     // const user = {
-        //     //     nickname: this.params.user.name,
-        //     //     email: this.params.user.email,
-        //     //     uid: 'aaaaaaaaaa'
-        //     // }
-        //     // this.$axios.post('/api/v1/users', { user })
-        //     //     .then(response => {
-        //     //             console.log(response)
-        //     //         })
-        //     this.$axios.get('/api/v1/users')
-        //         .then(response => {
-        //             const users = response
-        //             return users
-        //         })
+            // const user = {
+            //     nickname: this.params.user.name,
+            //     email: this.params.user.email,
+            //     uid: 'aaaaaaaaaa'
+            // }
+            // this.$axios.post('/api/v1/users', { user })
+            //     .then(response => {
+            //             console.log(response)
+            //         })
+            // this.$axios.get('/api/v1/users')
+            //     .then(response => {
+            //         const users = response
+            //         return users
+            //     })
         // },
         async formSignup() {
 
@@ -127,19 +127,21 @@ export default {
 
             // }, 1500)
             if(this.isValid) {
-                await this.$axios.$post('/api/v1/users')
-                    .then()
                 await this.$axios.$post('/api/v1/auth_token', this.params)
-                    .then((res => {
-                        this.$auth.login(userObj)
-                        const status = true
-                        const msg = 'パスワードと確認用パスワードが一致しません'
-                        const color = 'info'
-                        this.$store.dispatch('modules/toast/getToast', { status, msg, color })
-                        this.$router.pash('/home')
-                    }))
-
+                    .then((res) => {
+                        console.log('formsigunup',res)
+                        // const status = true
+                        // const msg = '登録が完了しました!!'
+                        // const color = 'success'
+                        // this.$store.dispatch('modules/toast/getToast', { status, msg, color })
+                        this.$auth.login(res)
+                        this.$router.push('/home')
+                    })
+                    .catch((err) => {
+                        console.log('errやで', err)
+                    })
             }
+            this.loading = false
             // console.log(this.params.user.email)
             // console.log(this.params.user.password)
         },

@@ -19,12 +19,15 @@ export default async ({ $auth, $axios, store, route, redirect, isDev }) => {
                     const msg = 'セッションの有効期限が切れました。' +
                                 'もう一度ログインしてください'
                     const color = 'error'
+
+                    redirect(`/auth/signin?redirect=${route.fullPath}`)
+
                     // トースター出力
                     store.dispatch('modules/toast/getToast', { status, msg, color })
                     // アクセスルート記憶
                     // store.dispatch('modules/remember/getRememberPath', route)
                     // return redirect('/auth/signin')
-                    return redirect(`/auth/signin?redirect=${route.fullPath}`)
+                    // return redirect(`/auth/signin?redirect=${route.fullPath}`)
                 }
             })
     }

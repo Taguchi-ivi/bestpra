@@ -6,11 +6,12 @@ export default ({ $auth, store, route, redirect }) => {
     const redirectPaths = store.getters['modules/remember/getRedirectPaths']
     if ($auth.loggedIn() && redirectPaths.includes(route.name)) {
         const msg = 'ログイン済みです!!'
-        const color = 'indigo'
+        const color = 'info'
         // const color = 'error'
         const status = true
         // トースター出力
+        redirect('/home')
         store.dispatch('modules/toast/getToast', { status, msg, color,})
-        return redirect('/home')
+        // return redirect('/home')
     }
 }

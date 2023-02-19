@@ -75,7 +75,7 @@ class User < ApplicationRecord
     # 呼び出し元でカスタムできるようにmergeを指定 => merge(sub: "sub")とするとHashにsubが追加される
     # with_indifferent_access => Railsのメソッド => hashのキーをシンボルでも文字列でも取得できるようにする
     def response_json(payload = {})
-        as_json(only: [:id, :nickname, :avatar]).merge(payload).with_indifferent_access
+        as_json(only: [:id, :nickname, :avatar, :admin]).merge(payload).with_indifferent_access
     end
 
 

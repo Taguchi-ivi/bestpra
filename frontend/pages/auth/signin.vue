@@ -74,7 +74,7 @@ export default {
             this.loading = true
             // setTimeout(() => {this.loading = false}, 1500)
             if(this.isValid) {
-                await this.$axios.$post('/api/v1/auth_token', this.params)
+                await this.$axios.$post('/api/v1/auth_token/login', this.params)
                     .then(res => this.authSuccessful(res))
                     .catch(error => this.authFailure(error))
             }
@@ -92,7 +92,12 @@ export default {
             // console.log('signin', this.redirectPath)
             // this.$router.push(this.redirectPath)
             const redirectPath = this.$route.query.redirect || '/home'
+            // const status = true
+            // const msg = 'ログインに成功しました!!'
+            // const color = 'info'
+
             this.$router.push(redirectPath)
+            // this.$store.dispatch('modules/toast/getToast', { status, msg, color })
             // this.$store.dispatch('modules/remember/getRememberPath', this.loggedInHomePath)
         },
         authFailure({ response }) {

@@ -19,11 +19,13 @@ export default async ({ $auth, store, route, redirect }) => {
         const color = 'info'
         // const color = 'error'
         const status = true
+
+        redirect(`/auth/signin?redirect=${route.fullPath}`)
         // トースター出力
         store.dispatch('modules/toast/getToast', { status, msg, color })
         // アクセスルート記憶
         // store.dispatch('modules/remember/getRememberPath', route)
         // return redirect('/auth/signin')
-        return redirect(`/auth/signin?redirect=${route.fullPath}`)
+        // return redirect(`/auth/signin?redirect=${route.fullPath}`)
     }
 }

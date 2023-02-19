@@ -23,6 +23,7 @@ import marginBottom from '~/components/Atom/margin/marginBottom.vue'
 import AppToaster from '~/components/Atom/App/AppToaster.vue'
 
 export default {
+  name: 'LayoutDefault',
   components: {
     LoggedInHomeHeader,
     LoggedInHomeFooter,

@@ -22,9 +22,6 @@ class Api::V1::UsersController < ApplicationController
         if @user.save
         #   flash[:success] = "Object successfully created"
         #   redirect_to @user
-            @user = login_user
-            set_refresh_token_to_cookie
-            render json: login_response
             # render json: @user
         else
         #   flash[:error] = "Something went wrong"
@@ -68,9 +65,9 @@ class Api::V1::UsersController < ApplicationController
     end
 
     private
-        def user_params
-            params.require(:user).permit(:nickname, :email, :avatar, :introduction, :birthday , :basecok_id, )
-        end
+        # def user_params
+        #     params.require(:user).permit(:nickname, :email, :avatar, :introduction, :birthday , :basecok_id, )
+        # end
 
         def set_user
             @user = User.find(params[:id])
