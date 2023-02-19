@@ -1,6 +1,7 @@
 class Api::V1::UsersController < ApplicationController
     # skip_before_action :authenticate
-    before_action :authenticate_user
+    # createメソッドのみログイン済みかどうかの判定をスキップする
+    before_action :authenticate_user, except: :create
     before_action :set_user, only: [:show, :edit, :update]
 
     def index
@@ -21,7 +22,10 @@ class Api::V1::UsersController < ApplicationController
         if @user.save
         #   flash[:success] = "Object successfully created"
         #   redirect_to @user
-            render json: @user
+            @user = login_user
+            set_refresh_token_to_cookie
+            render json: login_response
+            # render json: @user
         else
         #   flash[:error] = "Something went wrong"
         #   render 'new'
@@ -65,7 +69,7 @@ class Api::V1::UsersController < ApplicationController
 
     private
         def user_params
-            params.require(:user).permit(:nickname, :email, :uid, :avatar, :introduction, :birthday , :basecok_id)
+            params.require(:user).permit(:nickname, :email, :avatar, :introduction, :birthday , :basecok_id, )
         end
 
         def set_user

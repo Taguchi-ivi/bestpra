@@ -89,7 +89,7 @@ export default {
             // console.log('user',this.$auth.user)
             this.$auth.login(res)
             // 記憶ルートリダイレクト
-            console.log('signin', this.redirectPath)
+            // console.log('signin', this.redirectPath)
             // this.$router.push(this.redirectPath)
             const redirectPath = this.$route.query.redirect || '/home'
             this.$router.push(redirectPath)
@@ -104,8 +104,8 @@ export default {
                 const color = 'error'
                 return this.$store.dispatch('modules/toast/getToast', { status, msg, color })
             }
-            // TODO エラー処理
-            // alert(response.status)
+            // エラー処理
+            return this.$my.apiErrorHandler(response)
         }
     },
 }

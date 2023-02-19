@@ -1,7 +1,7 @@
 <template>
     <user-form-card >
         <template #user-form-card-content>
-            <p v-if="errMsg">
+            <!-- <p v-if="errMsg">
                 <v-alert
                     border="left"
                     color="pink darken-1"
@@ -9,7 +9,7 @@
                     >
                     {{ errMsg }}
                 </v-alert>
-            </p>
+            </p> -->
             <v-form
                 ref="form"
                 v-model="isValid"
@@ -27,7 +27,7 @@
                     set-validation
                 />
                 <user-form-password-again
-                    :password-again.sync="params.user.passwordAgain"
+                    :password-again.sync="passwordAgain"
                 />
                 <v-btn
                     type="submit"
@@ -78,7 +78,16 @@ export default {
             isValid: false,
             loading: false,
             errMsg: '',
-            params: {user: { name: '', email: '', password: '', passwordAgain: ''} },
+            params: {
+                user:
+                {
+                    name: '',
+                    email: '',
+                    password: '',
+                    activated: true,
+                }
+            },
+            passwordAgain: '',
             // users: {}
         }
     },
@@ -102,14 +111,14 @@ export default {
         //             return users
         //         })
         // },
-        // async formSignup() {
-        formSignup() {
+        async formSignup() {
 
             const password = this.params.user.password
-            const passwordAgain = this.params.user.passwordAgain
-            if(password !== passwordAgain) {
-                this.errMsg = 'パスワードと確認用パスワードが一致しません'
-                return
+            if(password !== this.passwordAgain) {
+                const status = true
+                const msg = 'パスワードと確認用パスワードが一致しません'
+                const color = 'error'
+                return this.$store.dispatch('modules/toast/getToast', { status, msg, color })
             }
             this.loading = true
             // setTimeout(() => {
@@ -117,6 +126,20 @@ export default {
             //     this.loading = false
 
             // }, 1500)
+            if(this.isValid) {
+                await this.$axios.$post('/api/v1/users')
+                    .then()
+                await this.$axios.$post('/api/v1/auth_token', this.params)
+                    .then((res => {
+                        this.$auth.login(userObj)
+                        const status = true
+                        const msg = 'パスワードと確認用パスワードが一致しません'
+                        const color = 'info'
+                        this.$store.dispatch('modules/toast/getToast', { status, msg, color })
+                        this.$router.pash('/home')
+                    }))
+
+            }
             // console.log(this.params.user.email)
             // console.log(this.params.user.password)
         },

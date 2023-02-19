@@ -1,3 +1,4 @@
+// export default ({ $axios, $auth, isDev }) => {
 export default ({ $axios, $auth }) => {
     // リクエストログ
     $axios.onRequest((config) => {
@@ -10,14 +11,20 @@ export default ({ $axios, $auth }) => {
         if($auth.token) {
             config.headers.common.Authorization = `Bearer ${$auth.token}`
         }
-        // console.log(config)
+
+        // 開発環境用コンテキスト
+        // if(isDev){
+        //     // console.log(config)
+        // }
     })
     // レスポンスログ
     $axios.onResponse((config) => {
-        // console.log(config)
+        // if(isDev) {
+        //     // console.log(config)
+        // }
     })
     // エラーログ
     $axios.onError((e) => {
-        // console.log(e.response)
+        console.log(e.response)
     })
 }
