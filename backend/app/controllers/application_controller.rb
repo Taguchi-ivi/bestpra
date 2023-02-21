@@ -6,6 +6,7 @@ class ApplicationController < ActionController::API
     include UserAuthenticateService
 
     # CSRF対策
+    # TODO 検証環境ではコメントアウトするとデータの取得可能 ※最後必ずコメントアウトを外す
     before_action :xhr_request?
 
     private

@@ -7,11 +7,13 @@ class Api::V1::AuthTokenController < ApplicationController
     rescue_from JWT::InvalidJtiError, with: :invalid_jti
 
     # userのログイン情報を確認する
+    # before_action :authenticate, only: [:login]
     before_action :authenticate, only: [:login]
     # 処理前にsessionを削除する
     before_action :delete_session, only: [:login]
     # session_userを取得、存在しない場合は401を返す
-    before_action :sessionize_user, only: [:refresh, :destroy]
+    # before_action :sessionize_user, only: [:refresh, :destroy]
+    before_action :sessionize_user, only: [:logout, :refresh, :destroy, :update_email, :update_password]
 
     # 新規作成
     def create
@@ -37,15 +39,48 @@ class Api::V1::AuthTokenController < ApplicationController
         @user = session_user
         # 自動更新しない  => リフレッシュトークンの有効期限で再ログインを強制する場合は下記をコメントアウト
         # 自動更新する => 下記を実装して都度リフレッシュトークンを更新する
-        # set_refresh_token_to_cookie
+        ## 自動更新する前にcookieの値を削除したらリフレッシュできる？
+        # delete_session
+        set_refresh_token_to_cookie
         render json: login_response
     end
 
-    # ログアウト
-    def destroy
+    # ログアウト => logout
+    # def destroy
+    def logout
         delete_session if session_user.forget
         cookies[session_key].nil? ?
         head(:ok) : response_500("Could not delete session")
+    end
+
+    # メールアドレス更新
+    def update_email
+        # if current_user.update(user_params)
+        #     render json: status: 'ok'
+        # else
+        #     render json
+        # end
+        # render update_email_password
+        update_email_password
+
+    end
+
+    # パスワード更新
+    def update_password
+        update_email_password
+    end
+
+    # ユーザ削除 && cookieの情報を削除する
+    def destroy
+        user = User.find(params[:id])
+        return if current_user.id != @user.id
+        if current_user.destroy!
+            delete_session if session_user.forget
+            cookies[session_key].nil? ?
+            head(:ok) : response_500("Could not delete session && destroy")
+        else
+            render :destroy, status: 400
+        end
     end
 
     private
@@ -139,5 +174,18 @@ class Api::V1::AuthTokenController < ApplicationController
         # user情報を取得
         def user_params
             params.require(:user).permit(:nickname, :email, :password, :avatar, :introduction, :birthday , :basecolor_id, :activated, :admin)
+        end
+
+        # 一度cookieの情報を削除して、新しい情報に変える
+        def update_email_password
+            if current_user.update(user_params)
+                delete_session if session_user.forget
+                set_refresh_token_to_cookie
+                render status: :ok
+            else
+                msg = "update error"
+                # render json: 401, json { status: 401, error: msg}
+                render 'update_email_password', status: 400
+            end
         end
 end

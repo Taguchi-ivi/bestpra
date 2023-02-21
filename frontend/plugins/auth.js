@@ -20,7 +20,8 @@ class Authentication {
     }
 
     get user () {
-        return this.store.state.user.current || {}
+        // return this.store.getters['modules/user/getUser'].current || {}
+        return this.store.getters['modules/user/getUser'] || {}
     }
 
     // 認証情報をVuexに保存する
@@ -30,7 +31,8 @@ class Authentication {
 
         this.store.dispatch('getAuthToken', token)
         this.store.dispatch('getAuthExpires', exp)
-        this.store.dispatch('getCurrentUser', user)
+        // this.store.dispatch('getCurrentUser', user)
+        this.store.dispatch('modules/user/getCurrentUser', user)
         this.store.dispatch('getAuthPayload', jwtPayload)
     }
 
@@ -53,9 +55,10 @@ class Authentication {
     }
 
     // logoutのみ401エラーを許容して、vuexの値をリセットする
+    // '/api/v1/auth_token',
     async logout() {
         await this.$axios.$delete(
-            '/api/v1/auth_token',
+            '/api/v1/auth_token/logout',
             { validateStatus: status => this.resolveUnauthorized(status)}
         )
         this.resetVuex()

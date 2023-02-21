@@ -79,8 +79,7 @@ export default {
             loading: false,
             errMsg: '',
             params: {
-                user:
-                {
+                user: {
                     nickname: '',
                     email: '',
                     password: '',

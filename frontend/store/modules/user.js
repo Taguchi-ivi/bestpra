@@ -1,71 +1,71 @@
-// import Cookies from 'js-cookie'
-// import jwtDecode from 'jwt-decode'
+
 
 export const state = () => ({
+
+    user: {
+        current: null
+    },
     // userデータ
-    // user: {}
-    userUid: null
+    otherUser: {},
+    editUser: {}
 })
 
 export const getters = {
+
     getUser(state) {
-        // return state.user
-        return state.userUid
+        return state.user.current
+        // return state.currentUser
     },
 
-    isAuthenticated(state) {
-        // return !!state.user && !!state.user.uid
-        return state.userUid !== null
+    getOtherUser(state) {
+        return state.otherUser
+    },
+
+    getEditUser(state) {
+        return state.editUser
     }
+
+    // isCurrentUser(state) {
+    //     // return !!state.user && !!state.user.uid
+    //     // return state.userUid !== null
+    //     return state.user.current.id === state.otherData.id
+    // }
 }
 
 export const actions = {
-    // ログイン処理を実施
-    login({ commit }, user) {
-        // console.log('token取得')
-
-        // console.log(token.PromiseResult)
-        // console.log('↓でdecode')
-        // const decodeToken = jwtDecode(token)
-        // console.log(token.access_token)
-        // const userInfo = {
-        //     email: user.email,
-        //     uid: user.uid
-        // }
-        // console.log(userInfo)
-        // Cookies.set('access_token', token)
-        commit('setUser', user.uid)
+    getCurrentUser ({ commit }, user) {
+        console.log('mutationsOK', user)
+        commit('setCurrentUser', user)
     },
 
-    // ログアウト処理を実施
-    async logout({ commit }) {
-        // const auth = getAuth();
-        // await signOut(auth).then(() => {
-        //     // Sign-out successful.
-        //     // Cookies.remove('access_token')
-        //     commit('setUser', null)
-        // }).catch((error) => {
-        //     // An error happened.
-        //     console.log(error);
-        // })
+    getOtherUser ({ commit }, user) {
+        console.log('mutationsOK', user)
+        commit('setOtherUser', user)
     },
+
+    getEditUser ({ commit }, user) {
+        console.log('mutationsOK', user)
+        commit('setEditUser', user)
+    },
+
 
 
 }
 
 export const mutations = {
 
-    setUser(state, payload) {
-        // state.user.name = payload.name
-        // state.user.email = payload.email
-        // state.user.uid = payload.uid
-        // console.log('mutations action!')
-        // console.log(state.user)
-        state.userUid = payload
-        // console.log(state.user)
-
+    setCurrentUser (state, payload) {
+        state.user.current = payload
+        // state.currentUser = payload
     },
-    // setUid(state, payload) {
-    //     state.user = payload
-    // }
+
+    setOtherUser(state, payload) {
+        // console.log(state.user)
+        state.otherUser = payload
+    },
+
+    setEditUser(state, payload) {
+        // console.log(state.user)
+        state.editUser = payload
+    },
 }
