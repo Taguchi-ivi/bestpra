@@ -11,21 +11,22 @@ Rails.application.routes.draw do
       # users
       # index不要かも
       # resources :users, only: [:index, :show, :create , :edit, :update, :destroy]
-      resources :users, only: [:index, :show, :destroy] do
+      resources :users, only: [:index, :show] do
         # resource :users, only: [:edit]
         get :edit, on: :collection
+        patch :update, on: :collection
       end
 
       # auth_token, 認証周り
       # on collection => user_idがなくてもリクエストが可能に
-      resources :auth_token, only:[:create] do
+      resources :auth_token, only:[:create, :destroy] do
+        # delete :destroy, on: :collection
         post :login, on: :collection
         post :refresh, on: :collection
-        delete :destroy, on: :collection
         # add
         # delete :logout, on: :collection
-        post :update_email, on: :collection
-        post :update_password, on: :collection
+        patch :update_email, on: :collection
+        patch :update_password, on: :collection
         delete :logout, on: :collection
       end
 

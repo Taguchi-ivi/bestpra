@@ -9,36 +9,36 @@
                 dark
                 icons-and-text
             >
-            <v-tabs-slider></v-tabs-slider>
+                <v-tabs-slider></v-tabs-slider>
 
-            <v-tab href="#tab-1">
-                プロフィール
-                <v-icon>mdi-account-edit</v-icon>
-            </v-tab>
+                <v-tab href="#tab-1">
+                    プロフィール
+                    <v-icon>mdi-account-edit</v-icon>
+                </v-tab>
 
-            <v-tab href="#tab-2">
-                メールアドレス
-                <v-icon>mdi-email-edit-outline</v-icon>
-            </v-tab>
+                <v-tab href="#tab-2">
+                    メールアドレス
+                    <v-icon>mdi-email-edit-outline</v-icon>
+                </v-tab>
 
-            <v-tab href="#tab-3">
-                パスワード
-                <v-icon>mdi-key-variant</v-icon>
-            </v-tab>
+                <v-tab href="#tab-3">
+                    パスワード
+                    <v-icon>mdi-key-variant</v-icon>
+                </v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
-                <v-card
-                    flat
+                <v-tab-item
+                    value="tab-1"
                 >
                     <v-card
-                        class="mx-auto"
-                        max-width="800"
-                        color="transparent"
                         flat
                     >
-                        <v-tab-item
-                            :value="tab-1"
+                        <v-card
+                            class="mx-auto pa-5"
+                            max-width="800"
+                            color="transparent"
+                            flat
                         >
                             <v-form>
                                 <v-row
@@ -55,14 +55,28 @@
 
                                             </v-img>
                                         </div>
-                                        <v-avatar
-                                            color="indigo"
-                                            class="align-self-center"
+                                        <!-- class="align-self-center" -->
+                                        <div v-else class="mt-15 text-center">
+                                            <v-avatar
+                                                color="indigo"
                                             >
-                                            <v-icon dark>
-                                                mdi-account-circle
-                                            </v-icon>
-                                        </v-avatar>
+                                                <v-icon dark>
+                                                    mdi-account-circle
+                                                </v-icon>
+                                            </v-avatar>
+                                            <div class="mt-5 text-center">
+                                                <v-btn
+                                                    outlined
+                                                    dark
+                                                    color="indigo"
+                                                    small
+                                                    @click="updateAvatar"
+                                                >
+                                                    画像変更
+                                                </v-btn>
+
+                                            </div>
+                                        </div>
                                     </v-col>
                                     <v-col
                                         cols="9"
@@ -78,7 +92,7 @@
                                         >
                                         </v-text-field>
                                         <v-textarea
-                                            v-model="user.ntroduction"
+                                            v-model="user.introduction"
                                             color="indigo"
                                             name="input-7-1"
                                             label="自己紹介"
@@ -136,13 +150,6 @@
                                             </v-date-picker>
                                         </v-menu>
                                     </div>
-                                    <!-- <v-text-field
-                                        v-model="user.email"
-                                        color="indigo"
-                                        label="E-mail"
-                                        required
-                                    >
-                                    </v-text-field> -->
                                 </v-card>
                                 <div
                                     class="d-flex justify-end"
@@ -158,42 +165,58 @@
                                     </v-btn>
                                 </div>
                             </v-form>
-                        </v-tab-item>
-                        <v-tab-item
-                            :value="tab-2"
+                        </v-card>
+                    </v-card>
+                </v-tab-item>
+                <v-tab-item
+                    value="tab-2"
+                >
+                    <v-card
+                        flat
+                    >
+                        <v-card
+                            class="mx-auto pa-5"
+                            max-width="800"
+                            color="transparent"
+                            flat
                         >
-                            <!-- <v-card flat> -->
-                            <div>{{ text + "b" }}</div>
-                                <v-form>
-                                    <v-text-field
-                                        v-model="email"
+                            <v-form>
+                                <v-text-field
+                                    v-model="email"
+                                    color="indigo"
+                                    label="E-mail"
+                                    required
+                                >
+                                </v-text-field>
+                                <div
+                                    class="d-flex justify-end"
+                                >
+                                <!-- :disabled="!valid" -->
+                                    <v-btn
+                                        dark
                                         color="indigo"
-                                        label="E-mail"
-                                        required
+                                        class="mr-4"
+                                        @click="updateEmail"
                                     >
-                                    </v-text-field>
-                                    <div
-                                        class="d-flex justify-end"
-                                    >
-                                    <!-- :disabled="!valid" -->
-                                        <v-btn
-                                            dark
-                                            color="indigo"
-                                            class="mr-4"
-                                            @click="updateEmail"
-                                        >
-                                            保存
-                                        </v-btn>
-                                    </div>
-                                </v-form>
-                            <!-- </v-card> -->
-                        </v-tab-item>
-                        <v-tab-item
-                            :value="tab-3"
+                                        保存
+                                    </v-btn>
+                                </div>
+                            </v-form>
+                        </v-card>
+                    </v-card>
+                </v-tab-item>
+                <v-tab-item
+                    value="tab-3"
+                >
+                    <v-card
+                        flat
+                    >
+                        <v-card
+                            class="mx-auto pa-5"
+                            max-width="800"
+                            color="transparent"
+                            flat
                         >
-                            <v-card flat>
-                                <v-card-text>{{ text + "c" }}</v-card-text>
-                            </v-card>
                             <v-form>
                                 <user-form-password
                                     :password.sync="params.user.password"
@@ -202,29 +225,27 @@
                                 <user-form-password-again
                                     :password-again.sync="passwordAgain"
                                 />
-                                <v-btn
-                                    dark
-                                    color="indigo"
-                                    class="mr-4"
-                                    @click="updatePassword"
+                                <div
+                                    class="d-flex justify-end"
                                 >
-                                    保存
-                                </v-btn>
+                                    <v-btn
+                                        dark
+                                        color="indigo"
+                                        class="mr-4"
+                                        @click="updatePassword"
+                                    >
+                                        保存
+                                    </v-btn>
+                                </div>
                             </v-form>
-                        </v-tab-item>
-                        <!-- <v-tab-item
-                            v-for="i in 3"
-                            :key="i"
-                            :value="'tab-' + i"
-                        >
-                            <v-card flat>
-                            <v-card-text>{{ text }}</v-card-text>
-                            </v-card>
-                        </v-tab-item> -->
+                        </v-card>
                     </v-card>
-                </v-card>
+                </v-tab-item>
             </v-tabs-items>
         </v-card>
+
+        <!-- <p>{{ user }}</p>
+        <p>{{ 'email =>'  + email }}</p> -->
 
         <!-- <v-form v-model="valid"> -->
     </v-container>
@@ -232,29 +253,31 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import UserFormPassword from '~/components/Atom/UserForm/UserFormPassword'
+import UserFormPasswordAgain from '~/components/Atom/UserForm/UserFormPasswordAgain'
 
 export default {
     async asyncData({ $axios,store }) {
         // const editUser = store.getters['modules/user/getEditUser']
-        await $axios.$get('api/v1/users/edit')
+        const res = await $axios.$get('api/v1/users/edit')
         // await $axios.$get(`api/v1/users/`)
-            .then(res => {
-                console.log(res)
-                // store.dispatch('modules/user/getEditUser', res)
-                return {
-                    user: {
-                        nickname: res.nickname,
-                        introduction: res.introduction,
-                        birthday: res.birthday
-                    },
-                    avatar: res.avatar,
-                    email: res.email,
-                    password: res.password,
-                }
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        console.log(res)
+        // store.dispatch('modules/user/getEditUser', res)
+        return {
+            user: {
+                id: res.id,
+                nickname: res.nickname,
+                introduction: res.introduction,
+                birthday: res.birthday
+            },
+            avatar: res.avatar,
+            email: res.email,
+            // password: res.password,
+        }
+    },
+    components: {
+        UserFormPassword,
+        UserFormPasswordAgain
     },
     data() {
         return {
@@ -301,7 +324,9 @@ export default {
     },
     methods: {
         async updateProfile() {
-            await this.$axios.$patch('api/v1/users/update', this.user)
+            console.log('ok')
+            console.log(this.user)
+            await this.$axios.$patch('/api/v1/users', this.user )
                 .then(res => {
                     console.log(res)
                     const status = true
@@ -320,7 +345,7 @@ export default {
             return this.$store.dispatch('modules/user/getEditUser', null)
         },
         async updateEmail() {
-            await this.$axios.$patch('api/v1/auth_token/update_email',{
+            await this.$axios.$patch('/api/v1/auth_token/update_email',{
                     params: {
                         user: {
                             email: this.email
@@ -348,7 +373,7 @@ export default {
                 const msg = 'パスワードと確認用パスワードが一致しません'
                 return this.$store.dispatch('modules/toast/getToast', { status, msg })
             }
-            await this.$axios.$patch('api/v1/auth_token/update_password',{
+            await this.$axios.$patch('/api/v1/auth_token/update_password',{
                     params: {
                         user: {
                             password: this.email
@@ -368,6 +393,9 @@ export default {
                     const msg = 'パスワードの更新に失敗しました'
                     this.$store.dispatch('modules/toast/getToast', { status, msg })
                 })
+        },
+        updateAvatar() {
+            console.log('ok')
         }
     },
     beforeDestroy () {

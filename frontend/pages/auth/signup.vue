@@ -39,13 +39,13 @@
                 >
                     登録
                 </v-btn>
-                <v-btn
+                <!-- <v-btn
                     class="white--text"
                     color="blue"
                     @click="testBtn"
                 >
                     テスト
-                </v-btn>
+                </v-btn> -->
                 <!-- {{ params.user }} -->
                 <!-- {{ users }} -->
             </v-form>

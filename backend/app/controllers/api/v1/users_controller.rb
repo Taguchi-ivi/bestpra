@@ -42,28 +42,28 @@ class Api::V1::UsersController < ApplicationController
         # end
         # render json: 'Usersupdate'
         if current_user.update(user_params)
-            render json: status: 'ok'
+            render status: :ok
         else
-            render json: status: 'ng'
+            render status: :bad_request
         end
     end
 
-    def destroy
+    # def destroy
 
-        return if current_user.id != @user.id
-        # user = User.find(params[:id])
-        # if user.destroy!
-        #     # flash[:success] = 'Object was successfully deleted.'
-        #     # redirect_to users_url
-        # else
-        #     # flash[:error] = 'Something went wrong'
-        #     # redirect_to users_url
-        # end
+    #     return if current_user.id != @user.id
+    #     # user = User.find(params[:id])
+    #     # if user.destroy!
+    #     #     # flash[:success] = 'Object was successfully deleted.'
+    #     #     # redirect_to users_url
+    #     # else
+    #     #     # flash[:error] = 'Something went wrong'
+    #     #     # redirect_to users_url
+    #     # end
 
-        # user = User.find(params[:id])
-        # user.destroy!
-        render json: 'Usersdestroy'
-    end
+    #     # user = User.find(params[:id])
+    #     # user.destroy!
+    #     render json: 'Usersdestroy'
+    # end
 
     private
         def user_params

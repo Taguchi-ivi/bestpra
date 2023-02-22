@@ -73,7 +73,7 @@
                                     </v-list-item-title>
                                 </v-list-item>
                                 <!-- <v-divider /> -->
-                                <v-list-item>
+                                <!-- <v-list-item>
                                     <v-list-item-icon
                                         class="mr-2"
                                     >
@@ -84,7 +84,58 @@
                                     <v-list-item-title>
                                         削除する
                                     </v-list-item-title>
-                                </v-list-item>
+                                </v-list-item> -->
+                                <v-dialog
+                                    v-model="dialog"
+                                    max-width="290"
+                                >
+                                    <template #activator="{ on, attrs }">
+                                        <v-list-item
+                                            v-bind="attrs"
+                                            v-on="on"
+                                        >
+                                            <v-list-item-icon
+                                                class="mr-2"
+                                            >
+                                                <v-icon
+                                                    size="22"
+                                                >
+                                                    mdi-account-remove
+                                                </v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                削除する
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </template>
+                                    <v-card>
+                                        <v-card-title class="text-h5">
+                                            アカウント削除
+                                        </v-card-title>
+                                        <v-card-text>
+                                            本当によろしいですか？<br />
+                                            ※全てのデータが削除されます
+                                        </v-card-text>
+                                        <v-card-actions>
+                                        <v-spacer />
+                                        <!-- color="green darken-1" -->
+                                        <v-btn
+                                            color="blue"
+                                            text
+                                            @click="dialog = false"
+                                        >
+                                            キャンセル
+                                        </v-btn>
+                                        <v-btn
+                                            color="red"
+                                            text
+                                            @click="accountDelete"
+                                        >
+                                            削除する
+                                        </v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-dialog>
                             </v-list>
                         </v-menu>
                     </div>
@@ -199,8 +250,9 @@ export default {
             tabTitle: 'フォロワー',
             soccerBallImg,
             on: false,
-            introduction: 'testtesttesttesttesttesttesttesttesttesttesttesttesttest',
-            name: 'meron',
+            dialog: false,
+            // introduction: 'testtesttesttesttesttesttesttesttesttesttesttesttesttest',
+            // name: 'meron',
             items: [
                 {
                     icon: 'mdi-account-star',
@@ -271,6 +323,25 @@ export default {
         // Vuexのtoast.msgの値を変更する
         resetOtherUser() {
             return this.$store.dispatch('modules/user/getOtherUser', null)
+        },
+        async accountDelete() {
+            await this.$axios.$delete(`/api/v1/auth_token/${this.otherUser.id}`,{})
+                .then(res => {
+                    // console.log(res)
+                    // this.$auth.login(res)
+                    // const status = true
+                    // const msg = '削除が完了しました'
+                    // this.$store.dispatch('modules/toast/getToast', { status, msg })
+                    this.$auth.resetVuex()
+                    this.$router.push('/about')
+                })
+                .catch( err => {
+                    console.log(err)
+                    const status = true
+                    const msg = 'アカウト削除に失敗しました'
+                    this.$store.dispatch('modules/toast/getToast', { status, msg })
+                })
+            this.dialog = false
         }
     },
     beforeDestroy () {

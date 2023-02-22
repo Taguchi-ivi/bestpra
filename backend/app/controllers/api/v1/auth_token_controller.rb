@@ -41,7 +41,7 @@ class Api::V1::AuthTokenController < ApplicationController
         # 自動更新する => 下記を実装して都度リフレッシュトークンを更新する
         ## 自動更新する前にcookieの値を削除したらリフレッシュできる？
         # delete_session
-        set_refresh_token_to_cookie
+        # set_refresh_token_to_cookie
         render json: login_response
     end
 
@@ -72,8 +72,8 @@ class Api::V1::AuthTokenController < ApplicationController
 
     # ユーザ削除 && cookieの情報を削除する
     def destroy
-        user = User.find(params[:id])
-        return if current_user.id != @user.id
+        delete_user = User.find(params[:id])
+        return if current_user.id != delete_user.id
         if current_user.destroy!
             delete_session if session_user.forget
             cookies[session_key].nil? ?
