@@ -25,9 +25,9 @@ Rails.application.routes.draw do
         post :refresh, on: :collection
         # add
         # delete :logout, on: :collection
+        delete :logout, on: :collection
         patch :update_email, on: :collection
         patch :update_password, on: :collection
-        delete :logout, on: :collection
       end
 
       # projects authenticateメソッド検証用

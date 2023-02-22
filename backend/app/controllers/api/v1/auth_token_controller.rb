@@ -13,7 +13,7 @@ class Api::V1::AuthTokenController < ApplicationController
     before_action :delete_session, only: [:login]
     # session_userを取得、存在しない場合は401を返す
     # before_action :sessionize_user, only: [:refresh, :destroy]
-    before_action :sessionize_user, only: [:logout, :refresh, :destroy, :update_email, :update_password]
+    before_action :sessionize_user, only: [:refresh, :destroy, :logout,:update_email, :update_password]
 
     # 新規作成
     def create
@@ -61,13 +61,24 @@ class Api::V1::AuthTokenController < ApplicationController
         #     render json
         # end
         # render update_email_password
-        update_email_password
-
+        # update_email_password
+        @user = current_user
+        if @user.update!(email: params[:user][:email])
+            update_email_password
+        else
+            render 'update_email_password', status: 400
+        end
     end
 
     # パスワード更新
     def update_password
-        update_email_password
+        # update_email_password
+        @user = current_user
+        if @user.update!(password: params[:user][:password])
+            update_email_password
+        else
+            render 'update_email_password', status: 400
+        end
     end
 
     # ユーザ削除 && cookieの情報を削除する
@@ -176,16 +187,20 @@ class Api::V1::AuthTokenController < ApplicationController
             params.require(:user).permit(:nickname, :email, :password, :avatar, :introduction, :birthday , :basecolor_id, :activated, :admin)
         end
 
+        # def user_params_email
+        #     params.require(:user).permit(:email)
+        #     # params.permit(:email)
+        # end
+
+        # def user_params_password
+        #     params.require(:user).permit(:password)
+        # end
+
         # 一度cookieの情報を削除して、新しい情報に変える
         def update_email_password
-            if current_user.update(user_params)
-                delete_session if session_user.forget
-                set_refresh_token_to_cookie
-                render status: :ok
-            else
-                msg = "update error"
-                # render json: 401, json { status: 401, error: msg}
-                render 'update_email_password', status: 400
-            end
+            delete_session if session_user.forget
+            set_refresh_token_to_cookie
+            render json: login_response
+            # render status: :ok
         end
 end

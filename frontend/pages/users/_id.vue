@@ -339,7 +339,8 @@ export default {
                     console.log(err)
                     const status = true
                     const msg = 'アカウト削除に失敗しました'
-                    this.$store.dispatch('modules/toast/getToast', { status, msg })
+                    const color = 'error'
+                    this.$store.dispatch('modules/toast/getToast', { status, msg, color })
                 })
             this.dialog = false
         }

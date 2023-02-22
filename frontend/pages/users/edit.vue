@@ -219,7 +219,7 @@
                         >
                             <v-form>
                                 <user-form-password
-                                    :password.sync="params.user.password"
+                                    :password.sync="password"
                                     set-validation
                                 />
                                 <user-form-password-again
@@ -244,8 +244,8 @@
             </v-tabs-items>
         </v-card>
 
-        <!-- <p>{{ user }}</p>
-        <p>{{ 'email =>'  + email }}</p> -->
+        <p>{{ user }}</p>
+        <p>{{ 'email =>'  + email }}</p>
 
         <!-- <v-form v-model="valid"> -->
     </v-container>
@@ -257,6 +257,7 @@ import UserFormPassword from '~/components/Atom/UserForm/UserFormPassword'
 import UserFormPasswordAgain from '~/components/Atom/UserForm/UserFormPasswordAgain'
 
 export default {
+    name: 'UsersEdit',
     async asyncData({ $axios,store }) {
         // const editUser = store.getters['modules/user/getEditUser']
         const res = await $axios.$get('api/v1/users/edit')
@@ -294,11 +295,7 @@ export default {
             },
             avatar: [],
             email: '',
-            params: {
-                user: {
-                    password: '',
-                }
-            },
+            password: '',
             passwordAgain: ''
         }
     },
@@ -328,7 +325,13 @@ export default {
             console.log(this.user)
             await this.$axios.$patch('/api/v1/users', this.user )
                 .then(res => {
-                    console.log(res)
+                    // console.log(res)
+                    this.$store.dispatch('modules/user/getCurrentUser', {
+                        id: this.currentUser.id,
+                        nickname: this.user.nickname,
+                        // introduction: this.user.introduction,
+                        // birthday: this.user.birthday
+                    })
                     const status = true
                     const msg = 'プロフィールを更新しました'
                     const color = 'info'
@@ -345,14 +348,15 @@ export default {
             return this.$store.dispatch('modules/user/getEditUser', null)
         },
         async updateEmail() {
-            await this.$axios.$patch('/api/v1/auth_token/update_email',{
-                    params: {
-                        user: {
-                            email: this.email
-                        }
-                    }})
+            const params = {
+                user: {
+                    email: this.email,
+                }
+            }
+            // console.log(this.email)
+            await this.$axios.$patch('/api/v1/auth_token/update_email', params)
                 .then(res => {
-                    console.log(res)
+                    // console.log(res)
                     this.$auth.login(res)
                     const status = true
                     const msg = 'メールアドレスの更新しました'
@@ -363,22 +367,24 @@ export default {
                     console.log(err)
                     const status = true
                     const msg = 'メールアドレスの更新に失敗しました'
-                    this.$store.dispatch('modules/toast/getToast', { status, msg })
+                    const color = 'error'
+                    this.$store.dispatch('modules/toast/getToast', { status, msg, color })
                 })
         },
         async updatePassword() {
-            const password = this.params.user.password
+            const password = this.password
             if(password !== this.passwordAgain) {
                 const status = true
                 const msg = 'パスワードと確認用パスワードが一致しません'
-                return this.$store.dispatch('modules/toast/getToast', { status, msg })
+                const color = 'error'
+                return this.$store.dispatch('modules/toast/getToast', { status, msg, color })
             }
-            await this.$axios.$patch('/api/v1/auth_token/update_password',{
-                    params: {
-                        user: {
-                            password: this.email
-                        }
-                    }})
+            const params = {
+                user: {
+                    password,
+                }
+            }
+            await this.$axios.$patch('/api/v1/auth_token/update_password',params)
                 .then(res => {
                     console.log(res)
                     this.$auth.login(res)
@@ -391,7 +397,8 @@ export default {
                     console.log(err)
                     const status = true
                     const msg = 'パスワードの更新に失敗しました'
-                    this.$store.dispatch('modules/toast/getToast', { status, msg })
+                    const color = 'error'
+                    this.$store.dispatch('modules/toast/getToast', { status, msg, color })
                 })
         },
         updateAvatar() {
