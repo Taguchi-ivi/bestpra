@@ -10,11 +10,14 @@
                 <v-col
                     cols="2"
                 >
-                    <v-avatar color="indigo">
-                        <v-icon dark>
+                    <!-- <v-avatar>
+                        <v-icon>
                             mdi-account-circle
                         </v-icon>
-                    </v-avatar>
+                    </v-avatar> -->
+                    <AvatarImg
+                        :avatar="otherUser.avatar"
+                    />
                     <!-- <p>{{ name }}</p> -->
                     <p>{{ otherUser.nickname }}</p>
                 </v-col>
@@ -238,12 +241,14 @@ import { mapGetters } from 'vuex'
 import soccerBallImg from '~/assets/img/ball/soccer-ball.png'
 import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 import CardArticle from '~/components/Organisms/Card/CardArticle.vue'
+import AvatarImg from '~/components/Atom/App/AppAvatarImg.vue'
 
 export default {
     name: 'UsersProfile',
     components: {
         MainTitle,
-        CardArticle
+        CardArticle,
+        AvatarImg,
     },
     data() {
         return {

@@ -51,6 +51,7 @@
                                         <div
                                             class="d-flex justify-center"
                                         >
+                                        <!-- TODO avatarComponentsに集約できるか検証必要 -->
                                             <div v-if="avatar.url">
                                                 <v-img
                                                     :src="preview.url ? preview.url : avatar.url"
@@ -59,13 +60,16 @@
                                             </div>
                                             <!-- class="align-self-center" -->
                                             <div v-else class="mt-15">
-                                                <v-avatar
+                                                <!-- <v-avatar
                                                     color="indigo"
                                                 >
                                                     <v-icon dark>
                                                         mdi-account-circle
                                                     </v-icon>
-                                                </v-avatar>
+                                                </v-avatar> -->
+                                                <AvatarImg
+                                                    :avatar="avatar"
+                                                />
                                             </div>
                                             <div class="mt-5 text-center">
                                                 <!-- <v-btn
@@ -293,6 +297,7 @@
 import { mapGetters } from 'vuex'
 import UserFormPassword from '~/components/Atom/UserForm/UserFormPassword'
 import UserFormPasswordAgain from '~/components/Atom/UserForm/UserFormPasswordAgain'
+import AvatarImg from '~/components/Atom/App/AppAvatarImg.vue'
 
 export default {
     name: 'UsersEdit',
@@ -316,7 +321,8 @@ export default {
     },
     components: {
         UserFormPassword,
-        UserFormPasswordAgain
+        UserFormPasswordAgain,
+        AvatarImg,
     },
     data() {
         return {
@@ -393,7 +399,11 @@ export default {
             this.$refs.menu.save(date)
         },
         resetVuex() {
-            this.$store.dispatch('modules/toast/getToast', null)
+            this.$store.dispatch('modules/toast/getToast',{
+                status: false,
+                msg: null,
+                color: null,
+            })
             return this.$store.dispatch('modules/user/getEditUser', null)
         },
         async updateEmail() {

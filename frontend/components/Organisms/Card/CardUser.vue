@@ -15,14 +15,23 @@
                 <div
                     class="d-flex justify-start"
                 >
-                    <v-list-item-avatar
+                    <!-- <v-list-item-avatar
                         color="indigo"
                         class="ml-3"
                     >
                         <v-icon dark>
                             mdi-account-circle
                         </v-icon>
-                    </v-list-item-avatar>
+                    </v-list-item-avatar> -->
+                    <!-- TODO 対象のIDを付与する -->
+                    <div
+                        class="pa-5"
+                    >
+                        <AvatarSwitch
+                            :avatar="avatar"
+                        />
+
+                    </div>
                     <div>
                         <div class="text-h6 mt-3">this.name</div>
                         <div class="text-caption mr-auto">フォロー済み</div>
@@ -35,3 +44,19 @@
         </v-col>
     </v-row>
 </template>
+
+<script>
+import AvatarSwitch from '~/components/Molecules/AvatarSwitch.vue'
+export default {
+    components: {
+        AvatarSwitch,
+    },
+    data() {
+        return {
+            avatar: {
+                url: ''
+            }
+        }
+    }
+}
+</script>

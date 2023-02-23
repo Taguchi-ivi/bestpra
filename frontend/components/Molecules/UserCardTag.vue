@@ -5,14 +5,19 @@
         <v-col
             cols="3"
         >
-            <v-list-item-avatar
-                color="indigo"
+            <!-- <v-list-item-avatar
                 class="ml-3"
-                >
-                <v-icon dark>
+            > -->
+                <!-- <v-icon dark>
                     mdi-account-circle
-                </v-icon>
-            </v-list-item-avatar>
+                </v-icon> -->
+                <div class="ml-3">
+                    <!-- TODO idを対象のIDを付与すること -->
+                    <AvatarSwitch
+                        :avatar="avatar"
+                    />
+                </div>
+            <!-- </v-list-item-avatar> -->
         </v-col>
         <v-col
             cols="9"
@@ -49,3 +54,20 @@
         </v-col>
     </v-row>
 </template>
+
+<script>
+import AvatarSwitch from '~/components/Molecules/AvatarSwitch.vue'
+
+export default {
+    components: {
+        AvatarSwitch,
+    },
+    data() {
+        return {
+            avatar: {
+                url: ''
+            }
+        }
+    }
+}
+</script>

@@ -53,7 +53,11 @@ export default {
     methods: {
         // Vuexのtoast.msgの値を変更する
         resetToast () {
-            return this.$store.dispatch('modules/toast/getToast', { msg: null })
+            return this.$store.dispatch('modules/toast/getToast', {
+                status: false,
+                msg: null,
+                color: null,
+            })
         }
     }
 }

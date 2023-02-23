@@ -5,20 +5,25 @@
     <!-- trueではない場合はシンプルにlinkを作成してその人のprofileページへ -->
     <!-- <h1>avatarのcomponentを作成したい</h1> -->
     <div>
+        <!-- <div v-if="avatar.url"> -->
         <div v-if="avatar.url">
-            <v-img
-                :src="avatar.url"
+            <v-avatar
+                :size="size"
             >
-
-            </v-img>
+                <img
+                    :src="avatar.url"
+                    alt="avatar"
+                >
+            </v-avatar>
         </div>
         <div v-else>
             <v-avatar
-                color="indigo"
                 class="align-self-center"
                 :size="size"
+            >
+                <v-icon
+                    :size="size"
                 >
-                <v-icon dark>
                     mdi-account-circle
                 </v-icon>
             </v-avatar>
@@ -30,13 +35,14 @@
 
 export default {
     props: {
+        // sizeの調整はAvatar-switch-componentsも修正する
         size: {
             type: Number,
-            default: 33
+            default: 40
         },
         avatar: {
-            type: Array,
-            default: {}
+            type: Object,
+            default:  () => {}
         }
     },
 }
