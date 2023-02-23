@@ -31,18 +31,16 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def update
-        # @user = User.find(params[:id])
-        # if @user.update(user_params)
-        # if @user.update_attributes(params[:user])
-        #     # flash[:success] = "Object was successfully updated"
-        #     # redirect_to @user
-        # else
-        #     # flash[:error] = "Something went wrong"
-        #     # render 'edit'
-        # end
-        # render json: 'Usersupdate'
         if current_user.update(user_params)
             render status: :ok
+        else
+            render status: :bad_request
+        end
+    end
+
+    def update_avatar
+        if current_user.update!(avatar: params[:user][:avatar])
+            render current_user
         else
             render status: :bad_request
         end

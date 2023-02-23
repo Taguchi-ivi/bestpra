@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         # resource :users, only: [:edit]
         get :edit, on: :collection
         patch :update, on: :collection
+        patch :update_avatar, on: :collection
       end
 
       # auth_token, 認証周り

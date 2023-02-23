@@ -46,26 +46,29 @@
                                 >
                                     <v-col
                                         cols="3"
-                                        class="d-flex"
                                     >
-                                        <div v-if="avatar.url">
-                                            <v-img
-                                                :src="avatar.img"
-                                            >
-
-                                            </v-img>
-                                        </div>
-                                        <!-- class="align-self-center" -->
-                                        <div v-else class="mt-15 text-center">
-                                            <v-avatar
-                                                color="indigo"
-                                            >
-                                                <v-icon dark>
-                                                    mdi-account-circle
-                                                </v-icon>
-                                            </v-avatar>
+                                        <!-- <v-form> -->
+                                        <div
+                                            class="d-flex justify-center"
+                                        >
+                                            <div v-if="avatar.url">
+                                                <v-img
+                                                    :src="preview.url ? preview.url : avatar.url"
+                                                >
+                                                </v-img>
+                                            </div>
+                                            <!-- class="align-self-center" -->
+                                            <div v-else class="mt-15">
+                                                <v-avatar
+                                                    color="indigo"
+                                                >
+                                                    <v-icon dark>
+                                                        mdi-account-circle
+                                                    </v-icon>
+                                                </v-avatar>
+                                            </div>
                                             <div class="mt-5 text-center">
-                                                <v-btn
+                                                <!-- <v-btn
                                                     outlined
                                                     dark
                                                     color="indigo"
@@ -73,10 +76,45 @@
                                                     @click="updateAvatar"
                                                 >
                                                     画像変更
-                                                </v-btn>
-
+                                                </v-btn> -->
+                                                <div v-if="preview.url && preview.flg">
+                                                    <v-btn
+                                                        icon
+                                                        dark
+                                                        color="black"
+                                                        @click="deletePreview"
+                                                    >
+                                                        <v-icon>x</v-icon>
+                                                    </v-btn>
+                                                </div>
+                                                <div v-if="!preview.flg">
+                                                    <v-file-input
+                                                        v-model="imgFile"
+                                                        hide-input
+                                                        small-chips
+                                                        prepend-icon="mdi-image-plus"
+                                                        @change="fileChange"
+                                                    >
+                                                    </v-file-input>
+                                                </div>
                                             </div>
                                         </div>
+                                        <div
+                                            v-if="preview.flg"
+                                            class="mt-5 text-center"
+                                        >
+                                            <v-btn
+                                                outlined
+                                                dark
+                                                color="indigo"
+                                                small
+                                                :loading="updateAvatarLoading"
+                                                @click="updateAvatar"
+                                            >
+                                                画像変更
+                                            </v-btn>
+                                        </div>
+                                        <!-- </v-form> -->
                                     </v-col>
                                     <v-col
                                         cols="9"
@@ -244,8 +282,8 @@
             </v-tabs-items>
         </v-card>
 
-        <p>{{ user }}</p>
-        <p>{{ 'email =>'  + email }}</p>
+        <!-- <p>{{ user }}</p>
+        <p>{{ 'email =>'  + email }}</p> -->
 
         <!-- <v-form v-model="valid"> -->
     </v-container>
@@ -283,7 +321,6 @@ export default {
     data() {
         return {
             tab: null,
-            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit,',
             // date: null,
             activePicker: null,
             menu: false,
@@ -296,7 +333,13 @@ export default {
             avatar: [],
             email: '',
             password: '',
-            passwordAgain: ''
+            passwordAgain: '',
+            preview: {
+                url: '',
+                flg: false
+            },
+            imgFile: {},
+            updateAvatarLoading: false,
         }
     },
     computed: {
@@ -332,10 +375,15 @@ export default {
                         // introduction: this.user.introduction,
                         // birthday: this.user.birthday
                     })
-                    const status = true
-                    const msg = 'プロフィールを更新しました'
-                    const color = 'info'
-                    this.$store.dispatch('modules/toast/getToast', { status, msg, color })
+                    // const status = true
+                    // const msg = 'プロフィールを更新しました'
+                    // const color = 'info'
+                    // this.$store.dispatch('modules/toast/getToast', { status, msg, color })
+                    this.$store.dispatch('modules/toast/getToast', {
+                        status: true,
+                        msg: 'プロフィールを更新しました',
+                        color: 'info'
+                    })
                 })
                 .catch(err => {
                     console.log(err)
@@ -344,7 +392,8 @@ export default {
         save (date) {
             this.$refs.menu.save(date)
         },
-        resetEditUser() {
+        resetVuex() {
+            this.$store.dispatch('modules/toast/getToast', null)
             return this.$store.dispatch('modules/user/getEditUser', null)
         },
         async updateEmail() {
@@ -358,26 +407,41 @@ export default {
                 .then(res => {
                     // console.log(res)
                     this.$auth.login(res)
-                    const status = true
-                    const msg = 'メールアドレスの更新しました'
-                    const color = 'info'
-                    this.$store.dispatch('modules/toast/getToast', { status, msg, color })
+                    // const status = true
+                    // const msg = 'メールアドレスの更新しました'
+                    // const color = 'info'
+                    // this.$store.dispatch('modules/toast/getToast', { status, msg, color })
+                    this.$store.dispatch('modules/toast/getToast', {
+                        status: true,
+                        msg: 'メールアドレスの更新しました',
+                        color: 'info'
+                    })
                 })
                 .catch( err => {
                     console.log(err)
-                    const status = true
-                    const msg = 'メールアドレスの更新に失敗しました'
-                    const color = 'error'
-                    this.$store.dispatch('modules/toast/getToast', { status, msg, color })
+                    // const status = true
+                    // const msg = 'メールアドレスの更新に失敗しました'
+                    // const color = 'error'
+                    // this.$store.dispatch('modules/toast/getToast', { status, msg, color })
+                    this.$store.dispatch('modules/toast/getToast', {
+                        status: true,
+                        msg: 'メールアドレスの更新に失敗しました',
+                        color: 'error'
+                    })
                 })
         },
         async updatePassword() {
             const password = this.password
             if(password !== this.passwordAgain) {
-                const status = true
-                const msg = 'パスワードと確認用パスワードが一致しません'
-                const color = 'error'
-                return this.$store.dispatch('modules/toast/getToast', { status, msg, color })
+                // const status = true
+                // const msg = 'パスワードと確認用パスワードが一致しません'
+                // const color = 'error'
+                // return this.$store.dispatch('modules/toast/getToast', { status, msg, color })
+                return this.$store.dispatch('modules/toast/getToast', {
+                    status: true,
+                    msg: 'パスワードと確認用パスワードが一致しません',
+                    color: 'error'
+                })
             }
             const params = {
                 user: {
@@ -388,26 +452,74 @@ export default {
                 .then(res => {
                     console.log(res)
                     this.$auth.login(res)
-                    const status = true
-                    const msg = 'パスワードの更新しました'
-                    const color = 'info'
-                    this.$store.dispatch('modules/toast/getToast', { status, msg, color })
+                    // const status = true
+                    // const msg = 'パスワードの更新しました'
+                    // const color = 'info'
+                    // this.$store.dispatch('modules/toast/getToast', { status, msg, color })
+                    this.$store.dispatch('modules/toast/getToast', {
+                        status: true,
+                        msg: 'パスワードの更新しました',
+                        color: 'info'
+                    })
                 })
                 .catch( err => {
                     console.log(err)
-                    const status = true
-                    const msg = 'パスワードの更新に失敗しました'
-                    const color = 'error'
-                    this.$store.dispatch('modules/toast/getToast', { status, msg, color })
+                    // const status = true
+                    // const msg = 'パスワードの更新に失敗しました'
+                    // const color = 'error'
+                    // this.$store.dispatch('modules/toast/getToast', { status, msg, color })
+                    this.$store.dispatch('modules/toast/getToast', {
+                        status: true,
+                        msg: 'パスワードの更新に失敗しました',
+                        color: 'error'
+                    })
                 })
         },
-        updateAvatar() {
-            console.log('ok')
+        fileChange() {
+            console.log('これはimgFile',this.imgFile)
+            this.preview.flg = true
+            // this.preview.url = window.URL.createObjectURL(imgFile)
+        },
+        async updateAvatar() {
+            this.updateAvatarLoading = true
+            console.log(this.avatar)
+            const params = {
+                user: {
+                    avatar: this.avatar
+                }
+            }
+            await this.$axios.$patch('/api/v1/users/update_avatar',params)
+                .then(res => {
+                    console.log(res)
+                    this.$auth.login(res)
+                    // const status = true
+                    // const msg = 'アイコンを更新しました'
+                    // const color = 'info'
+                    this.$store.dispatch('modules/toast/getToast', {
+                        status: true,
+                        msg: 'アイコンを更新しました',
+                        color: 'info'
+                    })
+                })
+                .catch( err => {
+                    console.log(err)
+                    // const status = true
+                    // const msg = 'アイコンの更新に失敗しました'
+                    // const color = 'error'
+                    this.$store.dispatch('modules/toast/getToast',{
+                        status: true,
+                        msg: 'アイコンの更新に失敗しました',
+                        color: 'error'
+                    })
+                })
+            this.updateAvatarLoading = false
+        },
+        deletePreview() {
+            this.preview = {url: '',flg: false}
         }
     },
     beforeDestroy () {
-        // Vueインスタンスが破棄される直前にVuexのtoast.msgを削除する(無期限toastに対応)
-        this.resetEditUser()
+        this.resetVuex()
     },
 }
 </script>

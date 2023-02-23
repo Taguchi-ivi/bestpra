@@ -47,9 +47,11 @@
 
                 <v-list-item>
                     <v-list-item-content>
-                        <v-list-item-subtitle>
-                            {{ $auth.user.nickname }}
-                        </v-list-item-subtitle>
+                        <v-list-item :to="`/users/${$auth.user.id}`">
+                            <v-list-item-subtitle>
+                                {{ $auth.user.nickname }}
+                            </v-list-item-subtitle>
+                        </v-list-item>
                     </v-list-item-content>
                 </v-list-item>
 
