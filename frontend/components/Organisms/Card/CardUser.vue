@@ -28,7 +28,7 @@
                         class="pa-5"
                     >
                         <AvatarSwitch
-                            :avatar="avatar"
+                            :avatarUrl="avatarUrl"
                         />
 
                     </div>
@@ -53,9 +53,7 @@ export default {
     },
     data() {
         return {
-            avatar: {
-                url: ''
-            }
+            avatarUrl: ''
         }
     }
 }

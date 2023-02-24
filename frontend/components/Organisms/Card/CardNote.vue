@@ -42,7 +42,7 @@
                             </v-icon>
                         </v-list-item-avatar> -->
                         <AvatarSwitch
-                            :avatar="avatar"
+                            :avatarUrl="avatarUrl"
                             :id="1"
                         />
                         <v-card-title>
@@ -84,9 +84,7 @@ export default {
     },
     data() {
         return {
-            avatar: {
-                url: '',
-            }
+            avatarUrl: ''
         }
     }
 }

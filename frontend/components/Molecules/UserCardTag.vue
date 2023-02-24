@@ -14,7 +14,7 @@
                 <div class="ml-3">
                     <!-- TODO idを対象のIDを付与すること -->
                     <AvatarSwitch
-                        :avatar="avatar"
+                        :avatarUrl="avatarUrl"
                     />
                 </div>
             <!-- </v-list-item-avatar> -->
@@ -64,9 +64,7 @@ export default {
     },
     data() {
         return {
-            avatar: {
-                url: ''
-            }
+            avatarUrl: ''
         }
     }
 }

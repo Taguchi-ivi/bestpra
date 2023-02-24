@@ -16,7 +16,7 @@
                         </v-icon>
                     </v-avatar> -->
                     <AvatarImg
-                        :avatar="otherUser.avatar"
+                        :avatar="otherUser.avatar.url"
                     />
                     <!-- <p>{{ name }}</p> -->
                     <p>{{ otherUser.nickname }}</p>

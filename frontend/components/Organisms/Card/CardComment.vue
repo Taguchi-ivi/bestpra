@@ -18,7 +18,7 @@
                 <!-- TODO 対象のidを付与する -->
                 <AvatarSwitch
                     :id="1"
-                    :avatar="avatar"
+                    :avatarUrl="avatarUrl"
                 />
             </div>
             <div class="ml-5">
@@ -39,9 +39,7 @@ export default {
     },
     data() {
         return {
-            avatar: {
-                url: '',
-            }
+            avatarUrl: ''
         }
     }
 }

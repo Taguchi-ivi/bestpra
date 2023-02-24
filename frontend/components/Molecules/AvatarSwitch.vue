@@ -24,7 +24,7 @@
                         </v-icon> -->
                         <AvatarImg
                             :size="size"
-                            :avatar="avatar"
+                            :avatarUrl="avatarUrl"
                         />
                     </v-btn>
                 </template>
@@ -138,14 +138,14 @@
                 >
                     <AvatarImg
                         :size="Number(size)"
-                        :avatar="avatar"
+                        :avatarUrl="avatarUrl"
                     />
                 </nuxt-link>
             </div>
             <div v-else>
                 <AvatarImg
                     :size="Number(size)"
-                    :avatar="avatar"
+                    :avatarUrl="avatarUrl"
                 />
             </div>
         </div>
@@ -170,9 +170,9 @@ export default {
             type: Boolean,
             default: false
         },
-        avatar: {
-            type: Object,
-            default: () => {}
+        avatarUrl: {
+            type: String,
+            default: ''
         },
         id: {
             type: Number,
@@ -184,7 +184,7 @@ export default {
             on: false,
             dialog: false,
             Menus: [
-                { name: 'アカウント設定', icon: 'mdi-account-cog', divider: false, path: '/users/edit' },
+                { name: 'アカウント修正', icon: 'mdi-account-cog', divider: false, path: '/users/edit' },
                 { name: 'help', icon: 'mdi-chat-question', divider: false, path: '/help'},
             ],
         }

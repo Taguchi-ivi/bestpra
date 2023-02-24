@@ -6,12 +6,12 @@
     <!-- <h1>avatarのcomponentを作成したい</h1> -->
     <div>
         <!-- <div v-if="avatar.url"> -->
-        <div v-if="avatar.url">
+        <div v-if="avatarUrl">
             <v-avatar
                 :size="size"
             >
                 <img
-                    :src="avatar.url"
+                    :src="avatarUrl"
                     alt="avatar"
                 >
             </v-avatar>
@@ -40,9 +40,9 @@ export default {
             type: Number,
             default: 40
         },
-        avatar: {
-            type: Object,
-            default:  () => {}
+        avatarUrl: {
+            type: String,
+            default: ''
         }
     },
 }

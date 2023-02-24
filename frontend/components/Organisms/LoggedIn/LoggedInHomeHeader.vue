@@ -24,7 +24,7 @@
         <AvatarSwitch
             headerFlg
             :size="33"
-            :avatar="$auth.user.avatar"
+            :avatarUrl="$auth.user.avatar.url"
             :id="Number($auth.user.id)"
         />
     </v-app-bar>

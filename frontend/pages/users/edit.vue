@@ -52,50 +52,38 @@
                                             class="d-flex justify-center"
                                         >
                                         <!-- TODO avatarComponentsに集約できるか検証必要 -->
-                                            <div v-if="avatar.url">
-                                                <v-img
-                                                    :src="preview.url ? preview.url : avatar.url"
-                                                >
-                                                </v-img>
-                                            </div>
-                                            <!-- class="align-self-center" -->
-                                            <div v-else class="mt-15">
-                                                <!-- <v-avatar
-                                                    color="indigo"
-                                                >
-                                                    <v-icon dark>
-                                                        mdi-account-circle
-                                                    </v-icon>
-                                                </v-avatar> -->
-                                                <AvatarImg
-                                                    :avatar="avatar"
-                                                />
+                                            <div class="mt-15">
+                                                <div v-if="preview.url">
+                                                    <AvatarImg
+                                                        :avatarUrl="preview.url"
+                                                        :size="48"
+                                                    />
+                                                </div>
+                                                <!-- class="align-self-center" -->
+                                                <div v-else>
+                                                    <AvatarImg
+                                                        :avatarUrl="avatar.url"
+                                                        :size="48"
+                                                    />
+                                                </div>
                                             </div>
                                             <div class="mt-5 text-center">
-                                                <!-- <v-btn
-                                                    outlined
-                                                    dark
-                                                    color="indigo"
-                                                    small
-                                                    @click="updateAvatar"
-                                                >
-                                                    画像変更
-                                                </v-btn> -->
                                                 <div v-if="preview.url && preview.flg">
-                                                    <v-btn
-                                                        icon
-                                                        dark
-                                                        color="black"
-                                                        @click="deletePreview"
-                                                    >
-                                                        <v-icon>x</v-icon>
-                                                    </v-btn>
+                                                    <div class="mb-auto">
+                                                        <v-btn
+                                                            icon
+                                                            dark
+                                                            color="black"
+                                                            @click="deletePreview"
+                                                        >
+                                                            <v-icon>mdi-alpha-x-circle</v-icon>
+                                                        </v-btn>
+                                                    </div>
                                                 </div>
                                                 <div v-if="!preview.flg">
                                                     <v-file-input
                                                         v-model="imgFile"
                                                         hide-input
-                                                        small-chips
                                                         prepend-icon="mdi-image-plus"
                                                         @change="fileChange"
                                                     >
@@ -301,6 +289,11 @@ import AvatarImg from '~/components/Atom/App/AppAvatarImg.vue'
 
 export default {
     name: 'UsersEdit',
+    components: {
+        UserFormPassword,
+        UserFormPasswordAgain,
+        AvatarImg,
+    },
     async asyncData({ $axios,store }) {
         // const editUser = store.getters['modules/user/getEditUser']
         const res = await $axios.$get('api/v1/users/edit')
@@ -319,11 +312,6 @@ export default {
             // password: res.password,
         }
     },
-    components: {
-        UserFormPassword,
-        UserFormPasswordAgain,
-        AvatarImg,
-    },
     data() {
         return {
             tab: null,
@@ -336,13 +324,15 @@ export default {
                 introduction: '',
                 birthday: ''
             },
-            avatar: [],
+            avatar: {},
             email: '',
             password: '',
             passwordAgain: '',
             preview: {
-                url: '',
-                flg: false
+                // url: '',
+                img: {},
+                flg: false,
+                url: ''
             },
             imgFile: {},
             updateAvatarLoading: false,
@@ -351,7 +341,7 @@ export default {
     computed: {
         ...mapGetters({
             currentUser: 'modules/user/getUser',
-            editUser: 'modules/user/getEditUser',
+            // editUser: 'modules/user/getEditUser',
         }),
         dateFormat() {
             // date => birthday
@@ -368,6 +358,9 @@ export default {
             val && setTimeout(() => (this.activePicker = 'YEAR'))
         },
     },
+    beforeDestroy () {
+        this.resetVuex()
+    },
     methods: {
         async updateProfile() {
             console.log('ok')
@@ -378,8 +371,9 @@ export default {
                     this.$store.dispatch('modules/user/getCurrentUser', {
                         id: this.currentUser.id,
                         nickname: this.user.nickname,
-                        // introduction: this.user.introduction,
-                        // birthday: this.user.birthday
+                        avatar: this.currentUser.avatar,
+                        admin: this.currentUser.admin,
+                        sub: this.currentUser.sub,
                     })
                     // const status = true
                     // const msg = 'プロフィールを更新しました'
@@ -404,7 +398,7 @@ export default {
                 msg: null,
                 color: null,
             })
-            return this.$store.dispatch('modules/user/getEditUser', null)
+            // return this.$store.dispatch('modules/user/getEditUser', null)
         },
         async updateEmail() {
             const params = {
@@ -485,26 +479,46 @@ export default {
                     })
                 })
         },
-        fileChange() {
-            console.log('これはimgFile',this.imgFile)
+        fileChange(event) {
             this.preview.flg = true
-            // this.preview.url = window.URL.createObjectURL(imgFile)
+            // this.preview.img = event.target.File[0]
+            this.preview.img = this.imgFile
+            this.preview.url = window.URL.createObjectURL(this.imgFile)
         },
         async updateAvatar() {
-            this.updateAvatarLoading = true
-            console.log(this.avatar)
-            const params = {
-                user: {
-                    avatar: this.avatar
-                }
+            if(!this.preview.flg) {
+                return this.$store.dispatch('modules/toast/getToast', {
+                        status: true,
+                        msg: 'アイコンが更新されてません',
+                        color: 'error'
+                    })
             }
-            await this.$axios.$patch('/api/v1/users/update_avatar',params)
+            this.updateAvatarLoading = true
+            const formData = new FormData()
+            formData.append('user[avatar]', this.preview.img)
+            // const config = {
+            // header: {
+            //     "Content-Type": "multipart/form-data",
+            // }}
+            // await this.$axios.$patch('/api/v1/users/update_avatar', formData, config)
+            await this.$axios.$patch('/api/v1/users/update_avatar', formData)
                 .then(res => {
-                    console.log(res)
-                    this.$auth.login(res)
+                    // console.log(res)
+                    this.$store.dispatch('modules/user/getCurrentUser', {
+                        id: this.currentUser.id,
+                        nickname: this.currentUser.nickname,
+                        avatar: res.avatar,
+                        admin: this.currentUser.admin,
+                        sub: this.currentUser.sub,
+
+                    })
+                    this.avatar = res.avatar
                     // const status = true
                     // const msg = 'アイコンを更新しました'
                     // const color = 'info'
+                    this.preview.flg = false
+                    this.preview.url = null
+                    this.preview.img = {}
                     this.$store.dispatch('modules/toast/getToast', {
                         status: true,
                         msg: 'アイコンを更新しました',
@@ -525,11 +539,8 @@ export default {
             this.updateAvatarLoading = false
         },
         deletePreview() {
-            this.preview = {url: '',flg: false}
+            this.preview = {url: null,flg: false, img: {}}
         }
-    },
-    beforeDestroy () {
-        this.resetVuex()
     },
 }
 </script>

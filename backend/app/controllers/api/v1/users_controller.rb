@@ -38,35 +38,21 @@ class Api::V1::UsersController < ApplicationController
         end
     end
 
+    # TODO S3にアップロードする
     def update_avatar
+        # @user = current_user
         if current_user.update!(avatar: params[:user][:avatar])
-            render current_user
+            render json: current_user
         else
             render status: :bad_request
         end
     end
 
-    # def destroy
-
-    #     return if current_user.id != @user.id
-    #     # user = User.find(params[:id])
-    #     # if user.destroy!
-    #     #     # flash[:success] = 'Object was successfully deleted.'
-    #     #     # redirect_to users_url
-    #     # else
-    #     #     # flash[:error] = 'Something went wrong'
-    #     #     # redirect_to users_url
-    #     # end
-
-    #     # user = User.find(params[:id])
-    #     # user.destroy!
-    #     render json: 'Usersdestroy'
-    # end
 
     private
         def user_params
-            # params.require(:user).permit(:nickname, :email, :avatar, :introduction, :birthday , :basecok_id )
-            params.require(:user).permit(:id, :nickname, :email, :password, :avatar, :introduction, :birthday , :basecolor_id, :activated, :admin)
+            # params.require(:user).permit(:id, :nickname, :introduction, :birthday , :basecolor_id, :activated, :admin)
+            params.require(:user).permit(:id, :nickname, :introduction, :birthday)
         end
 
         def set_user
