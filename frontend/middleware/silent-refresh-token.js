@@ -16,8 +16,8 @@ export default async ({ $auth, $axios, store, route, redirect, isDev }) => {
                     return redirect('/about')
                 } else {
                     const status = true
-                    const msg = 'セッションの有効期限が切れました。' +
-                                'もう一度ログインしてください'
+                    const msg = "セッションの有効期限が切れました。\n" +
+                                "もう一度ログインしてください"
                     const color = 'error'
 
                     redirect(`/auth/signin?redirect=${route.fullPath}`)

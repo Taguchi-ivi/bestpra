@@ -152,9 +152,9 @@ export default {
             this.image = window.URL.createObjectURL(file)
         },
         fileClick() {
-            const thisFile = this.selectFile
-            console.log(this.selectFile)
-            this.image = window.URL.createObjectURL(thisFile)
+            // const thisFile = this.selectFile
+            // console.log(this.selectFile)
+            this.image = window.URL.createObjectURL(this.selectFile)
         },
         remove (item) {
             this.chips.splice(this.chips.indexOf(item), 1)

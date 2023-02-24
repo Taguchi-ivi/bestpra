@@ -10,14 +10,25 @@ Rails.application.routes.draw do
 
       # users
       # index不要かも
-      resources :users, only: [:index, :show, :create , :edit, :update, :destroy]
+      # resources :users, only: [:index, :show, :create , :edit, :update, :destroy]
+      resources :users, only: [:index, :show] do
+        # resource :users, only: [:edit]
+        get :edit, on: :collection
+        patch :update, on: :collection
+        patch :update_avatar, on: :collection
+      end
 
       # auth_token, 認証周り
       # on collection => user_idがなくてもリクエストが可能に
-      resources :auth_token, only:[:create] do
+      resources :auth_token, only:[:create, :destroy] do
+        # delete :destroy, on: :collection
         post :login, on: :collection
         post :refresh, on: :collection
-        delete :destroy, on: :collection
+        # add
+        # delete :logout, on: :collection
+        delete :logout, on: :collection
+        patch :update_email, on: :collection
+        patch :update_password, on: :collection
       end
 
       # projects authenticateメソッド検証用

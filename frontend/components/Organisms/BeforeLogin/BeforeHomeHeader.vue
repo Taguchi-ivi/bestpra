@@ -33,13 +33,10 @@
 
 <script>
 
-// import { mapMutations } from 'vuex'
-
 export default {
 data ({ $config: $store }) {
     return {
         scrollY: 0,
-        // homeAppBarHeight: this.$store.state.homeAppBarHeight
     }
 },
 computed: {
@@ -51,12 +48,8 @@ computed: {
     toolbarStyle () {
         let color = 'white'
         let elevation = 4
-        // console.log('page name!!')
-        // console.log(this.$route.name)
 
         if(this.$route.name === 'about') {
-            // color = this.isScrollPoint ? 'white' : 'transparent'
-            // elevation = this.isScrollPoint ? 4 : 0
             if (!this.isScrollPoint) color = 'transparent';
             if (!this.isScrollPoint) elevation = 0;
         }

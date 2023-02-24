@@ -33,14 +33,18 @@
                     <v-card
                         class="mt-15 note-mb"
                     >
-                        <v-list-item-avatar
+                        <!-- <v-list-item-avatar
                             color="indigo"
                             class="ml-3"
                         >
                             <v-icon dark>
                                 mdi-account-circle
                             </v-icon>
-                        </v-list-item-avatar>
+                        </v-list-item-avatar> -->
+                        <AvatarSwitch
+                            :avatarUrl="avatarUrl"
+                            :id="1"
+                        />
                         <v-card-title>
                             this.title
                         </v-card-title>
@@ -71,6 +75,20 @@
         </v-col>
     </v-row>
 </template>
+
+<script>
+import AvatarSwitch from '~/components/Molecules/AvatarSwitch.vue'
+export default {
+    components: {
+        AvatarSwitch,
+    },
+    data() {
+        return {
+            avatarUrl: ''
+        }
+    }
+}
+</script>
 
 <style lang="scss" scoped>
 

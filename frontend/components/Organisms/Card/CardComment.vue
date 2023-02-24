@@ -7,14 +7,19 @@
             class="d-flex"
         >
             <div>
-                <v-avatar
+                <!-- <v-avatar
                     color="indigo"
                     class="ml-3"
                 >
                     <v-icon dark>
                         mdi-account-circle
                     </v-icon>
-                </v-avatar>
+                </v-avatar> -->
+                <!-- TODO 対象のidを付与する -->
+                <AvatarSwitch
+                    :id="1"
+                    :avatarUrl="avatarUrl"
+                />
             </div>
             <div class="ml-5">
                 <p class="ma-0">this.name</p>
@@ -24,3 +29,18 @@
         <p>content</p>
     </v-card>
 </template>
+
+<script>
+import AvatarSwitch from '~/components/Molecules/AvatarSwitch.vue'
+
+export default {
+    components: {
+        AvatarSwitch,
+    },
+    data() {
+        return {
+            avatarUrl: ''
+        }
+    }
+}
+</script>

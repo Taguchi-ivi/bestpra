@@ -28,6 +28,7 @@ module TokenGenerateService
         end
 
         # リフレッシュトークンのuserを返す
+        # ここの処理でエラーになってそう
         def from_refresh_token(token)
             decode_refresh_token(token).entity_for_user
         end
