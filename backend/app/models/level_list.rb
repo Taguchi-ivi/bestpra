@@ -9,4 +9,8 @@
 #  updated_at :datetime         not null
 #
 class LevelList < ApplicationRecord
+
+    validates :name, presence: true, uniqueness: true
+
+    belongs_to :article
 end

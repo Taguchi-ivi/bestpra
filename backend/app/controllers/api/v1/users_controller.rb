@@ -44,7 +44,7 @@ class Api::V1::UsersController < ApplicationController
         if current_user.update!(avatar: params[:user][:avatar])
             render json: current_user
         else
-            render status: :bad_request
+            render json: current_user.errors.full_messages
         end
     end
 
@@ -52,7 +52,7 @@ class Api::V1::UsersController < ApplicationController
     private
         def user_params
             # params.require(:user).permit(:id, :nickname, :introduction, :birthday , :basecolor_id, :activated, :admin)
-            params.require(:user).permit(:id, :nickname, :introduction, :birthday)
+            params.require(:user).permit(:nickname, :introduction, :birthday)
         end
 
         def set_user

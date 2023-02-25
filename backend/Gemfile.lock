@@ -98,6 +98,8 @@ GEM
       dotenv (= 2.8.1)
       railties (>= 3.2)
     erubi (1.11.0)
+    faker (3.1.1)
+      i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
@@ -253,6 +255,7 @@ DEPENDENCIES
   carrierwave (~> 2.2, >= 2.2.3)
   debug
   dotenv-rails
+  faker (~> 3.1, >= 3.1.1)
   hirb (~> 0.7.3)
   hirb-unicode-steakknife (~> 0.0.9)
   jwt (~> 2.7)

@@ -22,4 +22,15 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Article < ApplicationRecord
+
+    # image用 carrierwave
+    mount_uploader :image, ImageUploader
+
+    # validates
+    validates :title, presence: true
+    validates :content, presence: true
+
+
+    belongs_to :user, class_name: "user", foreign_key: "user_id"
+    has_one :level_list
 end

@@ -23,7 +23,6 @@ class User < ApplicationRecord
     # Token生成モジュール services/token_generate_service.rb
     include TokenGenerateService
 
-
     # バリデーション直前に実行する
     before_validation :downcase_email
 
@@ -57,6 +56,9 @@ class User < ApplicationRecord
                     allow_blank: true
                 },
                 allow_nil: true
+
+
+    has_many :articles, dependent: :destroy
 
 
 
@@ -95,6 +97,11 @@ class User < ApplicationRecord
     def response_json(payload = {})
         as_json(only: [:id, :nickname, :avatar, :admin]).merge(payload).with_indifferent_access
     end
+
+    # 自身で書いた記事か判定
+    # def has_written?(article)
+    #     articles.exists?(id: article.id)
+    # end
 
 
     private
