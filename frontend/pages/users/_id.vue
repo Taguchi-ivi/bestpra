@@ -302,10 +302,11 @@ export default {
             })
             .catch(err => {
                 console.log(err)
-                const status = true
-                const msg = '存在しないユーザです'
-                const color = 'error'
-                store.dispatch('modules/toast/getToast', { status, msg, color })
+                store.dispatch('modules/toast/getToast', {
+                    status: true,
+                    msg: '存在しないユーザです',
+                    color: 'error'
+                })
             })
     },
     // 算出プロパティ => 計算したデータを返す関数のこと
@@ -342,10 +343,11 @@ export default {
                 })
                 .catch( err => {
                     console.log(err)
-                    const status = true
-                    const msg = 'アカウト削除に失敗しました'
-                    const color = 'error'
-                    this.$store.dispatch('modules/toast/getToast', { status, msg, color })
+                    this.$store.dispatch('modules/toast/getToast', {
+                        status: true,
+                        msg: 'アカウト削除に失敗しました',
+                        color: 'error'
+                    })
                 })
             this.dialog = false
         }

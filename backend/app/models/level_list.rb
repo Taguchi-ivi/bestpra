@@ -12,5 +12,5 @@ class LevelList < ApplicationRecord
 
     validates :name, presence: true, uniqueness: true
 
-    belongs_to :article
+    has_many :article
 end

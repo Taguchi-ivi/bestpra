@@ -5,6 +5,7 @@ class MyInject {
         this.app = ctx.app
         this.error = ctx.error
     }
+
     // i18nページタイトル変換
     pageTitle (routeName){
         // routeName => 'account-settings' =>'pages.account.settings'
@@ -14,7 +15,7 @@ class MyInject {
     }
 
     // 日付のフォーマット変換
-    // 使い方 => $my.dateFormat(日付)
+    // 使い方 => $my.dataFormat(日付)
     dataFormat(dateStr) {
         const dateTimeFormat = new Intl.DateTimeFormat(
             'ja', { dateStyle: 'medium', timeStyle: 'short' }

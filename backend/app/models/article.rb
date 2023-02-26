@@ -31,6 +31,6 @@ class Article < ApplicationRecord
     validates :content, presence: true
 
 
-    belongs_to :user, class_name: "user", foreign_key: "user_id"
-    has_one :level_list
+    belongs_to :user
+    belongs_to :level_list
 end

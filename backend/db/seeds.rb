@@ -7,8 +7,8 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 table_names = %w(
-    users,
-    level_lists,
+    users
+    level_lists
     articles
 )
 

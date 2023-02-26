@@ -1,7 +1,7 @@
 class Api::V1::UsersController < ApplicationController
     # skip_before_action :authenticate
     # createメソッドのみログイン済みかどうかの判定をスキップする
-    before_action :authenticate_user
+    # before_action :authenticate_user
     before_action :set_user, only: [:show, :update, :destroy]
 
     # current_userで値を取得できる

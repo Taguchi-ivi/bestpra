@@ -1,19 +1,25 @@
-
+    // userデータ
 
 export const state = () => ({
 
-    user: {
-        current: null
-    },
-    // userデータ
+    // user: {
+    //     current: null
+    // },
+    currentUser: null,
+
     otherUser: {},
-    editUser: {}
+
+    editUser: {},
+
+    // 様々なユーザー情報を格納
+    // userData: {},
+    userData: [],
 })
 
 export const getters = {
 
     getUser(state) {
-        return state.user.current
+        return state.currentUser
         // return state.currentUser
     },
 
@@ -23,6 +29,10 @@ export const getters = {
 
     getEditUser(state) {
         return state.editUser
+    },
+
+    getUserData(state) {
+        return state.userData
     }
 
     // isCurrentUser(state) {
@@ -48,6 +58,11 @@ export const actions = {
         commit('setEditUser', user)
     },
 
+    getUserData ( { commit }, user) {
+        console.log('mutationsOK', user)
+        commit('setUserData', user)
+    }
+
 
 
 }
@@ -55,7 +70,7 @@ export const actions = {
 export const mutations = {
 
     setCurrentUser (state, payload) {
-        state.user.current = payload
+        state.currentUser = payload
         // state.currentUser = payload
     },
 
@@ -68,4 +83,9 @@ export const mutations = {
         // console.log(state.user)
         state.editUser = payload
     },
+
+    setUserData(state, payload) {
+        // console.log(state.user)
+        state.userData = payload
+    }
 }

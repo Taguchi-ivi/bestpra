@@ -3,9 +3,10 @@
     height="auto" -->
     <v-img
         :aspect-ratio="16/9"
-        :src="img ? img : NoImg"
+        :src="imgUrl ? imgUrl : NoImg"
         contain
-        max-height="400"
+        :max-height="cardFlg ? 400 : 400"
+        width="100%"
     >
     </v-img>
 </template>
@@ -14,9 +15,13 @@
 import NoImg from '~/assets/img/card/coming-soon.jpg'
 export default {
     props: {
-        img: {
+        imgUrl: {
             type: String,
             default: ''
+        },
+        cardFlg: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
