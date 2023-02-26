@@ -40,7 +40,7 @@ export default {
     name: 'CkEditor',
     components: { ckeditor: CKEditor.component },
     props: {
-        value: {
+        text: {
             type: String,
             default: ''
         }

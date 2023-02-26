@@ -16,7 +16,7 @@
                         </v-icon>
                     </v-avatar> -->
                     <AvatarImg
-                        :avatar="otherUser.avatar.url"
+                        :avatar-url="otherUser.avatar.url"
                     />
                     <!-- <p>{{ name }}</p> -->
                     <p>{{ otherUser.nickname }}</p>
@@ -352,10 +352,11 @@ export default {
             this.dialog = false
         }
     },
-    beforeDestroy () {
-        // Vueインスタンスが破棄される直前にVuexのtoast.msgを削除する(無期限toastに対応)
-        this.resetOtherUser()
-    },
+    // idページからidページへ遷移(nuxt-link)するとエラーになるため、コメントアウト
+    // async beforeDestroy () {
+    //     // Vueインスタンスが破棄される直前にVuexのtoast.msgを削除する(無期限toastに対応)
+    //     await this.resetOtherUser()
+    // },
 }
 </script>
 

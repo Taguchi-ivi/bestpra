@@ -24,7 +24,7 @@
                         </v-icon> -->
                         <AvatarImg
                             :size="size"
-                            :avatarUrl="avatarUrl"
+                            :avatar-url="avatarUrl"
                         />
                     </v-btn>
                 </template>
@@ -138,14 +138,14 @@
                 >
                     <AvatarImg
                         :size="Number(size)"
-                        :avatarUrl="avatarUrl"
+                        :avatar-url="avatarUrl"
                     />
                 </nuxt-link>
             </div>
             <div v-else>
                 <AvatarImg
                     :size="Number(size)"
-                    :avatarUrl="avatarUrl"
+                    :avatar-url="avatarUrl"
                 />
             </div>
         </div>

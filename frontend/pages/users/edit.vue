@@ -55,14 +55,14 @@
                                             <div class="mt-15">
                                                 <div v-if="preview.url">
                                                     <AvatarImg
-                                                        :avatarUrl="preview.url"
+                                                        :avatar-url="preview.url"
                                                         :size="48"
                                                     />
                                                 </div>
                                                 <!-- class="align-self-center" -->
                                                 <div v-else>
                                                     <AvatarImg
-                                                        :avatarUrl="avatar.url"
+                                                        :avatar-url="avatar.url"
                                                         :size="48"
                                                     />
                                                 </div>

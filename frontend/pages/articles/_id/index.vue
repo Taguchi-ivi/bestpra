@@ -81,7 +81,7 @@
                 <!-- <h1 class="mt-5 text-center">タイトルを表示</h1> -->
                 <h1 class="mt-5 text-center">{{ currentArticleData.title }}</h1>
                 <UserCardTag
-                    :avatarUrl="currentArticleData.user.avatar.url"
+                    :avatar-url="currentArticleData.user.avatar.url"
                     :userId="currentArticleData.user_id"
                     :level="currentArticleData.level_name"
                 />

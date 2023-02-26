@@ -20,16 +20,16 @@
                 >
 
                     <AppImg
-                        :imgUrl="article.image.url"
-                        cardFlg
+                        :img-url="article.image.url"
+                        card-flg
                     />
                 </nuxt-link>
                 <!-- TODO tagデータを受け渡す -->
                 <!-- :tag="article.tag.name" -->
                 <UserCardTag
-                    :userData="article.user.avatar.url"
+                    :avatar-url="article.user.avatar.url"
                     :level="article.level_name"
-                    :userId="article.user_id"
+                    :user-id="article.user_id"
                 />
                 <div class="pa-3">
                     <!-- <v-divider /> -->

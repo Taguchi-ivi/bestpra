@@ -14,7 +14,7 @@
                 <div class="ml-3">
                     <!-- TODO idを対象のIDを付与すること -->
                     <AvatarSwitch
-                        :avatarUrl="avatarUrl"
+                        :avatar-url="avatarUrl"
                         :id="userId"
                     />
                 </div>

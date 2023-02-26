@@ -22,9 +22,9 @@
             </v-icon>
         </v-btn>
         <AvatarSwitch
-            headerFlg
+            header-flg
             :size="33"
-            :avatarUrl="$auth.user.avatar.url"
+            :avatar-url="$auth.user.avatar.url"
             :id="Number($auth.user.id)"
         />
     </v-app-bar>
