@@ -57,6 +57,7 @@
                                                     <AvatarImg
                                                         :avatar-url="preview.url"
                                                         :size="48"
+                                                        preview-flg
                                                     />
                                                 </div>
                                                 <!-- class="align-self-center" -->

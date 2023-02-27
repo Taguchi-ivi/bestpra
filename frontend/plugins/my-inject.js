@@ -35,6 +35,13 @@ class MyInject {
         const message = (response) ? response.statusText : 'Network Error'
         return this.error({statusCode, message})
     }
+
+    // 8080から3000へ変換
+    // TODO 本番環境で要注意
+    portFix(url) {
+        // return url.replace('//localhost:8080', '//localhost:3000')
+        return "http://localhost:3000" + url
+    }
 }
 
 // inject => オリジナルクラスを追加することができる
