@@ -75,19 +75,6 @@
                                         編集する
                                     </v-list-item-title>
                                 </v-list-item>
-                                <!-- <v-divider /> -->
-                                <!-- <v-list-item>
-                                    <v-list-item-icon
-                                        class="mr-2"
-                                    >
-                                        <v-icon size="22">
-                                            mdi-account-remove
-                                        </v-icon>
-                                    </v-list-item-icon>
-                                    <v-list-item-title>
-                                        削除する
-                                    </v-list-item-title>
-                                </v-list-item> -->
                                 <v-dialog
                                     v-model="dialog"
                                     max-width="290"
@@ -338,8 +325,8 @@ export default {
                     // const status = true
                     // const msg = '削除が完了しました'
                     // this.$store.dispatch('modules/toast/getToast', { status, msg })
-                    this.$auth.resetVuex()
                     this.$router.push('/about')
+                    this.$auth.resetVuex()
                 })
                 .catch( err => {
                     console.log(err)

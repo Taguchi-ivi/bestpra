@@ -5,7 +5,9 @@
             class="mx-auto pa-5"
             elevation="2"
         >
-            <NoImg />
+            <AppImg
+                :img-url="currentArticleData.image.url"
+            />
             <v-card
                 width="80%"
                 flat
@@ -62,18 +64,56 @@
                                     </v-list-item-title>
                                 </v-list-item>
                                 <!-- <v-divider /> -->
-                                <v-list-item>
-                                    <v-list-item-icon
-                                        class="mr-2"
-                                    >
-                                        <v-icon size="22">
-                                            mdi-trash-can-outline
-                                        </v-icon>
-                                    </v-list-item-icon>
-                                    <v-list-item-title>
-                                        削除する
-                                    </v-list-item-title>
-                                </v-list-item>
+                                <v-dialog
+                                    v-model="dialog"
+                                    max-width="290"
+                                >
+                                    <template #activator="{ on, attrs }">
+                                        <v-list-item
+                                            v-bind="attrs"
+                                            v-on="on"
+                                        >
+                                            <v-list-item-icon
+                                                class="mr-2"
+                                            >
+                                                <v-icon
+                                                    size="22"
+                                                >
+                                                    mdi-trash-can-outline
+                                                </v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                削除する
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </template>
+                                    <v-card>
+                                        <v-card-title class="text-h5">
+                                            練習メニュを削除
+                                        </v-card-title>
+                                        <v-card-text>
+                                            本当によろしいですか？<br />
+                                        </v-card-text>
+                                        <v-card-actions>
+                                        <v-spacer />
+                                        <!-- color="green darken-1" -->
+                                        <v-btn
+                                            color="blue"
+                                            text
+                                            @click="dialog = false"
+                                        >
+                                            キャンセル
+                                        </v-btn>
+                                        <v-btn
+                                            color="red"
+                                            text
+                                            @click="articleDelete"
+                                        >
+                                            削除する
+                                        </v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-dialog>
                             </v-list>
                         </v-menu>
                     </div>
@@ -94,16 +134,15 @@
                     <p>作成日:{{ $my.dataFormat(currentArticleData.created_at) }}</p>
                     <p class="ml-3">更新日:{{ $my.dataFormat(currentArticleData.updated_at) }}</p>
                 </div>
-                <!-- <client-only>
-                    <Ckeditor v-model="text" />
-                </client-only> -->
                 <div
-                    class="mt-5"
+                    class="mt-15"
                 >
+                    <!-- eslint-disable-next-line vue/no-v-html -->
+                    <div v-html="currentArticleData.content" />
                     <!-- {{ text }} -->
                     <!-- {{ currentArticleData }}
                     {{ currentArticleData.user.id }} -->
-                    {{ currentArticleData.content }}
+                    <!-- {{ currentArticleData.content }} -->
                 </div>
             </v-card>
         </v-card>
@@ -145,7 +184,7 @@
 
 // import { mapActions, mapGetters } from 'vuex'
 import { mapGetters } from 'vuex'
-import NoImg from '~/components/Atom/App/AppNoImg.vue'
+import AppImg from '~/components/Atom/App/AppNoImg.vue'
 import UserCardTag from '~/components/Molecules/UserCardTag.vue'
 import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 import CardComment from '~/components/Organisms/Card/CardComment.vue'
@@ -155,7 +194,7 @@ export default {
     //     Ckeditor,
     // },
     components: {
-        NoImg,
+        AppImg,
         UserCardTag,
         MainTitle,
         CardComment,
@@ -166,6 +205,8 @@ export default {
             image: '',
             text: 'hello world',
             comment: 'a',
+            on: false,
+            dialog: false,
         }
     },
     computed: {
@@ -177,6 +218,26 @@ export default {
     methods: {
         resetArticle() {
             return this.$store.dispatch('modules/article/getCurrentArticleData', null)
+        },
+        async articleDelete() {
+            await this.$axios.$delete(`/api/v1/articles/${this.$route.params.id}`)
+                .then(res => {
+                    // console.log(res)
+                    // this.$auth.login(res)
+                    // const status = true
+                    // const msg = '削除が完了しました'
+                    // this.$store.dispatch('modules/toast/getToast', { status, msg })
+                    this.$router.push('/home')
+                })
+                .catch( err => {
+                    console.log(err)
+                    this.$store.dispatch('modules/toast/getToast', {
+                        status: true,
+                        msg: '練習メニュの削除に失敗しました',
+                        color: 'error'
+                    })
+                })
+            this.dialog = false
         }
     },
     async fetch({ $axios, params, store }) {
@@ -195,9 +256,9 @@ export default {
                 })
             })
     },
-    beforeDestroy () {
-        // Vueインスタンスが破棄される直前にVuexのtoast.msgを削除する(無期限toastに対応)
-        this.resetArticle()
-    },
+    // beforeDestroy () {
+    //     // Vueインスタンスが破棄される直前にVuexのtoast.msgを削除する(無期限toastに対応)
+    //     this.resetArticle()
+    // },
 };
 </script>

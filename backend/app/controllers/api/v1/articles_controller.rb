@@ -42,7 +42,7 @@ class Api::V1::ArticlesController < ApplicationController
         # @article = current_user.articles.build(article_params)
         @article = current_user.articles.build(article_params)
         if @article.save!
-            render json @article
+            render json: @article
         else
             render json: @article.errors.full_messages
         end
@@ -53,11 +53,11 @@ class Api::V1::ArticlesController < ApplicationController
     end
 
     def update
-        return current_user_for_article
+        return if current_user_for_article
         if @article.update!(article_params)
-            render @article
+            render json: @article
         else
-            render status: :bad_request
+            render json: @article.errors.full_messages
         end
     end
 
@@ -67,7 +67,7 @@ class Api::V1::ArticlesController < ApplicationController
         if article.destroy!
             render status: :ok
         else
-            render @article.errors.full_messages
+            render article.errors.full_messages
         end
     end
 
@@ -83,7 +83,7 @@ class Api::V1::ArticlesController < ApplicationController
         end
 
         def current_user_for_article
-            current_user.id != @article.user_id
+            current_user.id != params[:id]
         end
 
 end

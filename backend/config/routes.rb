@@ -39,6 +39,9 @@ Rails.application.routes.draw do
         get :article_about, on: :collection
       end
 
+      # MSTデータ取得
+      resources :mst_lists, only:[:index]
+
     end
 
     # helth check
