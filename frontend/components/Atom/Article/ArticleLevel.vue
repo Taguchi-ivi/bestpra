@@ -31,10 +31,10 @@
 
 export default {
     props: {
-        // levelItem: {
-        //     type: Array,
-        //     default: () => []
-        // },
+        level: {
+            type: Object,
+            default: () => {},
+        },
     },
     data() {
         return {

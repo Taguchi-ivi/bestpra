@@ -77,7 +77,6 @@
 </template>
 
 <script>
-// import ArticleEdit from '~/components/Organisms/Application/ArticleEdit.vue'
 import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 import ArticleTitle from '~/components/Atom/Article/ArcielsTitle.vue'
 import ArticleLevel from '~/components/Atom/Article/ArticleLevel.vue'
@@ -127,9 +126,6 @@ export default {
             // console.log(this.selectFile)
             this.imageUrl = window.URL.createObjectURL(this.selectFile)
         },
-        remove (item) {
-            this.chips.splice(this.chips.indexOf(item), 1)
-        },
         deleteView() {
             this.imageUrl = ''
             URL.revokeObjectURL(this.imageUrl)
@@ -171,10 +167,20 @@ export default {
                     //     console.log(this.item)
                     // }
                     // console.log('tagデータ', this.chips)
+                    this.$store.dispatch('modules/toast/getToast', {
+                        status: true,
+                        msg: '素敵な練習メニュをありがとう!!',
+                        color: 'success',
+                    })
                     this.$router.push('/articles/' + res.id)
                 })
                 .catch((err) => {
                     console.log(err)
+                    this.$store.dispatch('modules/toast/getToast', {
+                        status: true,
+                        msg: '新規作成に失敗しました',
+                        color: 'error'
+                    })
                 })
             this.loading = false
         }

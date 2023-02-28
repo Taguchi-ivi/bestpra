@@ -10,6 +10,12 @@
 
 <script>
 export default {
+    props: {
+        title: {
+            type: String,
+            default: ''
+        }
+    },
     computed: {
         setTitle: {
             get() { return this.title },

@@ -29,6 +29,12 @@
 
 <script>
 export default {
+    // props: {
+    //     chips: {
+    //         type: Array,
+    //         default: () => [],
+    //     }
+    // },
     data() {
         return {
             // TODO マスタデータ追加&&存在するお項目以外は選べないようにする

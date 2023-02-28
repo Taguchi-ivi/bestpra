@@ -57,7 +57,6 @@
                                                     <AvatarImg
                                                         :avatar-url="preview.url"
                                                         :size="48"
-                                                        preview-flg
                                                     />
                                                 </div>
                                                 <!-- class="align-self-center" -->
@@ -295,9 +294,9 @@ export default {
         UserFormPasswordAgain,
         AvatarImg,
     },
-    async asyncData({ $axios,store }) {
+    async asyncData({ $axios, store}) {
         // const editUser = store.getters['modules/user/getEditUser']
-        const res = await $axios.$get('api/v1/users/edit')
+        const res = await $axios.$get('/api/v1/users/edit')
         // await $axios.$get(`api/v1/users/`)
         console.log(res)
         // store.dispatch('modules/user/getEditUser', res)

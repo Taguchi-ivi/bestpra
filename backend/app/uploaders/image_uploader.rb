@@ -14,9 +14,9 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   # ポート変更可能
-  # def asset_host
-  #   return "http://localhost:8080"
-  # end
+  def asset_host
+    return "http://localhost:3000" if Rails.env.development?
+  end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url(*args)

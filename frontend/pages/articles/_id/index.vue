@@ -50,7 +50,7 @@
                                     練習メニュー
                                 </v-subheader>
                                 <v-list-item
-                                    :to="`/articles/${currentArticleData.user.id}/edit`"
+                                    :to="`/articles/${currentArticleData.id}/edit`"
                                 >
                                     <v-list-item-icon
                                         class="mr-2"

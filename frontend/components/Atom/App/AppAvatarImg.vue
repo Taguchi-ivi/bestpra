@@ -11,7 +11,7 @@
                 :size="size"
             >
                 <img
-                    :src="$my.portFix(avatarUrl)"
+                    :src="avatarUrl"
                     alt="avatar"
                 >
             </v-avatar>

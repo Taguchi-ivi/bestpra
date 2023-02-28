@@ -79,11 +79,12 @@ class Api::V1::ArticlesController < ApplicationController
         end
 
         def set_article
+            # @article = Article.find(params[:id])
             @article = current_user.articles.find(params[:id])
         end
 
         def current_user_for_article
-            current_user.id != params[:id]
+            current_user.id != Article.find(params[:id]).user_id
         end
 
 end
