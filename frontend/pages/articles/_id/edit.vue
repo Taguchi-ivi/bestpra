@@ -1,82 +1,93 @@
 <template>
-    <v-container>
-        <MainTitle title="練習メニュ編集" />
-        <v-form
-            ref="form"
-            v-model="valid"
-        >
-            <v-card
-                width="100%"
-                class="mx-auto pa-5"
-                elevation="2"
-            >
-                <div v-if="!imageUrl">
-                    <v-file-input
-                        v-model="selectFile"
-                        prepend-icon="mdi-image-plus"
-                        hide-input
-                        @change="fileClick"
-                    >
-                    </v-file-input>
-                    <!-- <input ref="view" type="file" @change="uploadFile"> -->
-                </div>
-                <div v-else class="img-active">
-                    <div class="img-active-delete" @click="deleteView">
-                        <v-icon
-                            large
-                            color="grey darken-1"
-                        >
-                            mdi-alpha-x-circle
-                        </v-icon>
-                    </div>
-                    <v-img
-                        :aspect-ratio="16/9"
-                        :src="imageUrl"
-                        contain
-                        max-height="400"
-                    >
-                    </v-img>
-                    <!-- <AppImg
-                        :img-url="imageUrl"
-                    /> -->
-                </div>
-                <div class="mt-8"></div>
-                <ArticleTitle
-                    :title.sync="title"
-                />
-                <ArticleLevel
-                    :level.sync="level"
-                />
-                <!-- :level-item="levelItem" -->
-                <client-only>
-                    <!-- <Ckeditor v-model="text" /> -->
-                    <Ckeditor :text.sync="text" />
-                </client-only>
-                <pre>
-                    {{ text }}
-                </pre>
-                <ArticleTag
-                    :chips.sync="chips"
-                />
-            </v-card>
-            <div
-                class="mt-5 d-flex justify-end"
-            >
-                <v-btn
-                    :disabled="!valid"
-                    color="indigo"
-                    dark
-                    @click="updateArticle"
-                    :loading="loading"
+    <div>
+        <div v-if="error">
+            <ErrorCard
+                title="存在しない練習メニュです"
+                message="404 not found"
+            />
+        </div>
+        <div v-else>
+            <v-container>
+                <MainTitle title="練習メニュ編集" />
+                <v-form
+                    ref="form"
+                    v-model="valid"
                 >
-                    編集を保存
-                </v-btn>
-            </div>
-        </v-form>
-    </v-container>
+                    <v-card
+                        width="100%"
+                        class="mx-auto pa-5"
+                        elevation="2"
+                    >
+                        <div v-if="!imageUrl">
+                            <v-file-input
+                                v-model="selectFile"
+                                prepend-icon="mdi-image-plus"
+                                hide-input
+                                @change="fileClick"
+                            >
+                            </v-file-input>
+                            <!-- <input ref="view" type="file" @change="uploadFile"> -->
+                        </div>
+                        <div v-else class="img-active">
+                            <div class="img-active-delete" @click="deleteView">
+                                <v-icon
+                                    large
+                                    color="grey darken-1"
+                                >
+                                    mdi-alpha-x-circle
+                                </v-icon>
+                            </div>
+                            <v-img
+                                :aspect-ratio="16/9"
+                                :src="imageUrl"
+                                contain
+                                max-height="400"
+                            >
+                            </v-img>
+                            <!-- <AppImg
+                                :img-url="imageUrl"
+                            /> -->
+                        </div>
+                        <div class="mt-8"></div>
+                        <ArticleTitle
+                            :title.sync="title"
+                        />
+                        <ArticleLevel
+                            :level.sync="level"
+                        />
+                        <!-- :level-item="levelItem" -->
+                        <client-only>
+                            <!-- <Ckeditor v-model="text" /> -->
+                            <Ckeditor :text.sync="text" />
+                        </client-only>
+                        <!-- <pre>
+                            {{ text }}
+                        </pre> -->
+                        <ArticleTag
+                            :chips.sync="chips"
+                        />
+                    </v-card>
+                    <div
+                        class="mt-5 d-flex justify-end"
+                    >
+                        <v-btn
+                            :disabled="!valid"
+                            color="indigo"
+                            dark
+                            @click="updateArticle"
+                            :loading="loading"
+                        >
+                            編集を保存
+                        </v-btn>
+                    </div>
+                </v-form>
+            </v-container>
+        </div>
+    </div>
 </template>
 
 <script>
+import ErrorCard from '~/components/Molecules/ErrorCard.vue'
 import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 import ArticleTitle from '~/components/Atom/Article/ArcielsTitle.vue'
 import ArticleLevel from '~/components/Atom/Article/ArticleLevel.vue'
@@ -89,11 +100,21 @@ export default {
         MainTitle,
         ArticleTitle,
         ArticleLevel,
-        ArticleTag
+        ArticleTag,
+        ErrorCard
     },
     async asyncData({ $axios,store, params  }) {
         const res = await $axios.$get('/api/v1/articles/' + params.id + '/edit')
-        console.log(res)
+        if(res === 'bad_request') {
+            store.dispatch('modules/toast/getToast', {
+                        status: true,
+                        msg: '存在しない練習メニュです',
+                        color: 'error'
+                    })
+            return {
+                error: true
+            }
+        }
         return {
             level: {
                 id: res.level_list_id,
@@ -114,6 +135,7 @@ export default {
             chips: '',
             selectFile: [],
             loading: false,
+            error: false,
         }
     },
     methods: {

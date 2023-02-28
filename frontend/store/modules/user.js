@@ -9,11 +9,11 @@ export const state = () => ({
 
     otherUser: {},
 
-    editUser: {},
-
     // 様々なユーザー情報を格納
     // userData: {},
     userData: [],
+
+    // editUser: {},
 })
 
 export const getters = {
@@ -27,13 +27,13 @@ export const getters = {
         return state.otherUser
     },
 
-    getEditUser(state) {
-        return state.editUser
-    },
-
     getUserData(state) {
         return state.userData
-    }
+    },
+
+    // getEditUser(state) {
+    //     return state.editUser
+    // },
 
     // isCurrentUser(state) {
     //     // return !!state.user && !!state.user.uid
@@ -50,12 +50,17 @@ export const actions = {
 
     getOtherUser ({ commit }, user) {
         console.log('mutationsOK', user)
-        commit('setOtherUser', user)
-    },
 
-    getEditUser ({ commit }, user) {
-        console.log('mutationsOK', user)
-        commit('setEditUser', user)
+        if (!user) {
+            user = {
+                id: null,
+                nickname: null,
+                avatar: { url: null },
+                introduction: null,
+                current_user: false
+            }
+        }
+        commit('setOtherUser', user)
     },
 
     getUserData ( { commit }, user) {
@@ -63,6 +68,10 @@ export const actions = {
         commit('setUserData', user)
     }
 
+    // getEditUser ({ commit }, user) {
+    //     console.log('mutationsOK', user)
+    //     commit('setEditUser', user)
+    // },
 
 
 }
@@ -79,13 +88,13 @@ export const mutations = {
         state.otherUser = payload
     },
 
-    setEditUser(state, payload) {
-        // console.log(state.user)
-        state.editUser = payload
-    },
-
     setUserData(state, payload) {
         // console.log(state.user)
         state.userData = payload
     }
+
+    // setEditUser(state, payload) {
+    //     // console.log(state.user)
+    //     state.editUser = payload
+    // },
 }

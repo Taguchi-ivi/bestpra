@@ -52,9 +52,9 @@
                     <!-- <Ckeditor v-model="text" /> -->
                     <Ckeditor :text.sync="text" />
                 </client-only>
-                <pre>
+                <!-- <pre>
                     {{ text }}
-                </pre>
+                </pre> -->
                 <ArticleTag
                     :chips.sync="chips"
                 />
@@ -102,7 +102,7 @@ export default {
     data() {
         return {
             valid: true,
-            level: '',
+            level: {},
             text: '',
             title: '',
             imageUrl: '',

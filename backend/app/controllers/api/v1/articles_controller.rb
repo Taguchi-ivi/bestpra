@@ -1,8 +1,8 @@
 class Api::V1::ArticlesController < ApplicationController
     before_action :authenticate_user
 
-    before_action :set_article, only: [:edit, :update]
-
+    # before_action :set_article, only: [:edit, :update]
+    
     def index
         # users = User.all
         # render json: users
@@ -48,12 +48,20 @@ class Api::V1::ArticlesController < ApplicationController
         end
     end
 
+    # paramsの値が存在することを確認
+    # 記事の当事者か確認
     def edit
-        render json: @article.as_json()
+
+        return render json: :bad_request unless Article.exists?(id: params[:id])
+        @article = Article.find(params[:id])
+        return render json: :bad_request unless @article.user_id == current_user.id
+
+        render json:  @article.as_json(), status: :ok
     end
 
     def update
         return if current_user_for_article
+        @article = current_user.articles.find(params[:id])
         if @article.update!(article_params)
             render json: @article
         else
@@ -62,7 +70,7 @@ class Api::V1::ArticlesController < ApplicationController
     end
 
     def destroy
-        return current_user_for_article
+        return if current_user_for_article
         article = current_user.articles.find(params[:id])
         if article.destroy!
             render status: :ok
@@ -78,10 +86,10 @@ class Api::V1::ArticlesController < ApplicationController
             params.require(:article).permit(:title, :content, :image, :level_list_id)
         end
 
-        def set_article
-            # @article = Article.find(params[:id])
-            @article = current_user.articles.find(params[:id])
-        end
+        # def set_article
+        #     # @article = Article.find(params[:id])
+        #     @article = current_user.articles.find(params[:id])
+        # end
 
         def current_user_for_article
             current_user.id != Article.find(params[:id]).user_id
