@@ -31,6 +31,8 @@ class Article < ApplicationRecord
     validates :content, presence: true
 
 
+    # association
     belongs_to :user
     belongs_to :level_list
+    has_many :tag_maps, dependent: :destroy
 end

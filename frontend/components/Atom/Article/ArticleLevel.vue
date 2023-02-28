@@ -42,7 +42,7 @@ export default {
         }
     },
     async mounted() {
-        await this.$axios.$get('/api/v1/mst_lists')
+        await this.$axios.$get('/api/v1/level_lists')
             .then(res => {
                 console.log('level_lsitのindexデータ', res)
                 this.levelItem = res

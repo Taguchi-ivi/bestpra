@@ -40,7 +40,11 @@ Rails.application.routes.draw do
       end
 
       # MSTデータ取得
-      resources :mst_lists, only:[:index]
+      # resources :mst_lists, only:[:index]
+
+      # MSTデータ取得
+      resources :level_lists, only:[:index]
+      resources :tag_lists, only:[:index]
 
     end
 
