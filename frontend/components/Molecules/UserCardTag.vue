@@ -14,7 +14,8 @@
                 <div class="ml-3">
                     <!-- TODO idを対象のIDを付与すること -->
                     <AvatarSwitch
-                        :avatarUrl="avatarUrl"
+                        :avatar-url="avatarUrl"
+                        :id="userId"
                     />
                 </div>
             <!-- </v-list-item-avatar> -->
@@ -32,13 +33,15 @@
                     <v-icon left>
                         mdi-label
                     </v-icon>
-                    大学生以上
+                    <!-- 大学生以上 -->
+                    {{ level }}
                 </v-chip>
             </div>
             <div class="mt-1">
                 <v-icon>
                     mdi-tag-multiple
                 </v-icon>
+                <!-- TODO propsで受け取れるようにする -->
                 <v-chip
                     v-for="i in 2"
                     :key="i"
@@ -59,12 +62,32 @@
 import AvatarSwitch from '~/components/Molecules/AvatarSwitch.vue'
 
 export default {
+    name: 'UserCardTag',
     components: {
         AvatarSwitch,
     },
+    props: {
+        avatarUrl: {
+            type: String,
+            default: '',
+        },
+        userId: {
+            type: Number,
+            default: 0,
+        },
+        level: {
+            type: String,
+            default: '',
+        },
+        // TODO tag情報を受け取れるようにする
+        tags: {
+            type: Array,
+            default: () => [],
+        }
+    },
     data() {
         return {
-            avatarUrl: ''
+            // avatarUrl: '',
         }
     }
 }

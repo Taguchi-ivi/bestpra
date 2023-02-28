@@ -31,8 +31,16 @@ Rails.application.routes.draw do
         patch :update_password, on: :collection
       end
 
-      # projects authenticateメソッド検証用
+      # TODO 今後不要に:projects authenticateメソッド検証用
       resources :projects, only:[:index]
+
+      # articles
+      resources :articles, only:[:index, :show, :edit, :update, :create, :destroy] do
+        get :article_about, on: :collection
+      end
+
+      # MSTデータ取得
+      resources :mst_lists, only:[:index]
 
     end
 

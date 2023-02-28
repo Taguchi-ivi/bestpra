@@ -13,4 +13,8 @@ module.exports = {
   plugins: ['jest'],
   // add your custom rules here
   rules: {},
+  // htmlサポート
+  // globals: {
+  //   HtmlSupport: true
+  // }
 }

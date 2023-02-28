@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_15_234023) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_24_090601) do
+  create_table "articles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "level_list_id", null: false
+    t.string "title", null: false
+    t.string "image"
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["level_list_id"], name: "index_articles_on_level_list_id"
+    t.index ["user_id"], name: "index_articles_on_user_id"
+  end
+
+  create_table "level_lists", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.boolean "delete_flg", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "nickname", null: false
     t.string "email", null: false
@@ -26,4 +45,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_15_234023) do
     t.string "refresh_jti"
   end
 
+  add_foreign_key "articles", "level_lists"
+  add_foreign_key "articles", "users"
 end

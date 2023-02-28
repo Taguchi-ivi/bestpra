@@ -36,5 +36,5 @@
 /public/uploads
 
 # add history
-.irb-history
+.irb_history
 .byebug_history

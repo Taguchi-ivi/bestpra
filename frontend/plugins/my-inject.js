@@ -5,6 +5,7 @@ class MyInject {
         this.app = ctx.app
         this.error = ctx.error
     }
+
     // i18nページタイトル変換
     pageTitle (routeName){
         // routeName => 'account-settings' =>'pages.account.settings'
@@ -14,7 +15,7 @@ class MyInject {
     }
 
     // 日付のフォーマット変換
-    // 使い方 => $my.dateFormat(日付)
+    // 使い方 => $my.dataFormat(日付)
     dataFormat(dateStr) {
         const dateTimeFormat = new Intl.DateTimeFormat(
             'ja', { dateStyle: 'medium', timeStyle: 'short' }
@@ -34,6 +35,13 @@ class MyInject {
         const message = (response) ? response.statusText : 'Network Error'
         return this.error({statusCode, message})
     }
+
+    // 8080から3000へ変換
+    // TODO 本番環境で要注意
+    // portFix(url) {
+    //     // return url.replace('//localhost:8080', '//localhost:3000')
+    //     return "http://localhost:3000" + url
+    // }
 }
 
 // inject => オリジナルクラスを追加することができる

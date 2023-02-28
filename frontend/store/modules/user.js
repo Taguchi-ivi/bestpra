@@ -1,19 +1,25 @@
-
+    // userデータ
 
 export const state = () => ({
 
-    user: {
-        current: null
-    },
-    // userデータ
+    // user: {
+    //     current: null
+    // },
+    currentUser: null,
+
     otherUser: {},
-    editUser: {}
+
+    // 様々なユーザー情報を格納
+    // userData: {},
+    userData: [],
+
+    // editUser: {},
 })
 
 export const getters = {
 
     getUser(state) {
-        return state.user.current
+        return state.currentUser
         // return state.currentUser
     },
 
@@ -21,9 +27,13 @@ export const getters = {
         return state.otherUser
     },
 
-    getEditUser(state) {
-        return state.editUser
-    }
+    getUserData(state) {
+        return state.userData
+    },
+
+    // getEditUser(state) {
+    //     return state.editUser
+    // },
 
     // isCurrentUser(state) {
     //     // return !!state.user && !!state.user.uid
@@ -40,14 +50,28 @@ export const actions = {
 
     getOtherUser ({ commit }, user) {
         console.log('mutationsOK', user)
+
+        if (!user) {
+            user = {
+                id: null,
+                nickname: null,
+                avatar: { url: null },
+                introduction: null,
+                current_user: false
+            }
+        }
         commit('setOtherUser', user)
     },
 
-    getEditUser ({ commit }, user) {
+    getUserData ( { commit }, user) {
         console.log('mutationsOK', user)
-        commit('setEditUser', user)
-    },
+        commit('setUserData', user)
+    }
 
+    // getEditUser ({ commit }, user) {
+    //     console.log('mutationsOK', user)
+    //     commit('setEditUser', user)
+    // },
 
 
 }
@@ -55,7 +79,7 @@ export const actions = {
 export const mutations = {
 
     setCurrentUser (state, payload) {
-        state.user.current = payload
+        state.currentUser = payload
         // state.currentUser = payload
     },
 
@@ -64,8 +88,13 @@ export const mutations = {
         state.otherUser = payload
     },
 
-    setEditUser(state, payload) {
+    setUserData(state, payload) {
         // console.log(state.user)
-        state.editUser = payload
-    },
+        state.userData = payload
+    }
+
+    // setEditUser(state, payload) {
+    //     // console.log(state.user)
+    //     state.editUser = payload
+    // },
 }

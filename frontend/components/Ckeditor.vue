@@ -1,7 +1,8 @@
 <template>
     <div class="ckeditor">
+        <!-- placeholder="本文を入力してください(範囲選択でテキストを変更できます)" -->
         <ckeditor
-            v-model="editorData"
+            v-model="setRichText"
             :editor="editor"
             :config="editorConfig"
             class="ckeditor"
@@ -40,17 +41,13 @@ export default {
     name: 'CkEditor',
     components: { ckeditor: CKEditor.component },
     props: {
-        value: {
+        text: {
             type: String,
             default: ''
         }
     },
+    // props: ['text'],
     data() {
-        //     const config = this.config || {};
-
-        //     const ckeditorValue = "";
-        //     const ckeditorConfig = { editor, ...config };
-        //     const ckeditorReady = () => {};
 
         // return { ckeditorValue, ckeditorConfig, ckeditorReady };
         return {
@@ -60,61 +57,41 @@ export default {
             editor: ClassicEditor,
             editorData: '<p>Content of the editor.</p>',
             editorConfig: {
-                // plugins: [
-                //     Bold,
-                //     Italic,
-                //     Underline,
-                //     Strikethrough,
-                //     Heading,
-                //     Essentials,
-                //     ImageUpload,
-                //     ImageInsert,
-                //     AutoImage,
-                //     Image,
-                //     ImageResizeEditing,
-                //     ImageResizeHandles,
-                //     Base64UploadAdapter,
-                // ],
-                // toolbar: {
-                //     items: [
-                //         'heading',
-                //         '|',
-                //         'bold',
-                //         'italic',
-                //         'underline',
-                //         'strikethrough',
-                //         '|',
-                //         'insertImage',
-                //     ],
-                // },
-                toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
+                // htmlSupport: {
+				// 		disallow: [
+				// 			{
+				// 				name: /.*/,
+				// 				style: /.*/
+				// 			}
+				// 		]
+				// 	},
+                // extraPlugins: [ HtmlSupport ],
+                toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
                 heading: {
                     options: [
                         { model: 'paragraph', title: '見出し', class: 'ck-heading_paragraph' },
-                        { model: 'heading1', view: '大見出し', title: 'Heading 1', class: 'ck-heading_heading1' },
-                        { model: 'heading2', view: '小見出し', title: 'Heading 2', class: 'ck-heading_heading2' }
+                        { model: 'heading1', view: 'h1', title: '大見出し', class: 'ck-heading_heading1' },
+                        { model: 'heading2', view: 'h2', title: '小見出し', class: 'ck-heading_heading2' }
                     ]
                 },
                 // language: 'ja',
             },
         }
     },
-    // watch: {
-    //     ckeditorValue(value) {
-    //         this.$emit("input", value);
-    //     }
-    // }
-    // computed: {
-    //     editorData: {
-    //         get() {
-    //             return this.value
-    //         },
-    //         set(value) {
-    //             this.$emit('input', value)
-    //         }
-    //     }
-    // }
+    computed: {
+        setRichText: {
+            get() {
+                return this.text
+            },
+            set(newVal) {
+                this.$emit('update:text', newVal)
+            }
+        }
+    }
 };
+
+// get() { return this.email },
+//             set(newVal) { return this.$emit('update:email',newVal)}
 </script>
 
 <style lang="scss" scoped>
@@ -124,6 +101,11 @@ export default {
     height: 500px;
     margin: 0 auto;
     border: 1px solid #9E9E9E;
+}
+
+.ck.ck-editor__editable > .ck-placeholder::before {
+    color: #d21714;
+    font-family: Georgia;
 }
 
 </style>

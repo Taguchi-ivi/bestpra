@@ -103,4 +103,7 @@ bestpraとは、**サッカーの練習メニュを共有するサービスと�
 ・component   => PascalCase
 ・その他       => kebab-case
 ・DOM         => kebab-case
+
+props => kebab-case ->:kebak-case props[pascalCase]
+emit => kebab-case -> this.$emit('my-emit')
  -->

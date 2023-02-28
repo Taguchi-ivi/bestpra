@@ -55,14 +55,14 @@
                                             <div class="mt-15">
                                                 <div v-if="preview.url">
                                                     <AvatarImg
-                                                        :avatarUrl="preview.url"
+                                                        :avatar-url="preview.url"
                                                         :size="48"
                                                     />
                                                 </div>
                                                 <!-- class="align-self-center" -->
                                                 <div v-else>
                                                     <AvatarImg
-                                                        :avatarUrl="avatar.url"
+                                                        :avatar-url="avatar.url"
                                                         :size="48"
                                                     />
                                                 </div>
@@ -294,9 +294,9 @@ export default {
         UserFormPasswordAgain,
         AvatarImg,
     },
-    async asyncData({ $axios,store }) {
+    async asyncData({ $axios, store}) {
         // const editUser = store.getters['modules/user/getEditUser']
-        const res = await $axios.$get('api/v1/users/edit')
+        const res = await $axios.$get('/api/v1/users/edit')
         // await $axios.$get(`api/v1/users/`)
         console.log(res)
         // store.dispatch('modules/user/getEditUser', res)

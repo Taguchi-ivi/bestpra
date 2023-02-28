@@ -1,10 +1,27 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :bigint           not null, primary key
+#  activated       :boolean          default(FALSE), not null
+#  admin           :boolean          default(FALSE)
+#  avatar          :string(255)
+#  birthday        :date
+#  email           :string(255)      not null
+#  introduction    :text(65535)
+#  nickname        :string(255)      not null
+#  password_digest :string(255)      not null
+#  refresh_jti     :string(255)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  basecolor_id    :integer          default(0)
+#
 # lib以下のものは自動では読み込まれない
 require "validator/email_validator"
 
 class User < ApplicationRecord
     # Token生成モジュール services/token_generate_service.rb
     include TokenGenerateService
-
 
     # バリデーション直前に実行する
     before_validation :downcase_email
@@ -39,6 +56,9 @@ class User < ApplicationRecord
                     allow_blank: true
                 },
                 allow_nil: true
+
+
+    has_many :articles, dependent: :destroy
 
 
 
@@ -77,6 +97,11 @@ class User < ApplicationRecord
     def response_json(payload = {})
         as_json(only: [:id, :nickname, :avatar, :admin]).merge(payload).with_indifferent_access
     end
+
+    # 自身で書いた記事か判定
+    # def has_written?(article)
+    #     articles.exists?(id: article.id)
+    # end
 
 
     private

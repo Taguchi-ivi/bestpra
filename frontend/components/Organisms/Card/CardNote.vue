@@ -42,7 +42,7 @@
                             </v-icon>
                         </v-list-item-avatar> -->
                         <AvatarSwitch
-                            :avatarUrl="avatarUrl"
+                            :avatar-url="avatarUrl"
                             :id="1"
                         />
                         <v-card-title>

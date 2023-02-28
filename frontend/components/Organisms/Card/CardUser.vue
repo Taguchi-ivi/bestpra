@@ -28,7 +28,7 @@
                         class="pa-5"
                     >
                         <AvatarSwitch
-                            :avatarUrl="avatarUrl"
+                            :avatar-url="avatarUrl"
                         />
 
                     </div>

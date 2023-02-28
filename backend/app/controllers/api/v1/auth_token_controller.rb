@@ -18,7 +18,7 @@ class Api::V1::AuthTokenController < ApplicationController
     # 新規作成
     def create
         @user = User.new(user_params)
-        if @user.save
+        if @user.save!
             # @user = login_user
             set_refresh_token_to_cookie
             render json: login_response
