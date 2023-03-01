@@ -72,7 +72,7 @@
                     >
                         <v-btn
                             :disabled="!valid"
-                            color="indigo"
+                            color="primary"
                             dark
                             @click="updateArticle"
                             :loading="loading"

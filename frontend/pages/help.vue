@@ -6,11 +6,11 @@
             <MainTitle title="helpページ" />
             <v-alert
                 type="info"
-                color="indigo"
+                color="primary"
                 text
             >
-                <h5>日々サイトをご利用いただき、誠にありがとうございます。</h5>
-                <p>
+                <h4>日々サイトをご利用いただき、誠にありがとうございます。</h4>
+                <p class="mt-3">
                     こちらでは改善点などをご意見として管理者に送信できる場所となります。<br />
                     またタグを追加して欲しいなどの要望も承ります。<br />
                     全てのご意見に対し真摯に向き合い、サイトの利便性向上に努めたいと思います。<br />
@@ -27,7 +27,6 @@
                         v-model="select"
                         :items="items"
                         label="タイトル選択(自由記述可)"
-                        color="indigo"
                         class="mt-8 pa-2"
                     >
                     </v-combobox>
@@ -36,7 +35,6 @@
                         name="input-7-4"
                         label="ご意見/ご要望"
                         placeholder="〇〇な理由により「××」というタグが欲しいです！！"
-                        color="indigo"
                         class="mt-8"
                     >
                     </v-textarea>
@@ -45,7 +43,7 @@
                     >
                         <v-btn
                             dark
-                            color="indigo"
+                            color="primary"
                         >
                             送信!!
                         </v-btn>

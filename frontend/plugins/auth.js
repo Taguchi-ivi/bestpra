@@ -45,6 +45,7 @@ class Authentication {
     // Vuexの値を初期値に戻す(全て削除する)
     resetVuex () {
         this.setAuth({ token: null, expires: 0, user: null })
+        this.store.dispatch('modules/user/getCurrentUser', null)
         this.store.dispatch('getProjectList', [])
     }
 

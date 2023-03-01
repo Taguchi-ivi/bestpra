@@ -2,10 +2,13 @@
     <v-combobox
         v-model="setChips"
         :items="items"
+        item-text="name"
+        item-value="id"
+        class="mt-10"
+        return-object
         chips
         clearable
-        label="タグを選択"
-        color="indigo"
+        label="タグを選択(3つまで)"
         multiple
         prepend-icon="mdi-tag-multiple"
         solo
@@ -14,14 +17,15 @@
             <v-chip
                 v-bind="attrs"
                 :input-value="selected"
-                text-color="indigo"
+                text-color="primary"
                 close
                 @click="select"
                 @click:close="remove(item)"
                 return-object
             >
-                <strong>{{ item }}</strong>&nbsp;
-                <span>(interest)</span>
+                <!-- <strong>{{ item.name }}</strong>&nbsp;
+                <span>(interest)</span> -->
+                <strong>{{ item.name }}</strong>
             </v-chip>
         </template>
     </v-combobox>
@@ -41,10 +45,20 @@ export default {
             // TODO chipsの値は受け取る
             // TODO 選択肢の色を変える
             // chips: ['Programming', 'Playing video games', 'Watching movies', 'Sleeping'],
+            items: [],
             chips: [],
-            items: ['Programming', 'Playing video games', 'Watching movies', 'Sleeping','Streaming', 'Eating'],
             loading: false,
         }
+    },
+    async mounted() {
+        await this.$axios.$get('/api/v1/tag_lists')
+            .then(res => {
+                // console.log('tag_listのindexデータ', res)
+                this.items = res
+            })
+            .catch(err => {
+                console.log(err)
+            })
     },
     computed: {
         setChips: {

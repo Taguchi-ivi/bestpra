@@ -16,7 +16,7 @@
                     class="d-flex justify-start"
                 >
                     <!-- <v-list-item-avatar
-                        color="indigo"
+                        color="primary"
                         class="ml-3"
                     >
                         <v-icon dark>

@@ -10,6 +10,7 @@ table_names = %w(
     users
     level_lists
     articles
+    tag_lists
 )
 
 table_names.each do |table_name|

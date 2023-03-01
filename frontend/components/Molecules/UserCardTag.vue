@@ -25,7 +25,7 @@
         >
             <div>
                 <v-chip
-                    color="indigo"
+                    color="primary"
                     dark
                     label
                     small
@@ -46,7 +46,7 @@
                     v-for="i in 2"
                     :key="i"
                     outlined
-                    color="indigo"
+                    color="primary"
                     class="ml-1"
                     dark
                     small

@@ -171,13 +171,12 @@
                             <v-textarea
                                 outlined
                                 label="Comment"
-                                color="indigo"
                                 class="mt-5"
                             >
                             </v-textarea>
                             <div class="text-right">
                                 <v-btn
-                                    color=indigo
+                                    color="primary"
                                     dark
                                 >
                                     コメント

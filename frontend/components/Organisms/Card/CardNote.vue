@@ -34,7 +34,7 @@
                         class="mt-15 note-mb"
                     >
                         <!-- <v-list-item-avatar
-                            color="indigo"
+                            color="primary"
                             class="ml-3"
                         >
                             <v-icon dark>
