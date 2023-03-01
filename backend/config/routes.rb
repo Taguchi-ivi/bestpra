@@ -24,8 +24,6 @@ Rails.application.routes.draw do
         # delete :destroy, on: :collection
         post :login, on: :collection
         post :refresh, on: :collection
-        # add
-        # delete :logout, on: :collection
         delete :logout, on: :collection
         patch :update_email, on: :collection
         patch :update_password, on: :collection
@@ -43,8 +41,11 @@ Rails.application.routes.draw do
       # resources :mst_lists, only:[:index]
 
       # MSTデータ取得
-      resources :level_lists, only:[:index]
-      resources :tag_lists, only:[:index]
+      resources :level_lists, only:[:index, :create]
+      resources :tag_lists, only:[:index, :create]
+
+      # タグ情報を更新する
+      resources :tag_maps, only:[:update, :create]
 
     end
 

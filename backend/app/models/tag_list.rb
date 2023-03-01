@@ -11,8 +11,10 @@
 class TagList < ApplicationRecord
 
     # validation
-    validates :name, presence: true,length: { maximum: 15 }
+    validates :name, presence: true, uniqueness: true, length: { maximum: 15 }
 
     # association
-    has_many :tag_maps
+    has_many :tag_maps, dependent: :destroy
+    has_many :articles, through: :tag_maps
+
 end

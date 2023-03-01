@@ -149,7 +149,7 @@ export default {
             })
         },
         // async createArticle() {
-            async createArticle() {
+        createArticle() {
             this.loading = true
             const formData = new FormData()
             // formData.append('article[user_id]', this.$auth.user.id)
@@ -159,29 +159,30 @@ export default {
             formData.append('article[level_list_id]', this.level.id)
 
             // console.log('postデータ確認', formData)
-            await this.$axios.$post('/api/v1/articles', formData )
-                .then((res) => {
-                    console.log('resです', res)
-                    // TODO tagを追加する
-                    // if(this.chips) {
-                    //     console.log(this.item)
-                    // }
-                    // console.log('tagデータ', this.chips)
-                    this.$store.dispatch('modules/toast/getToast', {
-                        status: true,
-                        msg: '素敵な練習メニュをありがとう!!',
-                        color: 'success',
-                    })
-                    this.$router.push('/articles/' + res.id)
-                })
-                .catch((err) => {
-                    console.log(err)
-                    this.$store.dispatch('modules/toast/getToast', {
-                        status: true,
-                        msg: '新規作成に失敗しました',
-                        color: 'error'
-                    })
-                })
+            console.log('postデータ確認', this.chips)
+            // await this.$axios.$post('/api/v1/articles', formData )
+            //     .then((res) => {
+            //         console.log('resです', res)
+            //         // TODO tagを追加する
+            //         // if(this.chips) {
+            //         //     console.log(this.item)
+            //         // }
+            //         // console.log('tagデータ', this.chips)
+            //         this.$store.dispatch('modules/toast/getToast', {
+            //             status: true,
+            //             msg: '素敵な練習メニュをありがとう!!',
+            //             color: 'success',
+            //         })
+            //         this.$router.push('/articles/' + res.id)
+            //     })
+            //     .catch((err) => {
+            //         console.log(err)
+            //         this.$store.dispatch('modules/toast/getToast', {
+            //             status: true,
+            //             msg: '新規作成に失敗しました',
+            //             color: 'error'
+            //         })
+            //     })
             this.loading = false
         }
     },

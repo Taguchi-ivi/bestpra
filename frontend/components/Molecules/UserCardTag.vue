@@ -34,31 +34,34 @@
                         mdi-label
                     </v-icon>
                     <!-- 大学生以上 -->
-                    {{ level }}
+                    {{ level.name }}
                 </v-chip>
             </div>
-            <div class="mt-1">
-                <v-icon>
-                    mdi-tag-multiple
-                </v-icon>
-                <!-- TODO propsで受け取れるようにする -->
-                <v-chip
-                    v-for="i in 2"
-                    :key="i"
-                    outlined
-                    color="primary"
-                    class="ml-1"
-                    dark
-                    small
-                >
-                    シュート
-                </v-chip>
+            <div v-if="tags.length">
+                <div class="mt-1">
+                    <v-icon>
+                        mdi-tag-multiple
+                    </v-icon>
+                    <!-- TODO propsで受け取れるようにする -->
+                    <v-chip
+                        v-for="tag in limitCount(tags)"
+                        :key="tag.id"
+                        outlined
+                        color="primary"
+                        class="ml-1"
+                        dark
+                        small
+                    >
+                        {{ tag.name }}
+                    </v-chip>
+                </div>
             </div>
         </v-col>
     </v-row>
 </template>
 
 <script>
+
 import AvatarSwitch from '~/components/Molecules/AvatarSwitch.vue'
 
 export default {
@@ -76,8 +79,8 @@ export default {
             default: 0,
         },
         level: {
-            type: String,
-            default: '',
+            type: Object,
+            default: () => ({}),
         },
         // TODO tag情報を受け取れるようにする
         tags: {
@@ -88,6 +91,11 @@ export default {
     data() {
         return {
             // avatarUrl: '',
+        }
+    },
+    methods: {
+        limitCount (lists) {
+            return lists.slice(0, 2)
         }
     }
 }

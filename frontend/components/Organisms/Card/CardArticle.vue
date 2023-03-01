@@ -28,8 +28,9 @@
                 <!-- :tag="article.tag.name" -->
                 <UserCardTag
                     :avatar-url="article.user.avatar.url"
-                    :level="article.level_name"
+                    :level="article.level_list"
                     :user-id="article.user_id"
+                    :tags="article.tag_list"
                 />
                 <div class="pa-3">
                     <!-- <v-divider /> -->
