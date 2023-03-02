@@ -5,40 +5,47 @@
         <v-col
             cols="3"
         >
-            <!-- <v-list-item-avatar
-                class="ml-3"
-            > -->
-                <!-- <v-icon dark>
-                    mdi-account-circle
-                </v-icon> -->
-                <div class="ml-3">
-                    <!-- TODO idを対象のIDを付与すること -->
-                    <AvatarSwitch
-                        :avatar-url="avatarUrl"
-                        :id="userId"
-                    />
-                </div>
-            <!-- </v-list-item-avatar> -->
+            <div class="ml-3">
+                <AvatarSwitch
+                    :avatar-url="avatarUrl"
+                    :id="userId"
+                />
+            </div>
         </v-col>
         <v-col
             cols="9"
         >
-            <div>
-                <v-chip
-                    color="primary"
-                    dark
-                    label
-                    small
-                >
-                    <v-icon left>
-                        mdi-label
-                    </v-icon>
-                    <!-- 大学生以上 -->
-                    {{ level.name }}
-                </v-chip>
-            </div>
+            <p>{{ userNickname }}</p>
+        </v-col>
+        <v-col
+            cols="12"
+            class="py-0"
+        >
+            <nuxt-link
+                :to="`/levels/${level.id}`"
+            >
+                <div class="ml-2">
+                    <v-chip
+                        color="primary"
+                        dark
+                        label
+                        small
+                    >
+                        <v-icon left>
+                            mdi-label
+                        </v-icon>
+                        <!-- 大学生以上 -->
+                        {{ level.name }}
+                    </v-chip>
+                </div>
+            </nuxt-link>
+        </v-col>
+        <v-col
+            cols="11"
+            class="py-0 px-4"
+        >
             <div v-if="tags.length">
-                <div class="mt-1">
+                <div>
                     <v-icon>
                         mdi-tag-multiple
                     </v-icon>
@@ -52,7 +59,11 @@
                         dark
                         small
                     >
-                        {{ tag.name }}
+                        <nuxt-link
+                            :to="`/tags/${tag.id}`"
+                        >
+                            {{ tag.name }}
+                        </nuxt-link>
                     </v-chip>
                 </div>
             </div>
@@ -65,12 +76,16 @@
 import AvatarSwitch from '~/components/Molecules/AvatarSwitch.vue'
 
 export default {
-    name: 'UserCardTag',
+    name: 'ArticleUserCardTag',
     components: {
         AvatarSwitch,
     },
     props: {
         avatarUrl: {
+            type: String,
+            default: '',
+        },
+        userNickname: {
             type: String,
             default: '',
         },

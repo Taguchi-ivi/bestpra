@@ -86,7 +86,7 @@
                             </v-text-field>
                         </v-card>
                     <MainTitle title="hello"/>
-                    <CardArticle />
+                    <CardArticleAll />
                     <CardTag />
                     <CardUser />
                     <MarginBottom />
@@ -100,7 +100,7 @@
 <script>
 
 import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
-import CardArticle from '~/components/Organisms/Card/CardArticle.vue'
+import CardArticleAll from '~/components/Organisms/Card/CardArticleAll.vue'
 import CardTag from '~/components/Organisms/Card/CardTag.vue'
 import CardUser from '~/components/Organisms/Card/CardUser.vue'
 import MarginBottom from '~/components/Atom/margin/marginBottom.vue'
@@ -109,7 +109,7 @@ import PageTop from '~/components/Atom/App/AppPageTop.vue'
 export default {
     components: {
             MainTitle,
-            CardArticle,
+            CardArticleAll,
             CardTag,
             CardUser,
             MarginBottom,
