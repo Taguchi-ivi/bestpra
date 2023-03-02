@@ -1,19 +1,21 @@
 <template>
+    <!-- TODO 今後表示linkで飛ばす -->
+    <!-- TODO そもそもさらにコンポーネント化する -->
     <v-row>
         <v-col
-            v-for="n in 12"
-            :key="n"
+            v-for="tag in tags"
+            :key="tag.id"
             class="d-flex justify-center"
         >
             <nuxt-link
-                to="/"
+                :to="`/tags/${tag.id}`"
             >
                 <div class="tag">
                     <v-card
                         class="mt-15 tag-mb"
                     >
                     <v-card-title>
-                        タグ.name
+                        {{ tag.name }}
                     </v-card-title>
                         <div
                             class="d-flex justify-end mb-2"
@@ -21,7 +23,12 @@
                             <div
                                 class="mr-3"
                             >
-                                <span class="subheading">256件の投稿</span>
+                                <div v-if="tag.tag_count === 0">
+                                    <span class="text-caption">まだ投稿されていません</span>
+                                </div>
+                                <div v-else>
+                                    <span>{{ tag.tag_count }}件の投稿</span>
+                                </div>
                             </div>
                         </div>
                     </v-card>
@@ -31,8 +38,40 @@
     </v-row>
 </template>
 
-<style lang="scss" scoped>
+<script>
+export default {
+    name: 'CardTag',
+    // props: {
+    //     chips: {
+    //         type: Array,
+    //         default: () => [],
+    //     },
+    //     tags: {
+    //         type: Array,
+    //         default: () => [],
+    //     },
+    // },
+    data() {
+        return {
+            tags: []
+        }
+    },
+    async mounted() {
+        await this.$axios.$get('/api/v1/tag_lists')
+            .then(res => {
+                // tag_listのnameだけの配列を作成する
+                this.tags = res
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    },
+}
 
+</script>
+
+
+<style lang="scss" scoped>
 .tag {
     background: #7986CB;
 	width: 230px;

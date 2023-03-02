@@ -1,10 +1,14 @@
 class Api::V1::TagListsController < ApplicationController
-    before_action :authenticate_user
+    # before_action :authenticate_user
 
     def index
         # nameでソート
-        tag_list = TagList.where(delete_flg: false).order(:name).as_json(only: [:id, :name])
-        # tag_list = TagList.where(delete_flg: false).order(:name).as_json(only: [:name])
+        # tag_list = TagList.where(delete_flg: false).order(:name).as_json(only: [:id, :name])
+        tag_list = TagList.left_joins(:tag_maps)
+                            .select('tag_lists.id, tag_lists.name, count(tag_maps.tag_list_id) as tag_count')
+                            .group('id')
+                            .where(delete_flg: false)
+                            .order('tag_count desc')
         render json: tag_list
     end
 
