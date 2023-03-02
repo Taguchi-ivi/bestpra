@@ -172,7 +172,7 @@
                         >
                             <v-list-item-group
                                 v-model="model"
-                                color="indigo"
+                                color="primary"
                             >
                                 <v-list-item
                                     v-for="(item, i) in items"
@@ -190,6 +190,7 @@
                                 </v-list-item-content>
                                 </v-list-item>
                             </v-list-item-group>
+                            {{ model }}
                         </v-list>
                     </v-col>
                     <v-col

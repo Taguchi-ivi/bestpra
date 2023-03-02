@@ -7,14 +7,6 @@
             class="d-flex"
         >
             <div>
-                <!-- <v-avatar
-                    color="indigo"
-                    class="ml-3"
-                >
-                    <v-icon dark>
-                        mdi-account-circle
-                    </v-icon>
-                </v-avatar> -->
                 <!-- TODO 対象のidを付与する -->
                 <AvatarSwitch
                     :id="1"

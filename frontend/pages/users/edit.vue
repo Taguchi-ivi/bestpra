@@ -4,7 +4,7 @@
         <v-card>
             <v-tabs
                 v-model="tab"
-                background-color="indigo"
+                background-color="primary"
                 centered
                 dark
                 icons-and-text
@@ -98,7 +98,7 @@
                                             <v-btn
                                                 outlined
                                                 dark
-                                                color="indigo"
+                                                color="primary"
                                                 small
                                                 :loading="updateAvatarLoading"
                                                 @click="updateAvatar"
@@ -115,7 +115,6 @@
                                         <!-- :rules="nameRules" -->
                                         <v-text-field
                                             v-model="user.nickname"
-                                            color="indigo"
                                             :counter="20"
                                             label="ニックネーム"
                                             required
@@ -123,7 +122,6 @@
                                         </v-text-field>
                                         <v-textarea
                                             v-model="user.introduction"
-                                            color="indigo"
                                             name="input-7-1"
                                             label="自己紹介"
                                             hint="自己紹介文"
@@ -159,7 +157,6 @@
                                                 <!-- :value="birthday" -->
                                                 <v-text-field
                                                     v-model="user.birthday"
-                                                    color="indigo"
                                                     label="Birthday date"
                                                     prepend-icon="mdi-calendar"
                                                     readonly
@@ -171,7 +168,6 @@
                                             <!-- v-model="date" -->
                                             <v-date-picker
                                                 v-model="user.birthday"
-                                                color="indigo"
                                                 :active-picker.sync="activePicker"
                                                 :max="(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)"
                                                 min="1950-01-01"
@@ -187,7 +183,7 @@
                                 <!-- :disabled="!valid" -->
                                     <v-btn
                                         dark
-                                        color="indigo"
+                                        color="primary"
                                         class="mr-4"
                                         @click="updateProfile"
                                     >
@@ -213,7 +209,6 @@
                             <v-form>
                                 <v-text-field
                                     v-model="email"
-                                    color="indigo"
                                     label="E-mail"
                                     required
                                 >
@@ -224,7 +219,7 @@
                                 <!-- :disabled="!valid" -->
                                     <v-btn
                                         dark
-                                        color="indigo"
+                                        color="primary"
                                         class="mr-4"
                                         @click="updateEmail"
                                     >
@@ -260,7 +255,7 @@
                                 >
                                     <v-btn
                                         dark
-                                        color="indigo"
+                                        color="primary"
                                         class="mr-4"
                                         @click="updatePassword"
                                     >

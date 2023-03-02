@@ -3,7 +3,7 @@
         <!-- color="#117768" -->
         <v-progress-circular
             indeterminate
-            color="indigo"
+            color="primary"
             :size="50"
             style="height: 80vh"
         />

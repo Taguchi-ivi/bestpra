@@ -3,7 +3,7 @@
         <v-card>
             <v-toolbar
                 flat
-                class="indigo"
+                color="primary"
                 dark
             >
                 <!-- <v-icon>mdi-magnify</v-icon> -->
@@ -81,7 +81,6 @@
                                 label="検索!!"
                                 solo
                                 prepend-inner-icon="mdi-magnify"
-                                color="indigo"
                                 class="mx-auto mt-8"
                             >
                             </v-text-field>

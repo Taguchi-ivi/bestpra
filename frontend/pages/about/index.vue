@@ -40,7 +40,7 @@
                             rounded
                             to="/home" nuxt
                         >
-                            練習メニュを覗く
+                            練習メニュを開く
                             <v-icon right>
                                 mdi-book-open-variant
                             </v-icon>

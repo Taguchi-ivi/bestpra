@@ -53,13 +53,12 @@
                     label="Your product or service"
                     hint="For example, flowers or used cars"
                     outlined
-                    color=indigo
                 >
                 </v-text-field>
                 <div class="text-right">
                     <v-btn
                         dark
-                        color=indigo
+                        color="primary"
                     >
                         userへ連絡
                     </v-btn>
@@ -119,13 +118,12 @@
                     label="Your product or service"
                     hint="For example, flowers or used cars"
                     outlined
-                    color=indigo
                 >
                 </v-text-field>
                 <div class="text-right">
                     <v-btn
                         dark
-                        color=indigo
+                        color="primary"
                     >
                         タグ追加
                     </v-btn>
@@ -185,13 +183,12 @@
                     label="Your product or service"
                     hint="For example, flowers or used cars"
                     outlined
-                    color=indigo
                 >
                 </v-text-field>
                 <div class="text-right">
                     <v-btn
                         dark
-                        color=indigo
+                        color="primary"
                     >
                         level追加
                     </v-btn>

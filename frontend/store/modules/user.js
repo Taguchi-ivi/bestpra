@@ -44,7 +44,16 @@ export const getters = {
 
 export const actions = {
     getCurrentUser ({ commit }, user) {
-        console.log('mutationsOK', user)
+        // console.log('mutationsOK', user)
+        if(!user) {
+            user = {
+                id: null,
+                nickname: null,
+                avatar: { url: null },
+                admin: false,
+                sub: null
+            }
+        }
         commit('setCurrentUser', user)
     },
 

@@ -15,7 +15,7 @@
         elevation="4"
         large
         outlined
-        color="indigo"
+        color="primary"
         to="/auth/signup" nuxt
     >
         会員登録
@@ -23,7 +23,8 @@
     <v-btn
         large
         text
-        color="indigo"
+        color="primary"
+        class="ml-2"
         to="/auth/signin" nuxt
     >
         ログイン

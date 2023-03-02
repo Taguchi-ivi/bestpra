@@ -3,7 +3,6 @@
         v-model="setTitle"
         label="タイトル"
         required
-        color="indigo"
     >
     </v-text-field>
 </template>

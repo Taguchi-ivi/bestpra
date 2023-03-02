@@ -12,8 +12,6 @@
             item-text="name"
             item-value="id"
             class="mb-10"
-            color="indigo"
-            item-color="indigo"
             menu-props="auto"
             label="対象者を選択"
             hide-details
@@ -42,7 +40,7 @@ export default {
         }
     },
     async mounted() {
-        await this.$axios.$get('/api/v1/mst_lists')
+        await this.$axios.$get('/api/v1/level_lists')
             .then(res => {
                 console.log('level_lsitのindexデータ', res)
                 this.levelItem = res

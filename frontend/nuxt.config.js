@@ -121,7 +121,7 @@ export default {
         //   success: colors.green.accent3,
         // },
         light: {
-          primary: '#EDF6E5',
+          primary: '#3F51B5',   // #EDF6E5
           accent: '#F38BA0',
           secondary: '#FFBCBC',
           info: '#B5EAEA',

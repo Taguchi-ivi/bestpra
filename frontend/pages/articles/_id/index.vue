@@ -131,7 +131,8 @@
                         <UserCardTag
                             :avatar-url="currentArticleData.user.avatar.url"
                             :userId="currentArticleData.user_id"
-                            :level="currentArticleData.level_name"
+                            :level="currentArticleData.level_list"
+                            :tags="currentArticleData.tag_list"
                         />
                         <!-- <p class="ml-2">this.name</p> -->
                         <!-- <p class="ml-2">{{ currentArticle.user.nickname }}</p> -->
@@ -171,13 +172,12 @@
                             <v-textarea
                                 outlined
                                 label="Comment"
-                                color="indigo"
                                 class="mt-5"
                             >
                             </v-textarea>
                             <div class="text-right">
                                 <v-btn
-                                    color=indigo
+                                    color="primary"
                                     dark
                                 >
                                     コメント

@@ -63,8 +63,11 @@
                         <!-- <pre>
                             {{ text }}
                         </pre> -->
+                        <!-- :chips.sync="chips"
+                        :tags="tag_list" -->
                         <ArticleTag
-                            :chips.sync="chips"
+                            v-model="chips"
+                            :tags="tag_list"
                         />
                     </v-card>
                     <div
@@ -72,10 +75,10 @@
                     >
                         <v-btn
                             :disabled="!valid"
-                            color="indigo"
+                            :loading="loading"
+                            color="primary"
                             dark
                             @click="updateArticle"
-                            :loading="loading"
                         >
                             編集を保存
                         </v-btn>
@@ -89,7 +92,7 @@
 <script>
 import ErrorCard from '~/components/Molecules/ErrorCard.vue'
 import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
-import ArticleTitle from '~/components/Atom/Article/ArcielsTitle.vue'
+import ArticleTitle from '~/components/Atom/Article/ArticleTitle.vue'
 import ArticleLevel from '~/components/Atom/Article/ArticleLevel.vue'
 import ArticleTag from '~/components/Atom/Article/ArticleTag.vue'
 // import AppImg from '~/components/Atom/App/AppNoImg.vue'
@@ -115,6 +118,8 @@ export default {
                 error: true
             }
         }
+        // nameだけの配列に変更
+        const tagList = res.tag_list.map(item => item.name)
         return {
             level: {
                 id: res.level_list_id,
@@ -123,6 +128,8 @@ export default {
             text: res.content,
             title: res.title,
             imageUrl: res.image.url,
+            // tag_list: list,
+            tag_list: tagList
         }
     },
     data() {
@@ -132,10 +139,11 @@ export default {
             text: '',
             title: '',
             imageUrl: '',
-            chips: '',
+            chips: [],
             selectFile: [],
             loading: false,
             error: false,
+            tag_list: []
         }
     },
     methods: {
@@ -155,7 +163,9 @@ export default {
             formData.append('article[level]', this.level.id)
             formData.append('article[content]', this.text)
             formData.append('article[image]', this.selectFile)
-            // formData.append('chips', this.chips)
+            const appendChips = this.chips.length === 0 ? [] : this.chips
+            formData.append('article[tag_list]', appendChips)
+
             await this.$axios.$patch('/api/v1/articles/' + this.$route.params.id, formData)
                 .then((res) => {
                     console.log(res)

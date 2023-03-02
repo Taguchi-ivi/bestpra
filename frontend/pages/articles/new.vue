@@ -52,11 +52,11 @@
                     <!-- <Ckeditor v-model="text" /> -->
                     <Ckeditor :text.sync="text" />
                 </client-only>
-                <!-- <pre>
-                    {{ text }}
-                </pre> -->
-                <ArticleTag
+                <!-- <ArticleTag
                     :chips.sync="chips"
+                /> -->
+                <ArticleTag
+                    v-model="chips"
                 />
             </v-card>
             <div
@@ -64,10 +64,10 @@
             >
                 <v-btn
                     :disabled="!valid"
-                    color="indigo"
+                    :loading="loading"
+                    color="primary"
                     dark
                     @click="createArticle"
-                    :loading="loading"
                 >
                     投稿
                 </v-btn>
@@ -78,7 +78,7 @@
 
 <script>
 import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
-import ArticleTitle from '~/components/Atom/Article/ArcielsTitle.vue'
+import ArticleTitle from '~/components/Atom/Article/ArticleTitle.vue'
 import ArticleLevel from '~/components/Atom/Article/ArticleLevel.vue'
 import ArticleTag from '~/components/Atom/Article/ArticleTag.vue'
 // import AppImg from '~/components/Atom/App/AppNoImg.vue'
@@ -149,7 +149,7 @@ export default {
             })
         },
         // async createArticle() {
-            async createArticle() {
+        async createArticle() {
             this.loading = true
             const formData = new FormData()
             // formData.append('article[user_id]', this.$auth.user.id)
@@ -158,7 +158,9 @@ export default {
             formData.append('article[image]', this.selectFile)
             formData.append('article[level_list_id]', this.level.id)
 
-            // console.log('postデータ確認', formData)
+            const appendChips = this.chips.length === 0 ? [] : this.chips
+            formData.append('article[tag_list]', appendChips)
+            // console.log('postデータ確認', this.chips)
             await this.$axios.$post('/api/v1/articles', formData )
                 .then((res) => {
                     console.log('resです', res)
