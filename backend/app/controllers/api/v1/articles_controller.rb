@@ -38,18 +38,27 @@ class Api::V1::ArticlesController < ApplicationController
         @article = Article.find(params[:id])
         return render json: :bad_request unless @article.user_id == current_user.id
 
-        render json:  @article.as_json(), status: :ok
+        # render json:  @article.as_json(), status: :ok
+        render json:  @article.as_json(include: [
+                                {tag_list: { only: [:name]}}
+                                ]), status: :ok
     end
 
     def update
-        return if current_user_for_article
+        render json: :bad_request if current_user_for_article
+
         @article = current_user.articles.find(params[:id])
         if @article.update!(article_params)
 
+            # 人が多くなったら不要になったタグを削除する ※ロジックの記載場所は考えること
+            # old_tag_list = @article.tag_list
+            # delete_tag_list(old_tag_list) unless old_tag_list.empty?
+
             # タグ情報も作成する
-            tag_list = params[:article][:tags].split('[sp|it]]')
+            # new_tag_list = params[:article][:tags].split(',')
+            new_tag_list = params[:article][:tag_list].split(',')
             @article.delete_tag_map
-            @article.save_tags(tag_list) unless tag_list.empty?
+            @article.save_tags(new_tag_list) unless new_tag_list.empty?
             render json: @article
         else
             render json: @article.errors.full_messages
@@ -63,7 +72,7 @@ class Api::V1::ArticlesController < ApplicationController
         if @article.save!
 
             # タグ情報も作成する
-            tag_list = params[:article][:tags].split('[sp|it]]')
+            tag_list = params[:article][:tag_list].split(',')
             @article.save_tags(tag_list) unless tag_list.empty?
 
             render json: @article
@@ -98,24 +107,15 @@ class Api::V1::ArticlesController < ApplicationController
             current_user.id != Article.find(params[:id]).user_id
         end
 
-        def delete_tag_map
-            return unless TagMap.exists?(article_id: self.id)
-            TagMap.where(article_id: self.id).destroy_all
-
-            # 必要無くなったタグは削除する
-            self.tags.each do |tag|
-                if TagMap.where(id: tag.tag_list_id).count == 0
-                    TagList.where(tag_id: tag.id).destroy_all
-                end
-            end
-        end
-
-        def save_tags(tag_list)
-            tag_list.each do |tag_name|
-                next if tag_name.empty?
-                tag = Tag.find_or_create_by(name: tag_name)
-                self.tags << tag
-            end
-        end
+        # 不要になったタグは削除する
+        # def delete_tag_list(old_tag_list)
+        #     old_tag_list.each do |old_tag_name|
+        #         next if old_tag_name.empty?
+        #         tag = TagList.find_by(name: old_tag_name)
+        #         if TagMap.where(tag_list_id: tag.id).count == 0
+        #             TagList.where(tag_id: tag.id).destroy_all
+        #         end
+        #     end
+        # end
 
 end

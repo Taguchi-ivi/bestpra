@@ -21,14 +21,6 @@ class Api::V1::TagMapsController < ApplicationController
             params.require(:level_list).permit(:name)
         end
 
-        def save_tags
-
-        end
-
-        def delete_tag_map
-
-        end
-
         def tag_map_params
             params.require(:tag_map).permit(:article_id, :tag_list_id)
         end

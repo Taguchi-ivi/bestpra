@@ -4,6 +4,7 @@ class Api::V1::TagListsController < ApplicationController
     def index
         # nameでソート
         tag_list = TagList.where(delete_flg: false).order(:name).as_json(only: [:id, :name])
+        # tag_list = TagList.where(delete_flg: false).order(:name).as_json(only: [:name])
         render json: tag_list
     end
 
