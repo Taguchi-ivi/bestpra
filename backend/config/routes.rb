@@ -10,9 +10,7 @@ Rails.application.routes.draw do
 
       # users
       # index不要かも
-      # resources :users, only: [:index, :show, :create , :edit, :update, :destroy]
       resources :users, only: [:index, :show] do
-        # resource :users, only: [:edit]
         get :edit, on: :collection
         patch :update, on: :collection
         patch :update_avatar, on: :collection
@@ -41,8 +39,13 @@ Rails.application.routes.draw do
       # resources :mst_lists, only:[:index]
 
       # MSTデータ取得
-      resources :level_lists, only:[:index, :create]
-      resources :tag_lists, only:[:index, :create]
+      resources :level_lists, only:[:index, :update, :create] do
+        get :article_level
+      end
+
+      resources :tag_lists, only:[:index, :update, :create] do
+        get :article_tag
+      end
 
       # タグ情報を更新する
       resources :tag_maps, only:[:update, :create]

@@ -8,3 +8,10 @@ a {
 .v-application a {
     color: rgba(0,0,0,.87);
 }
+
+.toc-view {
+    position: sticky;
+    top: 5rem;
+    max-height: 90vh;
+    // overflow: scroll;
+}

@@ -1,34 +1,29 @@
 <template>
-    <v-row
+    <div
         class="mt-2"
     >
-        <v-col
-            cols="3"
+        <div
+            class="d-flex"
         >
-            <!-- <v-list-item-avatar
-                class="ml-3"
-            > -->
-                <!-- <v-icon dark>
-                    mdi-account-circle
-                </v-icon> -->
-                <div class="ml-3">
-                    <!-- TODO idを対象のIDを付与すること -->
-                    <AvatarSwitch
-                        :avatar-url="avatarUrl"
-                        :id="userId"
-                    />
-                </div>
-            <!-- </v-list-item-avatar> -->
-        </v-col>
-        <v-col
-            cols="9"
+            <div class="ml-3">
+                <AvatarSwitch
+                    :avatar-url="avatarUrl"
+                    :id="userId"
+                />
+            </div>
+            <p class="ml-3">{{ userNickname }}</p>
+        </div>
+        <div
+            class="py-0 mt-3"
         >
-            <div>
+            <div class="ml-2">
                 <v-chip
                     color="primary"
                     dark
                     label
                     small
+                    link nuxt
+                    :to="`/levels/${level.id}`"
                 >
                     <v-icon left>
                         mdi-label
@@ -37,8 +32,12 @@
                     {{ level.name }}
                 </v-chip>
             </div>
+        </div>
+        <div
+            class="py-0 px-4"
+        >
             <div v-if="tags.length">
-                <div class="mt-1">
+                <div>
                     <v-icon>
                         mdi-tag-multiple
                     </v-icon>
@@ -51,13 +50,15 @@
                         class="ml-1"
                         dark
                         small
+                        link nuxt
+                        :to="`/tags/${tag.id}`"
                     >
                         {{ tag.name }}
                     </v-chip>
                 </div>
             </div>
-        </v-col>
-    </v-row>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -65,12 +66,16 @@
 import AvatarSwitch from '~/components/Molecules/AvatarSwitch.vue'
 
 export default {
-    name: 'UserCardTag',
+    name: 'ArticleUserCardTag',
     components: {
         AvatarSwitch,
     },
     props: {
         avatarUrl: {
+            type: String,
+            default: '',
+        },
+        userNickname: {
             type: String,
             default: '',
         },

@@ -13,7 +13,7 @@
             >
                 <v-row
                     no-gutters
-                    class="pa-10 mx-auto"
+                    class="pa-10"
                 >
                     <v-col
                         cols="2"
@@ -158,6 +158,7 @@
             </div>
             <v-divider />
             <v-container
+                fluid
                 class="mt-5"
                 >
                 <v-row no-gutters>
@@ -199,7 +200,7 @@
                         <MainTitle
                             :title="tabTitle"
                         />
-                        <CardArticle />
+                        <CardArticleAll />
                     </v-col>
                 </v-row>
             </v-container>
@@ -213,7 +214,7 @@
 import { mapGetters } from 'vuex'
 import ErrorCard from '~/components/Molecules/ErrorCard.vue'
 import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
-import CardArticle from '~/components/Organisms/Card/CardArticle.vue'
+import CardArticleAll from '~/components/Organisms/Card/CardArticleAll.vue'
 import AvatarImg from '~/components/Atom/App/AppAvatarImg.vue'
 
 export default {
@@ -221,7 +222,7 @@ export default {
     components: {
         MainTitle,
         ErrorCard,
-        CardArticle,
+        CardArticleAll,
         AvatarImg,
     },
     data() {

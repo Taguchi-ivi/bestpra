@@ -1,5 +1,5 @@
 class Api::V1::ArticlesController < ApplicationController
-    before_action :authenticate_user
+    before_action :authenticate_user, except: [:article_about]
 
     # before_action :set_article, only: [:edit, :update]
 
@@ -8,7 +8,7 @@ class Api::V1::ArticlesController < ApplicationController
         render json: Article.all.as_json(include: [
                                     {user: { only: [:id, :nickname, :avatar]}},
                                     {level_list: { only: [:id, :name]}},
-                                    {tag_list: { only: [:name]}}
+                                    {tag_list: { only: [:id, :name]}}
                                 ])
     end
 
@@ -26,7 +26,7 @@ class Api::V1::ArticlesController < ApplicationController
 
     # aboutページ用の3件のarticleを取得
     # TODO いいねの数が多い3件く、最新のデータを取得する
-    def about
+    def article_about
         # articles = Article.where(about: true).limit(3).order(like)
     end
 

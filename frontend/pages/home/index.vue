@@ -1,5 +1,7 @@
 <template>
-    <v-container>
+    <v-container
+        fluid
+    >
         <v-row>
             <v-col
                 cols="3"
@@ -44,7 +46,7 @@
                     <MainTitle
                         title="練習メニュー"
                     />
-                    <CardArticle />
+                    <CardArticleAll />
                     <MainTitle
                         title="タグ"
                     />
@@ -62,7 +64,7 @@
 
 <script>
 import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
-import CardArticle from '~/components/Organisms/Card/CardArticle.vue'
+import CardArticleAll from '~/components/Organisms/Card/CardArticleAll.vue'
 import CardTag from '~/components/Organisms/Card/CardTag.vue'
 import CardUser from '~/components/Organisms/Card/CardUser.vue'
 import TheLoading from '~/components/Organisms/Application/TheLoading.vue'
@@ -73,7 +75,7 @@ export default {
     // middleware: ['before-login-user'],
     components: {
         MainTitle,
-        CardArticle,
+        CardArticleAll,
         CardTag,
         CardUser,
         TheLoading
@@ -103,31 +105,5 @@ export default {
     created() {
         this.loading = false
     },
-    methods: {
-        testBtn() {
-            // const user = {
-            //     nickname: this.params.user.name,
-            //     email: this.params.user.email,
-            //     uid: 'aaaaaaaaaa'
-            // }
-            // this.$axios.post('/api/v1/users', { user })
-            //     .then(response => {
-            //             console.log(response)
-            //         })
-            // this.$axios.get('/api/v1/users')
-            //     .then(response => {
-            //         this.users = response.data
-            //     })
-        },
-    },
 }
 </script>
-
-<style lang="scss" scoped>
-.toc-view {
-    position: sticky;
-    top: 5rem;
-    max-height: 90vh;
-    // overflow: scroll;
-}
-</style>

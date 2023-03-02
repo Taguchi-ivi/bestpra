@@ -128,15 +128,14 @@
                         </div>
                         <!-- <h1 class="mt-5 text-center">タイトルを表示</h1> -->
                         <h1 class="mt-5 text-center">{{ currentArticleData.title }}</h1>
-                        <UserCardTag
+                        <ArticleUserCardTag
                             :avatar-url="currentArticleData.user.avatar.url"
+                            :user-nickname="currentArticleData.user.nickname"
                             :userId="currentArticleData.user_id"
                             :level="currentArticleData.level_list"
                             :tags="currentArticleData.tag_list"
                         />
-                        <!-- <p class="ml-2">this.name</p> -->
-                        <!-- <p class="ml-2">{{ currentArticle.user.nickname }}</p> -->
-                        <p class="ml-2">{{ currentArticleData.user.nickname }}</p>
+                        <!-- <p class="ml-2">{{ currentArticleData.user.nickname }}</p> -->
                         <div
                             class="d-flex mt-5"
                         >
@@ -197,7 +196,7 @@
 import { mapGetters } from 'vuex'
 import ErrorCard from '~/components/Molecules/ErrorCard.vue'
 import AppImg from '~/components/Atom/App/AppNoImg.vue'
-import UserCardTag from '~/components/Molecules/UserCardTag.vue'
+import ArticleUserCardTag from '~/components/Atom/Article/ArticleUserCardTag.vue'
 import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 import CardComment from '~/components/Organisms/Card/CardComment.vue'
 
@@ -207,7 +206,7 @@ export default {
     // },
     components: {
         AppImg,
-        UserCardTag,
+        ArticleUserCardTag,
         MainTitle,
         CardComment,
         ErrorCard
