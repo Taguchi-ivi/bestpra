@@ -25,14 +25,28 @@
                     </v-btn>
                 </div>
             </div>
-            <div v-if="content === 'level'"></div>
-            <div v-if="content === 'tag'"></div>
+            <!-- ロード時間がかかるため一旦なし -->
+            <!-- content="level" -->
+            <!-- content="tag" -->
+            <!-- <div v-if="content === 'level'">
+                <LevelContent />
+            </div>
+            <div v-if="content === 'tag'">
+                <TagsContent />
+            </div> -->
         </v-card>
     </div>
 </template>
 
 <script>
+// import LevelContent from '~/components/Atom/App/AppLevels.vue'
+// import TagsContent from '~/components/Atom/App/AppTags.vue'
+
 export default {
+    components: {
+        // LevelContent,
+        // TagsContent
+    },
     props: {
         title: {
             type: String,

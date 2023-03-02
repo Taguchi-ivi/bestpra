@@ -130,14 +130,12 @@
                         <h1 class="mt-5 text-center">{{ currentArticleData.title }}</h1>
                         <ArticleUserCardTag
                             :avatar-url="currentArticleData.user.avatar.url"
-                            :user-name="currentArticleData.user.name"
+                            :user-nickname="currentArticleData.user.nickname"
                             :userId="currentArticleData.user_id"
                             :level="currentArticleData.level_list"
                             :tags="currentArticleData.tag_list"
                         />
-                        <!-- <p class="ml-2">this.name</p> -->
-                        <!-- <p class="ml-2">{{ currentArticle.user.nickname }}</p> -->
-                        <p class="ml-2">{{ currentArticleData.user.nickname }}</p>
+                        <!-- <p class="ml-2">{{ currentArticleData.user.nickname }}</p> -->
                         <div
                             class="d-flex mt-5"
                         >

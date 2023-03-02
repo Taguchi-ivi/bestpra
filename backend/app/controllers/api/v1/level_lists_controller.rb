@@ -6,6 +6,19 @@ class Api::V1::LevelListsController < ApplicationController
         render json: @level_lists
     end
 
+    # level_idに紐づくarticleデータを全件取得
+    def article_level
+        level_id = params[:level_list_id]
+        return render json: :bad_request unless LevelList.exists?(id: level_id, delete_flg: false)
+
+        # articles = Article.where(tag_id: tag_id).order(created_at: :desc)
+        render json: Article.order(created_at: :desc).where(level_list_id: level_id).as_json(include: [
+                                                            {user: { only: [:id, :nickname, :avatar]}},
+                                                            {level_list: { only: [:id, :name]}},
+                                                            {tag_list: { only: [:name]}}
+                                                        ])
+    end
+
     def update
         return render json: '権限がありません' if admin
         return render json: '存在しません' unless tag_list.exists?(name: params[:tag_list][:name])

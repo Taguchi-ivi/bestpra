@@ -1,9 +1,9 @@
 <template>
-    <v-row
+    <div
         class="mt-2"
     >
-        <v-col
-            cols="3"
+        <div
+            class="d-flex"
         >
             <div class="ml-3">
                 <AvatarSwitch
@@ -11,37 +11,29 @@
                     :id="userId"
                 />
             </div>
-        </v-col>
-        <v-col
-            cols="9"
+            <p class="ml-3">{{ userNickname }}</p>
+        </div>
+        <div
+            class="py-0 mt-3"
         >
-            <p>{{ userNickname }}</p>
-        </v-col>
-        <v-col
-            cols="12"
-            class="py-0"
-        >
-            <nuxt-link
-                :to="`/levels/${level.id}`"
-            >
-                <div class="ml-2">
-                    <v-chip
-                        color="primary"
-                        dark
-                        label
-                        small
-                    >
-                        <v-icon left>
-                            mdi-label
-                        </v-icon>
-                        <!-- 大学生以上 -->
-                        {{ level.name }}
-                    </v-chip>
-                </div>
-            </nuxt-link>
-        </v-col>
-        <v-col
-            cols="11"
+            <div class="ml-2">
+                <v-chip
+                    color="primary"
+                    dark
+                    label
+                    small
+                    link nuxt
+                    :to="`/levels/${level.id}`"
+                >
+                    <v-icon left>
+                        mdi-label
+                    </v-icon>
+                    <!-- 大学生以上 -->
+                    {{ level.name }}
+                </v-chip>
+            </div>
+        </div>
+        <div
             class="py-0 px-4"
         >
             <div v-if="tags.length">
@@ -58,17 +50,15 @@
                         class="ml-1"
                         dark
                         small
+                        link nuxt
+                        :to="`/tags/${tag.id}`"
                     >
-                        <nuxt-link
-                            :to="`/tags/${tag.id}`"
-                        >
-                            {{ tag.name }}
-                        </nuxt-link>
+                        {{ tag.name }}
                     </v-chip>
                 </div>
             </div>
-        </v-col>
-    </v-row>
+        </div>
+    </div>
 </template>
 
 <script>

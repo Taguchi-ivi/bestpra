@@ -1,5 +1,5 @@
 class Api::V1::TagListsController < ApplicationController
-    # before_action :authenticate_user
+    before_action :authenticate_user
 
     def index
         # nameでソート
@@ -10,6 +10,19 @@ class Api::V1::TagListsController < ApplicationController
                             .where(delete_flg: false)
                             .order('tag_count desc')
         render json: tag_list
+    end
+
+    # tag_idに紐づくarticleデータを全件取得
+    def article_tag
+        tag_id = params[:tag_list_id]
+        return render json: :bad_request unless TagList.exists?(id: tag_id, delete_flg: false)
+
+        # articles = Article.where(tag_id: tag_id).order(created_at: :desc)
+        render json: TagList.find(tag_id).articles.order(created_at: :desc).as_json(include: [
+                                                        {user: { only: [:id, :nickname, :avatar]}},
+                                                        {level_list: { only: [:id, :name]}},
+                                                        {tag_list: { only: [:name]}}
+                                                    ])
     end
 
     def update

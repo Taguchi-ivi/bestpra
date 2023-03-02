@@ -14,7 +14,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import ArticleMain from '~/components/Molecules/ArticleMian.vue'
+import ArticleMain from '~/components/Molecules/ArticleMain.vue'
 
 
 export default {
