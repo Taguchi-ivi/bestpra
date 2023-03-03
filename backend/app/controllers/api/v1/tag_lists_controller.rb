@@ -17,8 +17,13 @@ class Api::V1::TagListsController < ApplicationController
         tag_id = params[:tag_list_id]
         return render json: :bad_request unless TagList.exists?(id: tag_id, delete_flg: false)
 
-        # articles = Article.where(tag_id: tag_id).order(created_at: :desc)
-        render json: TagList.find(tag_id).articles.order(created_at: :desc).as_json(include: [
+        # N + 1問題
+        # render json: TagList.find(tag_id).articles.order(created_at: :desc).as_json(include: [
+        #                                                 {user: { only: [:id, :nickname, :avatar]}},
+        #                                                 {level_list: { only: [:id, :name]}},
+        #                                                 {tag_list: { only: [:name]}}
+        #                                             ])
+        render json: TagList.find(tag_id).articles.includes(:user, :level_list, :tag_list).order(created_at: :desc).as_json(include: [
                                                         {user: { only: [:id, :nickname, :avatar]}},
                                                         {level_list: { only: [:id, :name]}},
                                                         {tag_list: { only: [:name]}}

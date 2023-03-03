@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_28_082112) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_02_234024) do
   create_table "articles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "level_list_id", null: false
@@ -21,6 +21,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_28_082112) do
     t.datetime "updated_at", null: false
     t.index ["level_list_id"], name: "index_articles_on_level_list_id"
     t.index ["user_id"], name: "index_articles_on_user_id"
+  end
+
+  create_table "comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "article_id", null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_comments_on_article_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "level_lists", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -64,6 +74,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_28_082112) do
 
   add_foreign_key "articles", "level_lists"
   add_foreign_key "articles", "users"
+  add_foreign_key "comments", "articles"
+  add_foreign_key "comments", "users"
   add_foreign_key "tag_maps", "articles"
   add_foreign_key "tag_maps", "tag_lists"
 end

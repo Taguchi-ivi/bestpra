@@ -5,21 +5,38 @@ class Api::V1::ArticlesController < ApplicationController
 
     def index
 
-        render json: Article.all.as_json(include: [
-                                    {user: { only: [:id, :nickname, :avatar]}},
-                                    {level_list: { only: [:id, :name]}},
-                                    {tag_list: { only: [:id, :name]}}
-                                ])
+        # N + 1問題
+        # render json: Article.all.as_json(include: [
+        #                             {user: { only: [:id, :nickname, :avatar]}},
+        #                             {level_list: { only: [:id, :name]}},
+        #                             {tag_list: { only: [:id, :name]}}
+        #                         ])
+        render json: Article.includes(:user, :level_list, :tag_list, comments: :user).order(id: :desc).as_json(include: [
+                                                                {user: { only: [:id, :nickname, :avatar]}},
+                                                                {level_list: { only: [:id, :name]}},
+                                                                {tag_list: { only: [:id, :name]}},
+                                                                {comments: { include: [
+                                                                    user: { only: [:id, :nickname, :avatar] },]}},
+                                                            ])
     end
 
     def show
 
+        # N + 1問題
         # オーバーライズしたレコードを取得 ※article modelも修正が必要
         # render json: Article.find(params[:id]).as_json
-        render json: Article.find(params[:id]).as_json(include: [
+        # render json: Article.find(params[:id]).as_json(include: [
+        #                                             {user: { only: [:id, :nickname, :avatar]}},
+        #                                             {level_list: { only: [:id, :name]}},
+        #                                             {tag_list: { only: [:name]}},
+        #                                             {comments: { only: [:id, :user_id, :content]}},
+        #                                         ])
+        render json: Article.includes(:user, :level_list, :tag_list, comments: :user).find(params[:id]).as_json(include: [
                                                     {user: { only: [:id, :nickname, :avatar]}},
                                                     {level_list: { only: [:id, :name]}},
-                                                    {tag_list: { only: [:name]}}
+                                                    {tag_list: { only: [:name]}},
+                                                    {comments: { include: [
+                                                        user: { only: [:id, :nickname, :avatar] },]}},
                                                 ])
 
     end
