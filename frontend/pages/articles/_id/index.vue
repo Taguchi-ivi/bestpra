@@ -131,7 +131,7 @@
                         <ArticleUserCardTag
                             :avatar-url="currentArticleData.user.avatar.url"
                             :user-nickname="currentArticleData.user.nickname"
-                            :userId="currentArticleData.user_id"
+                            :user-id="currentArticleData.user_id"
                             :level="currentArticleData.level_list"
                             :tags="currentArticleData.tag_list"
                         />
@@ -156,7 +156,7 @@
                 </v-card>
                 <v-card class="mt-8 pa-3">
                     <MainTitle title="Comment" />
-                        <div v-if="comment">
+                        <div v-if="articleComments.length > 0">
                             <CardComment />
                         </div>
                         <div v-else>
@@ -169,6 +169,7 @@
                             class="ml-auto"
                         >
                             <v-textarea
+                                v-model="commentContent"
                                 outlined
                                 label="Comment"
                                 class="mt-5"
@@ -178,6 +179,7 @@
                                 <v-btn
                                     color="primary"
                                     dark
+                                    @click="commentPost"
                                 >
                                     コメント
                                 </v-btn>
@@ -201,9 +203,7 @@ import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 import CardComment from '~/components/Organisms/Card/CardComment.vue'
 
 export default {
-    // components: {
-    //     Ckeditor,
-    // },
+    name: 'ArticleDetail',
     components: {
         AppImg,
         ArticleUserCardTag,
@@ -219,18 +219,46 @@ export default {
             comment: 'a',
             on: false,
             dialog: false,
+            commentContent: '',
         }
+    },
+    async fetch({ $axios, params, store }) {
+        await $axios.$get(`/api/v1/articles/${params.id}`)
+        // await $axios.$get(`api/v1/users/`)
+            .then(res => {
+                console.log(res)
+                store.dispatch('modules/error/getErrorStatus', false)
+                store.dispatch('modules/article/getCurrentArticleData', res)
+                store.dispatch('modules/comment/getArticleComment', res.comments)
+
+            })
+            .catch(err => {
+                console.log(err)
+                store.dispatch('modules/error/getErrorStatus', true)
+                store.dispatch('modules/toast/getToast', {
+                    status: true,
+                    msg: '存在しない記事です',
+                    color: 'error'
+                })
+            })
     },
     computed: {
         ...mapGetters({
             currentArticleData: 'modules/article/getCurrentArticleData',
             currentUser: 'modules/user/getUser',
+            articleComments: 'modules/comment/getArticleComment',
             error: 'modules/error/getErrorStatus',
         })
     },
+    // beforeDestroy () {
+    //     // Vueインスタンスが破棄される直前にVuexのtoast.msgを削除する(無期限toastに対応)
+    //     this.resetArticle()
+    // },
     methods: {
         resetArticle() {
-            return this.$store.dispatch('modules/article/getCurrentArticleData', null)
+
+            this.$store.dispatch('modules/article/getCurrentArticleData', null)
+            this.$store.dispatch('modules/comment/getArticleComment', [])
         },
         async articleDelete() {
             await this.$axios.$delete(`/api/v1/articles/${this.$route.params.id}`)
@@ -251,29 +279,45 @@ export default {
                     })
                 })
             this.dialog = false
-        }
-    },
-    async fetch({ $axios, params, store }) {
-        await $axios.$get(`api/v1/articles/${params.id}`)
-        // await $axios.$get(`api/v1/users/`)
-            .then(res => {
-                console.log(res)
-                store.dispatch('modules/error/getErrorStatus', false)
-                store.dispatch('modules/article/getCurrentArticleData', res)
-            })
-            .catch(err => {
-                console.log(err)
-                store.dispatch('modules/error/getErrorStatus', true)
-                store.dispatch('modules/toast/getToast', {
-                    status: true,
-                    msg: '存在しない記事です',
-                    color: 'error'
+        },
+        async commentPost() {
+            const comment = {
+                content: this.commentContent,
+            }
+            await this.$axios.$post(`/api/v1/articles/${this.$route.params.id}/comments`, comment)
+                .then(res => {
+                    const comment = {
+                        id: res.id,
+                        user_id: this.currentUser.id,
+                        article_id: this.$route.params.id,
+                        content: this.commentContent,
+                        created_at: new Date(),
+                        user: {
+                            id: this.currentUser.id,
+                            nickname: this.currentUser.nickname,
+                            avatar: {
+                                url: this.currentUser.avatar.url,
+                            }
+                        }
+                    }
+                    this.$store.commit('modules/comment/setPushArticleComment', comment)
+                    this.commentContent = ''
+                    this.$store.dispatch('modules/toast/getToast', {
+                            status: true,
+                            msg: '素敵なコメントをありがとう!!',
+                            color: 'success'
+                        })
                 })
-            })
+                .catch( err => {
+                    console.log(err)
+                    this.$store.dispatch('modules/toast/getToast', {
+                            status: true,
+                            msg: 'コメントの投稿に失敗しました',
+                            color: 'error'
+                        })
+                })
+        },
+
     },
-    // beforeDestroy () {
-    //     // Vueインスタンスが破棄される直前にVuexのtoast.msgを削除する(無期限toastに対応)
-    //     this.resetArticle()
-    // },
 };
 </script>

@@ -49,7 +49,8 @@
                         <v-icon>
                             mdi-comment-text-outline
                         </v-icon>
-                        <span class="subheading">45</span>
+                        <!-- <span class="subheading">45</span> -->
+                        <span v-if="0 < article.comments.length" class="subheading">{{ article.comments.length }}</span>
                     </nuxt-link>
                 </div>
             </div>

@@ -33,10 +33,10 @@ Rails.application.routes.draw do
       # articles
       resources :articles, only:[:index, :show, :edit, :update, :create, :destroy] do
         get :article_about, on: :collection
+        # comments
+        resources :comments, only:[:create, :destroy]
       end
 
-      # comments
-      resources :comments, only:[:create, :destroy]
 
       # Level(ラベル)データ取得
       resources :level_lists, only:[:index, :update, :create] do

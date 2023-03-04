@@ -7,6 +7,7 @@ class Api::V1::UsersController < ApplicationController
     # current_userで値を取得できる
 
     def index
+        # TODO 全件取得する際に、項目を絞ること
         users = User.all
         #avatar必要
         # as_json => ハッシュの形でJSONデータを返す {"id" => 1, "nickname" => "test", ...}

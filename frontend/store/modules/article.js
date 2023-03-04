@@ -30,6 +30,31 @@
             commit('setCurrentArticleData', articleData)
         },
 
+        getResetCurrentArticleData({ commit }) {
+            commit('setCurrentArticleData', {
+                id: 0,
+                title: '',
+                content: '',
+                created_at: '',
+                updated_at: '',
+                image: {
+                    url: '',
+                },
+                level_list_id: 0,
+                level_list: {},
+                tag_list: {},
+                user: {
+                    id: 0,
+                    nickname: '',
+                    avatar: {
+                        url: '',
+                    }
+                },
+                user_id: 0,
+                comments: []
+            })
+        }
+
     }
 
     export const mutations = {
