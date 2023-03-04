@@ -156,7 +156,12 @@
                     </v-col>
                 </v-row>
             </div>
-            <v-divider />
+            <div
+                style="width: 97%"
+                class="mx-auto"
+            >
+                <v-divider />
+            </div>
             <v-container
                 fluid
                 class="mt-5"

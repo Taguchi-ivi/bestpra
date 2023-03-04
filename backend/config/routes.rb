@@ -33,16 +33,17 @@ Rails.application.routes.draw do
       # articles
       resources :articles, only:[:index, :show, :edit, :update, :create, :destroy] do
         get :article_about, on: :collection
+        # comments
+        resources :comments, only:[:create, :destroy]
       end
 
-      # MSTデータ取得
-      # resources :mst_lists, only:[:index]
 
-      # MSTデータ取得
+      # Level(ラベル)データ取得
       resources :level_lists, only:[:index, :update, :create] do
         get :article_level
       end
 
+      # Tagデータ取得
       resources :tag_lists, only:[:index, :update, :create] do
         get :article_tag
       end

@@ -58,7 +58,9 @@ class User < ApplicationRecord
                 allow_nil: true
 
 
+    # association
     has_many :articles, dependent: :destroy
+    has_many :comments, dependent: :destroy
 
 
 

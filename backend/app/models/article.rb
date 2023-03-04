@@ -34,6 +34,7 @@ class Article < ApplicationRecord
     # association
     belongs_to :user
     belongs_to :level_list
+    has_many :comments, dependent: :destroy
     has_many :tag_maps, dependent: :destroy
     has_many :tag_list, through: :tag_maps
 
