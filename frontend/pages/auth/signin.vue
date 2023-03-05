@@ -30,7 +30,7 @@
                         :loading="loading"
                         block
                         class="white--text"
-                        color="blue"
+                        color="primary"
                     >
                         ログインする
                     </v-btn>
@@ -48,7 +48,7 @@ import UserFormEmail from '~/components/Atom/UserForm/UserFormEmail'
 import UserFormPassword from '~/components/Atom/UserForm/UserFormPassword'
 
 export default {
-    name: 'singIn',
+    name: 'SingIn',
     components: {
         UserFormCard,
         UserFormEmail,

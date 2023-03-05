@@ -62,7 +62,7 @@ export default {
   // middleware
   router: {
     // middleware: ['silent-refresh-token','get-auth-state']
-    middleware: ['silent-refresh-token']
+    middleware: ['silent-refresh-token', 'current-liked']
   },
 
   // Auto import components: https://go.nuxtjs.dev/config-components

@@ -474,9 +474,8 @@ export default {
                     })
                 })
         },
-        fileChange(event) {
+        fileChange() {
             this.preview.flg = true
-            // this.preview.img = event.target.File[0]
             this.preview.img = this.imgFile
             this.preview.url = window.URL.createObjectURL(this.imgFile)
         },

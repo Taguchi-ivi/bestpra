@@ -34,14 +34,30 @@
             <div
                 class="d-flex justify-end mb-2"
             >
-                <div>
-                    <v-icon>
-                        mdi-heart-outline
-                    </v-icon>
-                    <span class="subheading mr-2">256</span>
+                <div v-if="$my.liked(article.id)">
+                    <v-btn
+                        icon
+                        color="red"
+                        @click="$my.unlike(article.id, true)"
+                    >
+                        <v-icon>
+                            mdi-heart
+                        </v-icon>
+                    </v-btn>
                 </div>
+                <div v-else>
+                    <v-btn
+                        icon
+                        @click="$my.createLike(article.id, true)"
+                    >
+                        <v-icon>
+                            mdi-heart-outline
+                        </v-icon>
+                    </v-btn>
+                </div>
+                <div v-if="likeCount(article.id) > 0" class="subheading mr-2 my-auto">{{ likeCount(article.id) }}</div>
                 <div
-                    class="mr-3"
+                    class="mr-3 my-auto"
                 >
                     <nuxt-link
                         :to="`/articles/${article.id}`"
@@ -59,6 +75,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import ArticleUserCardTag from '~/components/Atom/Article/ArticleUserCardTag.vue'
 import AppImg from '~/components/Atom/App/AppNoImg.vue'
 
@@ -71,8 +88,22 @@ export default {
         article: {
             type: Object,
             default: () => {}
+        },
+    },
+    computed: {
+        ...mapGetters({
+            articles: 'modules/article/getArticles',
+            AllLike: 'modules/like/getAllLike',
+        })
+    },
+    methods: {
+        ...mapActions({
+            getArticles: 'modules/article/getArticles'
+        }),
+        likeCount(articleId) {
+            return this.AllLike.find(like => like.id === articleId).likes.length
         }
-    }
+    },
 }
 
 </script>

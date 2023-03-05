@@ -37,6 +37,7 @@ class Article < ApplicationRecord
     has_many :comments, dependent: :destroy
     has_many :tag_maps, dependent: :destroy
     has_many :tag_list, through: :tag_maps
+    has_many :likes, dependent: :destroy
 
     # def as_json(options = {})
     #     super(options.merge(include: [:user, :level_list, {tag_list: {only: :name}}]))

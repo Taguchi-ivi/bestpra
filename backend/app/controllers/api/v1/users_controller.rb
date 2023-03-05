@@ -1,7 +1,7 @@
 class Api::V1::UsersController < ApplicationController
     # skip_before_action :authenticate
     # createメソッドのみログイン済みかどうかの判定をスキップする
-    # before_action :authenticate_user
+    before_action :authenticate_user
     before_action :set_user, only: [:show, :update, :destroy]
 
     # current_userで値を取得できる
@@ -23,6 +23,9 @@ class Api::V1::UsersController < ApplicationController
         render json: @user.as_json(only: [:id, :nickname, :avatar, :introduction]).merge(current_user: flg).with_indifferent_access
     end
 
+    def current_liked
+        render json: current_user.likes.pluck(:article_id)
+    end
 
     def edit
         # @user = User.find(params[:id])

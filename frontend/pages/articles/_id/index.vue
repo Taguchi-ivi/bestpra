@@ -24,7 +24,21 @@
                     >
                         <div class="d-flex justify-end">
                             <v-btn
+                                v-if="$my.liked(currentArticleData.id)"
                                 icon
+                                @click="$my.unlike(currentArticleData.id, false)"
+                            >
+                                <v-icon
+                                    size="30"
+                                    color="red"
+                                >
+                                    mdi-heart
+                                </v-icon>
+                            </v-btn>
+                            <v-btn
+                                v-else
+                                icon
+                                @click="$my.createLike(currentArticleData.id, false)"
                             >
                                 <v-icon
                                     size="30"
@@ -226,10 +240,11 @@ export default {
         await $axios.$get(`/api/v1/articles/${params.id}`)
         // await $axios.$get(`api/v1/users/`)
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 store.dispatch('modules/error/getErrorStatus', false)
                 store.dispatch('modules/article/getCurrentArticleData', res)
                 store.dispatch('modules/comment/getArticleComment', res.comments)
+                // store.dispatch('modules/like/getCurrentLike', res.likes)
 
             })
             .catch(err => {
@@ -248,6 +263,7 @@ export default {
             currentUser: 'modules/user/getUser',
             articleComments: 'modules/comment/getArticleComment',
             error: 'modules/error/getErrorStatus',
+            // currentLike: 'modules/like/getCurrentLike',
         })
     },
     // beforeDestroy () {
@@ -317,6 +333,26 @@ export default {
                         })
                 })
         },
+        // like(articleId) {
+        //     this.$axios.$post(`/api/v1/articles/${articleId}/likes`)
+        //         .then(res => {
+        //             console.log(res)
+        //             this.$store.commit('modules/like/getCurrentLike', articleId)
+        //         })
+        //         .catch( err => {
+        //             console.log(err)
+        //         })
+        // },
+        // unlike(articleId) {
+        //     this.$axios.$delete(`/api/v1/articles/${articleId}/likes`)
+        //         .then(res => {
+        //             console.log(res)
+        //             this.$store.commit('modules/like/getCurrentLike', articleId)
+        //         })
+        //         .catch( err => {
+        //             console.log(err)
+        //         })
+        // },
 
     },
 };

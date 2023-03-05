@@ -3,7 +3,14 @@ class MyInject {
     constructor (ctx) {
         // ctx => { app }
         this.app = ctx.app
+        this.store = ctx.store
+        this.$axios = ctx.$axios
         this.error = ctx.error
+    }
+
+    get user () {
+        // return this.store.getters['modules/user/getUser'].current || {}
+        return this.store.getters['modules/user/getUser'] || {}
     }
 
     // i18nページタイトル変換
@@ -36,19 +43,56 @@ class MyInject {
         return this.error({statusCode, message})
     }
 
-    // 8080から3000へ変換
-    // TODO 本番環境で要注意
-    // portFix(url) {
-    //     // return url.replace('//localhost:8080', '//localhost:3000')
-    //     return "http://localhost:3000" + url
-    // }
+    // いいねされているかを確認
+    liked(articleId) {
+        const currentLiked = this.store.getters['modules/like/getCurrentLike'] || []
+        return currentLiked.includes(articleId)
+    }
+
+    // いいねの件数を取得
+    likeCount(articleId) {
+        const AllLike = this.store.getters['modules/like/getAllLike'] || []
+        return AllLike.find(like => like.id === articleId).likes.length
+    }
+
+    async createLike(articleId, cardFlg) {
+        await this.$axios.$post(`/api/v1/articles/${articleId}/like`)
+            .then(res => {
+                this.store.commit('modules/like/setCreateCurrentLike', articleId)
+                if(cardFlg) {
+                    this.store.commit('modules/like/setCreateAllLike', {
+                            articleId,
+                            userId: this.user.id,
+                    })
+                }
+            })
+            .catch( err => {
+                console.log(err)
+            })
+    }
+
+    async unlike(articleId, cardFlg) {
+        await this.$axios.$delete(`/api/v1/articles/${articleId}/like`)
+            .then(res => {
+                this.store.commit('modules/like/setDeleteCurrentLike', articleId)
+                if(cardFlg) {
+                    this.store.commit('modules/like/setDeleteAllLike', {
+                            articleId,
+                            userId: this.user.id,
+                    })
+                }
+            })
+            .catch( err => {
+                console.log(err)
+            })
+    }
 }
 
 // inject => オリジナルクラスを追加することができる
 // どこからでも呼び出し可能となる
 // export default (context, inject)
-export default ({ app, error }, inject) => {
+export default ({ app, error, $axios, store }, inject) => {
     // inject('呼び出し名', 'クラスのインスタンス(context),)
     // 'my' => $myで呼び出せる
-    inject('my', new MyInject({ app, error }))
+    inject('my', new MyInject({ app, error, $axios, store }))
 }
