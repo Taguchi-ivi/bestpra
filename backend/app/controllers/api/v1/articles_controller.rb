@@ -1,7 +1,7 @@
 class Api::V1::ArticlesController < ApplicationController
     before_action :authenticate_user, except: [:article_about]
 
-    # before_action :set_article, only: [:edit, :update]
+    before_action :set_article, only: [:edit, :update]
 
     def index
 

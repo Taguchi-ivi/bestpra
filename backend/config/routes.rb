@@ -15,8 +15,10 @@ Rails.application.routes.draw do
         patch :update, on: :collection
         patch :update_avatar, on: :collection
 
-        # いいねした記事を取得
+        # いいねした記事のIDを取得
         get :current_liked, on: :collection
+        # ユーザのいいね一覧取得
+        get :likes
       end
 
       # auth_token, 認証周り

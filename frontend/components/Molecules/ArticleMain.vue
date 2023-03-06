@@ -38,7 +38,7 @@
                     <v-btn
                         icon
                         color="red"
-                        @click="$my.unlike(article.id, true)"
+                        @click="$my.unlike(article, true, userHomeFlg)"
                     >
                         <v-icon>
                             mdi-heart
@@ -48,7 +48,7 @@
                 <div v-else>
                     <v-btn
                         icon
-                        @click="$my.createLike(article.id, true)"
+                        @click="$my.createLike(article, true)"
                     >
                         <v-icon>
                             mdi-heart-outline
@@ -89,6 +89,10 @@ export default {
             type: Object,
             default: () => {}
         },
+        userHomeFlg: {
+            type: Boolean,
+            default: false
+        }
     },
     computed: {
         ...mapGetters({

@@ -4,11 +4,14 @@ export default async ({ $auth, store, $axios }) => {
     if ($auth.loggedIn()) {
         // ユーザーのいいね一覧が存在しない場合取得
         const currentLiked = store.getters['modules/like/getCurrentLike'].concat()
-        if (currentLiked.includes('nothing')) {
+        const allLiked = store.getters['modules/like/getAllLike'].concat()
+        if (currentLiked.includes('nothing') || allLiked.includes('nothing')) {
             await $axios.$get('/api/v1/users/current_liked')
                 .then((res => {
-                    console.log('返却データhello',res)
-                    store.dispatch('modules/like/getCurrentLike', res)
+                    // console.log('返却データhello',res)
+                    store.commit('modules/like/setCurrentLike', res.currentLiked)
+                    const result = res.likes.map(article => ({id: article.id, likes: article.likes}))
+                    store.commit('modules/like/setAllLike', result)
                 }))
                 .catch(err => console.log(err))
         }

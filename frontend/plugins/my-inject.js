@@ -55,13 +55,15 @@ class MyInject {
         return AllLike.find(like => like.id === articleId).likes.length
     }
 
-    async createLike(articleId, cardFlg) {
-        await this.$axios.$post(`/api/v1/articles/${articleId}/like`)
+    // いいねの処理
+    async createLike(article, cardFlg) {
+        await this.$axios.$post(`/api/v1/articles/${article.id}/like`)
             .then(res => {
-                this.store.commit('modules/like/setCreateCurrentLike', articleId)
+                this.store.commit('modules/like/setCreateCurrentLike', article.id)
+                // this.store.commit('modules/like/setCreateLikesArticle', article)
                 if(cardFlg) {
                     this.store.commit('modules/like/setCreateAllLike', {
-                            articleId,
+                            articleId: article.id,
                             userId: this.user.id,
                     })
                 }
@@ -71,20 +73,33 @@ class MyInject {
             })
     }
 
-    async unlike(articleId, cardFlg) {
-        await this.$axios.$delete(`/api/v1/articles/${articleId}/like`)
+    // いいね解除
+    async unlike(article, cardFlg, userHomeFlg) {
+        await this.$axios.$delete(`/api/v1/articles/${article.id}/like`)
             .then(res => {
-                this.store.commit('modules/like/setDeleteCurrentLike', articleId)
+                this.store.commit('modules/like/setDeleteCurrentLike', article.id)
+                // this.store.commit('modules/like/setDeleteLikesArticle', article.id)
                 if(cardFlg) {
                     this.store.commit('modules/like/setDeleteAllLike', {
-                            articleId,
+                            articleId: article.id,
                             userId: this.user.id,
                     })
+                }
+                console.log('userHomeFlg', userHomeFlg)
+                if(userHomeFlg) {
+                    this.store.commit('modules/article/setDeleteLikesArticle', article.id)
                 }
             })
             .catch( err => {
                 console.log(err)
             })
+    }
+
+    // current_userか判定
+    isCurrentUser(userId) {
+        // console.log('userId', userId)
+        // console.log('userId', this.user.id)
+        return Number(userId) === this.user.id
     }
 }
 

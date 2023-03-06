@@ -26,7 +26,7 @@
                             <v-btn
                                 v-if="$my.liked(currentArticleData.id)"
                                 icon
-                                @click="$my.unlike(currentArticleData.id, false)"
+                                @click="$my.unlike(currentArticleData, false, false)"
                             >
                                 <v-icon
                                     size="30"
@@ -38,7 +38,7 @@
                             <v-btn
                                 v-else
                                 icon
-                                @click="$my.createLike(currentArticleData.id, false)"
+                                @click="$my.createLike(currentArticleData, false)"
                             >
                                 <v-icon
                                     size="30"
@@ -240,7 +240,6 @@ export default {
         await $axios.$get(`/api/v1/articles/${params.id}`)
         // await $axios.$get(`api/v1/users/`)
             .then(res => {
-                // console.log(res)
                 store.dispatch('modules/error/getErrorStatus', false)
                 store.dispatch('modules/article/getCurrentArticleData', res)
                 store.dispatch('modules/comment/getArticleComment', res.comments)

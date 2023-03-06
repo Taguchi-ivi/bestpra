@@ -18,13 +18,49 @@ class Api::V1::UsersController < ApplicationController
 
     def show
         # current_userか判定
-        flg = current_user.id == @user.id ? true : false
+        # flg = current_user.id == @user.id ? true : false
         # render json: 'Usersshow'
-        render json: @user.as_json(only: [:id, :nickname, :avatar, :introduction]).merge(current_user: flg).with_indifferent_access
+        # render json: @user.as_json(only: [:id, :nickname, :avatar, :introduction])
+        user_data = @user.as_json(only: [:id, :nickname, :avatar, :introduction])
+        articles = @user.articles.includes(:likes, :level_list, :tag_list, comments: :user)
+                                                .order(id: :desc)
+                                                .as_json(include: [
+                                                        {user: { only: [:id, :nickname, :avatar]}},
+                                                        {likes: { only: [:user_id]}},
+                                                        {level_list: { only: [:id, :name]}},
+                                                        {tag_list: { only: [:id, :name]}},
+                                                        {comments: { include: [
+                                                            user: { only: [:id] },]}},
+                                                    ])
+        render json: {user: user_data, articles: articles}
     end
 
     def current_liked
-        render json: current_user.likes.pluck(:article_id)
+        # 自身のいいねしたIDのみ取得
+        # render json: current_user.likes.pluck(:article_id)
+        # current_liked = current_user.likes.pluck(:article_id)
+        current_liked = User.first.likes.pluck(:article_id)
+        likes = Article.includes(:likes)
+                            .order(id: :desc)
+                            .as_json(include: [
+                                        {likes: { only: [:user_id]}},
+                                    ])
+        render json: {currentLiked: current_liked, likes: likes}
+    end
+
+    def likes
+        # 対象のユーザのいいね一覧を取得
+        user = User.find(params[:user_id])
+        render json: user.likes.includes(article: [:user, :level_list, :tag_list, :comments])
+                        .order(article_id: :desc)
+                        .as_json(include:
+                                { article:
+                                    { include: [
+                                        {user: { only: [:id, :nickname, :avatar]}},
+                                        {level_list: { only: [:id, :name]}},
+                                        {tag_list: { only: [:name]}},
+                                        {comments: { only: [:user_id]}}]
+                                    }})
     end
 
     def edit
