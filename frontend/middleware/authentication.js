@@ -4,8 +4,8 @@
 // middleware: ['authentication'],
 export default async ({ $auth, store, route, redirect }) => {
     // リダイレクトを必要としないパス
-    // const notRedirectPaths = ['about', 'project']
-    const notRedirectPaths = ['about', 'users-1']
+    // const notRedirectPaths = ['about', 'project', 'users-1']
+    const notRedirectPaths = ['about']
     if (notRedirectPaths.includes(route.name)) {
         return false
     }

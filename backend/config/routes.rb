@@ -14,6 +14,11 @@ Rails.application.routes.draw do
         get :edit, on: :collection
         patch :update, on: :collection
         patch :update_avatar, on: :collection
+
+        # いいねした記事のIDを取得
+        get :current_liked, on: :collection
+        # ユーザのいいね一覧取得
+        get :likes
       end
 
       # auth_token, 認証周り
@@ -35,6 +40,8 @@ Rails.application.routes.draw do
         get :article_about, on: :collection
         # comments
         resources :comments, only:[:create, :destroy]
+        # like
+        resource :like, only:[:create, :destroy]
       end
 
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_02_234024) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_04_061701) do
   create_table "articles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "level_list_id", null: false
@@ -38,6 +38,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_02_234024) do
     t.boolean "delete_flg", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "article_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_likes_on_article_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "tag_lists", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -76,6 +85,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_02_234024) do
   add_foreign_key "articles", "users"
   add_foreign_key "comments", "articles"
   add_foreign_key "comments", "users"
+  add_foreign_key "likes", "articles"
+  add_foreign_key "likes", "users"
   add_foreign_key "tag_maps", "articles"
   add_foreign_key "tag_maps", "tag_lists"
 end

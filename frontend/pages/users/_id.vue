@@ -18,15 +18,9 @@
                     <v-col
                         cols="2"
                     >
-                        <!-- <v-avatar>
-                            <v-icon>
-                                mdi-account-circle
-                            </v-icon>
-                        </v-avatar> -->
                         <AvatarImg
                             :avatar-url="otherUser.avatar.url"
                         />
-                        <!-- <p>{{ name }}</p> -->
                         <p>{{ otherUser.nickname }}</p>
                     </v-col>
                     <v-col
@@ -44,7 +38,7 @@
                     <v-col
                         cols="3"
                     >
-                        <div v-if="otherUser.current_user">
+                        <div v-if="$my.isCurrentUser(otherUser.id)">
                             <v-menu
                                 app
                                 offset-x
@@ -181,8 +175,8 @@
                                 color="primary"
                             >
                                 <v-list-item
-                                    v-for="(item, i) in items"
-                                    :key="i"
+                                    v-for="item in items"
+                                    :key="item.text"
                                 >
                                 <v-list-item-icon>
                                     <v-icon>
@@ -203,9 +197,25 @@
                         cols="9"
                     >
                         <MainTitle
-                            :title="tabTitle"
+                            :title="model"
                         />
-                        <CardArticleAll />
+                        <div v-if="writtenArticles.length === 0">
+                            <p>まだ投稿はありません</p>
+                        </div>
+                        <div v-else>
+                            <v-row>
+                                <v-col
+                                    v-for="(article, index) in writtenArticles"
+                                    :key="index"
+                                    cols="4"
+                                >
+                                    <ArticleMain
+                                        :article="article"
+                                    />
+                                </v-col>
+                            </v-row>
+                        </div>
+                        <nuxt-child />
                     </v-col>
                 </v-row>
             </v-container>
@@ -215,11 +225,11 @@
 
 <script>
 
-// import { mapActions, mapGetters } from 'vuex'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 import ErrorCard from '~/components/Molecules/ErrorCard.vue'
 import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
-import CardArticleAll from '~/components/Organisms/Card/CardArticleAll.vue'
+import ArticleMain from '~/components/Molecules/ArticleMain.vue'
 import AvatarImg from '~/components/Atom/App/AppAvatarImg.vue'
 
 export default {
@@ -227,17 +237,19 @@ export default {
     components: {
         MainTitle,
         ErrorCard,
-        CardArticleAll,
         AvatarImg,
+        ArticleMain,
     },
     data() {
         return {
             tabTitle: 'フォロワー',
             on: false,
             dialog: false,
-            // introduction: 'testtesttesttesttesttesttesttesttesttesttesttesttesttest',
-            // name: 'meron',
             items: [
+                {
+                    icon: 'mdi-note',
+                    text: '練習メニュー',
+                },
                 {
                     icon: 'mdi-account-star',
                     text: 'フォロー',
@@ -250,16 +262,8 @@ export default {
                     icon: 'mdi-heart',
                     text: 'いいね',
                 },
-                {
-                    icon: 'mdi-note',
-                    text: '練習メニュー',
-                },
-                {
-                    icon: 'mdi-book-open-blank-variant',
-                    text: '練習ノート',
-                },
             ],
-            model: 1,
+            model: 'フォロー',
         }
     },
     // asyncDate => componentのデータを表示する前に実行されるメソッド
@@ -272,13 +276,14 @@ export default {
     //         .catch(err => (console.log(err)))
     //     return { users }
     // },
-    async fetch({ $axios, params, store }) {
+    async fetch({ $axios, params, store}) {
         await $axios.$get(`api/v1/users/${params.id}`)
         // await $axios.$get(`api/v1/users/`)
             .then(res => {
-                console.log(res)
+                // console.log('resUser', res.user)
                 store.dispatch('modules/error/getErrorStatus', false)
-                store.dispatch('modules/user/getOtherUser', res)
+                store.dispatch('modules/user/getOtherUser', res.user)
+                store.dispatch('modules/article/getWrittenArticles', res.articles)
             })
             .catch(err => {
                 console.log('err', err)
@@ -297,18 +302,17 @@ export default {
         ...mapGetters({
             currentUser: 'modules/user/getUser',
             otherUser: 'modules/user/getOtherUser',
+            writtenArticles: 'modules/article/getWrittenArticles',
             error: 'modules/error/getErrorStatus',
         }),
-        dateFormat() {
-            return (date) => {
-                const dateTimeFormat = new Intl.DateTimeFormat(
-                    'ja', { dateStyle: 'medium', timeStyle: 'short'}
-                )
-                return dateTimeFormat.format(new Date(date))
-            }
-        }
     },
     methods: {
+        ...mapActions({
+            dispatchErr: 'modules/error/getErrorStatus',
+            dispatchOtherUser: 'modules/user/getOtherUser',
+            dispatchWrittenArticles: 'modules/article/getWrittenArticles',
+            dispatchToast: 'modules/toast/getToast'
+        }),
         // Vuexのtoast.msgの値を変更する
         resetOtherUser() {
             return this.$store.dispatch('modules/user/getOtherUser', null)

@@ -1,43 +1,54 @@
 class Api::V1::ArticlesController < ApplicationController
     before_action :authenticate_user, except: [:article_about]
 
-    # before_action :set_article, only: [:edit, :update]
+    before_action :set_article, only: [:edit, :update]
 
     def index
 
+        # TODO リファクタリング必須 scopeを使う
         # N + 1問題
-        # render json: Article.all.as_json(include: [
-        #                             {user: { only: [:id, :nickname, :avatar]}},
-        #                             {level_list: { only: [:id, :name]}},
-        #                             {tag_list: { only: [:id, :name]}}
-        #                         ])
-        render json: Article.includes(:user, :level_list, :tag_list, comments: :user).order(id: :desc).as_json(include: [
-                                                                {user: { only: [:id, :nickname, :avatar]}},
-                                                                {level_list: { only: [:id, :name]}},
-                                                                {tag_list: { only: [:id, :name]}},
-                                                                {comments: { include: [
-                                                                    user: { only: [:id, :nickname, :avatar] },]}},
-                                                            ])
+        # render json: Article.includes(:user, :likes, :level_list, :tag_list, comments: :user).order(id: :desc).as_json(include: [
+        #                                                         {user: { only: [:id, :nickname, :avatar]}},
+        #                                                         {likes: { only: [:user_id]}},
+        #                                                         {level_list: { only: [:id, :name]}},
+        #                                                         {tag_list: { only: [:id, :name]}},
+        #                                                         {comments: { include: [
+        #                                                             user: { only: [:id, :nickname, :avatar] },]}},
+        #                                                     ])
+        articles = Article.includes(:user, :likes, :level_list, :tag_list, comments: :user).order(id: :desc).as_json(include: [
+                                        {user: { only: [:id, :nickname, :avatar]}},
+                                        {likes: { only: [:user_id]}},
+                                        {level_list: { only: [:id, :name]}},
+                                        {tag_list: { only: [:id, :name]}},
+                                        {comments: { include: [
+                                            user: { only: [:id, :nickname, :avatar] },]}},
+                                    ])
+        render json: articles
     end
 
     def show
 
+        # TODO リファクタリング必須 scopeを使う
         # N + 1問題
-        # オーバーライズしたレコードを取得 ※article modelも修正が必要
+        # オーバーライドしたレコードを取得 ※article modelも修正が必要
         # render json: Article.find(params[:id]).as_json
-        # render json: Article.find(params[:id]).as_json(include: [
+        # render json: Article.includes(:user, :likes, :level_list, :tag_list, comments: :user).find(params[:id]).as_json(include: [
         #                                             {user: { only: [:id, :nickname, :avatar]}},
+        #                                             {likes: { only: [:user_id]}},
         #                                             {level_list: { only: [:id, :name]}},
         #                                             {tag_list: { only: [:name]}},
-        #                                             {comments: { only: [:id, :user_id, :content]}},
+        #                                             {comments: { include: [
+        #                                                 user: { only: [:id, :nickname, :avatar] },]}},
         #                                         ])
-        render json: Article.includes(:user, :level_list, :tag_list, comments: :user).find(params[:id]).as_json(include: [
+        article = Article.includes(:user, :likes, :level_list, :tag_list, comments: :user).find(params[:id]).as_json(include: [
                                                     {user: { only: [:id, :nickname, :avatar]}},
+                                                    {likes: { only: [:user_id]}},
                                                     {level_list: { only: [:id, :name]}},
                                                     {tag_list: { only: [:name]}},
                                                     {comments: { include: [
                                                         user: { only: [:id, :nickname, :avatar] },]}},
                                                 ])
+        render json: article
 
     end
 

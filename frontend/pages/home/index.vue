@@ -80,7 +80,7 @@ export default {
         CardUser,
         TheLoading
     },
-    middleware: ['authentication','get-project-list'],
+    // middleware: ['authentication'],
     data() {
         return {
             users: {},

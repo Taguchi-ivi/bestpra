@@ -84,11 +84,11 @@
                                         >
                                             キャンセル
                                         </v-btn>
+                                        <!-- :data-id="articleComment.id" -->
                                         <v-btn
                                             color="red"
                                             text
-                                            :data-id="articleComment.id"
-                                            @click="commentDelete($event)"
+                                            @click="commentDelete(articleComment.id)"
                                         >
                                             削除する
                                         </v-btn>
@@ -125,21 +125,23 @@ export default {
         })
     },
     methods: {
-        async commentDelete(event) {
-            const commentId = event.currentTarget.dataset.id
-            await this.$axios.$delete(`/api/v1/articles/${this.articleComments[0].article_id}/comments/${commentId}`)
-                .then(res => {
-                    // const articleCommentNew = this.articleComments.filter(comment => comment.id !== articleComments[0].id)
-                    this.$store.commit('modules/comment/setDeleteArticleComment', commentId)
-                    this.$store.dispatch('modules/toast/getToast', {
-                        status: true,
-                        msg: 'コメントを削除しました',
-                        color: 'success'
-                    })
-                })
-                .catch(err => {
-                    console.log(err)
-                })
+        // async commentDelete(event) {
+        commentDelete(commentId) {
+            // TODO これがうまくいっていたら別の部分でも
+            console.log('commentのIDになっていますか？', commentId)
+            // await this.$axios.$delete(`/api/v1/articles/${this.articleComments[0].article_id}/comments/${commentId}`)
+            //     .then(res => {
+            //         // const articleCommentNew = this.articleComments.filter(comment => comment.id !== articleComments[0].id)
+            //         this.$store.commit('modules/comment/setDeleteArticleComment', commentId)
+            //         this.$store.dispatch('modules/toast/getToast', {
+            //             status: true,
+            //             msg: 'コメントを削除しました',
+            //             color: 'success'
+            //         })
+            //     })
+            //     .catch(err => {
+            //         console.log(err)
+            //     })
             this.dialog = false
         }
     }

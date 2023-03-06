@@ -35,7 +35,7 @@
                     :loading="loading"
                     block
                     class="white--text"
-                    color="blue"
+                    color="primary"
                 >
                     登録
                 </v-btn>
@@ -63,7 +63,7 @@ import UserFormPassword from '~/components/Atom/UserForm/UserFormPassword'
 import UserFormPasswordAgain from '~/components/Atom/UserForm/UserFormPasswordAgain'
 
 export default {
-    name: 'singUp',
+    name: 'SingUp',
     components: {
         UserFormCard,
         UserFormName,

@@ -26,24 +26,31 @@ export default {
         return {
         }
     },
+    computed: {
+        ...mapGetters({
+            articles: 'modules/article/getArticles',
+            allLike: 'modules/like/getAllLike'
+        })
+    },
     async mounted() {
         await this.$axios.$get('/api/v1/articles')
             .then(res => {
                 // console.log('articleのindexデータ', res)
                 this.getArticles(res)
+                const result = res.map(article => ({id: article.id, likes: article.likes}))
+                // console.log('res', res)
+                // console.log('result', result)
+                this.dispatchLikes(result)
+
             })
             .catch(err => {
                 console.log(err)
             })
     },
-    computed: {
-        ...mapGetters({
-            articles: 'modules/article/getArticles'
-        })
-    },
     methods: {
         ...mapActions({
-            getArticles: 'modules/article/getArticles'
+            getArticles: 'modules/article/getArticles',
+            dispatchLikes: 'modules/like/getAllLike'
         })
     }
 }
