@@ -138,7 +138,7 @@ class Api::V1::AuthTokenControllerTest < ActionDispatch::IntegrationTest
         assert_not_nil new_refresh_token
         assert_not_nil new_user_jti
 
-        # tokenとjtiが新しく発行されているか
+        # tokenとjtiが新しく発行されているか #TODO sessionのjtiは新しく発行されているかを確認する
         assert_not_equal old_access_token, new_access_token
         assert_not_equal old_refresh_token, new_refresh_token
         assert_not_equal old_user_jti, new_user_jti
