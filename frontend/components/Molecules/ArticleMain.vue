@@ -1,4 +1,5 @@
 <template>
+    <!-- height="480" -->
     <v-card
         width="300"
         rounded
@@ -24,7 +25,7 @@
                 :to="`/articles/${article.id}`"
             >
                 <v-card-title class="text-h6">
-                    {{ article.title }}
+                    {{ shortTitle(article.title) }}
                 </v-card-title>
                 <v-card-subtitle>
                     <!-- 作成日: 2023/02/06 -->
@@ -106,7 +107,10 @@ export default {
         }),
         likeCount(articleId) {
             return this.AllLike.find(like => like.id === articleId).likes.length
-        }
+        },
+        shortTitle(title) {
+            return title.length > 27 ? `${title.slice(0, 27)}...` : title
+        },
     },
 }
 

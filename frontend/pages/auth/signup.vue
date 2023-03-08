@@ -134,7 +134,7 @@ export default {
                         // const color = 'success'
                         // this.$store.dispatch('modules/toast/getToast', { status, msg, color })
                         this.$auth.login(res)
-                        this.$router.push('/home')
+                        this.$router.push('/home/all')
                     })
                     .catch((err) => {
                         console.log('errやで', err)

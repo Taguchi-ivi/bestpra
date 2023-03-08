@@ -1,22 +1,13 @@
 <template>
     <v-card
         width="80%"
-        to="/" nuxt
+        :to="`/users/${user.id}/articles`" nuxt
         hover
         rounded
     >
         <div
             class="d-flex justify-start"
         >
-            <!-- <v-list-item-avatar
-                color="primary"
-                class="ml-3"
-            >
-                <v-icon dark>
-                    mdi-account-circle
-                </v-icon>
-            </v-list-item-avatar> -->
-            <!-- TODO 対象のIDを付与する -->
             <div
                 class="px-5 pt-5"
             >
@@ -26,7 +17,7 @@
 
             </div>
             <div
-                :class="marginTop(user.id)"
+                :class="$my.userMarginTop(user.id)"
             >
                 <div class="text-h6">{{ user.nickname }}</div>
                 <div
@@ -62,11 +53,6 @@ export default {
     data() {
         return {
             avatarUrl: ''
-        }
-    },
-    methods: {
-        marginTop(userId) {
-            return this.$my.isFollowed(userId) ? 'mt-1' : 'mt-4'
         }
     },
 }

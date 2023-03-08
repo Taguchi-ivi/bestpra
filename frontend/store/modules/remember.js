@@ -26,7 +26,7 @@ export const actions = {
     // ログイン前パスが渡された場合はhomeへ遷移する
     getRememberPath({ state, commit }, { name, params }) {
         if(state.redirectPaths.includes(name)){
-            name = 'home'
+            name = 'home/all'
         }
         params = params || {}
         commit('setRememberPath', { name, params})

@@ -13,9 +13,16 @@
                     class="mx-auto pa-5"
                     elevation="2"
                 >
-                    <AppImg
+                    <v-img
+                        :aspect-ratio="16/9"
+                        :src="currentArticleData.image.url"
+                        contain
+                        max-height="400"
+                    >
+                    </v-img>
+                    <!-- <AppImg
                         :img-url="currentArticleData.image.url"
-                    />
+                    /> -->
                     <v-card
                         width="80%"
                         flat
@@ -209,9 +216,9 @@
 <script>
 
 // import { mapActions, mapGetters } from 'vuex'
+// import AppImg from '~/components/Atom/App/AppNoImg.vue'
 import { mapGetters } from 'vuex'
 import ErrorCard from '~/components/Molecules/ErrorCard.vue'
-import AppImg from '~/components/Atom/App/AppNoImg.vue'
 import ArticleUserCardTag from '~/components/Atom/Article/ArticleUserCardTag.vue'
 import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 import CardComment from '~/components/Organisms/Card/CardComment.vue'
@@ -219,11 +226,11 @@ import CardComment from '~/components/Organisms/Card/CardComment.vue'
 export default {
     name: 'ArticleDetail',
     components: {
-        AppImg,
         ArticleUserCardTag,
         MainTitle,
         CardComment,
         ErrorCard
+        // AppImg,
     },
     data() {
         return {
@@ -283,7 +290,7 @@ export default {
                     // const status = true
                     // const msg = '削除が完了しました'
                     // this.$store.dispatch('modules/toast/getToast', { status, msg })
-                    this.$router.push('/home')
+                    this.$router.push('/home/all')
                 })
                 .catch( err => {
                     console.log(err)

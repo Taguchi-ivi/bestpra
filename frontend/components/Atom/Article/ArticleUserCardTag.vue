@@ -11,7 +11,21 @@
                     :id="userId"
                 />
             </div>
-            <p class="ml-3">{{ userNickname }}</p>
+            <div
+                :class="$my.userMarginTop(userId)"
+            >
+                <p class="ma-0 ml-3">{{ shortName(userNickname) }}</p>
+                <div
+                    v-if="$my.isFollowed(userId)"
+                    class="text-caption mr-auto"
+                >
+                    <v-chip
+                        x-small
+                    >
+                        フォロー済み
+                    </v-chip>
+                </div>
+            </div>
         </div>
         <div
             class="py-0 mt-3"
@@ -101,6 +115,9 @@ export default {
     methods: {
         limitCount (lists) {
             return lists.slice(0, 2)
+        },
+        shortName(name) {
+            return name.length > 15 ? `${name.slice(0, 15)}...` : name
         }
     }
 }

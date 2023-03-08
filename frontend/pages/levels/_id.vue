@@ -35,6 +35,7 @@
                                     <ArticleMain
                                         :article="article"
                                     />
+                                    <!-- <v-card>{{ article }}</v-card> -->
                                 </v-col>
                             </v-row>
                         </div>

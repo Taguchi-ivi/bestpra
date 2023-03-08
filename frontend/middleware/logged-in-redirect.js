@@ -10,7 +10,7 @@ export default ({ $auth, store, route, redirect }) => {
         // const color = 'error'
         const status = true
         // トースター出力
-        redirect('/home')
+        redirect('/home/all')
         store.dispatch('modules/toast/getToast', { status, msg, color,})
         // return redirect('/home')
     }

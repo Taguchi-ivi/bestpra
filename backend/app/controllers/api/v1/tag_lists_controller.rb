@@ -23,10 +23,14 @@ class Api::V1::TagListsController < ApplicationController
         #                                                 {level_list: { only: [:id, :name]}},
         #                                                 {tag_list: { only: [:name]}}
         #                                             ])
-        render json: TagList.find(tag_id).articles.includes(:user, :level_list, :tag_list).order(created_at: :desc).as_json(include: [
+        render json: TagList.find(tag_id).articles
+                                            .includes(:user, :level_list, :tag_list, :comments)
+                                            .order(created_at: :desc)
+                                            .as_json(include: [
                                                         {user: { only: [:id, :nickname, :avatar]}},
                                                         {level_list: { only: [:id, :name]}},
-                                                        {tag_list: { only: [:name]}}
+                                                        {tag_list: { only: [:name]}},
+                                                        {comments: { only: [:id]}}
                                                     ])
     end
 

@@ -15,7 +15,9 @@ class Api::V1::ArticlesController < ApplicationController
         #                                                         {comments: { include: [
         #                                                             user: { only: [:id, :nickname, :avatar] },]}},
         #                                                     ])
-        articles = Article.includes(:user, :likes, :level_list, :tag_list, comments: :user).order(id: :desc).as_json(include: [
+        articles = Article.includes(:user, :likes, :level_list, :tag_list, comments: :user)
+                            .order(id: :desc)
+                            .as_json(include: [
                                         {user: { only: [:id, :nickname, :avatar]}},
                                         {likes: { only: [:user_id]}},
                                         {level_list: { only: [:id, :name]}},
