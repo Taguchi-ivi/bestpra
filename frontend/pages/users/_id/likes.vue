@@ -1,7 +1,9 @@
 <template>
     <div>
-        <h2>likes</h2>
-        <p v-if="likesArticle.length === 0">まだいいねされていません</p>
+        <MainTitle
+            title="いいね一覧"
+        />
+        <p v-if="likesArticle.length === 0" class="text-center">まだいいねされていません</p>
         <div v-else>
             <v-row>
                 <v-col
@@ -21,25 +23,50 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 import ArticleMain from '~/components/Molecules/ArticleMain.vue'
 
 export default {
     name: 'UserLikes',
     components: {
+        MainTitle,
         ArticleMain
     },
-    async fetch({ $axios, params, store}) {
-        await $axios.$get(`/api/v1/users/${params.id}/likes`)
-            .then(res => {
-                // console.log('どう？', res)
-                const result = res.map(item => ( item.article))
-                store.dispatch('modules/article/getLikesArticle', result)
-
-            })
-            .catch(err => {
-                console.log(err)
-            })
+    data() {
+        return {
+            error: false
+        }
     },
+    async asyncData({ $axios, params, store }) {
+        const res = await $axios.$get(`/api/v1/users/${params.id}/likes`)
+        if(res === 'bad_request') {
+            store.dispatch('modules/toast/getToast', {
+                        status: true,
+                        msg: '存在しないユーザーです',
+                        color: 'error'
+                    })
+            return {
+                error: true
+            }
+        }
+        const result = res.map(item => ( item.article))
+        store.dispatch('modules/article/getLikesArticle', result)
+        return {
+            error: false,
+        }
+    },
+    // async fetch({ $axios, params, store}) {
+    //     await $axios.$get(`/api/v1/users/${params.id}/likes`)
+    //         .then(res => {
+    //             // console.log('どう？', res)
+    //             const result = res.map(item => ( item.article))
+    //             store.dispatch('modules/article/getLikesArticle', result)
+
+    //         })
+    //         .catch(err => {
+    //             console.log(err)
+    //         })
+    // },
     computed: {
         ...mapGetters({
             currentUser: 'modules/user/getUser',

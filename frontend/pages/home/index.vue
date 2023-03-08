@@ -51,10 +51,6 @@
                         title="タグ"
                     />
                     <CardTag />
-                    <MainTitle
-                        title="ユーザー"
-                    />
-                    <CardUser />
                 </div>
             </v-col>
         </v-row>
@@ -66,7 +62,6 @@
 import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 import CardArticleAll from '~/components/Organisms/Card/CardArticleAll.vue'
 import CardTag from '~/components/Organisms/Card/CardTag.vue'
-import CardUser from '~/components/Organisms/Card/CardUser.vue'
 import TheLoading from '~/components/Organisms/Application/TheLoading.vue'
 
 export default {
@@ -77,7 +72,6 @@ export default {
         MainTitle,
         CardArticleAll,
         CardTag,
-        CardUser,
         TheLoading
     },
     // middleware: ['authentication'],

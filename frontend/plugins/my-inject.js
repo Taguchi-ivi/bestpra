@@ -101,6 +101,12 @@ class MyInject {
         // console.log('userId', this.user.id)
         return Number(userId) === this.user.id
     }
+
+    // フォロー済みか判定
+    isFollowed(userId) {
+        const followingUsers = this.store.getters['modules/follow/getCurrentFollow'] || []
+        return followingUsers.includes(userId)
+    }
 }
 
 // inject => オリジナルクラスを追加することができる
