@@ -44,8 +44,8 @@
 export default {
     data: () => ({
         icons: [
-            {name: 'mdi-home', path: '/home'},
-            {name: 'mdi-account-cog', path: '/users/edit'},
+            {name: 'mdi-home', path: '/home/all'},
+            {name: 'mdi-account-cog', path: `/users/edit`},
             {name: 'mdi-magnify', path: '/search'},
             {name: 'mdi-pencil', path: '/articles/new'},
         ],

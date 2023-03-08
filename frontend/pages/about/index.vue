@@ -38,7 +38,7 @@
                             large
                             elevation="13"
                             rounded
-                            to="/home" nuxt
+                            to="/home/all" nuxt
                         >
                             練習メニュを開く
                             <v-icon right>

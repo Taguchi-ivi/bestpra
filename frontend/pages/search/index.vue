@@ -88,7 +88,7 @@
                     <MainTitle title="hello"/>
                     <CardArticleAll />
                     <CardTag />
-                    <CardUser />
+                    <CardUserAll />
                     <MarginBottom />
                 </v-tab-item>
             </v-tabs-items>
@@ -102,7 +102,7 @@
 import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 import CardArticleAll from '~/components/Organisms/Card/CardArticleAll.vue'
 import CardTag from '~/components/Organisms/Card/CardTag.vue'
-import CardUser from '~/components/Organisms/Card/CardUser.vue'
+import CardUserAll from '~/components/Organisms/Card/CardUserAll.vue'
 import MarginBottom from '~/components/Atom/margin/marginBottom.vue'
 import PageTop from '~/components/Atom/App/AppPageTop.vue'
 
@@ -111,7 +111,7 @@ export default {
             MainTitle,
             CardArticleAll,
             CardTag,
-            CardUser,
+            CardUserAll,
             MarginBottom,
             PageTop
         },

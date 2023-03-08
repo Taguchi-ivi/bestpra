@@ -22,7 +22,9 @@ class UserTest < ActiveSupport::TestCase
 
     # helperで定義したacvive_userを使用
     def setup
-        @user = active_user
+        # @user = active_user
+        @user_first = User.create(nickname: "test taro", email: "example@example.com", password: "password", activated: true)
+        @user_second = User.create(nickname: "test jiro", email: "example2@example.com", password: "password", activated: true)
     end
 
     test "nickname_validation" do
@@ -211,8 +213,18 @@ class UserTest < ActiveSupport::TestCase
             user.save
             assert_equal(format_msg, user.errors.full_messages)
         end
+    end
 
-
+    test 'should follow and unfollow a user' do
+        assert_not @user_first.following?(@user_second)
+        @user_first.follow(@user_second)
+        assert @user_first.following?(@user_second)
+        assert @user_second.followers.include?(@user_first)
+        @user_first.unfollow(@user_second)
+        assert_not @user_first.following?(@user_second)
+        # ユーザーは自分自身をフォローできない
+        @user_first.follow(@user_first)
+        assert_not @user_first.following?(@user_first)
     end
 
 end

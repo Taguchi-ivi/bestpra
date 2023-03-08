@@ -37,7 +37,7 @@
 
                     <v-list-item>
                         <v-list-item-content>
-                            <v-list-item :to="`/users/${id}`">
+                            <v-list-item :to="`/users/${id}/articles`">
                                 <v-list-item-subtitle>
                                     {{ $auth.user.nickname }}
                                 </v-list-item-subtitle>
@@ -134,7 +134,7 @@
         <div v-else>
             <div v-if="id !== 0">
                 <nuxt-link
-                    :to="`/users/${id}`"
+                    :to="`/users/${id}/articles`"
                 >
                     <AvatarImg
                         :size="Number(size)"

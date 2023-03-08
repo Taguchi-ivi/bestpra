@@ -1,59 +1,31 @@
 <template>
-    <v-row>
-        <v-col
-            v-for="n in 12"
-            :key="n"
-            class="d-flex justify-center"
-            cols="12"
-        >
-            <v-card
-                width="80%"
-                to="/" nuxt
-                hover
-                rounded
+    <div>
+        <v-row>
+            <v-col
+                v-for="user in users"
+                :key="user.id"
+                class="d-flex justify-center"
+                cols="12"
             >
-                <div
-                    class="d-flex justify-start"
-                >
-                    <!-- <v-list-item-avatar
-                        color="primary"
-                        class="ml-3"
-                    >
-                        <v-icon dark>
-                            mdi-account-circle
-                        </v-icon>
-                    </v-list-item-avatar> -->
-                    <!-- TODO 対象のIDを付与する -->
-                    <div
-                        class="pa-5"
-                    >
-                        <AvatarSwitch
-                            :avatar-url="avatarUrl"
-                        />
-
-                    </div>
-                    <div>
-                        <div class="text-h6 mt-3">this.name</div>
-                        <div class="text-caption mr-auto">フォロー済み</div>
-                    </div>
-                </div>
-                <v-card-subtitle>
-                    introduction
-                </v-card-subtitle>
-            </v-card>
-        </v-col>
-    </v-row>
+                <UserMain
+                    :user="user"
+                />
+            </v-col>
+        </v-row>
+    </div>
 </template>
 
 <script>
-import AvatarSwitch from '~/components/Molecules/AvatarSwitch.vue'
+import UserMain from '~/components/Molecules/UserMain.vue'
+
 export default {
     components: {
-        AvatarSwitch,
+        UserMain,
     },
-    data() {
-        return {
-            avatarUrl: ''
+    props: {
+        users: {
+            type: Array,
+            default: () => [],
         }
     }
 }

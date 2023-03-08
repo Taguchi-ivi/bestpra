@@ -15,7 +15,9 @@ class Api::V1::ArticlesController < ApplicationController
         #                                                         {comments: { include: [
         #                                                             user: { only: [:id, :nickname, :avatar] },]}},
         #                                                     ])
-        articles = Article.includes(:user, :likes, :level_list, :tag_list, comments: :user).order(id: :desc).as_json(include: [
+        articles = Article.includes(:user, :likes, :level_list, :tag_list, comments: :user)
+                            .order(id: :desc)
+                            .as_json(include: [
                                         {user: { only: [:id, :nickname, :avatar]}},
                                         {likes: { only: [:user_id]}},
                                         {level_list: { only: [:id, :name]}},
@@ -50,6 +52,19 @@ class Api::V1::ArticlesController < ApplicationController
                                                 ])
         render json: article
 
+    end
+
+    def current_liked
+        # 自身のいいねした記事のIDのみ取得
+        # render json: current_user.likes.pluck(:article_id)
+        # current_liked = current_user.likes.pluck(:article_id)
+        current_liked = current_user.likes.pluck(:article_id)
+        likes = Article.includes(:likes)
+                            .order(id: :desc)
+                            .as_json(include: [
+                                        {likes: { only: [:user_id]}},
+                                    ])
+        render json: {currentLiked: current_liked, likes: likes}
     end
 
     # aboutページ用の3件のarticleを取得

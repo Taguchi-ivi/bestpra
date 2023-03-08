@@ -2,11 +2,12 @@
     <div>
         <v-card
             max-width="250px"
-            class="py-3 mx-auto"
+            class="py-3 mx-auto mb-3"
+            elevation="9"
             color="primary"
             dark
         >
-            <p class="text-center">ラベル一覧</p>
+            <p class="text-center mb-0">ラベル一覧</p>
         </v-card>
         <v-card
             class="mx-auto pa-5"

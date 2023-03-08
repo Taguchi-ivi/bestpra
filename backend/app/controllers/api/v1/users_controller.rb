@@ -2,7 +2,7 @@ class Api::V1::UsersController < ApplicationController
     # skip_before_action :authenticate
     # createメソッドのみログイン済みかどうかの判定をスキップする
     before_action :authenticate_user
-    before_action :set_user, only: [:show, :update, :destroy]
+    before_action :set_user, only: [:update, :destroy]
 
     # current_userで値を取得できる
 
@@ -21,35 +21,29 @@ class Api::V1::UsersController < ApplicationController
         # flg = current_user.id == @user.id ? true : false
         # render json: 'Usersshow'
         # render json: @user.as_json(only: [:id, :nickname, :avatar, :introduction])
-        user_data = @user.as_json(only: [:id, :nickname, :avatar, :introduction])
-        articles = @user.articles.includes(:likes, :level_list, :tag_list, comments: :user)
-                                                .order(id: :desc)
-                                                .as_json(include: [
-                                                        {user: { only: [:id, :nickname, :avatar]}},
-                                                        {likes: { only: [:user_id]}},
-                                                        {level_list: { only: [:id, :name]}},
-                                                        {tag_list: { only: [:id, :name]}},
-                                                        {comments: { include: [
-                                                            user: { only: [:id] },]}},
-                                                    ])
-        render json: {user: user_data, articles: articles}
+        # render json: {user: user_data, articles: articles}
+        return render json: :bad_request unless User.exists?(id: params[:id])
+        render json: User.find(params[:id]).as_json(only: [:id, :nickname, :avatar, :introduction])
     end
 
-    def current_liked
-        # 自身のいいねしたIDのみ取得
-        # render json: current_user.likes.pluck(:article_id)
-        # current_liked = current_user.likes.pluck(:article_id)
-        current_liked = User.first.likes.pluck(:article_id)
-        likes = Article.includes(:likes)
-                            .order(id: :desc)
-                            .as_json(include: [
-                                        {likes: { only: [:user_id]}},
-                                    ])
-        render json: {currentLiked: current_liked, likes: likes}
+    def written_articles
+        return render json: :bad_request unless User.exists?(id: params[:user_id])
+        user = User.find(params[:user_id])
+        render json:  user.articles.includes(:likes, :level_list, :tag_list, comments: :user)
+                                        .order(id: :desc)
+                                        .as_json(include: [
+                                                {user: { only: [:id, :nickname, :avatar]}},
+                                                {likes: { only: [:user_id]}},
+                                                {level_list: { only: [:id, :name]}},
+                                                {tag_list: { only: [:id, :name]}},
+                                                {comments: { include: [
+                                                    user: { only: [:id] },]}},
+                                            ])
     end
 
     def likes
         # 対象のユーザのいいね一覧を取得
+        return render json: :bad_request unless User.exists?(id: params[:user_id])
         user = User.find(params[:user_id])
         render json: user.likes.includes(article: [:user, :level_list, :tag_list, :comments])
                         .order(article_id: :desc)
@@ -61,6 +55,11 @@ class Api::V1::UsersController < ApplicationController
                                         {tag_list: { only: [:name]}},
                                         {comments: { only: [:user_id]}}]
                                     }})
+    end
+
+    # フォローしているIDを取得する
+    def current_following
+        render json: current_user.following.pluck(:id)
     end
 
     def edit

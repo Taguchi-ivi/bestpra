@@ -43,6 +43,10 @@ class MyInject {
         return this.error({statusCode, message})
     }
 
+    userMarginTop(userId) {
+        return this.isFollowed(userId) ? 'mt-1' : 'mt-3'
+    }
+
     // いいねされているかを確認
     liked(articleId) {
         const currentLiked = this.store.getters['modules/like/getCurrentLike'] || []
@@ -100,6 +104,12 @@ class MyInject {
         // console.log('userId', userId)
         // console.log('userId', this.user.id)
         return Number(userId) === this.user.id
+    }
+
+    // フォロー済みか判定
+    isFollowed(userId) {
+        const followingUsers = this.store.getters['modules/follow/getCurrentFollow'] || []
+        return followingUsers.includes(userId)
     }
 }
 

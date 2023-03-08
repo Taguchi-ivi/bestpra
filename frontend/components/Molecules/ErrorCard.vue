@@ -15,7 +15,7 @@
             <div v-if="content === 'home'">
                 <div class="text-center">
                     <v-btn
-                        @click="$router.push('/home')"
+                        @click="$router.push('/home/all')"
                         icon
                     >
                         <v-icon>

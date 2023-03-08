@@ -14,11 +14,13 @@
                 >
                     <v-list-item-group
                         v-model="model"
+                        mandatory
                         color="primary"
                     >
                         <v-list-item
                             v-for="(item, i) in items"
                             :key="i"
+                            :to="item.path" nuxt
                         >
                             <v-list-item-icon>
                                 <v-icon>
@@ -31,7 +33,6 @@
                                 </v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
-                        {{ model }}
                     </v-list-item-group>
                 </v-list>
             </v-col>
@@ -42,19 +43,8 @@
                     <TheLoading />
                 </div>
                 <div v-else>
+                    <nuxt-child />
 
-                    <MainTitle
-                        title="練習メニュー"
-                    />
-                    <CardArticleAll />
-                    <MainTitle
-                        title="タグ"
-                    />
-                    <CardTag />
-                    <MainTitle
-                        title="ユーザー"
-                    />
-                    <CardUser />
                 </div>
             </v-col>
         </v-row>
@@ -63,24 +53,16 @@
 
 
 <script>
-import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
-import CardArticleAll from '~/components/Organisms/Card/CardArticleAll.vue'
-import CardTag from '~/components/Organisms/Card/CardTag.vue'
-import CardUser from '~/components/Organisms/Card/CardUser.vue'
 import TheLoading from '~/components/Organisms/Application/TheLoading.vue'
 
 export default {
     name: 'ClientHome',
-    // middleware: 'get-article-current',
-    // middleware: ['before-login-user'],
+    middleware ({ route, redirect }) {
+        if(route.name === 'home') return redirect('/home/all')
+    },
     components: {
-        MainTitle,
-        CardArticleAll,
-        CardTag,
-        CardUser,
         TheLoading
     },
-    // middleware: ['authentication'],
     data() {
         return {
             users: {},
@@ -88,18 +70,16 @@ export default {
             items: [
                 {
                     icon: 'mdi-note',
-                    text: '練習メニュー',
+                    text: '練習メニュー一覧',
+                    path: '/home/all'
                 },
                 {
-                    icon: 'mdi-book-open-blank-variant',
-                    text: '練習ノート',
-                },
-                {
-                    icon: 'mdi-account-multiple',
-                    text: 'ユーザー',
+                    icon: 'mdi-book-account',
+                    text: 'フォロー中',
+                    path: '/home/following'
                 },
             ],
-            model: 1,
+            model: 0,
         }
     },
     created() {

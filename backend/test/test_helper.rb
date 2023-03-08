@@ -46,12 +46,14 @@ class ActiveSupport::TestCase
 
   # 引数のparamsでログインを行う
   def login(params)
-    post api("/auth_token"), xhr: true, params: params
+    # post api("/auth_token"), xhr: true, params: params
+    post api("/auth_token/login"), xhr: true, params: params
   end
 
   # ログアウトapi
   def logout
-    delete api("/auth_token"), xhr: true
+    # delete api("/auth_token"), xhr: true
+    delete api("/auth_token/logout"), xhr: true
   end
 
   # レスポンスJSONをハッシュで返す

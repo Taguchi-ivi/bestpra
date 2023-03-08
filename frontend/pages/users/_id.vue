@@ -2,7 +2,7 @@
     <div>
         <div v-if="error">
             <ErrorCard
-                title="存在しないユーザです"
+                title="存在しないユーザーです"
                 message="404 not found"
             />
         </div>
@@ -131,22 +131,22 @@
                                 </v-list>
                             </v-menu>
                         </div>
-                        <!-- <div v-else>
+                        <div v-else>
                             <v-btn
-                                v-if="!otherUser.isFollowed"
-                                color="success"
-                                @click="follow"
-                            >
-                                フォローする
-                            </v-btn>
-                            <v-btn
-                                v-else
+                                v-if="$my.isFollowed(otherUser.id)"
                                 color="white--text red"
                                 @click="unfollow"
                             >
                                 フォロー解除
                             </v-btn>
-                        </div> -->
+                            <v-btn
+                                v-else
+                                color="primary"
+                                @click="follow"
+                            >
+                                フォローする
+                            </v-btn>
+                        </div>
                     </v-col>
                 </v-row>
             </div>
@@ -172,48 +172,38 @@
                         >
                             <v-list-item-group
                                 v-model="model"
+                                mandatory
                                 color="primary"
                             >
                                 <v-list-item
-                                    v-for="item in items"
-                                    :key="item.text"
+                                    v-for="(item, i) in items"
+                                    :key="i"
+                                    :to="item.path" nuxt
                                 >
-                                <v-list-item-icon>
-                                    <v-icon>
-                                        {{ item.icon }}
-                                    </v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-content>
-                                    <v-list-item-title>
-                                        {{ item.text }}
-                                    </v-list-item-title>
-                                </v-list-item-content>
+                                    <v-list-item-icon>
+                                        <v-icon>
+                                            {{ item.icon }}
+                                        </v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-content>
+                                        <v-list-item-title>
+                                            {{ item.text }}
+                                        </v-list-item-title>
+                                    </v-list-item-content>
                                 </v-list-item>
                             </v-list-item-group>
-                            {{ model }}
                         </v-list>
                     </v-col>
                     <v-col
                         cols="9"
                     >
-                        <MainTitle
-                            :title="model"
-                        />
-                        <div v-if="writtenArticles.length === 0">
-                            <p>まだ投稿はありません</p>
-                        </div>
-                        <div v-else>
-                            <v-row>
-                                <v-col
-                                    v-for="(article, index) in writtenArticles"
-                                    :key="index"
-                                    cols="4"
-                                >
-                                    <ArticleMain
-                                        :article="article"
-                                    />
-                                </v-col>
-                            </v-row>
+                        <div v-if="$route.name === 'users-id'">
+                            <div v-if="$my.isCurrentUser(otherUser.id)">
+                                <p class="text-center">おかえりなさい</p>
+                            </div>
+                            <div v-else>
+                                <p class="text-center">WellCome to {{ otherUser.nickname }}page</p>
+                            </div>
                         </div>
                         <nuxt-child />
                     </v-col>
@@ -225,98 +215,113 @@
 
 <script>
 
-import { mapActions, mapGetters } from 'vuex'
-// import { mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 import ErrorCard from '~/components/Molecules/ErrorCard.vue'
-import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
-import ArticleMain from '~/components/Molecules/ArticleMain.vue'
 import AvatarImg from '~/components/Atom/App/AppAvatarImg.vue'
 
 export default {
     name: 'UsersProfile',
     components: {
-        MainTitle,
         ErrorCard,
         AvatarImg,
-        ArticleMain,
+    },
+    // middleware ({ params, redirect, route }) {
+    //     // return redirect('/about')
+    //     if(route.name === 'users-id') return redirect('/users/' + params.id + '/articles')
+    // },
+    async asyncData({$axios, params, store}) {
+        const res = await $axios.$get(`/api/v1/users/${params.id}`)
+        console.log('res', res)
+        if(res === 'bad_request') {
+            store.dispatch('modules/toast/getToast', {
+                        status: true,
+                        msg: '存在しない練習メニュです',
+                        color: 'error'
+                    })
+            return {
+                error: true
+            }
+        }
+        return {
+            error: false,
+            otherUser: res,
+        }
     },
     data() {
         return {
-            tabTitle: 'フォロワー',
             on: false,
             dialog: false,
             items: [
                 {
                     icon: 'mdi-note',
                     text: '練習メニュー',
+                    path: `/users/${this.$route.params.id}/articles`,
                 },
                 {
                     icon: 'mdi-account-star',
                     text: 'フォロー',
+                    path: `/users/${this.$route.params.id}/following`,
                 },
                 {
                     icon: 'mdi-account-star-outline',
                     text: 'フォロワー',
+                    path: `/users/${this.$route.params.id}/followers`,
                 },
                 {
                     icon: 'mdi-heart',
                     text: 'いいね',
+                    path: `/users/${this.$route.params.id}/likes`,
                 },
             ],
-            model: 'フォロー',
+            model: 0,
         }
     },
-    // asyncDate => componentのデータを表示する前に実行されるメソッド
-    // async => promiseを返す(promise => 非同期処理の結果を表示するオブジェクト)
-    // await => promiseを返すまでJavaScriptを待機させる(async内のawaitが終わるまで次のステップに行かない)
-    // async asyncData ({ $axios }) {
-    //     let users = []
-    //     await $axios.$get('/api/v1/users')
-    //         .then(res => (users = res))
-    //         .catch(err => (console.log(err)))
-    //     return { users }
+    // async fetch({ $axios, params, store}) {
+    //     await $axios.$get(`api/v1/users/${params.id}`)
+    //     // await $axios.$get(`api/v1/users/`)
+    //         .then(res => {
+    //             // console.log('resUser', res.user)
+    //             store.dispatch('modules/error/getErrorStatus', false)
+    //             store.dispatch('modules/user/getOtherUser', res.user)
+    //             store.dispatch('modules/article/getWrittenArticles', res.articles)
+    //         })
+    //         .catch(err => {
+    //             console.log('err', err)
+    //             store.dispatch('modules/error/getErrorStatus', true)
+    //             store.dispatch('modules/user/getOtherUser', null)
+    //             store.dispatch('modules/toast/getToast', {
+    //                 status: true,
+    //                 msg: '存在しないユーザです',
+    //                 color: 'error'
+    //             })
+    //         })
     // },
-    async fetch({ $axios, params, store}) {
-        await $axios.$get(`api/v1/users/${params.id}`)
-        // await $axios.$get(`api/v1/users/`)
-            .then(res => {
-                // console.log('resUser', res.user)
-                store.dispatch('modules/error/getErrorStatus', false)
-                store.dispatch('modules/user/getOtherUser', res.user)
-                store.dispatch('modules/article/getWrittenArticles', res.articles)
-            })
-            .catch(err => {
-                console.log('err', err)
-                store.dispatch('modules/error/getErrorStatus', true)
-                store.dispatch('modules/user/getOtherUser', null)
-                store.dispatch('modules/toast/getToast', {
-                    status: true,
-                    msg: '存在しないユーザです',
-                    color: 'error'
-                })
-            })
-    },
     // 算出プロパティ => 計算したデータを返す関数のこと
     // dateとほぼ一緒だが、複雑なデータなどはcomputedで使う
     computed: {
         ...mapGetters({
             currentUser: 'modules/user/getUser',
-            otherUser: 'modules/user/getOtherUser',
-            writtenArticles: 'modules/article/getWrittenArticles',
-            error: 'modules/error/getErrorStatus',
+            followingUsers: 'modules/follow/getCurrentFollow',
+            // writtenArticles: 'modules/article/getWrittenArticles',
+            // otherUser: 'modules/user/getOtherUser',
+            // error: 'modules/error/getErrorStatus',
         }),
     },
     methods: {
         ...mapActions({
-            dispatchErr: 'modules/error/getErrorStatus',
-            dispatchOtherUser: 'modules/user/getOtherUser',
-            dispatchWrittenArticles: 'modules/article/getWrittenArticles',
             dispatchToast: 'modules/toast/getToast'
+            // dispatchErr: 'modules/error/getErrorStatus',
+            // dispatchOtherUser: 'modules/user/getOtherUser',
+            // dispatchWrittenArticles: 'modules/article/getWrittenArticles',
+        }),
+        ...mapMutations({
+            commitCreateFollow: 'modules/follow/setCreateCurrentFollow',
+            commitDeleteFollow: 'modules/follow/setDeleteCurrentFollow',
         }),
         // Vuexのtoast.msgの値を変更する
-        resetOtherUser() {
-            return this.$store.dispatch('modules/user/getOtherUser', null)
-        },
+        // resetOtherUser() {
+        //     // return this.$store.dispatch('modules/user/getOtherUser', null)
+        // },
         async accountDelete() {
             await this.$axios.$delete(`/api/v1/auth_token/${this.otherUser.id}`,{})
                 .then(res => {
@@ -330,13 +335,34 @@ export default {
                 })
                 .catch( err => {
                     console.log(err)
-                    this.$store.dispatch('modules/toast/getToast', {
+                    this.dispatchToast({
                         status: true,
                         msg: 'アカウト削除に失敗しました',
                         color: 'error'
                     })
                 })
             this.dialog = false
+        },
+        async follow() {
+            // await this.$axios.$post(`/api/v1/follow/${this.otherUser.id}`)
+            await this.$axios.$post(`/api/v1/users/${this.$route.params.id}/relationships`)
+                .then(res => {
+                    // console.log(res)
+                    this.commitCreateFollow(this.$route.params.id)
+                })
+                .catch( err => {
+                    console.log(err)
+                })
+        },
+        async unfollow() {
+            await this.$axios.$post(`/api/v1/users/${this.$route.params.id}/relationships/unfollow`)
+                .then(res => {
+                    // console.log(res)
+                    this.commitDeleteFollow(this.$route.params.id)
+                })
+                .catch( err => {
+                    console.log(err)
+                })
         }
     },
     // idページからidページへ遷移(nuxt-link)するとエラーになるため、コメントアウト
@@ -346,12 +372,3 @@ export default {
     // },
 }
 </script>
-
-<style lang="scss" scoped>
-.toc-view {
-    position: sticky;
-    top: 5rem;
-    max-height: 90vh;
-    // overflow: scroll;
-}
-</style>

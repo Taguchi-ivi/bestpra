@@ -4,7 +4,7 @@
     >
         <slot name="navigation-toggle-button" />
         <!-- <nuxt-link to="/about"> -->
-        <nuxt-link to="/home">
+        <nuxt-link to="/home/all">
             <v-img width="50" src="/header-logo.png"></v-img>
         </nuxt-link>
         <v-toolbar-title class="ml-3 hidden-mobile-and-down">bestpra</v-toolbar-title>

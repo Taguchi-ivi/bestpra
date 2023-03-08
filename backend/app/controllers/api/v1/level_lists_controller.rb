@@ -1,5 +1,5 @@
 class Api::V1::LevelListsController < ApplicationController
-    before_action :authenticate_user
+    # before_action :authenticate_user
 
     def index
         @level_lists = LevelList.where(delete_flg: false).as_json(only: [:id, :name])
@@ -18,11 +18,15 @@ class Api::V1::LevelListsController < ApplicationController
         #                                                     {level_list: { only: [:id, :name]}},
         #                                                     {tag_list: { only: [:name]}}
         #                                                 ])
-        render json: Article.includes(:user, :level_list, :tag_list).order(created_at: :desc).where(level_list_id: level_id).as_json(include: [
-                                                            {user: { only: [:id, :nickname, :avatar]}},
-                                                            {level_list: { only: [:id, :name]}},
-                                                            {tag_list: { only: [:name]}}
-                                                        ])
+        render json: Article.includes(:user, :level_list, :tag_list, :comments)
+                                .where(level_list_id: level_id)
+                                .order(created_at: :desc)
+                                .as_json(include: [
+                                            {user: { only: [:id, :nickname, :avatar]}},
+                                            {level_list: { only: [:id, :name]}},
+                                            {tag_list: { only: [:name]}},
+                                            {comments: { only: [:id]}}
+                                        ])
     end
 
     def update

@@ -3,8 +3,8 @@ Rails.application.routes.draw do
 
   # add
   namespace :api do
-    # namespace :v1 do
     namespace :v1, default: { format: :json } do
+
       # api test action
       resources :hello,only: [:index]
 
@@ -15,11 +15,27 @@ Rails.application.routes.draw do
         patch :update, on: :collection
         patch :update_avatar, on: :collection
 
-        # いいねした記事のIDを取得
-        get :current_liked, on: :collection
-        # ユーザのいいね一覧取得
+        # フォローしたユーザーのIDを取得
+        get :current_following, on: :collection
+
+        # ユーザーのいいね一覧取得
         get :likes
+
+        # ユーザーの記事一覧取得
+        get :written_articles
+
+        # フォロー機能
+        resources :relationships, only: [:create] do
+          post :unfollow, on: :collection
+          # ユーザーのフォロワー一覧取得
+          get :followers, on: :collection
+          # ユーザーのフォロー一覧取得
+          get :following, on: :collection
+        end
       end
+
+      # フォローしたユーザの記事一覧取得
+      resources :following_articles, only: [:index]
 
       # auth_token, 認証周り
       # on collection => user_idがなくてもリクエストが可能に
@@ -38,6 +54,9 @@ Rails.application.routes.draw do
       # articles
       resources :articles, only:[:index, :show, :edit, :update, :create, :destroy] do
         get :article_about, on: :collection
+        # いいねした記事のIDを取得
+        get :current_liked, on: :collection
+
         # comments
         resources :comments, only:[:create, :destroy]
         # like
