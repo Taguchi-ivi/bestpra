@@ -31,7 +31,7 @@ export default {
     marginBottom,
     AppToaster
   },
-  middleware: ['authentication'],
+  middleware: ['authentication','current-liked', 'current-following'],
   data: () => ({
     // icons: [
     //   'mdi-home',

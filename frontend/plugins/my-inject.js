@@ -43,6 +43,12 @@ class MyInject {
         return this.error({statusCode, message})
     }
 
+    // タイトルをshortに
+    shortTitle(title) {
+        return title.length > 27 ? `${title.slice(0, 27)}...` : title
+    }
+
+    // nicknameのmarginを指定
     userMarginTop(userId) {
         return this.isFollowed(userId) ? 'mt-1' : 'mt-3'
     }

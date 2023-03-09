@@ -109,6 +109,29 @@
             </div>
             <div class="example">
                 <!-- cardを複数列記するこれが一番分かりやすい -->
+                <h2 class="subtitle mb-8">例えば....</h2>
+                <v-sheet
+                    class="mx-auto"
+                    max-width="800"
+                >
+                    <v-slide-group
+                        show-arrows
+                    >
+                        <v-slide-item
+                            v-for="article in articles"
+                            :key="article.id"
+                            class="pa-3"
+                        >
+                            <div
+                                class="ma-3"
+                            >
+                                <ArticleAbout
+                                    :article="article"
+                                />
+                            </div>
+                        </v-slide-item>
+                    </v-slide-group>
+                </v-sheet>
             </div>
             <div class="uses">
                 <h2 class="subtitle mb-8">使い方</h2>
@@ -247,10 +270,20 @@ import loginImg from '~/assets/img/about/login-img.png'
 import searchImg from '~/assets/img/about/search-img.png'
 import memoImg from '~/assets/img/about/memo-img.png'
 import articleImg from '~/assets/img/about/article-img.png'
+import ArticleAbout from '~/components/Molecules/ArticleAbout.vue'
 
     export default {
         name: 'About',
+        components: {
+            ArticleAbout,
+        },
         layout: 'beforeLogin',
+        async asyncData({ $axios }) {
+            const res = await $axios.$get('/api/v1/articles/article_about')
+            return {
+                articles: res
+            }
+        },
         data () {
             return {
                 e6: 1,
@@ -262,7 +295,8 @@ import articleImg from '~/assets/img/about/article-img.png'
                 loginImg,
                 searchImg,
                 memoImg,
-                articleImg
+                articleImg,
+                model: null,
             }
         },
         head(){
