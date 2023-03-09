@@ -42,14 +42,16 @@ class Api::V1::ArticlesController < ApplicationController
         #                                             {comments: { include: [
         #                                                 user: { only: [:id, :nickname, :avatar] },]}},
         #                                         ])
-        article = Article.includes(:user, :likes, :level_list, :tag_list, comments: :user).find(params[:id]).as_json(include: [
-                                                    {user: { only: [:id, :nickname, :avatar]}},
-                                                    {likes: { only: [:user_id]}},
-                                                    {level_list: { only: [:id, :name]}},
-                                                    {tag_list: { only: [:name]}},
-                                                    {comments: { include: [
-                                                        user: { only: [:id, :nickname, :avatar] },]}},
-                                                ])
+        article = Article.includes(:user, :likes, :level_list, :tag_list, comments: :user)
+                            .find(params[:id])
+                            .as_json(include: [
+                                        {user: { only: [:id, :nickname, :avatar]}},
+                                        {likes: { only: [:user_id]}},
+                                        {level_list: { only: [:id, :name]}},
+                                        {tag_list: { only: [:name]}},
+                                        {comments: { include: [
+                                            user: { only: [:id, :nickname, :avatar] },]}},
+                                    ])
         render json: article
 
     end

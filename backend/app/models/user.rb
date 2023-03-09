@@ -70,6 +70,14 @@ class User < ApplicationRecord
                                     dependent: :destroy
     has_many :following, through: :active_relationships, source: :followed
     has_many :followers, through: :passive_relationships, source: :follower
+    # active_notifications：自分からの通知
+    has_many :active_notifications, class_name: 'Notification',
+                                    foreign_key: 'visitor_id',
+                                    dependent: :destroy
+    # passive_notifications：相手からの通知
+    has_many :passive_notifications, class_name: 'Notification',
+                                    foreign_key: 'visited_id',
+                                    dependent: :destroy
 
 
     # ユーザをフォローする
@@ -86,6 +94,24 @@ class User < ApplicationRecord
     # フォローしているかどうか
     def following?(other_user)
         following.include?(other_user)
+    end
+
+    # フォローした際に通知を作成
+    def create_notification_follow!(current_user)
+        temp = Notification.where(["visitor_id = ? and visited_id = ? and action = ? ", current_user.id, self.id, 'follow'])
+        if temp.blank?
+            notification = current_user.active_notifications.new(
+                visited_id: self.id,
+                action: 'follow'
+            )
+            notification.save if notification.valid?
+        end
+    end
+
+    # フォロー解除した際に通知を削除
+    def delete_notification_follow!(current_user)
+        temp = Notification.where(["visitor_id = ? and visited_id = ? and action = ? ", current_user.id, self.id, 'follow'])
+        temp.destroy_all if temp
     end
 
 

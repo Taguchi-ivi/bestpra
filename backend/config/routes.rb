@@ -77,6 +77,12 @@ Rails.application.routes.draw do
       # タグ情報を更新する
       resources :tag_maps, only:[:update, :create]
 
+      # 通知
+      resources :notifications, only:[:index, :update] do
+        get :read, on: :collection
+        patch :all_update, on: :collection
+      end
+
     end
 
     # helth check
