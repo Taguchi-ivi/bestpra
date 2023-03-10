@@ -1,23 +1,29 @@
-class Api::V1::LikesController < ApplicationController
+class Api::V1::NotificationsController < ApplicationController
     before_action :authenticate_user
 
     def index
-        notifications = current_user.passive_notifications
-        render json: notifications.as_json(include: [
-                                                {user: { only: [:id, :nickname, :avatar]}},
-                                                {article: { only: [:id, :title]}},
-                                                {comment: { only: [:id, :content]}}
-                                            ]), status: :ok
+        # notifications = current_user.passive_notifications
+        notifications = User.first.passive_notifications
+        render json: notifications.includes(:visitor, :article, :comment, :level_list)
+                                        .as_json(include: [
+                                            {visitor: { only: [:id, :nickname, :avatar]}},
+                                            {article: { only: [:id, :title]}},
+                                            {comment: { only: [:id, :content]}}
+                                        ]), status: :ok
+        # notifications = Notification.includes(:visitor).all
+        # render json: notifications.to_json(include: { visited: { only: [:id, :name] } })
     end
 
     # 5件取得
     def read
-        notifications = current_user.passive_notifications
-        render json: notifications.as_json(include: [
-                                                {user: { only: [:id, :nickname, :avatar]}},
-                                                {article: { only: [:id, :title]}},
-                                                {comment: { only: [:id, :content]}}
-                                            ]), status: :ok
+        # notifications = current_user.passive_notifications
+        notifications = User.first.passive_notifications.limit(5)
+        render json: notifications.includes(:visitor, :article, :comment, :level_list)
+                                        .as_json(include: [
+                                            {visitor: { only: [:id, :nickname, :avatar]}},
+                                            {article: { only: [:id, :title]}},
+                                            {comment: { only: [:id, :content]}}
+                                        ]), status: :ok
     end
 
     # チェックされたらそのidのcheckedをtrueにする
