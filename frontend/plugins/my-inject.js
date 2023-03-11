@@ -43,6 +43,12 @@ class MyInject {
         return this.error({statusCode, message})
     }
 
+    // 文字列の長さを調整
+    shortVersion(text, textCount) {
+        return text.length > textCount ? `${text.slice(0, textCount)}...` : text
+    }
+
+    // nicknameのmarginを指定
     userMarginTop(userId) {
         return this.isFollowed(userId) ? 'mt-1' : 'mt-3'
     }

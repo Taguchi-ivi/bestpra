@@ -4,11 +4,15 @@ class Api::V1::RelationshipsController < ApplicationController
     def create
         user = User.find(params[:user_id])
         current_user.follow(user)
+        user.create_notification_follow!(current_user)
+        render json: { status: :ok, message: 'フォローしました' }
     end
 
     def unfollow
         user = User.find(params[:user_id])
         current_user.unfollow(user)
+        user.delete_notification_follow!(current_user)
+        render json: { status: :ok, message: 'フォロー解除しました' }
     end
 
 

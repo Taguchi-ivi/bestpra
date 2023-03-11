@@ -2,7 +2,7 @@
     <div>
         <div v-if="error">
             <ErrorCard
-                title="存在しないユーザーです"
+                title="存在しないページです"
                 message="404 not found"
             />
         </div>
@@ -229,7 +229,7 @@ export default {
     //     // return redirect('/about')
     //     if(route.name === 'users-id') return redirect('/users/' + params.id + '/articles')
     // },
-    async asyncData({$axios, params, store}) {
+    async asyncData({$axios, $my, params, store, route}) {
         const res = await $axios.$get(`/api/v1/users/${params.id}`)
         console.log('res', res)
         if(res === 'bad_request') {
@@ -242,37 +242,61 @@ export default {
                 error: true
             }
         }
-        return {
-            error: false,
-            otherUser: res,
+        const path = route.path
+        const pathArray = path.split('/')
+        const routeName = pathArray[pathArray.length -1]
+        if(routeName === 'notifications' && !$my.isCurrentUser(params.id)) {
+            return {
+                error: true,
+            }
+        }
+        const items = [
+                    {
+                        icon: 'mdi-note',
+                        text: '練習メニュー',
+                        path: `/users/${params.id}/articles`,
+                    },
+                    {
+                        icon: 'mdi-account-star',
+                        text: 'フォロー',
+                        path: `/users/${params.id}/following`,
+                    },
+                    {
+                        icon: 'mdi-account-star-outline',
+                        text: 'フォロワー',
+                        path: `/users/${params.id}/followers`,
+                    },
+                    {
+                        icon: 'mdi-heart',
+                        text: 'いいね',
+                        path: `/users/${params.id}/likes`,
+                    },
+                ]
+        if($my.isCurrentUser(params.id)) {
+            items.push(
+                {
+                    icon: 'mdi-bell-outline',
+                    text: '通知',
+                    path: `/users/${params.id}/notifications`,
+                }
+            )
+            return {
+                error: false,
+                otherUser: res,
+                items
+            }
+        } else {
+            return {
+                error: false,
+                otherUser: res,
+                items
+            }
         }
     },
     data() {
         return {
             on: false,
             dialog: false,
-            items: [
-                {
-                    icon: 'mdi-note',
-                    text: '練習メニュー',
-                    path: `/users/${this.$route.params.id}/articles`,
-                },
-                {
-                    icon: 'mdi-account-star',
-                    text: 'フォロー',
-                    path: `/users/${this.$route.params.id}/following`,
-                },
-                {
-                    icon: 'mdi-account-star-outline',
-                    text: 'フォロワー',
-                    path: `/users/${this.$route.params.id}/followers`,
-                },
-                {
-                    icon: 'mdi-heart',
-                    text: 'いいね',
-                    path: `/users/${this.$route.params.id}/likes`,
-                },
-            ],
             model: 0,
         }
     },
@@ -363,6 +387,15 @@ export default {
                 .catch( err => {
                     console.log(err)
                 })
+        },
+        activeBell(name, userId) {
+            let result = false
+            if (name === '通知') {
+                result = this.currentUser.id === userId
+            } else {
+                result = true
+            }
+            return result
         }
     },
     // idページからidページへ遷移(nuxt-link)するとエラーになるため、コメントアウト

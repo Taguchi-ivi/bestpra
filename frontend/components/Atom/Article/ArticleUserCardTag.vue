@@ -14,7 +14,7 @@
             <div
                 :class="$my.userMarginTop(userId)"
             >
-                <p class="ma-0 ml-3">{{ shortName(userNickname) }}</p>
+                <p class="ma-0 ml-3">{{ $my.shortVersion(userNickname, 15) }}</p>
                 <div
                     v-if="$my.isFollowed(userId)"
                     class="text-caption mr-auto"
@@ -116,9 +116,6 @@ export default {
         limitCount (lists) {
             return lists.slice(0, 2)
         },
-        shortName(name) {
-            return name.length > 15 ? `${name.slice(0, 15)}...` : name
-        }
     }
 }
 </script>

@@ -7,7 +7,6 @@
         <nuxt-link
             :to="`/articles/${article.id}`"
         >
-
             <AppImg
                 :img-url="article.image.url"
                 card-flg
@@ -36,27 +35,16 @@
                 class="d-flex justify-end mb-2"
             >
                 <div v-if="$my.liked(article.id)">
-                    <v-btn
-                        icon
-                        color="red"
-                        @click="$my.unlike(article, true, userHomeFlg)"
-                    >
-                        <v-icon>
-                            mdi-heart
-                        </v-icon>
-                    </v-btn>
+                    <v-icon>
+                        mdi-heart
+                    </v-icon>
                 </div>
                 <div v-else>
-                    <v-btn
-                        icon
-                        @click="$my.createLike(article, true)"
-                    >
-                        <v-icon>
-                            mdi-heart-outline
-                        </v-icon>
-                    </v-btn>
+                    <v-icon>
+                        mdi-heart-outline
+                    </v-icon>
                 </div>
-                <div v-if="likeCount(article.id) > 0" class="subheading mr-2 my-auto">{{ likeCount(article.id) }}</div>
+                <div v-if="0 < article.likes.length" class="subheading mr-2 my-auto">{{ article.likes.length }}</div>
                 <div
                     class="mr-3 my-auto"
                 >
@@ -76,7 +64,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+// import { mapActions, mapGetters } from 'vuex'
 import ArticleUserCardTag from '~/components/Atom/Article/ArticleUserCardTag.vue'
 import AppImg from '~/components/Atom/App/AppNoImg.vue'
 
@@ -90,25 +78,18 @@ export default {
             type: Object,
             default: () => {}
         },
-        userHomeFlg: {
-            type: Boolean,
-            default: false
-        }
     },
-    computed: {
-        ...mapGetters({
-            articles: 'modules/article/getArticles',
-            AllLike: 'modules/like/getAllLike',
-        })
-    },
-    methods: {
-        ...mapActions({
-            getArticles: 'modules/article/getArticles'
-        }),
-        likeCount(articleId) {
-            return this.AllLike.find(like => like.id === articleId).likes.length
-        },
-    },
+    // computed: {
+    //     ...mapGetters({
+    //         articles: 'modules/article/getArticles',
+    //         AllLike: 'modules/like/getAllLike',
+    //     })
+    // },
+    // methods: {
+    //     ...mapActions({
+    //         getArticles: 'modules/article/getArticles'
+    //     }),
+    // },
 }
 
 </script>

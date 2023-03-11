@@ -13,16 +13,16 @@
                     class="mx-auto pa-5"
                     elevation="2"
                 >
-                    <v-img
+                    <!-- <v-img
                         :aspect-ratio="16/9"
                         :src="currentArticleData.image.url"
                         contain
                         max-height="400"
                     >
-                    </v-img>
-                    <!-- <AppImg
+                    </v-img> -->
+                    <AppImg
                         :img-url="currentArticleData.image.url"
-                    /> -->
+                    />
                     <v-card
                         width="80%"
                         flat
@@ -216,8 +216,8 @@
 <script>
 
 // import { mapActions, mapGetters } from 'vuex'
-// import AppImg from '~/components/Atom/App/AppNoImg.vue'
 import { mapGetters } from 'vuex'
+import AppImg from '~/components/Atom/App/AppNoImg.vue'
 import ErrorCard from '~/components/Molecules/ErrorCard.vue'
 import ArticleUserCardTag from '~/components/Atom/Article/ArticleUserCardTag.vue'
 import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
@@ -229,8 +229,8 @@ export default {
         ArticleUserCardTag,
         MainTitle,
         CardComment,
-        ErrorCard
-        // AppImg,
+        ErrorCard,
+        AppImg,
     },
     data() {
         return {

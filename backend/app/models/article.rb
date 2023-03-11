@@ -38,6 +38,7 @@ class Article < ApplicationRecord
     has_many :tag_maps, dependent: :destroy
     has_many :tag_list, through: :tag_maps
     has_many :likes, dependent: :destroy
+    has_many :notifications, dependent: :destroy
 
     # def as_json(options = {})
     #     super(options.merge(include: [:user, :level_list, {tag_list: {only: :name}}]))
@@ -56,4 +57,55 @@ class Article < ApplicationRecord
             self.tag_list << tag
         end
     end
+
+    # いいねの通知を作成する
+    def create_notification_like!(current_user)
+        return if current_user.id == self.user_id
+        temp = Notification.where(["visitor_id = ? and visited_id = ? and article_id = ? and action = ? ", current_user.id, self.user_id, self.id, 'like'])
+        if temp.blank?
+            notification = current_user.active_notifications.new(
+                article_id: self.id,
+                visited_id: self.user_id,
+                action: 'like'
+            )
+            notification.save if notification.valid?
+        end
+    end
+
+    # いいねの通知を解除
+    def delete_notification_like!(current_user)
+        temp = Notification.where(["visitor_id = ? and visited_id = ? and article_id = ? and action = ? ", current_user.id, self.user_id, self.id, 'like'])
+        temp.destroy_all unless temp.blank?
+    end
+
+    # コメントの通知を作成する
+    def create_notification_comment!(current_user, comment_id)
+        temp_ids = Comment.select(:user_id).where(article_id: self.id).where.not(user_id: current_user.id).distinct
+        temp_ids.each do |temp_id|
+            save_notification_comment!(current_user, comment_id, temp_id['user_id'])
+        end
+
+        save_notification_comment!(current_user, comment_id, self.user_id) if temp_ids.blank?
+    end
+
+    def save_notification_comment!(current_user, comment_id, visited_id)
+        return if visited_id == current_user.id
+        notification = current_user.active_notifications.new(
+            article_id: self.id,
+            comment_id: comment_id,
+            visited_id: visited_id,
+            action: 'comment'
+        )
+        notification.save if notification.valid?
+    end
+
+    def delete_notification_comment!(current_user, comment_id)
+        temps = Notification.where(["visitor_id = ? and comment_id = ? and action = ? ", current_user.id, comment_id, 'comment'])
+        temps.destroy_all if temps
+        # temps.each do |temp|
+        #     temp.destroy
+        # end
+    end
+
+
 end

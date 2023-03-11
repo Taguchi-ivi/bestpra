@@ -184,7 +184,7 @@ export default {
             on: false,
             dialog: false,
             Menus: [
-                { name: 'アカウント修正', icon: 'mdi-account-cog', divider: false, path: '/users/edit' },
+                { name: '編集', icon: 'mdi-account-cog', divider: false, path: '/users/edit' },
                 { name: 'help', icon: 'mdi-chat-question', divider: false, path: '/help'},
             ],
         }

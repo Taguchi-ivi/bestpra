@@ -13,4 +13,5 @@ class LevelList < ApplicationRecord
     validates :name, presence: true, uniqueness: true
 
     has_many :article
+    has_many :notifications, dependent: :destroy
 end
