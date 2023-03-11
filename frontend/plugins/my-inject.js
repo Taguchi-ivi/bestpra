@@ -43,9 +43,9 @@ class MyInject {
         return this.error({statusCode, message})
     }
 
-    // タイトルをshortに
-    shortTitle(title) {
-        return title.length > 27 ? `${title.slice(0, 27)}...` : title
+    // 文字列の長さを調整
+    shortVersion(text, textCount) {
+        return text.length > textCount ? `${text.slice(0, textCount)}...` : text
     }
 
     // nicknameのmarginを指定

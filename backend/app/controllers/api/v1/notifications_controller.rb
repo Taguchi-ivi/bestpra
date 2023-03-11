@@ -2,8 +2,8 @@ class Api::V1::NotificationsController < ApplicationController
     before_action :authenticate_user
 
     def index
-        # notifications = current_user.passive_notifications
-        notifications = User.first.passive_notifications
+        # notifications = User.first.passive_notifications
+        notifications = current_user.passive_notifications
         render json: notifications.includes(:visitor, :article, :comment, :level_list)
                                         .as_json(include: [
                                             {visitor: { only: [:id, :nickname, :avatar]}},
@@ -16,8 +16,8 @@ class Api::V1::NotificationsController < ApplicationController
 
     # 5件取得
     def read
-        # notifications = current_user.passive_notifications
-        notifications = User.first.passive_notifications.limit(5)
+        # notifications = User.first.passive_notifications.limit(5)
+        notifications = current_user.passive_notifications.limit(5)
         render json: notifications.includes(:visitor, :article, :comment, :level_list)
                                         .as_json(include: [
                                             {visitor: { only: [:id, :nickname, :avatar]}},

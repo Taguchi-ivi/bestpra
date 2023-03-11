@@ -4,14 +4,28 @@
     <!-- contain -->
     <!-- max-height="400"
     width="100%" -->
-    <div class="item">
-        <div class="item-wrap">
+    <div>
+        <div v-if="cardFlg">
+            <div class="item">
+                <div class="item-wrap">
+                    <v-img
+                        :src="imgUrl ? imgUrl : NoImg"
+                        height="168"
+                    >
+                    </v-img>
+                </div>
+            </div>
+        </div>
+        <div v-else>
             <v-img
+                :aspect-ratio="16/9"
                 :src="imgUrl ? imgUrl : NoImg"
-                height="168"
+                contain
+                max-height="400"
             >
             </v-img>
         </div>
+
     </div>
 </template>
 

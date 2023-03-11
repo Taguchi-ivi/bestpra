@@ -24,7 +24,7 @@
                 :to="`/articles/${article.id}`"
             >
                 <v-card-title class="text-h6">
-                    {{ $my.shortTitle(article.title) }}
+                    {{ $my.shortVersion(article.title, 27) }}
                 </v-card-title>
                 <v-card-subtitle>
                     <!-- 作成日: 2023/02/06 -->

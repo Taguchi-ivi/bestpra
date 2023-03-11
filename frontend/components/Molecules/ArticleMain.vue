@@ -25,7 +25,7 @@
                 :to="`/articles/${article.id}`"
             >
                 <v-card-title class="text-h6">
-                    {{ shortTitle(article.title) }}
+                    {{ $my.shortVersion(article.title, 27) }}
                 </v-card-title>
                 <v-card-subtitle>
                     <!-- 作成日: 2023/02/06 -->
@@ -107,9 +107,6 @@ export default {
         }),
         likeCount(articleId) {
             return this.AllLike.find(like => like.id === articleId).likes.length
-        },
-        shortTitle(title) {
-            return title.length > 27 ? `${title.slice(0, 27)}...` : title
         },
     },
 }
