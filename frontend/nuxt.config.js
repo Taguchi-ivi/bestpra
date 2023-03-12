@@ -155,6 +155,11 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+
+    // lodash
+    transpile: [
+      'lodash-es'
+    ],
     // CkEditor
     plugins: [
       // If you set ssr: true that will cause the following error. This error does not affect the operation.

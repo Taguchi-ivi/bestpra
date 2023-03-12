@@ -5,6 +5,7 @@
         <!-- <v-container> -->
             <AppToaster />
             <Nuxt />
+            <PageTop />
         <!-- </v-container> -->
         </v-main>
         <before-home-footer />
@@ -17,6 +18,7 @@
 import BeforeHomeHeader from '~/components/Organisms/BeforeLogin/BeforeHomeHeader.vue'
 import BeforeHomeFooter from '~/components/Organisms/BeforeLogin/BeforeHomeFooter.vue'
 import AppToaster from '~/components/Atom/App/AppToaster.vue'
+import PageTop from '~/components/Atom/App/AppPageTop.vue'
 
 export default {
     name: 'BeforeLogin',
@@ -25,7 +27,8 @@ export default {
         // 'home-footer': HomeFooter
         BeforeHomeHeader,
         BeforeHomeFooter,
-        AppToaster
+        AppToaster,
+        PageTop
     },
     data: () => ({
       // icons: [

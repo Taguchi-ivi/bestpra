@@ -80,6 +80,10 @@ class User < ApplicationRecord
                                     dependent: :destroy
 
 
+    # scope
+    # default_scope -> { order(created_at: :desc) }
+
+
     # ユーザをフォローする
     def follow(other_user)
         following << other_user unless self == other_user

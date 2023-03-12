@@ -14,15 +14,14 @@ Rails.application.routes.draw do
         get :edit, on: :collection
         patch :update, on: :collection
         patch :update_avatar, on: :collection
-
         # フォローしたユーザーのIDを取得
         get :current_following, on: :collection
-
         # ユーザーのいいね一覧取得
         get :likes
-
         # ユーザーの記事一覧取得
         get :written_articles
+        # ユーザー検索
+        get :search, on: :collection
 
         # フォロー機能
         resources :relationships, only: [:create] do
@@ -56,6 +55,8 @@ Rails.application.routes.draw do
         get :article_about, on: :collection
         # いいねした記事のIDを取得
         get :current_liked, on: :collection
+        # search機能
+        get :search, on: :collection
 
         # comments
         resources :comments, only:[:create, :destroy]

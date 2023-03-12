@@ -13,7 +13,7 @@ export const state = () => ({
     // userData: {},
     userData: [],
 
-    // editUser: {},
+    searchUsers: [],
 })
 
 export const getters = {
@@ -31,15 +31,10 @@ export const getters = {
         return state.userData
     },
 
-    // getEditUser(state) {
-    //     return state.editUser
-    // },
+    getSearchUsers(state) {
+        return state.searchUsers
+    }
 
-    // isCurrentUser(state) {
-    //     // return !!state.user && !!state.user.uid
-    //     // return state.userUid !== null
-    //     return state.user.current.id === state.otherData.id
-    // }
 }
 
 export const actions = {
@@ -75,12 +70,17 @@ export const actions = {
     getUserData ( { commit }, user) {
         console.log('mutationsOK', user)
         commit('setUserData', user)
+    },
+
+    getSearchUsers( { commit }, user) {
+        console.log('mutationsOK', user)
+        commit('setSearchUsers', user)
+    },
+
+    getResetSearchUsers( { commit }) {
+        commit('setSearchUsers', [])
     }
 
-    // getEditUser ({ commit }, user) {
-    //     console.log('mutationsOK', user)
-    //     commit('setEditUser', user)
-    // },
 
 
 }
@@ -100,10 +100,12 @@ export const mutations = {
     setUserData(state, payload) {
         // console.log(state.user)
         state.userData = payload
-    }
+    },
 
-    // setEditUser(state, payload) {
-    //     // console.log(state.user)
-    //     state.editUser = payload
-    // },
+    setSearchUsers(state, payload) {
+        // console.log(state.user)
+        state.searchUsers = payload
+    },
+
+
 }

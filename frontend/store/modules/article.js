@@ -11,6 +11,8 @@
 
         // 対象のユーザのいいね一覧を管理
         likesArticle: [],
+
+        searchArticles: [],
     })
 
     export const getters = {
@@ -29,6 +31,10 @@
 
         getLikesArticle(state) {
             return state.likesArticle
+        },
+
+        getSearchArticles(state) {
+            return state.searchArticles
         }
     }
 
@@ -77,6 +83,14 @@
             commit('setLikesArticle',  likesArticle )
         },
 
+        getSearchArticles({ commit }, searchArticles) {
+            commit('setSearchArticles', searchArticles)
+        },
+
+        getResetSearchArticles({ commit }) {
+            commit('setSearchArticles', [])
+        }
+
     }
 
     export const mutations = {
@@ -114,5 +128,9 @@
             const result = state.likesArticle.filter(item => item.id !== articleId)
             console.log('result', result)
             state.likesArticle = result
-        }
+        },
+
+        setSearchArticles (state, payload) {
+            state.searchArticles = payload
+        },
     }

@@ -1,12 +1,13 @@
 <template>
     <div>
-        <div v-if="error">
+        <!-- <div v-if="error">
             <ErrorCard
                 title="存在しないタグです"
                 message="404 not found"
             />
-        </div>
-        <div v-else>
+        </div> -->
+        <!-- <div v-else> -->
+        <div>
             <v-container
                 fluid
             >
@@ -22,7 +23,10 @@
                     <v-col
                         cols="9"
                     >
-                        <div v-if="articles.length === 0">
+                        <div v-if="error">
+                            <p class="mt-5 text-center">タグから記事を検索!!</p>
+                        </div>
+                        <div v-else-if="articles.length === 0">
                             <p class="mt-5 text-center">まだ投稿されていません...</p>
                         </div>
                         <div v-else>
@@ -46,7 +50,7 @@
 </template>
 
 <script>
-import ErrorCard from '~/components/Molecules/ErrorCard.vue'
+// import ErrorCard from '~/components/Molecules/ErrorCard.vue'
 import TagsContent from '~/components/Atom/App/AppTags.vue'
 import ArticleMain from '~/components/Molecules/ArticleMain.vue'
 
@@ -54,16 +58,16 @@ export default {
     name: 'Tags',
     components: {
         TagsContent,
-        ErrorCard,
-        ArticleMain
+        ArticleMain,
+        // ErrorCard,
     },
     async asyncData({ $axios, store, params }) {
         const res = await $axios.$get(`/api/v1/tag_lists/${params.id}/article_tag`)
         if(res === 'bad_request') {
             store.dispatch('modules/toast/getToast', {
                         status: true,
-                        msg: '存在しないタグです',
-                        color: 'error'
+                        msg: 'タグを選択しよう!',
+                        color: 'info'
                     })
             return {
                 error: true

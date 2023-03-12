@@ -10,7 +10,8 @@
                 app
                 offset-x
                 offset-y
-                max-width="200"
+                width="200"
+                class="pa-3"
             >
                 <template
                     #activator="{ on }"
@@ -45,11 +46,7 @@
                         </v-list-item-content>
                     </v-list-item>
 
-                    <v-divider />
-
-                    <v-subheader>
-                        アカウント
-                    </v-subheader>
+                    <!-- <v-divider /> -->
                     <div
                         v-for="(menu, i) in Menus"
                         :key="`menu-divider-${i}`"
@@ -58,6 +55,9 @@
                             <v-divider
                                 v-if="menu.divider"
                             />
+                            <v-subheader v-if="menu.title">
+                                {{ menu.title }}
+                            </v-subheader>
                             <v-list-item
                                 :to="menu.path"
                             >
@@ -184,8 +184,10 @@ export default {
             on: false,
             dialog: false,
             Menus: [
-                { name: '編集', icon: 'mdi-account-cog', divider: false, path: '/users/edit' },
-                { name: 'help', icon: 'mdi-chat-question', divider: false, path: '/help'},
+                { title: 'アカウント', name: '編集', icon: 'mdi-account-cog', divider: true, path: '/users/edit' },
+                { title: '探す', name: '検索', icon: 'mdi-magnify', divider: true, path: '/search' },
+                { title: '', name: 'ラベル', icon: 'mdi-label', divider: false, path: '/levels/0' },
+                { title: '', name: 'タグ', icon: 'mdi-tag-multiple', divider: false, path: '/tags/0' },
             ],
         }
     },

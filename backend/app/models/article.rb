@@ -40,6 +40,8 @@ class Article < ApplicationRecord
     has_many :likes, dependent: :destroy
     has_many :notifications, dependent: :destroy
 
+    # scope
+    default_scope -> { order(created_at: :desc) }
     # def as_json(options = {})
     #     super(options.merge(include: [:user, :level_list, {tag_list: {only: :name}}]))
     # end

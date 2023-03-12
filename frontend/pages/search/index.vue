@@ -13,115 +13,65 @@
 
                 <template #extension>
                     <v-tabs
-                        v-model="tabs"
+                        v-model="tabName"
                         fixed-tabs
                         icons-and-text
                     >
-                    <v-tabs-slider></v-tabs-slider>
-                        <v-tab
-                            href="#mobile-tabs-5-1"
-                            class="pb-2"
+                        <div
+                            v-for="(tab, i) in tabs"
+                            :key="i"
                         >
-                            練習メニュ
-                            <v-icon dense>mdi-note</v-icon>
-                        </v-tab>
-
-                        <v-tab
-                            href="#mobile-tabs-5-2"
-                            class="pb-2"
-                        >
-                            タグ
-                            <v-icon dense>mdi-tag</v-icon>
-                        </v-tab>
-
-                        <v-tab
-                            href="#mobile-tabs-5-3"
-                            class="pb-2"
-                        >
-                            対象者
-                            <v-icon dense>mdi-label</v-icon>
-                        </v-tab>
-
-                        <v-tab
-                            href="#mobile-tabs-5-4"
-                            class="pb-2"
-                        >
-                            ユーザー
-                            <v-icon dense>mdi-account-multiple</v-icon>
-                        </v-tab>
-                        </v-tabs>
+                            <v-tab
+                                :href="`#${tab.name}`"
+                                class="pb-2"
+                            >
+                                {{ tab.name }}
+                                <v-icon dense>{{ tab.icon }}</v-icon>
+                            </v-tab>
+                        </div>
+                    </v-tabs>
                 </template>
             </v-toolbar>
-            <v-tabs-items v-model="tabs">
-                <!-- 動的なcomponents -->
+            <v-tabs-items v-model="tabName">
                 <v-tab-item
-                    v-for="i in 3"
-                    :key="i"
-                    :value="'mobile-tabs-5-' + i"
+                    value="練習メニュー"
                 >
-                    <!-- <v-card flat>
-                        <v-card-text>{{ text  }}</v-card-text>
-                    </v-card> -->
-                        <!-- <v-text-field
-                            v-model="searchText"
-                            solo
-                            label="検索!!"
-                            clearable
-                            append-outer-icon="mdi-magnify"
-                            class="mt-8"
-                        >
-                        </v-text-field> -->
-                        <v-card
-                            max-width="80%"
-                            class="mx-auto"
-                            color="transparent"
-                            flat
-                        >
-                            <v-text-field
-                                label="検索!!"
-                                solo
-                                prepend-inner-icon="mdi-magnify"
-                                class="mx-auto mt-8"
-                            >
-                            </v-text-field>
-                        </v-card>
-                    <MainTitle title="hello"/>
-                    <CardArticleAll />
-                    <CardTag />
-                    <CardUserAll />
-                    <MarginBottom />
+                    <SearchArticle />
+                </v-tab-item>
+                <v-tab-item
+                    value="ユーザー"
+                >
+                    <SearchUser />
                 </v-tab-item>
             </v-tabs-items>
         </v-card>
-        <PageTop />
     </v-container>
 </template>
 
 <script>
 
-import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
-import CardArticleAll from '~/components/Organisms/Card/CardArticleAll.vue'
-import CardTag from '~/components/Organisms/Card/CardTag.vue'
-import CardUserAll from '~/components/Organisms/Card/CardUserAll.vue'
-import MarginBottom from '~/components/Atom/margin/marginBottom.vue'
-import PageTop from '~/components/Atom/App/AppPageTop.vue'
+import SearchArticle from '~/components/Organisms/Search/SearchArticle.vue'
+import SearchUser from '~/components/Organisms/Search/SearchUser.vue'
 
 export default {
     components: {
-            MainTitle,
-            CardArticleAll,
-            CardTag,
-            CardUserAll,
-            MarginBottom,
-            PageTop
+        SearchArticle,
+        SearchUser,
         },
     data () {
         return {
-            tabs: null,
-            searchText: 'hello!!',
-            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+            // tabs: null,
+            tabName: '練習メニュー',
+            tabs: [
+                {name: '練習メニュー', icon: 'mdi-note'},
+                {name: 'ユーザー', icon: 'mdi-account-multiple'},
+                // {name: 'タグ', icon: 'mdi-tag'},
+            ],
         }
     },
+    methods: {
+        
+    }
 }
 </script>
 

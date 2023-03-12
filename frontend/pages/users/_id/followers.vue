@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 import CardUser from '~/components/Organisms/Card/CardUser.vue'
 
 export default {

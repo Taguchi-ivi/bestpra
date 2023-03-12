@@ -57,11 +57,11 @@ import TheLoading from '~/components/Organisms/Application/TheLoading.vue'
 
 export default {
     name: 'ClientHome',
-    middleware ({ route, redirect }) {
-        if(route.name === 'home') return redirect('/home/all')
-    },
     components: {
         TheLoading
+    },
+    middleware ({ route, redirect }) {
+        if(route.name === 'home') return redirect('/home/all')
     },
     data() {
         return {
@@ -70,7 +70,7 @@ export default {
             items: [
                 {
                     icon: 'mdi-note',
-                    text: '練習メニュー一覧',
+                    text: '練習メニュー',
                     path: '/home/all'
                 },
                 {
