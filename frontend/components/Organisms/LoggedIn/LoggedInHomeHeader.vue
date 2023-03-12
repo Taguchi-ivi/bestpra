@@ -44,6 +44,14 @@
                 <!-- three-line -->
                 <v-list
                 >
+                <div v-if="notificationHeader.length === 0">
+                    <v-list-item>
+                        <v-list-item-content>
+                            また通知はありません
+                        </v-list-item-content>
+                    </v-list-item>
+                </div>
+                <div v-else>
                     <div
                         v-for="(notification, index) in notificationHeader"
                         :key="index"
@@ -74,6 +82,7 @@
                         </v-icon>
                     </div>
                     </v-list-item>
+                </div>
                 </v-list>
             </v-menu>
         </div>

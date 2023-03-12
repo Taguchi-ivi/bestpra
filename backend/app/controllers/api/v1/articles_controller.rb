@@ -16,7 +16,6 @@ class Api::V1::ArticlesController < ApplicationController
         #                                                             user: { only: [:id, :nickname, :avatar] },]}},
         #                                                     ])
         articles = Article.includes(:user, :likes, :level_list, :tag_list, comments: :user)
-                            .order(id: :desc)
                             .as_json(include: [
                                         {user: { only: [:id, :nickname, :avatar]}},
                                         {likes: { only: [:user_id]}},
@@ -62,7 +61,6 @@ class Api::V1::ArticlesController < ApplicationController
         # current_liked = current_user.likes.pluck(:article_id)
         current_liked = current_user.likes.pluck(:article_id)
         likes = Article.includes(:likes)
-                            .order(id: :desc)
                             .as_json(include: [
                                         {likes: { only: [:user_id]}},
                                     ])
@@ -76,7 +74,7 @@ class Api::V1::ArticlesController < ApplicationController
         # likes_id = Like.article
         likes_id = Article.left_outer_joins(:likes)
                                 .group(:id)
-                                .order('COUNT(likes.id) DESC, id DESC')
+                                .order('COUNT(likes.id) DESC')
                                 .limit(3)
                                 .pluck(:id)
         articles = Article.includes(:user, :likes, :level_list, :tag_list, :comments)
@@ -98,6 +96,21 @@ class Api::V1::ArticlesController < ApplicationController
         #                                 {tag_list: { only: [:name]}},
         #                                 {comments: { only: [:id]}},
         #                     ])
+        render json: articles
+    end
+
+    def search
+        keyword = params[:keyword]
+        return render json: [] if keyword.blank?
+        articles = Article.includes(:user, :likes, :level_list, :tag_list, comments: :user)
+                            .where('title LIKE ? OR content LIKE ?', "%#{keyword}%", "%#{keyword}%")
+                            .as_json(include: [
+                                        {user: { only: [:id, :nickname, :avatar]}},
+                                        {likes: { only: [:user_id]}},
+                                        {level_list: { only: [:id, :name]}},
+                                        {tag_list: { only: [:name]}},
+                                        {comments: { only: [:id]}},
+                            ])
         render json: articles
     end
 

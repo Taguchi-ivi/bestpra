@@ -62,6 +62,14 @@ class Api::V1::UsersController < ApplicationController
         render json: current_user.following.pluck(:id)
     end
 
+    def search
+        keyword = params[:keyword]
+        return render json: [] if keyword.blank?
+        users = User.where('nickname LIKE ? OR introduction LIKE ?', "%#{keyword}%", "%#{keyword}%")
+                        .as_json(only: [:id, :nickname, :avatar, :introduction])
+        render json: users
+    end
+
     def edit
         # @user = User.find(params[:id])
         # render json: 'Usersedit'

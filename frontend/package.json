@@ -33,6 +33,7 @@
     "cookieparser": "^0.1.0",
     "core-js": "^3.25.3",
     "jwt-decode": "^3.1.2",
+    "lodash-es": "^4.17.21",
     "nuxt": "^2.15.8",
     "universal-cookie": "^4.0.4",
     "vue": "^2.7.10",
