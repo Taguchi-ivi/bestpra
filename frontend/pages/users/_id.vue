@@ -251,34 +251,14 @@ export default {
             }
         }
         const items = [
-                    {
-                        icon: 'mdi-note',
-                        text: '練習メニュー',
-                        path: `/users/${params.id}/articles`,
-                    },
-                    {
-                        icon: 'mdi-account-star',
-                        text: 'フォロー',
-                        path: `/users/${params.id}/following`,
-                    },
-                    {
-                        icon: 'mdi-account-star-outline',
-                        text: 'フォロワー',
-                        path: `/users/${params.id}/followers`,
-                    },
-                    {
-                        icon: 'mdi-heart',
-                        text: 'いいね',
-                        path: `/users/${params.id}/likes`,
-                    },
+                    {icon: 'mdi-note', text: '練習メニュー', path: `/users/${params.id}/articles`},
+                    {icon: 'mdi-account-star', text: 'フォロー', path: `/users/${params.id}/following`},
+                    {icon: 'mdi-account-star-outline', text: 'フォロワー', path: `/users/${params.id}/followers`},
+                    {icon: 'mdi-heart', text: 'いいね', path: `/users/${params.id}/likes`},
                 ]
         if($my.isCurrentUser(params.id)) {
             items.push(
-                {
-                    icon: 'mdi-bell-outline',
-                    text: '通知',
-                    path: `/users/${params.id}/notifications`,
-                }
+                {icon: 'mdi-bell-outline', text: '通知', path: `/users/${params.id}/notifications`}
             )
             return {
                 error: false,

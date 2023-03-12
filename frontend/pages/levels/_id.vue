@@ -1,12 +1,13 @@
 <template>
     <div>
-        <div v-if="error">
+        <!-- <div v-if="error">
             <ErrorCard
                 title="存在しないラベルです"
                 message="404 not found"
             />
         </div>
-        <div v-else>
+        <div v-else> -->
+        <div>
             <v-container
                 fluid
             >
@@ -22,7 +23,10 @@
                     <v-col
                         cols="9"
                     >
-                        <div v-if="articles.length === 0">
+                        <div v-if="error">
+                            <p class="mt-5 text-center">ラベルを検索しよう!!!</p>
+                        </div>
+                        <div v-else-if="articles.length === 0">
                             <p class="mt-5 text-center">まだ投稿されていません...</p>
                         </div>
                         <div v-else>
@@ -47,16 +51,16 @@
 </template>
 
 <script>
-import ErrorCard from '~/components/Molecules/ErrorCard.vue'
+// import ErrorCard from '~/components/Molecules/ErrorCard.vue'
 import LevelContent from '~/components/Atom/App/AppLevels.vue'
 import ArticleMain from '~/components/Molecules/ArticleMain.vue'
 
 export default {
     name: 'Levels',
     components: {
-        ErrorCard,
         LevelContent,
-        ArticleMain
+        ArticleMain,
+        // ErrorCard,
     },
     async asyncData({ $axios, store, params }) {
         const res = await $axios.$get(`/api/v1/level_lists/${params.id}/article_level`)
@@ -64,8 +68,8 @@ export default {
         if(res === 'bad_request') {
             store.dispatch('modules/toast/getToast', {
                         status: true,
-                        msg: '存在しないラベルです',
-                        color: 'error'
+                        msg: 'ラベルを選択しよう!',
+                        color: 'info'
                     })
             return {
                 error: true

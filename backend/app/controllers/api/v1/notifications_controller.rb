@@ -17,7 +17,7 @@ class Api::V1::NotificationsController < ApplicationController
     # 5件取得
     def read
         # notifications = User.first.passive_notifications.limit(5)
-        notifications = current_user.passive_notifications.limit(5)
+        notifications = current_user.passive_notifications.limit(3)
         render json: notifications.includes(:visitor, :article, :comment, :level_list)
                                         .as_json(include: [
                                             {visitor: { only: [:id, :nickname, :avatar]}},
