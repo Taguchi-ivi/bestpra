@@ -18,7 +18,6 @@
                         @change="fileClick"
                     >
                     </v-file-input>
-                    <!-- <input ref="view" type="file" @change="uploadFile"> -->
                 </div>
                 <div v-else class="img-active">
                     <div class="img-active-delete" @click="deleteView">
@@ -36,9 +35,6 @@
                         max-height="400"
                     >
                     </v-img>
-                    <!-- <AppImg
-                        :img-url="imageUrl"
-                    /> -->
                 </div>
                 <div class="mt-8"></div>
                 <ArticleTitle
@@ -47,14 +43,9 @@
                 <ArticleLevel
                     :level.sync="level"
                 />
-                <!-- :level-item="levelItem" -->
                 <client-only>
-                    <!-- <Ckeditor v-model="text" /> -->
                     <Ckeditor :text.sync="text" />
                 </client-only>
-                <!-- <ArticleTag
-                    :chips.sync="chips"
-                /> -->
                 <ArticleTag
                     v-model="chips"
                 />
@@ -81,7 +72,6 @@ import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 import ArticleTitle from '~/components/Atom/Article/ArticleTitle.vue'
 import ArticleLevel from '~/components/Atom/Article/ArticleLevel.vue'
 import ArticleTag from '~/components/Atom/Article/ArticleTag.vue'
-// import AppImg from '~/components/Atom/App/AppNoImg.vue'
 
 export default {
     name: 'ArticleCreate',
@@ -90,40 +80,26 @@ export default {
         ArticleTitle,
         ArticleLevel,
         ArticleTag,
-        // AppImg,
     },
-    // async asyncData({ $axios }) {
-    //     const res = await $axios.$get('/api/v1/mst_lists')
-    //     // console.log(res)
-    //     return {
-    //         levels: res,
-    //     }
-    // },
     data() {
         return {
             valid: true,
             level: {},
-            text: '',
             title: '',
             imageUrl: '',
             chips: '',
             selectFile: [],
-            // selectItem: '',
-            // // levels: [
-            // //     { label: 'all', level_id: 1},
-            // //     { label: '小学生', level_id: 1},
-            // //     { label: '中学生', level_id: 1},
-            // // ],
-            // text: '<p>内容を入力してください<strong>(範囲選択でテキストを変更できます)</strong></p>',
-            // chips: ['Programming', 'Playing video games', 'Watching movies', 'Sleeping'],
-            // items: ['Streaming', 'Eating'],
+            text: '<p>内容を入力してください<strong>(範囲選択でテキストを変更できます)</strong></p>',
             loading: false,
+        }
+    },
+    head(){
+        return {
+            title: 'Article New Page',
         }
     },
     methods: {
         fileClick() {
-            // const thisFile = this.selectFile
-            // console.log(this.selectFile)
             this.imageUrl = window.URL.createObjectURL(this.selectFile)
         },
         deleteView() {
@@ -148,11 +124,9 @@ export default {
                 }
             })
         },
-        // async createArticle() {
         async createArticle() {
             this.loading = true
             const formData = new FormData()
-            // formData.append('article[user_id]', this.$auth.user.id)
             formData.append('article[title]', this.title)
             formData.append('article[content]', this.text)
             formData.append('article[image]', this.selectFile)
@@ -160,15 +134,8 @@ export default {
 
             const appendChips = this.chips.length === 0 ? [] : this.chips
             formData.append('article[tag_list]', appendChips)
-            // console.log('postデータ確認', this.chips)
             await this.$axios.$post('/api/v1/articles', formData )
                 .then((res) => {
-                    console.log('resです', res)
-                    // TODO tagを追加する
-                    // if(this.chips) {
-                    //     console.log(this.item)
-                    // }
-                    // console.log('tagデータ', this.chips)
                     this.$store.dispatch('modules/toast/getToast', {
                         status: true,
                         msg: '素敵な練習メニュをありがとう!!',
