@@ -7,14 +7,11 @@
             <v-col
                 v-for="(article, index) in articles"
                 :key="index"
-                cols="4"
+                cols="12" sm="6" md="4" lg="4" xl="4"
             >
                 <ArticleMain
                     :article="article"
                 />
-                <!-- <v-card>
-                    {{article}}
-                </v-card> -->
             </v-col>
         </v-row>
     </div>
@@ -22,7 +19,6 @@
 
 
 <script>
-// import { mapGetters } from 'vuex'
 import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 import ArticleMain from '~/components/Molecules/ArticleMain.vue'
 
@@ -37,22 +33,6 @@ export default {
         return {
             articles: res,
         }
-            // .then(res => {
-            //     const followingArticles = res.map(item => (item.articles))
-            //     store.dispatch('modules/article/getArticles', followingArticles)
-
-            //     const result = res.map(item => ({id: item.articles.id, likes: item.articles.likes}))
-            //     store.dispatch('modules/like/getAllLike', result)
-            // })
-            // .catch(err => {
-            //     console.log(err)
-            // })
     },
-    // computed: {
-    //     ...mapGetters({
-    //         articles: 'modules/article/getArticles',
-    //         allLike: 'modules/like/getAllLike'
-    //     })
-    // },
 }
 </script>
