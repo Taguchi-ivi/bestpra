@@ -1,27 +1,20 @@
 <template>
     <div>
-        <!-- <div v-if="error">
-            <ErrorCard
-                title="存在しないタグです"
-                message="404 not found"
-            />
-        </div> -->
-        <!-- <div v-else> -->
         <div>
             <v-container
                 fluid
             >
                 <v-row>
                     <v-col
-                        cols="3"
-                        class="toc-view"
+                        cols="12" sm="3" md="3" lg="3" xl="3"
+                        :class="$vuetify.breakpoint.xs ? 'mx-auto' : 'toc-view'"
                     >
                         <TagsContent
                             :current-tag-id="Number($route.params.id)"
                         />
                     </v-col>
                     <v-col
-                        cols="9"
+                        cols="12" sm="9" md="9" lg="9" xl="9"
                     >
                         <div v-if="error">
                             <p class="mt-5 text-center">タグから記事を検索!!</p>
@@ -34,7 +27,7 @@
                                 <v-col
                                     v-for="(article, index) in articles"
                                     :key="index"
-                                    cols="4"
+                                    cols="12" sm="6" md="4" lg="4" xl="4"
                                 >
                                     <ArticleMain
                                         :article="article"
@@ -50,7 +43,6 @@
 </template>
 
 <script>
-// import ErrorCard from '~/components/Molecules/ErrorCard.vue'
 import TagsContent from '~/components/Atom/App/AppTags.vue'
 import ArticleMain from '~/components/Molecules/ArticleMain.vue'
 
@@ -59,7 +51,6 @@ export default {
     components: {
         TagsContent,
         ArticleMain,
-        // ErrorCard,
     },
     async asyncData({ $axios, store, params }) {
         const res = await $axios.$get(`/api/v1/tag_lists/${params.id}/article_tag`)
@@ -81,6 +72,11 @@ export default {
         return {
             error: false,
         }
-    }
+    },
+    head(){
+        return {
+            title: 'Tag Page',
+        }
+    },
 }
 </script>
