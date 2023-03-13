@@ -233,11 +233,6 @@ export default {
             commentContent: '',
         }
     },
-    head(){
-        return {
-            title: 'Article Show Page',
-        }
-    },
     async fetch({ $axios, params, store }) {
         await $axios.$get(`/api/v1/articles/${params.id}`)
             .then(res => {
@@ -255,6 +250,11 @@ export default {
                     color: 'error'
                 })
             })
+    },
+    head(){
+        return {
+            title: 'Article Show Page',
+        }
     },
     computed: {
         ...mapGetters({

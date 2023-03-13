@@ -35,14 +35,12 @@
                         ログインする
                     </v-btn>
                 </v-card-text>
-                <!-- {{ params.user }} -->
             </v-form>
         </template>
     </user-form-card>
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
 import UserFormCard from '~/components/Molecules/UserFormCard'
 import UserFormEmail from '~/components/Atom/UserForm/UserFormEmail'
 import UserFormPassword from '~/components/Atom/UserForm/UserFormPassword'
@@ -61,18 +59,16 @@ export default {
             isValid: false,
             loading: false,
             params: { auth: { email: 'user0@example.com', password: 'password'} },
-            // params: {auth: { email: '', password: ''} }
-            // redirectPath: ''
-            // loggedInHomePath: 'home',
+        }
+    },
+    head(){
+        return {
+            title: 'Signin Page',
         }
     },
     methods: {
-        // ...mapGetters({
-        //     redirectPath: 'modules/remember/getRememberPath',
-        // }),
         async formLogin() {
             this.loading = true
-            // setTimeout(() => {this.loading = false}, 1500)
             if(this.isValid) {
                 await this.$axios.$post('/api/v1/auth_token/login', this.params)
                     .then(res => this.authSuccessful(res))
@@ -82,28 +78,16 @@ export default {
             this.loading = false
         },
         authSuccessful(res) {
-            // console.log('authSuccessful', res)
-            // console.log('token',this.$auth.token)
-            // console.log('expires',this.$auth.expires)
-            // console.log('payload',this.$auth.payload)
-            // console.log('user',this.$auth.user)
             this.$auth.login(res)
-            // 記憶ルートリダイレクト
-            // console.log('signin', this.redirectPath)
-            // this.$router.push(this.redirectPath)
             const redirectPath = this.$route.query.redirect || '/home'
             // const status = true
             // const msg = 'ログインに成功しました!!'
             // const color = 'info'
 
             this.$router.push(redirectPath)
-            // this.$store.dispatch('modules/toast/getToast', { status, msg, color })
-            // this.$store.dispatch('modules/remember/getRememberPath', this.loggedInHomePath)
         },
         authFailure({ response }) {
             if (response && response.status === 404) {
-                // トースター出力
-                // alert('404')
                 const status = true
                 const msg = 'ユーザが見つかりません'
                 const color = 'error'
