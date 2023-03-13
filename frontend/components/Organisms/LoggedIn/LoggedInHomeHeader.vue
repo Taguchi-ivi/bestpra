@@ -1,11 +1,16 @@
 <template>
     <v-app-bar
         fixed
+        class="z-500"
     >
         <slot name="navigation-toggle-button" />
         <!-- <nuxt-link to="/about"> -->
         <nuxt-link to="/home/all">
-            <v-img width="50" src="/header-logo.png"></v-img>
+            <v-img
+                :width="$vuetify.breakpoint.xs ? 35 : 50"
+                src="/header-logo.png"
+            >
+            </v-img>
         </nuxt-link>
         <v-toolbar-title class="ml-3 hidden-mobile-and-down">bestpra</v-toolbar-title>
 
@@ -16,7 +21,8 @@
                 app
                 offset-x
                 offset-y
-                max-width="300"
+                max-width="280"
+                class="z-500"
             >
                 <template
                     #activator="{ on }"

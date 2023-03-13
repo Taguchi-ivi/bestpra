@@ -26,7 +26,6 @@
                                 @change="fileClick"
                             >
                             </v-file-input>
-                            <!-- <input ref="view" type="file" @change="uploadFile"> -->
                         </div>
                         <div v-else class="img-active">
                             <div class="img-active-delete" @click="deleteView">
@@ -44,9 +43,6 @@
                                 max-height="400"
                             >
                             </v-img>
-                            <!-- <AppImg
-                                :img-url="imageUrl"
-                            /> -->
                         </div>
                         <div class="mt-8"></div>
                         <ArticleTitle
@@ -55,16 +51,9 @@
                         <ArticleLevel
                             :level.sync="level"
                         />
-                        <!-- :level-item="levelItem" -->
                         <client-only>
-                            <!-- <Ckeditor v-model="text" /> -->
                             <Ckeditor :text.sync="text" />
                         </client-only>
-                        <!-- <pre>
-                            {{ text }}
-                        </pre> -->
-                        <!-- :chips.sync="chips"
-                        :tags="tag_list" -->
                         <ArticleTag
                             v-model="chips"
                             :tags="tag_list"
@@ -95,7 +84,6 @@ import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 import ArticleTitle from '~/components/Atom/Article/ArticleTitle.vue'
 import ArticleLevel from '~/components/Atom/Article/ArticleLevel.vue'
 import ArticleTag from '~/components/Atom/Article/ArticleTag.vue'
-// import AppImg from '~/components/Atom/App/AppNoImg.vue'
 
 export default {
     name: 'ArticleEdit',
@@ -128,7 +116,6 @@ export default {
             text: res.content,
             title: res.title,
             imageUrl: res.image.url,
-            // tag_list: list,
             tag_list: tagList
         }
     },
@@ -146,10 +133,14 @@ export default {
             tag_list: []
         }
     },
+    head(){
+        return {
+            title: 'Article Edit Page',
+        }
+    },
     methods: {
         fileClick() {
-            // const thisFile = this.selectFile
-            // console.log(this.selectFile)
+            // preview作成
             this.imageUrl = window.URL.createObjectURL(this.selectFile)
         },
         deleteView() {

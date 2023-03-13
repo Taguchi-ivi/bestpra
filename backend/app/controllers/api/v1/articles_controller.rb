@@ -1,8 +1,6 @@
 class Api::V1::ArticlesController < ApplicationController
     before_action :authenticate_user, except: [:article_about]
 
-    before_action :set_article, only: [:edit, :update]
-
     def index
 
         # TODO リファクタリング必須 scopeを使う
@@ -181,11 +179,6 @@ class Api::V1::ArticlesController < ApplicationController
             # params.require(:user).permit(:id, :nickname, :introduction, :birthday , :basecolor_id, :activated, :admin)
             params.require(:article).permit(:title, :content, :image, :level_list_id)
         end
-
-        # def set_article
-        #     # @article = Article.find(params[:id])
-        #     @article = current_user.articles.find(params[:id])
-        # end
 
         def current_user_for_article
             current_user.id != Article.find(params[:id]).user_id

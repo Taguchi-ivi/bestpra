@@ -11,7 +11,7 @@
                 offset-x
                 offset-y
                 width="200"
-                class="pa-3"
+                class="pa-3 z-500"
             >
                 <template
                     #activator="{ on }"

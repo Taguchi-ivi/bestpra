@@ -6,7 +6,12 @@
             :src="soccerBallImg"
             max-width="30"
         />
-        <h2 class="ml-3">{{ currentTitle }}</h2>
+        <div
+            :class="$vuetify.breakpoint.xs ? 'text-subtitle-1' : 'text-h5'"
+            class="ml-3 font-weight-bold"
+        >
+            {{ currentTitle }}
+        </div>
     </div>
 </template>
 

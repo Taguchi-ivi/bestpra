@@ -20,7 +20,7 @@
                 <v-btn
                     v-for="icon in icons"
                     :key="icon.name "
-                    class="mx-4"
+                    :class="$vuetify.breakpoint.xs ? 'mx-1' : 'mx-4'"
                     icon
                     :to="icon.path" nuxt
                 >

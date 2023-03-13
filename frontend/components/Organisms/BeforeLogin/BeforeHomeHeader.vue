@@ -3,6 +3,7 @@
     fixed
     :color="toolbarStyle.color"
     :elevation="toolbarStyle.elevation"
+    class="z-500"
 >
     <nuxt-link to="/about">
         <v-img

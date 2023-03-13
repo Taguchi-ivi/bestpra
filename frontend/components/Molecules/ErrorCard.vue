@@ -7,7 +7,11 @@
             max-width="600px"
         >
             <v-card-title>
-                <h1>{{ title }}</h1>
+                <p
+                    class="text-sm-body-2 font-weight-bold"
+                >
+                    {{ title }}
+                </p>
             </v-card-title>
             <v-card-text>
                 <p>{{ message }}</p>
