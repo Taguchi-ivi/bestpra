@@ -8,23 +8,17 @@
             class="mx-auto pa-3"
             elevation="8"
         >
-        <!-- three-line -->
             <v-list
+                three-line
             >
                 <div
                     v-for="(notification, index) in notifications"
                     :key="index"
                 >
-                <!-- TODO  ここから下いらない -->
-                <!-- notification -->
-                <!-- 配列の最後の要素だけdividerFlgをfalseに -->
-                <NotificationMain
-                    :notification="notification"
-                    :divider-flg="index + 1 !== notifications.length"
-                />
-                    <!-- <v-list-item>
-                        {{notification}}
-                    </v-list-item> -->
+                    <NotificationMain
+                        :notification="notification"
+                        :divider-flg="index + 1 !== notifications.length"
+                    />
                 </div>
             </v-list>
         </v-card>
@@ -42,9 +36,6 @@ export default {
         NotificationMain
     },
     async asyncData({ $axios, $my, params ,store }) {
-        // const user = store.getters['modules/user/getUser']
-        // console.log('user', user.id)
-        // console.log('params', params.id)
         if ($my.isCurrentUser(params.id)) {
             const res = await $axios.$get('/api/v1/notifications')
             return {
@@ -72,7 +63,7 @@ export default {
         ...mapMutations({
             commitHeaderUpdate: 'modules/notification/setNotificationHeaderAllUpdate',
         }),
-        // 通知の設定
+        // 画面描写後にcheckedをtrueにする
         async updateNotification() {
             this.commitHeaderUpdate()
             await this.$axios.$patch('/api/v1/notifications/all_update')

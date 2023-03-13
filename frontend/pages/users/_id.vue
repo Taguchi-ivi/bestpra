@@ -7,37 +7,17 @@
             />
         </div>
         <div v-if="!error">
-            <!-- TODO 色どうする問題 -->
-            <!-- class="grey lighten-4" -->
-            <div
-            >
-                <v-row
-                    no-gutters
-                    class="pa-10"
-                >
-                    <v-col
-                        cols="2"
-                    >
+            <div class="pa-5">
+                <div class="d-flex justify-center">
+                    <div>
                         <AvatarImg
                             :avatar-url="otherUser.avatar.url"
+                            :size="60"
+                            :xs-size="48"
                         />
                         <p>{{ otherUser.nickname }}</p>
-                    </v-col>
-                    <v-col
-                        cols="7"
-                    >
-                        <!-- {{ introduction }} -->
-                        <div v-if="otherUser.introduction">
-                            <!-- {{ introduction }} -->
-                            {{ otherUser.introduction }}
-                        </div>
-                        <div v-else>
-                            自己紹介はありません
-                        </div>
-                    </v-col>
-                    <v-col
-                        cols="3"
-                    >
+                    </div>
+                    <div class="ml-4">
                         <div v-if="$my.isCurrentUser(otherUser.id)">
                             <v-menu
                                 app
@@ -52,7 +32,7 @@
                                         icon
                                         v-on="on"
                                     >
-                                        <v-icon size="20">
+                                        <v-icon :size="$vuetify.breakpoint.xs ? 15 : 20">
                                             mdi-cog-outline
                                         </v-icon>
                                     </v-btn>
@@ -105,12 +85,11 @@
                                                 アカウント削除
                                             </v-card-title>
                                             <v-card-text>
-                                                本当によろしいですか？<br />
-                                                ※全てのデータが削除されます
+                                                全てのデータが削除されます<br />
+                                                本当によろしいですか？
                                             </v-card-text>
                                             <v-card-actions>
                                             <v-spacer />
-                                            <!-- color="green darken-1" -->
                                             <v-btn
                                                 color="blue"
                                                 text
@@ -135,6 +114,7 @@
                             <v-btn
                                 v-if="$my.isFollowed(otherUser.id)"
                                 color="white--text red"
+                                :small="$vuetify.breakpoint.xs ? true : false"
                                 @click="unfollow"
                             >
                                 フォロー解除
@@ -142,13 +122,49 @@
                             <v-btn
                                 v-else
                                 color="primary"
+                                :small="$vuetify.breakpoint.xs ? true : false"
                                 @click="follow"
                             >
                                 フォローする
                             </v-btn>
                         </div>
-                    </v-col>
-                </v-row>
+                    </div>
+                </div>
+                <v-card
+                    max-width="500"
+                    class="mx-auto pa-3"
+                    color="light-blue lighten-5"
+                    flat
+                >
+                    <div v-if="otherUser.introduction">
+                        {{ otherUser.introduction }}
+                    </div>
+                    <div v-else>
+                        自己紹介はありません
+                    </div>
+                </v-card>
+                <div class="mx-auto mt-3" style="max-width: 500px;">
+                    <div class="d-flex justify-space-around">
+                        <div>
+                            <p class="mb-0 text-center text-caption">
+                                <nuxt-link :to="`/users/${otherUser.id}/articles`">{{ otherUser.articles }}</nuxt-link>
+                            </p>
+                            <p>menus</p>
+                        </div>
+                        <div>
+                            <p class="mb-0 text-center text-caption">
+                                <nuxt-link :to="`/users/${otherUser.id}/following`">{{ otherUser.following }}</nuxt-link>
+                            </p>
+                            <p>following</p>
+                        </div>
+                        <div>
+                            <p class="mb-0 text-center text-caption">
+                                <nuxt-link :to="`/users/${otherUser.id}/followers`">{{ otherUser.followers }}</nuxt-link>
+                            </p>
+                            <p>follower</p>
+                        </div>
+                </div>
+                </div>
             </div>
             <div
                 style="width: 97%"
@@ -162,40 +178,46 @@
                 >
                 <v-row no-gutters>
                     <v-col
-                        cols="3"
+                        cols="12" sm="3" md="3" lg="3" xl="3"
                     >
                         <v-list
                             rounded
                             color="transparent"
                             max-width="250"
-                            class="toc-view"
+                            :class="$vuetify.breakpoint.xs ? 'mx-auto' : 'toc-view'"
                         >
                             <v-list-item-group
                                 v-model="model"
                                 mandatory
                                 color="primary"
                             >
-                                <v-list-item
-                                    v-for="(item, i) in items"
-                                    :key="i"
-                                    :to="item.path" nuxt
-                                >
-                                    <v-list-item-icon>
-                                        <v-icon>
-                                            {{ item.icon }}
-                                        </v-icon>
-                                    </v-list-item-icon>
-                                    <v-list-item-content>
-                                        <v-list-item-title>
-                                            {{ item.text }}
-                                        </v-list-item-title>
-                                    </v-list-item-content>
-                                </v-list-item>
+                                <v-row>
+                                    <v-col
+                                        v-for="(item, i) in items"
+                                        :key="i"
+                                        cols="4" sm="12" md="12" lg="12" xl="12"
+                                    >
+                                        <v-list-item
+                                            :to="item.path" nuxt
+                                        >
+                                            <v-list-item-icon>
+                                                <v-icon>
+                                                    {{ item.icon }}
+                                                </v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-content>
+                                                <v-list-item-title>
+                                                    {{ item.text }}
+                                                </v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                    </v-col>
+                                </v-row>
                             </v-list-item-group>
                         </v-list>
                     </v-col>
                     <v-col
-                        cols="9"
+                        cols="12" sm="9" md="9" lg="9" xl="9"
                     >
                         <div v-if="$route.name === 'users-id'">
                             <div v-if="$my.isCurrentUser(otherUser.id)">
@@ -225,10 +247,6 @@ export default {
         ErrorCard,
         AvatarImg,
     },
-    // middleware ({ params, redirect, route }) {
-    //     // return redirect('/about')
-    //     if(route.name === 'users-id') return redirect('/users/' + params.id + '/articles')
-    // },
     async asyncData({$axios, $my, params, store, route}) {
         const res = await $axios.$get(`/api/v1/users/${params.id}`)
         console.log('res', res)
@@ -256,19 +274,18 @@ export default {
                     {icon: 'mdi-account-star-outline', text: 'フォロワー', path: `/users/${params.id}/followers`},
                     {icon: 'mdi-heart', text: 'いいね', path: `/users/${params.id}/likes`},
                 ]
+        store.dispatch('modules/user/getOtherUser', res)
         if($my.isCurrentUser(params.id)) {
             items.push(
                 {icon: 'mdi-bell-outline', text: '通知', path: `/users/${params.id}/notifications`}
             )
             return {
                 error: false,
-                otherUser: res,
                 items
             }
         } else {
             return {
                 error: false,
-                otherUser: res,
                 items
             }
         }
@@ -280,47 +297,29 @@ export default {
             model: 0,
         }
     },
-    // async fetch({ $axios, params, store}) {
-    //     await $axios.$get(`api/v1/users/${params.id}`)
-    //     // await $axios.$get(`api/v1/users/`)
-    //         .then(res => {
-    //             // console.log('resUser', res.user)
-    //             store.dispatch('modules/error/getErrorStatus', false)
-    //             store.dispatch('modules/user/getOtherUser', res.user)
-    //             store.dispatch('modules/article/getWrittenArticles', res.articles)
-    //         })
-    //         .catch(err => {
-    //             console.log('err', err)
-    //             store.dispatch('modules/error/getErrorStatus', true)
-    //             store.dispatch('modules/user/getOtherUser', null)
-    //             store.dispatch('modules/toast/getToast', {
-    //                 status: true,
-    //                 msg: '存在しないユーザです',
-    //                 color: 'error'
-    //             })
-    //         })
-    // },
-    // 算出プロパティ => 計算したデータを返す関数のこと
-    // dateとほぼ一緒だが、複雑なデータなどはcomputedで使う
+    head(){
+        return {
+            title: 'Profile Page',
+        }
+    },
     computed: {
         ...mapGetters({
             currentUser: 'modules/user/getUser',
+            otherUser: 'modules/user/getOtherUser',
             followingUsers: 'modules/follow/getCurrentFollow',
-            // writtenArticles: 'modules/article/getWrittenArticles',
-            // otherUser: 'modules/user/getOtherUser',
-            // error: 'modules/error/getErrorStatus',
         }),
     },
     methods: {
         ...mapActions({
             dispatchToast: 'modules/toast/getToast'
-            // dispatchErr: 'modules/error/getErrorStatus',
-            // dispatchOtherUser: 'modules/user/getOtherUser',
-            // dispatchWrittenArticles: 'modules/article/getWrittenArticles',
         }),
         ...mapMutations({
             commitCreateFollow: 'modules/follow/setCreateCurrentFollow',
             commitDeleteFollow: 'modules/follow/setDeleteCurrentFollow',
+            commitFollowUser: 'modules/user/setFollowOtherUser',
+            commiUnfollowUser: 'modules/user/setUnfollowOtherUser',
+            commitCreateFollower: 'modules/follow/setCreateOtherFollower',
+            commitDeleteFollower: 'modules/follow/setDeleteOtherFollower',
         }),
         // Vuexのtoast.msgの値を変更する
         // resetOtherUser() {
@@ -329,8 +328,6 @@ export default {
         async accountDelete() {
             await this.$axios.$delete(`/api/v1/auth_token/${this.otherUser.id}`,{})
                 .then(res => {
-                    // console.log(res)
-                    // this.$auth.login(res)
                     // const status = true
                     // const msg = '削除が完了しました'
                     // this.$store.dispatch('modules/toast/getToast', { status, msg })
@@ -348,11 +345,18 @@ export default {
             this.dialog = false
         },
         async follow() {
-            // await this.$axios.$post(`/api/v1/follow/${this.otherUser.id}`)
             await this.$axios.$post(`/api/v1/users/${this.$route.params.id}/relationships`)
                 .then(res => {
-                    // console.log(res)
                     this.commitCreateFollow(this.$route.params.id)
+                    this.commitFollowUser()
+                    this.commitCreateFollower({
+                        id: this.currentUser.id,
+                        avatar: {
+                            url: this.currentUser.avatar.url,
+                        },
+                        nickname: this.currentUser.nickname,
+                        introduction: this.currentUser.introduction,
+                    })
                 })
                 .catch( err => {
                     console.log(err)
@@ -361,8 +365,9 @@ export default {
         async unfollow() {
             await this.$axios.$post(`/api/v1/users/${this.$route.params.id}/relationships/unfollow`)
                 .then(res => {
-                    // console.log(res)
                     this.commitDeleteFollow(this.$route.params.id)
+                    this.commiUnfollowUser()
+                    this.commitDeleteFollower(this.currentUser.id)
                 })
                 .catch( err => {
                     console.log(err)

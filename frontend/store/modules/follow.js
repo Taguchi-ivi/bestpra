@@ -1,10 +1,16 @@
 export const state = () => ({
     currentFollow: ['nothing'],
+
+    otherFollower: [],
 })
 
 export const getters = {
     getCurrentFollow(state) {
         return state.currentFollow
+    },
+
+    getOtherFollower(state) {
+        return state.otherFollower
     }
 }
 
@@ -12,6 +18,10 @@ export const actions = {
     getCurrentFollow({ commit }, currentFollow ) {
         // errorStatus = errorStatus || false
         commit('setErrorStatus', currentFollow )
+    },
+
+    getOtherFollower({ commit }, otherFollower ) {
+        commit('setOtherFollower', otherFollower )
     }
 
 }
@@ -33,4 +43,19 @@ export const mutations = {
         const result = state.currentFollow.filter(user => user !== UserId)
         state.currentFollow = result
     },
+
+
+    setOtherFollower (state, payload) {
+        state.otherFollower = payload
+    },
+
+    setCreateOtherFollower (state, payload) {
+        state.otherFollower.unshift(payload)
+    },
+
+    setDeleteOtherFollower (state, payload) {
+        const UserId = Number(payload)
+        const result = state.otherFollower.filter(user => user.id !== UserId)
+        state.otherFollower = result
+    }
 }

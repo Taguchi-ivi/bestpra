@@ -10,9 +10,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 import CardUser from '~/components/Organisms/Card/CardUser.vue'
 
 export default {
+    name: 'UsersFollowers',
     components: {
         MainTitle,
         CardUser,
@@ -29,10 +32,16 @@ export default {
                 error: true
             }
         }
+        store.dispatch('modules/follow/getOtherFollower', res)
         return {
             error: false,
-            followersUser: res
+            // followersUser: res
         }
-    }
+    },
+    computed: {
+        ...mapGetters({
+            followersUser: 'modules/follow/getOtherFollower',
+        }),
+    },
 }
 </script>

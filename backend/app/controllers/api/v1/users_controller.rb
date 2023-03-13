@@ -22,8 +22,15 @@ class Api::V1::UsersController < ApplicationController
         # render json: 'Usersshow'
         # render json: @user.as_json(only: [:id, :nickname, :avatar, :introduction])
         # render json: {user: user_data, articles: articles}
+        # render json: User.find(params[:id]).as_json(only: [:id, :nickname, :avatar, :introduction])
+        # render json: {user: user_data, articles: article_count, following: following_count, followers: followers_count}
         return render json: :bad_request unless User.exists?(id: params[:id])
-        render json: User.find(params[:id]).as_json(only: [:id, :nickname, :avatar, :introduction])
+        user_data =  User.find(params[:id]).as_json(only: [:id, :nickname, :avatar, :introduction])
+        article_count = Article.where(user_id: params[:id]).count
+        following_count = User.find(params[:id]).following.count
+        followers_count = User.find(params[:id]).followers.count
+        render json: user_data.merge({articles: article_count, following: following_count, followers: followers_count})
+                                .with_indifferent_access
     end
 
     def written_articles
