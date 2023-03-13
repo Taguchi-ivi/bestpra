@@ -6,7 +6,6 @@
                 color="primary"
                 dark
             >
-                <!-- <v-icon>mdi-magnify</v-icon> -->
                 <v-toolbar-title>検索</v-toolbar-title>
 
                 <v-spacer></v-spacer>
@@ -60,18 +59,18 @@ export default {
         },
     data () {
         return {
-            // tabs: null,
             tabName: '練習メニュー',
             tabs: [
                 {name: '練習メニュー', icon: 'mdi-note'},
                 {name: 'ユーザー', icon: 'mdi-account-multiple'},
-                // {name: 'タグ', icon: 'mdi-tag'},
             ],
         }
     },
-    methods: {
-        
-    }
+    head(){
+        return {
+            title: 'Search Page',
+        }
+    },
 }
 </script>
 

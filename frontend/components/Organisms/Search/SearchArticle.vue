@@ -25,7 +25,7 @@
                     <v-col
                         v-for="(article, index) in articles"
                         :key="index"
-                        cols="4"
+                        cols="12" sm="6" md="6" lg="6" xl="4"
                     >
                         <ArticleMain
                             :article="article"
