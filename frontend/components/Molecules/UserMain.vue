@@ -19,7 +19,7 @@
             <div
                 :class="$my.userMarginTop(user.id)"
             >
-                <div class="text-h6">{{ user.nickname }}</div>
+                <div :class="$vuetify.breakpoint.xs ? 'text-body-1' : 'text-h6'">{{ user.nickname }}</div>
                 <div
                     v-if="$my.isFollowed(user.id)"
                     class="text-caption mr-auto"

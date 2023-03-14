@@ -7,7 +7,11 @@
             max-width="600px"
         >
             <v-card-title>
-                <h1>{{ title }}</h1>
+                <p
+                    class="text-sm-body-2 font-weight-bold"
+                >
+                    {{ title }}
+                </p>
             </v-card-title>
             <v-card-text>
                 <p>{{ message }}</p>
@@ -15,8 +19,8 @@
             <div v-if="content === 'home'">
                 <div class="text-center">
                     <v-btn
-                        @click="$router.push('/home/all')"
                         icon
+                        @click="$router.push('/home/all')"
                     >
                         <v-icon>
                             mdi-home
@@ -25,28 +29,13 @@
                     </v-btn>
                 </div>
             </div>
-            <!-- ロード時間がかかるため一旦なし -->
-            <!-- content="level" -->
-            <!-- content="tag" -->
-            <!-- <div v-if="content === 'level'">
-                <LevelContent />
-            </div>
-            <div v-if="content === 'tag'">
-                <TagsContent />
-            </div> -->
         </v-card>
     </div>
 </template>
 
 <script>
-// import LevelContent from '~/components/Atom/App/AppLevels.vue'
-// import TagsContent from '~/components/Atom/App/AppTags.vue'
 
 export default {
-    components: {
-        // LevelContent,
-        // TagsContent
-    },
     props: {
         title: {
             type: String,

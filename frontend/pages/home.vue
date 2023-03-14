@@ -4,13 +4,14 @@
     >
         <v-row>
             <v-col
-                cols="3"
-                class="toc-view"
+                cols="12" sm="4" md="3" lg="3" xl="3"
+                :class="$vuetify.breakpoint.xs ? '' : 'toc-view'"
             >
                 <v-list
                     rounded
                     color="transparent"
                     max-width="250"
+                    :class="$vuetify.breakpoint.xs ? 'mx-auto' : ''"
                 >
                     <v-list-item-group
                         v-model="model"
@@ -37,7 +38,7 @@
                 </v-list>
             </v-col>
             <v-col
-                cols="9"
+                cols="12" sm="8" md="9" lg="9" xl="9"
             >
                 <div v-if="loading">
                     <TheLoading />
@@ -80,6 +81,11 @@ export default {
                 },
             ],
             model: 0,
+        }
+    },
+    head(){
+        return {
+            title: 'Home Page',
         }
     },
     created() {

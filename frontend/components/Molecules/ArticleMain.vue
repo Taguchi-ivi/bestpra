@@ -1,8 +1,8 @@
 <template>
-    <!-- height="480" -->
     <v-card
         width="300"
         rounded
+        :class="$vuetify.breakpoint.xs ? 'mx-auto' : ''"
     >
         <nuxt-link
             :to="`/articles/${article.id}`"
@@ -28,7 +28,6 @@
                     {{ $my.shortVersion(article.title, 27) }}
                 </v-card-title>
                 <v-card-subtitle>
-                    <!-- 作成日: 2023/02/06 -->
                     作成日:{{ $my.dataFormat(article.created_at) }}
                 </v-card-subtitle>
             </nuxt-link>
@@ -66,7 +65,6 @@
                         <v-icon>
                             mdi-comment-text-outline
                         </v-icon>
-                        <!-- <span class="subheading">45</span> -->
                         <span v-if="0 < article.comments.length" class="subheading">{{ article.comments.length }}</span>
                     </nuxt-link>
                 </div>

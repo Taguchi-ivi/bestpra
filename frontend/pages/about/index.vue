@@ -8,73 +8,52 @@
             >
             </v-img>
             <div class="main-container">
-                <h1 class="mb-12">
+                <div
+                    class="my-12"
+                >
                     <span>
                         あなたにあった練習が見つかる<br />
                         それがbestpra
                     </span>
-                </h1>
-                <div class="main-button text-center">
-                    <v-row
-                        align="center"
-                        justify="space-around"
-                    >
-                        <v-btn
-                            color="accent"
-                            class="px-8"
-                            large
-                            elevation="13"
-                            rounded
-                            to="/auth/signup" nuxt
-                        >
-                            始める
-                            <v-icon right>
-                                mdi-account-arrow-right
-                            </v-icon>
-                        </v-btn>
-                        <v-btn
-                            color="accent"
-                            class="pl-8"
-                            large
-                            elevation="13"
-                            rounded
-                            to="/home/all" nuxt
-                        >
-                            練習メニュを開く
-                            <v-icon right>
-                                mdi-book-open-variant
-                            </v-icon>
-                        </v-btn>
-                    </v-row>
                 </div>
             </div>
         </div>
         <v-container
             class="mb-30"
         >
-            <div class="about pt-15 mb-15">
-                <h2 class="subtitle mb-8">bestpraとは</h2>
+            <div class="about pt-10 mb-8">
+                <h2 class="subtitle mb-5">bestpraとは</h2>
                 <v-row class="about-container d-flex justify-space-between">
-                    <v-col>
-                        <v-img
-                            class="mb-5"
-                            contain
-                            max-height="auto"
-                            max-width="150"
-                            :src="aboutImg01"
-                            alt="サッカー風景"
-                        >
-                        </v-img>
-                        <v-img
-                            contain
-                            max-height="auto"
-                            max-width="150"
-                            :src="aboutImg02"
-                            alt="サッカー風景"
-                        >
-                        </v-img>
+                    <v-col
+                        cols="12" sm="4" md="4" lg="4" xl="4"
+                    >
+                        <v-row>
+                            <v-col>
+                                <v-img
+                                    class="mb-5"
+                                    contain
+                                    max-height="auto"
+                                    :width="$vuetify.breakpoint.xs ? 100 :150"
+                                    :src="aboutImg01"
+                                    alt="サッカー風景"
+                                >
+                                </v-img>
+                            </v-col>
+                            <v-col>
+                                <v-img
+                                    contain
+                                    max-height="auto"
+                                    :width="$vuetify.breakpoint.xs ? 100 :150"
+                                    :src="aboutImg02"
+                                    alt="サッカー風景"
+                                >
+                                </v-img>
+                            </v-col>
+                        </v-row>
                     </v-col>
-                    <v-col>
+                    <v-col
+                        cols="12" sm="4" md="4" lg="4" xl="4"
+                    >
                         <div class="text-center">
                             <h3>
                                 bestpraとは<br />
@@ -86,29 +65,37 @@
                             </h3>
                         </div>
                     </v-col>
-                    <v-col class="ml-auto">
-                        <v-img
-                            class="mb-5"
-                            contain
-                            max-height="auto"
-                            max-width="150"
-                            :src="aboutImg03"
-                            alt="サッカー風景"
-                        >
-                        </v-img>
-                        <v-img
-                            contain
-                            max-height="auto"
-                            max-width="160"
-                            :src="aboutImg04"
-                            alt="サッカー風景"
-                        >
-                        </v-img>
+                    <v-col
+                        cols="12" sm="4" md="4" lg="4" xl="4"
+                    >
+                        <v-row>
+                            <v-col>
+                                <v-img
+                                    class="mb-5 ml-auto"
+                                    contain
+                                    max-height="auto"
+                                    :width="$vuetify.breakpoint.xs ? 80 :150"
+                                    :src="aboutImg03"
+                                    alt="サッカー風景"
+                                >
+                                </v-img>
+                            </v-col>
+                            <v-col>
+                                <v-img
+                                    class="ml-auto"
+                                    contain
+                                    max-height="auto"
+                                    :width="$vuetify.breakpoint.xs ? 100 :150"
+                                    :src="aboutImg04"
+                                    alt="サッカー風景"
+                                >
+                                </v-img>
+                            </v-col>
+                        </v-row>
                     </v-col>
                 </v-row>
             </div>
             <div class="example">
-                <!-- cardを複数列記するこれが一番分かりやすい -->
                 <h2 class="subtitle mb-8">例えば....</h2>
                 <v-sheet
                     class="mx-auto"
@@ -145,7 +132,7 @@
                             <v-stepper-step
                                 :complete="e6 > 1"
                                 step="1"
-                                color="accent"
+                                color="primary"
                             >
                                 まずは登録しよう！
                             <small>Please singup or login</small>
@@ -158,13 +145,16 @@
                                     max-width="500"
                                 />
                                 <v-btn
-                                    color="secondary"
+                                    color="primary"
+                                    :small="$vuetify.breakpoint.xs ? true : false"
                                     to="/auth/signup" nuxt
                                 >
                                     会員登録
                                 </v-btn>
                                 <v-btn
                                     text
+                                    color="primary"
+                                    :small="$vuetify.breakpoint.xs ? true : false"
                                     @click="e6 = 2"
                                 >
                                     次へ
@@ -175,7 +165,7 @@
                             <v-stepper-step
                                 :complete="e6 > 2"
                                 step="2"
-                                color="accent"
+                                color="primary"
                             >
                                 自分が練習したいメニュを探そう！
                                 <small>search training menu</small>
@@ -188,48 +178,26 @@
                                     max-width="500"
                                 />
                                 <v-btn
-                                    color="secondary"
+                                    color="primary"
+                                    :small="$vuetify.breakpoint.xs ? true : false"
                                     to="/search" nuxt
                                 >
                                     検索ページへ
                                 </v-btn>
                                 <v-btn
                                     text
+                                    color="primary"
+                                    :small="$vuetify.breakpoint.xs ? true : false"
                                     @click="e6 = 3"
                                 >
                                     次へ
                                 </v-btn>
                             </v-stepper-content>
 
-                            <!-- <v-stepper-step
-                                :complete="e6 > 3"
+                            <v-stepper-step
                                 step="3"
-                                color="accent"
+                                color="primary"
                             >
-                                １日の練習スケジュールをメモしよう！
-                                <small>training menus memo</small>
-                            </v-stepper-step>
-                            <v-stepper-content step="3">
-                                <v-img
-                                    :src="memoImg"
-                                    :aspect-ratio="16/9"
-                                    max-width="500"
-                                />
-                                <v-btn
-                                    color="secondary"
-                                    to="/home"
-                                >
-                                    練習メニュを投稿
-                                </v-btn>
-                                <v-btn
-                                    text
-                                    @click="e6 = 4"
-                                >
-                                    次へ
-                                </v-btn>
-                            </v-stepper-content> -->
-
-                            <v-stepper-step step="3" color="accent">
                                 自分の練習メニュを投稿してみよう！
                                 <small>post training menus</small>
                             </v-stepper-step>
@@ -240,13 +208,16 @@
                                     max-width="500"
                                 />
                                 <v-btn
-                                    color="secondary"
+                                    color="primary"
+                                    :small="$vuetify.breakpoint.xs ? true : false"
                                     to="articles/new"
                                 >
                                     投稿する
                                 </v-btn>
                                 <v-btn
                                     text
+                                    color="primary"
+                                    :small="$vuetify.breakpoint.xs ? true : false"
                                     @click="e6 = 1"
                                 >
                                     最初へ
@@ -313,18 +284,33 @@ import ArticleAbout from '~/components/Molecules/ArticleAbout.vue'
 
     img {
         width: 100%;
-        height: 571px;
+        height: 600px;
     }
     .main-container {
-        min-width: 570px;
         position: absolute;
-        margin-left: 20px;
+        max-width: 300px;
         top: 30%;
-        left: 67%;
+        left: 60%;
         transform: translate(-50%,-50%);
+        @media only screen and (max-width: 560px) {
+            top: 40%;
+            left: 55%;
+        }
+        @media only screen and (max-width: 320px) {
+            top: 50%;
+            left: 50%;
+        }
 
         span {
+            font-size: 20px;
+            font-weight: bold;
             background:linear-gradient(transparent 60%, var(--v-secondary-base) 60%);
+            @media only screen and (max-width: 560px) {
+                font-size: 10px;
+            }
+            @media only screen and (max-width: 430px) {
+                font-size: 8px;
+            }
         }
     }
 }

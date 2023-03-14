@@ -9,6 +9,7 @@
             bottom
             right
             color="primary"
+            :small="$vuetify.breakpoint.xs ? true : false"
             @click="toTop"
         >
             <v-icon>mdi-arrow-up</v-icon>

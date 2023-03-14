@@ -45,25 +45,24 @@
                                     no-gutters
                                 >
                                     <v-col
-                                        cols="3"
+                                        cols="12" sm="3" md="3" lg="3" xl="3"
                                     >
-                                        <!-- <v-form> -->
                                         <div
                                             class="d-flex justify-center"
                                         >
-                                        <!-- TODO avatarComponentsに集約できるか検証必要 -->
                                             <div class="mt-15">
                                                 <div v-if="preview.url">
                                                     <AvatarImg
                                                         :avatar-url="preview.url"
                                                         :size="48"
+                                                        :xs-size="48"
                                                     />
                                                 </div>
-                                                <!-- class="align-self-center" -->
                                                 <div v-else>
                                                     <AvatarImg
                                                         :avatar-url="avatar.url"
                                                         :size="48"
+                                                        :xs-size="48"
                                                     />
                                                 </div>
                                             </div>
@@ -106,13 +105,10 @@
                                                 画像変更
                                             </v-btn>
                                         </div>
-                                        <!-- </v-form> -->
                                     </v-col>
                                     <v-col
-                                        cols="9"
+                                        cols="12" sm="9" md="9" lg="9" xl="9"
                                     >
-                                        <!-- v-model="nickname" -->
-                                        <!-- :rules="nameRules" -->
                                         <v-text-field
                                             v-model="user.nickname"
                                             :counter="20"
@@ -131,8 +127,6 @@
                                         </v-textarea>
                                     </v-col>
                                 </v-row>
-                                <!-- :rules="emailRules" -->
-                                <!-- v-model="email" -->
                                 <div class="mt-8" />
                                 <v-card
                                     max-width="400"
@@ -141,9 +135,6 @@
                                     flat
                                 >
                                     <div class="mb-8">
-                                        <!-- <div class="mb-6">
-                                            Active picker: <code>{{ activePicker || 'null' }}</code>
-                                        </div> -->
                                         <v-menu
                                             ref="menu"
                                             v-model="menu"
@@ -153,8 +144,6 @@
                                             min-width="auto"
                                         >
                                             <template #activator="{ on, attrs }">
-                                                <!-- v-model="date" -->
-                                                <!-- :value="birthday" -->
                                                 <v-text-field
                                                     v-model="user.birthday"
                                                     label="Birthday date"
@@ -165,7 +154,6 @@
                                                 >
                                                 </v-text-field>
                                             </template>
-                                            <!-- v-model="date" -->
                                             <v-date-picker
                                                 v-model="user.birthday"
                                                 :active-picker.sync="activePicker"
@@ -180,7 +168,6 @@
                                 <div
                                     class="d-flex justify-end"
                                 >
-                                <!-- :disabled="!valid" -->
                                     <v-btn
                                         dark
                                         color="primary"
@@ -216,7 +203,6 @@
                                 <div
                                     class="d-flex justify-end"
                                 >
-                                <!-- :disabled="!valid" -->
                                     <v-btn
                                         dark
                                         color="primary"
@@ -268,11 +254,6 @@
                 </v-tab-item>
             </v-tabs-items>
         </v-card>
-
-        <!-- <p>{{ user }}</p>
-        <p>{{ 'email =>'  + email }}</p> -->
-
-        <!-- <v-form v-model="valid"> -->
     </v-container>
 </template>
 
@@ -290,11 +271,8 @@ export default {
         AvatarImg,
     },
     async asyncData({ $axios, store}) {
-        // const editUser = store.getters['modules/user/getEditUser']
         const res = await $axios.$get('/api/v1/users/edit')
-        // await $axios.$get(`api/v1/users/`)
         console.log(res)
-        // store.dispatch('modules/user/getEditUser', res)
         return {
             user: {
                 id: res.id,
@@ -304,13 +282,11 @@ export default {
             },
             avatar: res.avatar,
             email: res.email,
-            // password: res.password,
         }
     },
     data() {
         return {
             tab: null,
-            // date: null,
             activePicker: null,
             menu: false,
             user: {
@@ -324,7 +300,6 @@ export default {
             password: '',
             passwordAgain: '',
             preview: {
-                // url: '',
                 img: {},
                 flg: false,
                 url: ''
@@ -336,10 +311,8 @@ export default {
     computed: {
         ...mapGetters({
             currentUser: 'modules/user/getUser',
-            // editUser: 'modules/user/getEditUser',
         }),
         dateFormat() {
-            // date => birthday
             return (birthday) => {
                 const dateTimeFormat = new Intl.DateTimeFormat(
                     'ja', { dateStyle: 'medium', timeStyle: 'short'}
@@ -362,7 +335,6 @@ export default {
             console.log(this.user)
             await this.$axios.$patch('/api/v1/users', this.user )
                 .then(res => {
-                    // console.log(res)
                     this.$store.dispatch('modules/user/getCurrentUser', {
                         id: this.currentUser.id,
                         nickname: this.user.nickname,
@@ -370,10 +342,6 @@ export default {
                         admin: this.currentUser.admin,
                         sub: this.currentUser.sub,
                     })
-                    // const status = true
-                    // const msg = 'プロフィールを更新しました'
-                    // const color = 'info'
-                    // this.$store.dispatch('modules/toast/getToast', { status, msg, color })
                     this.$store.dispatch('modules/toast/getToast', {
                         status: true,
                         msg: 'プロフィールを更新しました',
@@ -393,7 +361,6 @@ export default {
                 msg: null,
                 color: null,
             })
-            // return this.$store.dispatch('modules/user/getEditUser', null)
         },
         async updateEmail() {
             const params = {
@@ -401,15 +368,9 @@ export default {
                     email: this.email,
                 }
             }
-            // console.log(this.email)
             await this.$axios.$patch('/api/v1/auth_token/update_email', params)
                 .then(res => {
-                    // console.log(res)
                     this.$auth.login(res)
-                    // const status = true
-                    // const msg = 'メールアドレスの更新しました'
-                    // const color = 'info'
-                    // this.$store.dispatch('modules/toast/getToast', { status, msg, color })
                     this.$store.dispatch('modules/toast/getToast', {
                         status: true,
                         msg: 'メールアドレスの更新しました',
@@ -418,10 +379,6 @@ export default {
                 })
                 .catch( err => {
                     console.log(err)
-                    // const status = true
-                    // const msg = 'メールアドレスの更新に失敗しました'
-                    // const color = 'error'
-                    // this.$store.dispatch('modules/toast/getToast', { status, msg, color })
                     this.$store.dispatch('modules/toast/getToast', {
                         status: true,
                         msg: 'メールアドレスの更新に失敗しました',
@@ -432,10 +389,6 @@ export default {
         async updatePassword() {
             const password = this.password
             if(password !== this.passwordAgain) {
-                // const status = true
-                // const msg = 'パスワードと確認用パスワードが一致しません'
-                // const color = 'error'
-                // return this.$store.dispatch('modules/toast/getToast', { status, msg, color })
                 return this.$store.dispatch('modules/toast/getToast', {
                     status: true,
                     msg: 'パスワードと確認用パスワードが一致しません',
@@ -451,10 +404,6 @@ export default {
                 .then(res => {
                     console.log(res)
                     this.$auth.login(res)
-                    // const status = true
-                    // const msg = 'パスワードの更新しました'
-                    // const color = 'info'
-                    // this.$store.dispatch('modules/toast/getToast', { status, msg, color })
                     this.$store.dispatch('modules/toast/getToast', {
                         status: true,
                         msg: 'パスワードの更新しました',
@@ -463,10 +412,6 @@ export default {
                 })
                 .catch( err => {
                     console.log(err)
-                    // const status = true
-                    // const msg = 'パスワードの更新に失敗しました'
-                    // const color = 'error'
-                    // this.$store.dispatch('modules/toast/getToast', { status, msg, color })
                     this.$store.dispatch('modules/toast/getToast', {
                         status: true,
                         msg: 'パスワードの更新に失敗しました',
@@ -490,14 +435,8 @@ export default {
             this.updateAvatarLoading = true
             const formData = new FormData()
             formData.append('user[avatar]', this.preview.img)
-            // const config = {
-            // header: {
-            //     "Content-Type": "multipart/form-data",
-            // }}
-            // await this.$axios.$patch('/api/v1/users/update_avatar', formData, config)
             await this.$axios.$patch('/api/v1/users/update_avatar', formData)
                 .then(res => {
-                    // console.log(res)
                     this.$store.dispatch('modules/user/getCurrentUser', {
                         id: this.currentUser.id,
                         nickname: this.currentUser.nickname,
@@ -507,9 +446,6 @@ export default {
 
                     })
                     this.avatar = res.avatar
-                    // const status = true
-                    // const msg = 'アイコンを更新しました'
-                    // const color = 'info'
                     this.preview.flg = false
                     this.preview.url = null
                     this.preview.img = {}
@@ -521,9 +457,6 @@ export default {
                 })
                 .catch( err => {
                     console.log(err)
-                    // const status = true
-                    // const msg = 'アイコンの更新に失敗しました'
-                    // const color = 'error'
                     this.$store.dispatch('modules/toast/getToast',{
                         status: true,
                         msg: 'アイコンの更新に失敗しました',

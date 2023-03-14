@@ -97,6 +97,20 @@ export const mutations = {
         state.otherUser = payload
     },
 
+    setFollowOtherUser(state) {
+        // console.log(state.user)
+        const result = state.otherUser
+        result.followers++
+        state.otherUser = result
+    },
+
+    setUnfollowOtherUser(state) {
+        // console.log(state.user)
+        const result = state.otherUser
+        result.followers--
+        state.otherUser = result
+    },
+
     setUserData(state, payload) {
         // console.log(state.user)
         state.userData = payload

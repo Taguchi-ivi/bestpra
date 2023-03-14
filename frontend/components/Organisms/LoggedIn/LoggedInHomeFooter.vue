@@ -17,17 +17,17 @@
                 class="accent text-center"
             >
                 <v-card-text>
-                <v-btn
-                    v-for="icon in icons"
-                    :key="icon.name "
-                    class="mx-4"
-                    icon
-                    :to="icon.path" nuxt
-                >
-                    <v-icon size="24px">
-                        {{ icon.name }}
-                    </v-icon>
-                </v-btn>
+                    <v-btn
+                        v-for="icon in icons"
+                        :key="icon.name "
+                        :class="$vuetify.breakpoint.xs ? 'mx-1' : 'mx-4'"
+                        icon
+                        :to="icon.path" nuxt
+                    >
+                        <v-icon size="24px">
+                            {{ icon.name }}
+                        </v-icon>
+                    </v-btn>
                 </v-card-text>
 
                 <v-divider></v-divider>

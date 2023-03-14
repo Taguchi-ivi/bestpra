@@ -15,7 +15,6 @@
                     <v-list-item-title>
                         <span v-if="notification.action === 'like'">いいね</span>
                         <span v-if="notification.action === 'comment'">コメント</span>
-                        されました
                     </v-list-item-title>
                     <v-list-item-subtitle
                         class="mt-3"
@@ -47,7 +46,7 @@
                     </div>
                 </div>
                 <div v-else-if="notification.action === 'follow'">
-                    <v-list-item-title>フォローされました</v-list-item-title>
+                    <v-list-item-title>フォロー</v-list-item-title>
                     <v-list-item-subtitle
                         class="mt-3"
                     >

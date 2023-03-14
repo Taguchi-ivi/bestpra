@@ -15,3 +15,13 @@ a {
     max-height: 90vh;
     // overflow: scroll;
 }
+
+// z-indexを指定
+.z-500 {
+    z-index: 500;
+}
+
+// headerの指定
+.v-toolbar__content {
+    z-index: 500;
+}

@@ -8,7 +8,7 @@
         <!-- <div v-if="avatar.url"> -->
         <div v-if="avatarUrl">
             <v-avatar
-                :size="size"
+                :size="$vuetify.breakpoint.xs ? xsSize : size"
             >
                 <img
                     :src="avatarUrl"
@@ -19,10 +19,10 @@
         <div v-else>
             <v-avatar
                 class="align-self-center"
-                :size="size"
+                :size="$vuetify.breakpoint.xs ? xsSize : size"
             >
                 <v-icon
-                    :size="size"
+                    :size="$vuetify.breakpoint.xs ? xsSize : size"
                 >
                     mdi-account-circle
                 </v-icon>
@@ -39,6 +39,10 @@ export default {
         size: {
             type: Number,
             default: 40
+        },
+        xsSize: {
+            type: Number,
+            default: 30
         },
         avatarUrl: {
             type: String,

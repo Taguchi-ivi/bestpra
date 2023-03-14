@@ -9,7 +9,7 @@
                 <v-col
                     v-for="(article, index) in likesArticle"
                     :key="index"
-                    cols="4"
+                    cols="12" sm="6" md="4" lg="4" xl="4"
                 >
                     <ArticleMain
                         :article="article"
@@ -32,11 +32,6 @@ export default {
         MainTitle,
         ArticleMain
     },
-    data() {
-        return {
-            error: false
-        }
-    },
     async asyncData({ $axios, params, store }) {
         const res = await $axios.$get(`/api/v1/users/${params.id}/likes`)
         if(res === 'bad_request') {
@@ -55,18 +50,11 @@ export default {
             error: false,
         }
     },
-    // async fetch({ $axios, params, store}) {
-    //     await $axios.$get(`/api/v1/users/${params.id}/likes`)
-    //         .then(res => {
-    //             // console.log('どう？', res)
-    //             const result = res.map(item => ( item.article))
-    //             store.dispatch('modules/article/getLikesArticle', result)
-
-    //         })
-    //         .catch(err => {
-    //             console.log(err)
-    //         })
-    // },
+    data() {
+        return {
+            error: false
+        }
+    },
     computed: {
         ...mapGetters({
             currentUser: 'modules/user/getUser',

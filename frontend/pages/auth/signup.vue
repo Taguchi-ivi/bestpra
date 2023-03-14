@@ -1,15 +1,6 @@
 <template>
     <user-form-card >
         <template #user-form-card-content>
-            <!-- <p v-if="errMsg">
-                <v-alert
-                    border="left"
-                    color="pink darken-1"
-                    dark
-                    >
-                    {{ errMsg }}
-                </v-alert>
-            </p> -->
             <v-form
                 ref="form"
                 v-model="isValid"
@@ -39,15 +30,6 @@
                 >
                     登録
                 </v-btn>
-                <!-- <v-btn
-                    class="white--text"
-                    color="blue"
-                    @click="testBtn"
-                >
-                    テスト
-                </v-btn> -->
-                <!-- {{ params.user }} -->
-                <!-- {{ users }} -->
             </v-form>
         </template>
     </user-form-card>
@@ -87,29 +69,17 @@ export default {
                 }
             },
             passwordAgain: '',
-            // users: {}
+        }
+    },
+    head(){
+        return {
+            title: 'Signup Page',
         }
     },
     methods: {
         ...mapActions({
             login: 'modules/user/login',
         }),
-        // testBtn() {
-            // const user = {
-            //     nickname: this.params.user.name,
-            //     email: this.params.user.email,
-            //     uid: 'aaaaaaaaaa'
-            // }
-            // this.$axios.post('/api/v1/users', { user })
-            //     .then(response => {
-            //             console.log(response)
-            //         })
-            // this.$axios.get('/api/v1/users')
-            //     .then(response => {
-            //         const users = response
-            //         return users
-            //     })
-        // },
         async formSignup() {
 
             const password = this.params.user.password
@@ -120,11 +90,6 @@ export default {
                 return this.$store.dispatch('modules/toast/getToast', { status, msg, color })
             }
             this.loading = true
-            // setTimeout(() => {
-            //     this.formReset()
-            //     this.loading = false
-
-            // }, 1500)
             if(this.isValid) {
                 await this.$axios.$post('/api/v1/auth_token', this.params)
                     .then((res) => {
@@ -141,8 +106,6 @@ export default {
                     })
             }
             this.loading = false
-            // console.log(this.params.user.email)
-            // console.log(this.params.user.password)
         },
         formReset() {
             this.loading = false

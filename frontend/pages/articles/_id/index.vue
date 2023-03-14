@@ -13,13 +13,6 @@
                     class="mx-auto pa-5"
                     elevation="2"
                 >
-                    <!-- <v-img
-                        :aspect-ratio="16/9"
-                        :src="currentArticleData.image.url"
-                        contain
-                        max-height="400"
-                    >
-                    </v-img> -->
                     <AppImg
                         :img-url="currentArticleData.image.url"
                     />
@@ -92,7 +85,6 @@
                                                 編集する
                                             </v-list-item-title>
                                         </v-list-item>
-                                        <!-- <v-divider /> -->
                                         <v-dialog
                                             v-model="dialog"
                                             max-width="290"
@@ -125,7 +117,6 @@
                                                 </v-card-text>
                                                 <v-card-actions>
                                                 <v-spacer />
-                                                <!-- color="green darken-1" -->
                                                 <v-btn
                                                     color="blue"
                                                     text
@@ -147,8 +138,12 @@
                                 </v-menu>
                             </div>
                         </div>
-                        <!-- <h1 class="mt-5 text-center">タイトルを表示</h1> -->
-                        <h1 class="mt-5 text-center">{{ currentArticleData.title }}</h1>
+                        <div
+                            class="mt-5 text-center"
+                            :class="$vuetify.breakpoint.xs ? 'text-h5' : 'text-h3'"
+                        >
+                            {{ currentArticleData.title }}
+                        </div>
                         <ArticleUserCardTag
                             :avatar-url="currentArticleData.user.avatar.url"
                             :user-nickname="currentArticleData.user.nickname"
@@ -156,22 +151,18 @@
                             :level="currentArticleData.level_list"
                             :tags="currentArticleData.tag_list"
                         />
-                        <!-- <p class="ml-2">{{ currentArticleData.user.nickname }}</p> -->
                         <div
-                            class="d-flex mt-5"
+                            :class="$vuetify.breakpoint.xs ? '' : 'd-flex'"
+                            class="mt-5"
                         >
-                            <p>作成日:{{ $my.dataFormat(currentArticleData.created_at) }}</p>
-                            <p class="ml-3">更新日:{{ $my.dataFormat(currentArticleData.updated_at) }}</p>
+                            <p class="mb-0">作成日:{{ $my.dataFormat(currentArticleData.created_at) }}</p>
+                            <p :class="$vuetify.breakpoint.xs ? '' : 'ml-3'">更新日:{{ $my.dataFormat(currentArticleData.updated_at) }}</p>
                         </div>
                         <div
                             class="mt-15"
                         >
                             <!-- eslint-disable-next-line vue/no-v-html -->
                             <div v-html="currentArticleData.content" />
-                            <!-- {{ text }} -->
-                            <!-- {{ currentArticleData }}
-                            {{ currentArticleData.user.id }} -->
-                            <!-- {{ currentArticleData.content }} -->
                         </div>
                     </v-card>
                 </v-card>
@@ -215,7 +206,6 @@
 
 <script>
 
-// import { mapActions, mapGetters } from 'vuex'
 import { mapGetters } from 'vuex'
 import AppImg from '~/components/Atom/App/AppNoImg.vue'
 import ErrorCard from '~/components/Molecules/ErrorCard.vue'
@@ -245,12 +235,10 @@ export default {
     },
     async fetch({ $axios, params, store }) {
         await $axios.$get(`/api/v1/articles/${params.id}`)
-        // await $axios.$get(`api/v1/users/`)
             .then(res => {
                 store.dispatch('modules/error/getErrorStatus', false)
                 store.dispatch('modules/article/getCurrentArticleData', res)
                 store.dispatch('modules/comment/getArticleComment', res.comments)
-                // store.dispatch('modules/like/getCurrentLike', res.likes)
 
             })
             .catch(err => {
@@ -263,19 +251,19 @@ export default {
                 })
             })
     },
+    head(){
+        return {
+            title: 'Article Show Page',
+        }
+    },
     computed: {
         ...mapGetters({
             currentArticleData: 'modules/article/getCurrentArticleData',
             currentUser: 'modules/user/getUser',
             articleComments: 'modules/comment/getArticleComment',
             error: 'modules/error/getErrorStatus',
-            // currentLike: 'modules/like/getCurrentLike',
         })
     },
-    // beforeDestroy () {
-    //     // Vueインスタンスが破棄される直前にVuexのtoast.msgを削除する(無期限toastに対応)
-    //     this.resetArticle()
-    // },
     methods: {
         resetArticle() {
 
@@ -285,11 +273,9 @@ export default {
         async articleDelete() {
             await this.$axios.$delete(`/api/v1/articles/${this.$route.params.id}`)
                 .then(res => {
-                    // console.log(res)
-                    // this.$auth.login(res)
-                    // const status = true
-                    // const msg = '削除が完了しました'
-                    // this.$store.dispatch('modules/toast/getToast', { status, msg })
+                    const status = true
+                    const msg = '削除が完了しました'
+                    this.$store.dispatch('modules/toast/getToast', { status, msg })
                     this.$router.push('/home/all')
                 })
                 .catch( err => {
@@ -339,26 +325,6 @@ export default {
                         })
                 })
         },
-        // like(articleId) {
-        //     this.$axios.$post(`/api/v1/articles/${articleId}/likes`)
-        //         .then(res => {
-        //             console.log(res)
-        //             this.$store.commit('modules/like/getCurrentLike', articleId)
-        //         })
-        //         .catch( err => {
-        //             console.log(err)
-        //         })
-        // },
-        // unlike(articleId) {
-        //     this.$axios.$delete(`/api/v1/articles/${articleId}/likes`)
-        //         .then(res => {
-        //             console.log(res)
-        //             this.$store.commit('modules/like/getCurrentLike', articleId)
-        //         })
-        //         .catch( err => {
-        //             console.log(err)
-        //         })
-        // },
 
     },
 };
