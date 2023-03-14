@@ -55,6 +55,10 @@ gem 'hirb-unicode-steakknife', '~> 0.0.9'
 # add
 # 画像を管理
 gem 'carrierwave', '~> 2.2', '>= 2.2.3'
+# gem 'fog-aws', '~> 0.7.6'
+# gem 'mime-types'
+gem 'mime-types'
+gem 'fog-aws'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

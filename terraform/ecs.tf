@@ -15,6 +15,14 @@ data "aws_ssm_parameter" "app_key" {
     name = "${local.ssm_parameter_store_base}/app_key"
 }
 
+data "aws_ssm_parameter" "access_key" {
+    name = "${local.ssm_parameter_store_base}/access_key"
+}
+
+data "aws_ssm_parameter" "secret_access_key" {
+    name = "${local.ssm_parameter_store_base}/secret_access_key"
+}
+
 
 ####################################################
 # ECS cluster
@@ -110,6 +118,14 @@ resource "aws_ecs_task_definition" "backend" {
                 {
                     name: "RAILS_MASTER_KEY"
                     valueFrom: data.aws_ssm_parameter.app_key.arn
+                },
+                {
+                    name: "AWS_ACCESS_KEY_ID"
+                    valueFrom: data.aws_ssm_parameter.access_key.arn
+                },
+                {
+                    name: "AWS_SECRET_ACCESS_KEY"
+                    valueFrom: data.aws_ssm_parameter.secret_access_key.arn
                 },
                 {
                     name: "DB_DATABASE"

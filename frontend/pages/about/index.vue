@@ -11,7 +11,7 @@
                 <div
                     class="my-12"
                 >
-                    <span>
+                    <span :class="$vuetify.breakpoint.xs ? '' : 'text-h5'">
                         あなたにあった練習が見つかる<br />
                         それがbestpra
                     </span>
@@ -288,7 +288,7 @@ import ArticleAbout from '~/components/Molecules/ArticleAbout.vue'
     }
     .main-container {
         position: absolute;
-        max-width: 300px;
+        max-width: 400px;
         top: 30%;
         left: 60%;
         transform: translate(-50%,-50%);
