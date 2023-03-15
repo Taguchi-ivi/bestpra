@@ -2,11 +2,6 @@
     <v-container
         fluid class="mt-16"
     >
-        <!-- <v-card
-            elevation="8"
-            class="mx-auto rounded-lg"
-            max-width="550"
-        > -->
 
         <v-row
             align="center"
@@ -38,12 +33,6 @@
 <script>
 
 export default {
-    // data ({ $route, $config: { appName } }) {
-    //     return {
-    //     appName,
-    //     pageTitle: this.$t(`pages.${$route.name}`)
-    //     }
-    // }
     data() {
         return {
             pageTitle: '会員登録'
