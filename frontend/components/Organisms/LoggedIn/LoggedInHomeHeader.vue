@@ -4,7 +4,6 @@
         class="z-500"
     >
         <slot name="navigation-toggle-button" />
-        <!-- <nuxt-link to="/about"> -->
         <nuxt-link to="/home/all">
             <v-img
                 :width="$vuetify.breakpoint.xs ? 35 : 50"
@@ -27,7 +26,6 @@
                 <template
                     #activator="{ on }"
                 >
-                    <!-- TODO switch -->
                     <v-badge
                         :value="activeBell()"
                         dot
@@ -47,7 +45,6 @@
                         </v-btn>
                     </v-badge>
                 </template>
-                <!-- three-line -->
                 <v-list
                 >
                 <div v-if="notificationHeader.length === 0">
@@ -62,18 +59,10 @@
                         v-for="(notification, index) in notificationHeader"
                         :key="index"
                     >
-                    <!-- TODO  ここから下いらない -->
-                    <!-- notification -->
-                    <!-- 配列の最後の要素だけdividerFlgをfalseに -->
                         <NotificationMain
                             header-flg
                             :notification="notification"
                         />
-                        <!-- :divider-flg="index + 1 !== notificationHeader.length" -->
-                        <!-- <v-list-item>
-                            {{notification}}
-                        </v-list-item> -->
-                        <!-- <v-divider /> -->
                     </div>
                     <v-list-item
                         class="pa-2"
@@ -125,7 +114,6 @@ export default {
     },
     methods: {
         activeBell() {
-            // return Object.values(this.notificationHeader).includes(true)
             for(const item of this.notificationHeader) {
                 if(Object.prototype.hasOwnProperty.call(item,'checked') && item.checked === false) {
                     return true

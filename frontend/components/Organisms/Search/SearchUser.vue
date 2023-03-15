@@ -72,7 +72,6 @@ export default {
         }),
         async search() {
             this.loading = true
-            // const users = await this.dispatchUsers(this.searchUser)
             await this.$axios.get('/api/v1/users/search', {
                 params: {
                     keyword: this.searchUser

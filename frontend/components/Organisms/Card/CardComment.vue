@@ -10,7 +10,6 @@
                 class="d-flex"
             >
                 <div>
-                    <!-- TODO 対象のidを付与する -->
                     <AvatarSwitch
                         :id="articleComment.user.id"
                         :avatar-url="articleComment.user.avatar.url"
@@ -76,7 +75,6 @@
                                     </v-card-text>
                                     <v-card-actions>
                                         <v-spacer />
-                                        <!-- color="green darken-1" -->
                                         <v-btn
                                             color="blue"
                                             text
@@ -84,7 +82,6 @@
                                         >
                                             キャンセル
                                         </v-btn>
-                                        <!-- :data-id="articleComment.id" -->
                                         <v-btn
                                             color="red"
                                             text
@@ -105,7 +102,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import AvatarSwitch from '~/components/Molecules/AvatarSwitch.vue'
 
 export default {
@@ -125,23 +122,20 @@ export default {
         })
     },
     methods: {
-        // async commentDelete(event) {
-        commentDelete(commentId) {
-            // TODO これがうまくいっていたら別の部分でも
+        ...mapMutations({
+            commitDeleteArticleComment: 'modules/comment/setDeleteArticleComment'
+        }),
+        async commentDelete(commentId) {
             console.log('commentのIDになっていますか？', commentId)
             // await this.$axios.$delete(`/api/v1/articles/${this.articleComments[0].article_id}/comments/${commentId}`)
-            //     .then(res => {
-            //         // const articleCommentNew = this.articleComments.filter(comment => comment.id !== articleComments[0].id)
-            //         this.$store.commit('modules/comment/setDeleteArticleComment', commentId)
-            //         this.$store.dispatch('modules/toast/getToast', {
-            //             status: true,
-            //             msg: 'コメントを削除しました',
-            //             color: 'success'
-            //         })
-            //     })
-            //     .catch(err => {
-            //         console.log(err)
-            //     })
+            await this.$axios.$delete(`/api/v1/articles/${this.$route.params.id}/comments/${commentId}`)
+                .then(res => {
+                    this.commitDeleteArticleComment(commentId)
+                    this.$my.dispatchToast(true, 'コメントを削除しました', 'success')
+                })
+                .catch(err => {
+                    console.log(err)
+                })
             this.dialog = false
         }
     }
