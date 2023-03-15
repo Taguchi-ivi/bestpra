@@ -353,7 +353,7 @@ export default {
             dispatchCurrentUser: 'modules/user/getCurrentUser',
         }),
         async updateProfile() {
-            if(!this.isValidProfile || !this.user.nickname) {
+            if( !this.isValidProfile || !this.user.nickname) {
                 this.dispatchToast({
                         status: true,
                         msg: 'ニックネームは必須です',

@@ -150,13 +150,14 @@ export default {
         async updateArticle() {
             if(!this.isValid || !this.text) {
                 this.$vuetify.goTo(0)
-                return this.$store.dispatch('modules/toast/getToast', {
+                return this.dispatchToast({
                         status: true,
                         msg: 'タイトル・ラベル・内容は必須です',
                         color: 'error'
-                    })
+                })
             }
             this.loading = true
+
             const formData = new FormData()
             formData.append('article[title]', this.title)
             formData.append('article[level]', this.level.id)
@@ -169,19 +170,11 @@ export default {
                 .then((res) => {
                     console.log(res)
                     this.$router.push('/articles/' + res.id)
-                    this.$store.dispatch('modules/toast/getToast', {
-                        status: true,
-                        msg: '素敵な練習メニュをありがとう!!',
-                        color: 'success',
-                    })
+                    this.$my.dispatchToast(true, '素敵な練習メニュをありがとう!!', 'success')
                 })
                 .catch((err) => {
                     console.log(err)
-                    this.$store.dispatch('modules/toast/getToast', {
-                        status: true,
-                        msg: '更新に失敗しました',
-                        color: 'error'
-                    })
+                    this.$my.dispatchToast(true, '更新に失敗しました', 'error')
                 })
             this.loading = false
         }

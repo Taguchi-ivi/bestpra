@@ -101,7 +101,6 @@ export default {
     },
     methods: {
         ...mapActions({
-            dispatchToast: 'modules/toast/getToast',
             dispatchCurrentUser: 'modules/user/getCurrentUser',
         }),
         ...mapMutations({
@@ -135,11 +134,7 @@ export default {
         async createArticle() {
             if(!this.isValid || !this.text) {
                 this.$vuetify.goTo(0)
-                return this.$store.dispatch('modules/toast/getToast', {
-                        status: true,
-                        msg: 'タイトル・ラベル・内容は必須です',
-                        color: 'error'
-                    })
+                return this.$my.dispatchToast(true, 'タイトル・ラベル・内容は必須です', 'error')
             }
             this.loading = true
             const formData = new FormData()
@@ -156,20 +151,12 @@ export default {
                         id: res.id,
                         likes: []
                     })
-                    this.$store.dispatch('modules/toast/getToast', {
-                        status: true,
-                        msg: '素敵な練習メニュをありがとう!!',
-                        color: 'success',
-                    })
+                    this.$my.dispatchToast(true, '素敵な練習メニュをありがとう!!', 'success')
                     this.$router.push('/articles/' + res.id)
                 })
                 .catch((err) => {
                     console.log(err)
-                    this.$store.dispatch('modules/toast/getToast', {
-                        status: true,
-                        msg: '新規作成に失敗しました',
-                        color: 'error'
-                    })
+                    this.$my.dispatchToast(true, '作成に失敗しました', 'error')
                 })
             this.loading = false
         }

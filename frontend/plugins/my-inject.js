@@ -122,6 +122,14 @@ class MyInject {
         const followingUsers = this.store.getters['modules/follow/getCurrentFollow'] || []
         return followingUsers.includes(userId)
     }
+
+    dispatchToast(status, msg, color) {
+        this.store.dispatch('modules/toast/getToast', {
+            status,
+            msg,
+            color
+        })
+    }
 }
 
 // inject => オリジナルクラスを追加することができる
