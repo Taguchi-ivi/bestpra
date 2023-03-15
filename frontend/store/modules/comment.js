@@ -30,13 +30,10 @@ export const actions = {
             user_id: 0,
         }])
     }
-
 }
 
 export const mutations = {
-
     setArticleComment (state, payload) {
-        console.log('mutationsのこれは何？', payload)
         state.articleComment = payload
     },
 

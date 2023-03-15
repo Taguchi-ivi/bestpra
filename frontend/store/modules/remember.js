@@ -1,5 +1,4 @@
-// 作成したが、直接urlを叩くとリロードが走ってこのvuexが意味のないものになってしまう可能性を加味して
-// 一度qeryに集約
+// 一度queryに集約
 export const state = () => ({
     rememberPath: {
         name: 'home',
@@ -35,7 +34,6 @@ export const actions = {
 
 export const mutations = {
     setRememberPath( state, payload) {
-        console.log('mutationsのremember', payload)
         state.rememberPath = payload
     }
 }

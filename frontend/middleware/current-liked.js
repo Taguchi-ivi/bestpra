@@ -8,7 +8,6 @@ export default async ({ $auth, store, $axios }) => {
         if (currentLiked.includes('nothing') || allLiked.includes('nothing')) {
             await $axios.$get('/api/v1/articles/current_liked')
                 .then((res => {
-                    // console.log('返却データhello',res)
                     store.commit('modules/like/setCurrentLike', res.currentLiked)
                     const result = res.likes.map(article => ({id: article.id, likes: article.likes}))
                     store.commit('modules/like/setAllLike', result)

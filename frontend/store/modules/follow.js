@@ -16,19 +16,16 @@ export const getters = {
 
 export const actions = {
     getCurrentFollow({ commit }, currentFollow ) {
-        // errorStatus = errorStatus || false
         commit('setErrorStatus', currentFollow )
     },
 
     getOtherFollower({ commit }, otherFollower ) {
         commit('setOtherFollower', otherFollower )
     }
-
 }
 
 
 export const mutations = {
-
     setCurrentFollow (state, payload) {
         state.currentFollow = payload
     },

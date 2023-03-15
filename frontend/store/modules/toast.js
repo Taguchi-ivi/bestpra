@@ -20,14 +20,11 @@ export const actions = {
         timeout = timeout || 4000
         commit('setToast', { status, msg, color, timeout })
     }
-
 }
 
 
 export const mutations = {
-
     setToast (state, payload) {
-        console.log('mutationsのこれは何？', payload)
         state.toast = payload
     }
 }

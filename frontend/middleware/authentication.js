@@ -1,7 +1,6 @@
 
 
-// ログイン済みではないとページの対応
-// middleware: ['authentication'],
+// ログイン済みではないユーザーのリダイレクト処理
 export default async ({ $auth, store, route, redirect }) => {
     // リダイレクトを必要としないパス
     // const notRedirectPaths = ['about', 'project', 'users-1']
@@ -15,17 +14,12 @@ export default async ({ $auth, store, route, redirect }) => {
         // ユーザー以外の値が存在する可能性があるので全てを削除する
         await $auth.logout()
 
+        const status = true
         const msg = 'まずはログインしてください'
         const color = 'info'
-        // const color = 'error'
-        const status = true
 
         redirect(`/auth/signin?redirect=${route.fullPath}`)
         // トースター出力
         store.dispatch('modules/toast/getToast', { status, msg, color })
-        // アクセスルート記憶
-        // store.dispatch('modules/remember/getRememberPath', route)
-        // return redirect('/auth/signin')
-        // return redirect(`/auth/signin?redirect=${route.fullPath}`)
     }
 }

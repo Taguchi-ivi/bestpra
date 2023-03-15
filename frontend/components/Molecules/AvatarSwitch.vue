@@ -172,7 +172,7 @@ export default {
             on: false,
             dialog: false,
             Menus: [
-                { title: 'アカウント', name: '編集', icon: 'mdi-account-cog', divider: true, path: '/users/edit' },
+                { title: '練習メニュー', name: '投稿する', icon: 'mdi-pencil', divider: true, path: '/articles/new' },
                 { title: '探す', name: '検索', icon: 'mdi-magnify', divider: true, path: '/search' },
                 { title: '', name: 'ラベル', icon: 'mdi-label', divider: false, path: '/levels/0' },
                 { title: '', name: 'タグ', icon: 'mdi-tag-multiple', divider: false, path: '/tags/0' },

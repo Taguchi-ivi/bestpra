@@ -15,27 +15,21 @@ export const getters = {
 
 export const actions = {
     getNotifications({ commit }, notifications ) {
-        // errorStatus = errorStatus || false
         commit('setNotifications', notifications )
     },
 
     getNotificationHeader({ commit }, notificationHeader ) {
-        // errorStatus = errorStatus || false
         commit('setNotificationHeader', notificationHeader )
     },
-
 }
 
 
 export const mutations = {
-
     setNotifications (state, payload) {
-        // console.log('mutationsのこれは何？', payload)
         state.notifications = payload
     },
 
     setNotificationsUpdate (state, payload) {
-        // console.log('mutationsのこれは何？', payload)
         const id = Number(payload)
         const result = state.notifications.map(notification => {
             if (notification.id === id) {
@@ -47,7 +41,6 @@ export const mutations = {
     },
 
     setNotificationsAllUpdate (state) {
-        // console.log('mutationsのこれは何？', payload)¥
         const result = state.notifications.map(notification => {
                 notification.checked = true
                 return notification
@@ -57,12 +50,10 @@ export const mutations = {
 
 
     setNotificationHeader (state, payload) {
-        // console.log('mutationsのこれは何？', payload)
         state.notificationHeader = payload
     },
 
     setNotificationHeaderUpdate (state, payload) {
-        // console.log('mutationsのこれは何？', payload)
         const id = Number(payload)
         const result = state.notificationHeader.map(notificationHeader => {
             if (notificationHeader.id === id) {
@@ -74,7 +65,6 @@ export const mutations = {
     },
 
     setNotificationHeaderAllUpdate (state) {
-        // console.log('mutationsのこれは何？', payload)
         const result = state.notificationHeader.map(notificationHeader => {
             notificationHeader.checked = true
             return notificationHeader

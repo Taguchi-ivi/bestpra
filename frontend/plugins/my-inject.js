@@ -30,11 +30,6 @@ class MyInject {
         return dateTimeFormat.format(new Date(dateStr))
     }
 
-    // プロジェクトリンク
-    projectLnkTo(id, name = 'project-id-dashboard') {
-        return { name, params: { id } }
-    }
-
     // apiのエラーハンドリング
     apiErrorHandler(response) {
         // ネットワークエラーの場合はresponseが存在しないので500を代入
@@ -59,17 +54,6 @@ class MyInject {
         return currentLiked.includes(articleId)
     }
 
-    // いいねの件数を取得
-    // likeCount(articleId) {
-    //     const AllLike = this.store.getters['modules/like/getAllLike'] || []
-    //     if(AllLike.find(like => like.articleId === articleId)) {
-    //         return AllLike.find(like => like.articleId === articleId).likeCount
-    //     } else {
-    //         return 0
-    //     }
-    //     // return AllLike.find(like => like.id === articleId).likes.length
-    // }
-
     // いいねの処理
     async createLike(article, cardFlg) {
         await this.$axios.$post(`/api/v1/articles/${article.id}/like`)
@@ -93,7 +77,6 @@ class MyInject {
         await this.$axios.$delete(`/api/v1/articles/${article.id}/like`)
             .then(res => {
                 this.store.commit('modules/like/setDeleteCurrentLike', article.id)
-                // this.store.commit('modules/like/setDeleteLikesArticle', article.id)
                 if(cardFlg) {
                     this.store.commit('modules/like/setDownAllLike', {
                             articleId: article.id,
@@ -112,8 +95,6 @@ class MyInject {
 
     // current_userか判定
     isCurrentUser(userId) {
-        // console.log('userId', userId)
-        // console.log('userId', this.user.id)
         return Number(userId) === this.user.id
     }
 

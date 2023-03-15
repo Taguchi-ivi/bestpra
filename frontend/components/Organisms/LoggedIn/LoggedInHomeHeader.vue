@@ -48,9 +48,13 @@
                 <v-list
                 >
                 <div v-if="notificationHeader.length === 0">
-                    <v-list-item>
-                        <v-list-item-content>
-                            また通知はありません
+                    <v-list-item
+                        class="pa-2"
+                    >
+                        <v-list-item-content
+                            class="text-center"
+                        >
+                            まだ通知はありません
                         </v-list-item-content>
                     </v-list-item>
                 </div>
@@ -68,14 +72,14 @@
                         class="pa-2"
                         :to="`/users/${$auth.user.id}/notifications`" nuxt
                     >
-                    <div
-                        class="mx-auto"
-                    >
-                        通知一覧へ
-                        <v-icon>
-                            mdi-chevron-double-right
-                        </v-icon>
-                    </div>
+                        <div
+                            class="mx-auto"
+                        >
+                            通知一覧へ
+                            <v-icon>
+                                mdi-chevron-double-right
+                            </v-icon>
+                        </div>
                     </v-list-item>
                 </div>
                 </v-list>

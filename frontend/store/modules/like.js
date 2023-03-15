@@ -26,7 +26,6 @@ export const actions = {
 
 
 export const mutations = {
-
     // indexのLikeを管理
     setAllLike (state, payload) {
         state.allLike = payload
@@ -67,12 +66,10 @@ export const mutations = {
 
     // 自身のLikeを管理
     setCurrentLike (state, payload) {
-        // console.log('mutationsのこれは何？', payload)
         state.currentLiked = payload
     },
 
     setCreateCurrentLike (state, payload) {
-        // state.currentLike = payload
         state.currentLiked.push(Number(payload))
     },
 
@@ -81,5 +78,4 @@ export const mutations = {
         const result = state.currentLiked.filter(currentLiked => currentLiked !== currentLikeId)
         state.currentLiked = result
     },
-
 }
