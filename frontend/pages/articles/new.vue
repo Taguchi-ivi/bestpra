@@ -68,6 +68,7 @@
 </template>
 
 <script>
+import { mapActions, mapMutations } from 'vuex'
 import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 import ArticleTitle from '~/components/Atom/Article/ArticleTitle.vue'
 import ArticleLevel from '~/components/Atom/Article/ArticleLevel.vue'
@@ -99,6 +100,13 @@ export default {
         }
     },
     methods: {
+        ...mapActions({
+            dispatchToast: 'modules/toast/getToast',
+            dispatchCurrentUser: 'modules/user/getCurrentUser',
+        }),
+        ...mapMutations({
+            commitAllLike: 'modules/like/setAddAllLike',
+        }),
         fileClick() {
             this.imageUrl = window.URL.createObjectURL(this.selectFile)
         },
@@ -144,6 +152,10 @@ export default {
             formData.append('article[tag_list]', appendChips)
             await this.$axios.$post('/api/v1/articles', formData )
                 .then((res) => {
+                    this.commitAllLike({
+                        id: res.id,
+                        likes: []
+                    })
                     this.$store.dispatch('modules/toast/getToast', {
                         status: true,
                         msg: '素敵な練習メニュをありがとう!!',

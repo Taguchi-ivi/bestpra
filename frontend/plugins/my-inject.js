@@ -60,10 +60,15 @@ class MyInject {
     }
 
     // いいねの件数を取得
-    likeCount(articleId) {
-        const AllLike = this.store.getters['modules/like/getAllLike'] || []
-        return AllLike.find(like => like.id === articleId).likes.length
-    }
+    // likeCount(articleId) {
+    //     const AllLike = this.store.getters['modules/like/getAllLike'] || []
+    //     if(AllLike.find(like => like.articleId === articleId)) {
+    //         return AllLike.find(like => like.articleId === articleId).likeCount
+    //     } else {
+    //         return 0
+    //     }
+    //     // return AllLike.find(like => like.id === articleId).likes.length
+    // }
 
     // いいねの処理
     async createLike(article, cardFlg) {
@@ -72,7 +77,7 @@ class MyInject {
                 this.store.commit('modules/like/setCreateCurrentLike', article.id)
                 // this.store.commit('modules/like/setCreateLikesArticle', article)
                 if(cardFlg) {
-                    this.store.commit('modules/like/setCreateAllLike', {
+                    this.store.commit('modules/like/setUpAllLike', {
                             articleId: article.id,
                             userId: this.user.id,
                     })
@@ -90,7 +95,7 @@ class MyInject {
                 this.store.commit('modules/like/setDeleteCurrentLike', article.id)
                 // this.store.commit('modules/like/setDeleteLikesArticle', article.id)
                 if(cardFlg) {
-                    this.store.commit('modules/like/setDeleteAllLike', {
+                    this.store.commit('modules/like/setDownAllLike', {
                             articleId: article.id,
                             userId: this.user.id,
                     })

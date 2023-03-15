@@ -44,7 +44,18 @@ export const mutations = {
         state.allLike = payload
     },
 
-    setCreateAllLike (state, { articleId, userId }) {
+    // Likeに記事を追加
+    setAddAllLike (state, payload) {
+        state.allLike.unshift(payload)
+    },
+
+    // Likeの記事を削除
+    setDelAllLike (state, payload) {
+        state.allLike.unshift(payload)
+    },
+
+    // Likeの件数を増やす
+    setUpAllLike (state, { articleId, userId }) {
         const result = state.allLike.map(d => {
             if (d.id === articleId) {
                 d.likes.push({ user_id: userId })
@@ -54,7 +65,8 @@ export const mutations = {
         state.allLike = result
     },
 
-    setDeleteAllLike (state, { articleId, userId }) {
+    // Likeの件数を減らす
+    setDownAllLike (state, { articleId, userId }) {
         const result = state.allLike.map(d => {
             if (d.id === articleId) {
                 d.likes = d.likes.filter(like => like.user_id !== userId)
