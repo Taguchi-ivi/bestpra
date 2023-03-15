@@ -1,9 +1,4 @@
 <template>
-    <!-- :max-height="cardFlg ? 400 : 400" -->
-    <!-- :aspect-ratio="16/9" -->
-    <!-- contain -->
-    <!-- max-height="400"
-    width="100%" -->
     <div>
         <div v-if="cardFlg">
             <div class="item">
@@ -41,10 +36,6 @@ export default {
             type: Boolean,
             default: false
         },
-        // previewFlg: {
-        //     type: Boolean,
-        //     default: false
-        // }
     },
     data() {
         return {

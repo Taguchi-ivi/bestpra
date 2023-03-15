@@ -1,12 +1,10 @@
 <template>
-    <!-- TODO コンポーネント化 -->
     <v-card
         max-width="200"
         flat
         color="transparent"
         class="ml-auto"
     >
-    <!-- :rules="rules" -->
         <v-select
             v-model="setLevel"
             :items="levelItem"

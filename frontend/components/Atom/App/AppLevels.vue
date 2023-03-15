@@ -31,7 +31,6 @@
                             <v-icon left>
                                 mdi-label
                             </v-icon>
-                            <!-- 大学生以上 -->
                             {{ level.name }}
                         </v-chip>
                     </div>
@@ -50,7 +49,6 @@
                             <v-icon left>
                                 mdi-label
                             </v-icon>
-                            <!-- 大学生以上 -->
                             {{ level.name }}
                         </v-chip>
                     </div>

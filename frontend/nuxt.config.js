@@ -13,15 +13,6 @@ export default {
 
   // env: envSet,
   env: {
-    // ApiKey: process.env.FIREBASE_API_KEY,
-    // authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-    // projectId: process.env.FIREBASE_PROJECTID,
-    // storageBucket: process.env.FIREBASE_STORAGEBUCKET,
-    // messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID,
-    // appId: process.env.FIREBASE_APPID,
-    // measurementId: process.env.FIREBASE_MEASUREMENTID
-    // privateKey: process.env.FIREBASE_PRIVATE_KEY,
-    // clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
 
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -124,11 +115,12 @@ export default {
           primary: '#3F51B5',   // #EDF6E5
           accent: '#F38BA0',
           secondary: '#FFBCBC',
-          info: '#B5EAEA',
           imgBlue: '#6871fc',
+          info: '#03A9F4',  //#B5EAEA
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
-          success: colors.green.accent3,
+          success: '#4CAF50'
+          // success: colors.green.accent3,
         },
       },
       options: { customProperties: true , variations: false},

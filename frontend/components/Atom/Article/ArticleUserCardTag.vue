@@ -42,7 +42,6 @@
                     <v-icon left>
                         mdi-label
                     </v-icon>
-                    <!-- 大学生以上 -->
                     {{ level.name }}
                 </v-chip>
             </div>
@@ -55,7 +54,6 @@
                     <v-icon>
                         mdi-tag-multiple
                     </v-icon>
-                    <!-- TODO propsで受け取れるようにする -->
                     <v-chip
                         v-for="tag in limitCount(tags)"
                         :key="tag.id"
@@ -101,15 +99,9 @@ export default {
             type: Object,
             default: () => ({}),
         },
-        // TODO tag情報を受け取れるようにする
         tags: {
             type: Array,
             default: () => [],
-        }
-    },
-    data() {
-        return {
-            // avatarUrl: '',
         }
     },
     methods: {

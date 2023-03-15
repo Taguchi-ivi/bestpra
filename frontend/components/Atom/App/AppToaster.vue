@@ -38,7 +38,6 @@ export default {
             toast: 'modules/toast/getToast'
         }),
         setSnackbar: {
-            // Vuexのtoastオブジェクトのstatus参照
             get () { return this.toast.status },
             // (val)にはfalseが返ってくる（Vuetifyのv-snackbarの仕様）
             // set()内で return false を行うと、トースターが閉じる
@@ -53,11 +52,7 @@ export default {
     methods: {
         // Vuexのtoast.msgの値を変更する
         resetToast () {
-            return this.$store.dispatch('modules/toast/getToast', {
-                status: false,
-                msg: null,
-                color: null,
-            })
+            return this.$my.dispatchToast(false, null, null)
         }
     }
 }
