@@ -88,7 +88,8 @@ class Api::V1::UsersController < ApplicationController
         if current_user.update(user_params)
             render status: :ok
         else
-            render status: :bad_request
+            # render status: :bad_request
+            render json: { errors: current_user.errors }, status: :unprocessable_entity
         end
     end
 
