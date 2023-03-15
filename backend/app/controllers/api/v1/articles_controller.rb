@@ -117,11 +117,11 @@ class Api::V1::ArticlesController < ApplicationController
     def edit
 
         return render json: :bad_request unless Article.exists?(id: params[:id])
-        @article = Article.find(params[:id])
-        return render json: :bad_request unless @article.user_id == current_user.id
+        article = Article.find(params[:id])
+        return render json: :bad_request unless article.user_id == current_user.id
 
         # render json:  @article.as_json(), status: :ok
-        render json:  @article.as_json(include: [
+        render json:  article.as_json(include: [
                                 {tag_list: { only: [:name]}}
                                 ]), status: :ok
     end
@@ -129,8 +129,8 @@ class Api::V1::ArticlesController < ApplicationController
     def update
         render json: :bad_request if current_user_for_article
 
-        @article = current_user.articles.find(params[:id])
-        if @article.update!(article_params)
+        article = current_user.articles.find(params[:id])
+        if article.update!(article_params)
 
             # 人が多くなったら不要になったタグを削除する ※ロジックの記載場所は考えること
             # old_tag_list = @article.tag_list
@@ -139,27 +139,28 @@ class Api::V1::ArticlesController < ApplicationController
             # タグ情報も作成する
             # new_tag_list = params[:article][:tags].split(',')
             new_tag_list = params[:article][:tag_list].split(',')
-            @article.delete_tag_map
-            @article.save_tags(new_tag_list) unless new_tag_list.empty?
-            render json: @article
+            article.delete_tag_map
+            article.save_tags(new_tag_list) unless new_tag_list.empty?
+            render json: article
         else
-            render json: @article.errors.full_messages
+            render json: article.errors.full_messages
         end
     end
 
     def create
         # @article = current_user.articles.build(article_params)
         # tag情報も作成する
-        @article = current_user.articles.build(article_params)
-        if @article.save!
+        article = current_user.articles.build(article_params)
+        if article.save!
 
             # タグ情報も作成する
             tag_list = params[:article][:tag_list].split(',')
-            @article.save_tags(tag_list) unless tag_list.empty?
+            article.save_tags(tag_list) unless tag_list.empty?
 
-            render json: @article
+            render json: article
         else
-            render json: @article.errors.full_messages
+            # render json: @article.errors.full_messages
+            render json: { errors: article.errors.full_messages }, status: :unprocessable_entity
         end
     end
 

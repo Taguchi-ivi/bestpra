@@ -3,7 +3,7 @@
         <MainTitle title="練習メニュ作成" />
         <v-form
             ref="form"
-            v-model="valid"
+            v-model="isValid"
         >
             <v-card
                 width="100%"
@@ -51,13 +51,13 @@
                 />
             </v-card>
             <div
-                class="mt-5 d-flex justify-end"
+                class="mt-5 text-right"
             >
                 <v-btn
-                    :disabled="!valid"
+                    :disabled="!isValid || loading"
                     :loading="loading"
                     color="primary"
-                    dark
+                    class="white--text"
                     @click="createArticle"
                 >
                     投稿
@@ -83,7 +83,7 @@ export default {
     },
     data() {
         return {
-            valid: true,
+            isValid: false,
             level: {},
             title: '',
             imageUrl: '',
@@ -125,6 +125,14 @@ export default {
             })
         },
         async createArticle() {
+            if(!this.isValid || !this.text) {
+                this.$vuetify.goTo(0)
+                return this.$store.dispatch('modules/toast/getToast', {
+                        status: true,
+                        msg: 'タイトル・ラベル・内容は必須です',
+                        color: 'error'
+                    })
+            }
             this.loading = true
             const formData = new FormData()
             formData.append('article[title]', this.title)

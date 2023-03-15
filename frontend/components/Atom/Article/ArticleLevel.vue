@@ -6,6 +6,7 @@
         color="transparent"
         class="ml-auto"
     >
+    <!-- :rules="rules" -->
         <v-select
             v-model="setLevel"
             :items="levelItem"
@@ -14,11 +15,12 @@
             class="mb-10"
             menu-props="auto"
             label="対象者を選択"
-            hide-details
             prepend-icon="mdi-label"
             single-line
             chips
             placeholder="対象者を選択してください"
+            :rules="rules"
+            required
             return-object
         >
         </v-select>
@@ -36,8 +38,19 @@ export default {
     },
     data() {
         return {
-            levelItem: []
+            levelItem: [],
+            rules: [
+                // 入力必須
+                // v => 正しい式 || 'エラーメッセージ'
+                v => Object.keys(v).length > 0 || ''
+            ]
         }
+    },
+    computed: {
+        setLevel: {
+            get() { return this.level },
+            set(newVal) { this.$emit('update:level', newVal) }
+        },
     },
     async mounted() {
         await this.$axios.$get('/api/v1/level_lists')
@@ -49,12 +62,6 @@ export default {
                 console.log(err)
             })
     },
-    computed: {
-        setLevel: {
-            get() { return this.level },
-            set(newVal) { this.$emit('update:level', newVal) }
-        },
-    }
 }
 
 </script>

@@ -11,7 +11,7 @@
                 <MainTitle title="練習メニュ編集" />
                 <v-form
                     ref="form"
-                    v-model="valid"
+                    v-model="isValid"
                 >
                     <v-card
                         width="100%"
@@ -63,10 +63,10 @@
                         class="mt-5 d-flex justify-end"
                     >
                         <v-btn
-                            :disabled="!valid"
+                            :disabled="!isValid || loading"
                             :loading="loading"
                             color="primary"
-                            dark
+                            class="white--text"
                             @click="updateArticle"
                         >
                             編集を保存
@@ -121,7 +121,7 @@ export default {
     },
     data() {
         return {
-            valid: true,
+            isValid: false,
             level: {},
             text: '',
             title: '',
@@ -148,6 +148,14 @@ export default {
             URL.revokeObjectURL(this.imageUrl)
         },
         async updateArticle() {
+            if(!this.isValid || !this.text) {
+                this.$vuetify.goTo(0)
+                return this.$store.dispatch('modules/toast/getToast', {
+                        status: true,
+                        msg: 'タイトル・ラベル・内容は必須です',
+                        color: 'error'
+                    })
+            }
             this.loading = true
             const formData = new FormData()
             formData.append('article[title]', this.title)
