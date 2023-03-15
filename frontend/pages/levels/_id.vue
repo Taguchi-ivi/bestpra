@@ -55,7 +55,11 @@ export default {
     async asyncData({ $axios, store, params }) {
         const res = await $axios.$get(`/api/v1/level_lists/${params.id}/article_level`)
         if(res === 'bad_request') {
-            this.$my.dispatchToast(true, 'ラベルを選択しよう!!', 'info')
+            store.dispatch('modules/toast/getToast', {
+                        status: true,
+                        msg: 'ラベルを選択しよう!',
+                        color: 'info'
+                    })
             return {
                 error: true
             }

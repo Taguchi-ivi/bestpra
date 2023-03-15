@@ -198,12 +198,6 @@
                             flat
                         >
                             <v-form v-model="isValidEmail">
-                                <!-- <v-text-field
-                                    v-model="email"
-                                    label="E-mail"
-                                    required
-                                >
-                                </v-text-field> -->
                                 <user-form-email
                                     :email.sync="email"
                                 />
@@ -349,16 +343,11 @@ export default {
     // },
     methods: {
         ...mapActions({
-            dispatchToast: 'modules/toast/getToast',
             dispatchCurrentUser: 'modules/user/getCurrentUser',
         }),
         async updateProfile() {
-            if( !this.isValidProfile || !this.user.nickname) {
-                this.dispatchToast({
-                        status: true,
-                        msg: 'ニックネームは必須です',
-                        color: 'error'
-                })
+            if( !this.isValidProfile || !this.user.nickname ) {
+                return this.$my.dispatchToast(true, 'ニックネームは必須です', 'error')
             }
             this.profileLoading = true
             await this.$axios.$patch('/api/v1/users', this.user )
@@ -370,20 +359,12 @@ export default {
                         admin: this.currentUser.admin,
                         sub: this.currentUser.sub,
                     })
-                    this.dispatchToast({
-                        status: true,
-                        msg: 'プロフィールを更新しました',
-                        color: 'info'
-                    })
+                    this.$my.dispatchToast(true, 'プロフィールを更新しました', 'success')
 
                 })
                 .catch(err => {
                     console.log(err)
-                    this.dispatchToast({
-                        status: true,
-                        msg: '更新に失敗しました',
-                        color: 'error'
-                    })
+                    this.$my.dispatchToast(true, '更新に失敗しました', 'error')
                 })
             this.profileLoading = false
         },
@@ -399,11 +380,7 @@ export default {
         // },
         async updateEmail() {
             if(!this.isValidEmail || !this.email) {
-                this.dispatchToast({
-                        status: true,
-                        msg: 'Emailは必須です',
-                        color: 'error'
-                })
+                return this.$my.dispatchToast(true, 'メールアドレスは必須です', 'error')
             }
             this.EmailLoading = true
             const params = {
@@ -414,37 +391,21 @@ export default {
             await this.$axios.$patch('/api/v1/auth_token/update_email', params)
                 .then(res => {
                     this.$auth.login(res)
-                    this.dispatchToast({
-                        status: true,
-                        msg: 'メールアドレスの更新しました',
-                        color: 'info'
-                    })
+                    this.$my.dispatchToast(true, 'メールアドレスの更新しました', 'success')
                 })
                 .catch( err => {
                     console.log(err)
-                    this.dispatchToast({
-                        status: true,
-                        msg: 'メールアドレスの更新に失敗しました',
-                        color: 'error'
-                    })
+                    this.$my.dispatchToast(true, 'メールアドレスの更新に失敗しました', 'error')
                 })
             this.EmailLoading = false
         },
         async updatePassword() {
             if(!this.isValidPassword) {
-                return this.dispatchToast({
-                        status: true,
-                        msg: 'パスワードとは必須です',
-                        color: 'error'
-                })
+                return this.$my.dispatchToast(true, 'パスワードは必須です', 'error')
             }
             const password = this.password
             if(password !== this.passwordAgain) {
-                return this.dispatchToast({
-                        status: true,
-                        msg: 'パスワードと確認用パスワードが一致しません',
-                        color: 'error'
-                })
+                return this.$my.dispatchToast(true, 'パスワードと確認用パスワードが一致しません', 'error')
             }
             this.passwordLoading = true
             const params = {
@@ -456,19 +417,11 @@ export default {
                 .then(res => {
                     console.log(res)
                     this.$auth.login(res)
-                    this.dispatchToast({
-                        status: true,
-                        msg: 'パスワードの更新しました',
-                        color: 'info'
-                    })
+                    this.$my.dispatchToast(true, 'パスワードの更新しました', 'info')
                 })
                 .catch( err => {
                     console.log(err)
-                    this.dispatchToast({
-                        status: true,
-                        msg: 'パスワードの更新に失敗しました',
-                        color: 'error'
-                })
+                    this.$my.dispatchToast(true, 'パスワードの更新に失敗しました', 'error')
                 })
             this.passwordLoading = false
         },
@@ -479,11 +432,7 @@ export default {
         },
         async updateAvatar() {
             if(!this.preview.flg) {
-                return this.dispatchToast({
-                        status: true,
-                        msg: 'アイコンが更新されてません',
-                        color: 'error'
-                })
+                return this.$my.dispatchToast(true, 'アイコン画像が更新されてません', 'error')
             }
             this.updateAvatarLoading = true
             const formData = new FormData()
@@ -502,19 +451,11 @@ export default {
                     this.preview.flg = false
                     this.preview.url = null
                     this.preview.img = {}
-                    this.dispatchToast({
-                        status: true,
-                        msg: 'アイコンを更新しました',
-                        color: 'info'
-                    })
+                    this.$my.dispatchToast(true, 'アイコンを更新しました', 'success')
                 })
                 .catch( err => {
                     console.log(err)
-                    this.dispatchToast({
-                        status: true,
-                        msg: 'アイコンの更新に失敗しました',
-                        color: 'error'
-                    })
+                    this.$my.dispatchToast(true, 'アイコンの更新に失敗しました', 'error')
                 })
             this.updateAvatarLoading = false
         },
