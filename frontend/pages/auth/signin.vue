@@ -80,18 +80,13 @@ export default {
         authSuccessful(res) {
             this.$auth.login(res)
             const redirectPath = this.$route.query.redirect || '/home'
-            // const status = true
-            // const msg = 'ログインに成功しました!!'
-            // const color = 'info'
+            // this.$my.dispatchToast(true, 'ログインに成功しました!!', 'success')
 
             this.$router.push(redirectPath)
         },
         authFailure({ response }) {
             if (response && response.status === 404) {
-                const status = true
-                const msg = 'ユーザが見つかりません'
-                const color = 'error'
-                return this.$store.dispatch('modules/toast/getToast', { status, msg, color })
+                return this.$my.dispatchToast(true, 'ユーザが見つかりません', 'error')
             }
             // エラー処理
             return this.$my.apiErrorHandler(response)

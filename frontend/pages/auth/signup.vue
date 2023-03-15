@@ -36,8 +36,6 @@
 </template>
 
 <script>
-
-import { mapActions } from 'vuex'
 import UserFormCard from '~/components/Molecules/UserFormCard'
 import UserFormName from '~/components/Atom/UserForm/UserFormName'
 import UserFormEmail from '~/components/Atom/UserForm/UserFormEmail'
@@ -77,9 +75,6 @@ export default {
         }
     },
     methods: {
-        ...mapActions({
-            login: 'modules/user/login',
-        }),
         async formSignup() {
 
             const password = this.params.user.password
@@ -93,16 +88,12 @@ export default {
             if(this.isValid) {
                 await this.$axios.$post('/api/v1/auth_token', this.params)
                     .then((res) => {
-                        console.log('formsigunup',res)
-                        // const status = true
-                        // const msg = '登録が完了しました!!'
-                        // const color = 'success'
-                        // this.$store.dispatch('modules/toast/getToast', { status, msg, color })
+                        // this.$my.dispatchToast(true, '登録が完了しました!!', 'success')
                         this.$auth.login(res)
                         this.$router.push('/home/all')
                     })
                     .catch((err) => {
-                        console.log('errやで', err)
+                        console.log('err', err)
                     })
             }
             this.loading = false
