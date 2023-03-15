@@ -189,8 +189,10 @@
                             </v-textarea>
                             <div class="text-right">
                                 <v-btn
+                                    :disabled="!commentContent || loading"
+                                    :loading="loading"
                                     color="primary"
-                                    dark
+                                    class="white--text"
                                     @click="commentPost"
                                 >
                                     コメント
@@ -224,6 +226,7 @@ export default {
     },
     data() {
         return {
+            loading: false,
             title: '',
             image: '',
             text: 'hello world',
@@ -289,6 +292,14 @@ export default {
             this.dialog = false
         },
         async commentPost() {
+            if(!this.commentContent) {
+                return this.$store.dispatch('modules/toast/getToast', {
+                            status: true,
+                            msg: 'コメントを入力してください',
+                            color: 'error'
+                        })
+            }
+            this.loading = true
             const comment = {
                 content: this.commentContent,
             }
@@ -324,6 +335,7 @@ export default {
                             color: 'error'
                         })
                 })
+            this.loading = false
         },
 
     },
