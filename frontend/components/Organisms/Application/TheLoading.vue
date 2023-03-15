@@ -1,6 +1,5 @@
 <template>
     <div class="text-center">
-        <!-- color="#117768" -->
         <v-progress-circular
             indeterminate
             color="primary"

@@ -310,9 +310,6 @@ export default {
         }),
     },
     methods: {
-        ...mapActions({
-            dispatchToast: 'modules/toast/getToast'
-        }),
         ...mapMutations({
             commitCreateFollow: 'modules/follow/setCreateCurrentFollow',
             commitDeleteFollow: 'modules/follow/setDeleteCurrentFollow',
@@ -328,19 +325,13 @@ export default {
         async accountDelete() {
             await this.$axios.$delete(`/api/v1/auth_token/${this.otherUser.id}`,{})
                 .then(res => {
-                    // const status = true
-                    // const msg = '削除が完了しました'
-                    // this.$store.dispatch('modules/toast/getToast', { status, msg })
+                    // this.$my.dispatchToast(true, '削除が完了しました', 'success')
                     this.$router.push('/about')
                     this.$auth.resetVuex()
                 })
                 .catch( err => {
                     console.log(err)
-                    this.dispatchToast({
-                        status: true,
-                        msg: 'アカウト削除に失敗しました',
-                        color: 'error'
-                    })
+                    this.$my.dispatchToast(true, 'アカウト削除に失敗しました', 'error')
                 })
             this.dialog = false
         },
@@ -351,11 +342,11 @@ export default {
                     this.commitFollowUser()
                     this.commitCreateFollower({
                         id: this.currentUser.id,
+                        nickname: this.currentUser.nickname,
+                        introduction: this.currentUser.introduction,
                         avatar: {
                             url: this.currentUser.avatar.url,
                         },
-                        nickname: this.currentUser.nickname,
-                        introduction: this.currentUser.introduction,
                     })
                 })
                 .catch( err => {

@@ -189,8 +189,10 @@
                             </v-textarea>
                             <div class="text-right">
                                 <v-btn
+                                    :disabled="!commentContent || loading"
+                                    :loading="loading"
                                     color="primary"
-                                    dark
+                                    class="white--text"
                                     @click="commentPost"
                                 >
                                     コメント
@@ -206,7 +208,7 @@
 
 <script>
 
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 import AppImg from '~/components/Atom/App/AppNoImg.vue'
 import ErrorCard from '~/components/Molecules/ErrorCard.vue'
 import ArticleUserCardTag from '~/components/Atom/Article/ArticleUserCardTag.vue'
@@ -224,6 +226,7 @@ export default {
     },
     data() {
         return {
+            loading: false,
             title: '',
             image: '',
             text: 'hello world',
@@ -265,30 +268,33 @@ export default {
         })
     },
     methods: {
-        resetArticle() {
-
-            this.$store.dispatch('modules/article/getCurrentArticleData', null)
-            this.$store.dispatch('modules/comment/getArticleComment', [])
-        },
+        ...mapActions({
+            dispatchCurrentUser: 'modules/user/getCurrentUser',
+        }),
+        ...mapMutations({
+            commitArticleComment: 'modules/comment/setPushArticleComment',
+        }),
+        // resetArticle() {
+        //     this.$store.dispatch('modules/article/getCurrentArticleData', null)
+        //     this.$store.dispatch('modules/comment/getArticleComment', [])
+        // },
         async articleDelete() {
             await this.$axios.$delete(`/api/v1/articles/${this.$route.params.id}`)
                 .then(res => {
-                    const status = true
-                    const msg = '削除が完了しました'
-                    this.$store.dispatch('modules/toast/getToast', { status, msg })
+                    this.$my.dispatchToast(true, '削除が完了しました', 'success')
                     this.$router.push('/home/all')
                 })
                 .catch( err => {
                     console.log(err)
-                    this.$store.dispatch('modules/toast/getToast', {
-                        status: true,
-                        msg: '練習メニュの削除に失敗しました',
-                        color: 'error'
-                    })
+                    this.$my.dispatchToast(true, '練習メニュの削除に失敗しました', 'error')
                 })
             this.dialog = false
         },
         async commentPost() {
+            if(!this.commentContent) {
+                return this.$my.dispatchToast(true, 'コメントを入力してください', 'error')
+            }
+            this.loading = true
             const comment = {
                 content: this.commentContent,
             }
@@ -308,22 +314,15 @@ export default {
                             }
                         }
                     }
-                    this.$store.commit('modules/comment/setPushArticleComment', comment)
+                    this.commitArticleComment(comment)
                     this.commentContent = ''
-                    this.$store.dispatch('modules/toast/getToast', {
-                            status: true,
-                            msg: '素敵なコメントをありがとう!!',
-                            color: 'success'
-                        })
+                    this.$my.dispatchToast(true, '素敵なコメントをありがとう!!', 'success')
                 })
                 .catch( err => {
                     console.log(err)
-                    this.$store.dispatch('modules/toast/getToast', {
-                            status: true,
-                            msg: 'コメントの投稿に失敗しました',
-                            color: 'error'
-                        })
+                    this.$my.dispatchToast(true, 'ニックネームは必須です', 'error')
                 })
+            this.loading = false
         },
 
     },

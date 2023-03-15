@@ -27,7 +27,7 @@ class Article < ApplicationRecord
     mount_uploader :image, ImageUploader
 
     # validates
-    validates :title, presence: true
+    validates :title, presence: true, length: { maximum: 80 }
     validates :content, presence: true
 
 

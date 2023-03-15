@@ -1,5 +1,4 @@
 <template>
-    <!-- clearable toString() -->
     <v-text-field
         v-model="setPassword"
         :rules="form.rules"

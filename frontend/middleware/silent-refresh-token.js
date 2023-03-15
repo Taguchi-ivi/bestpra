@@ -4,9 +4,9 @@ export default async ({ $auth, $axios, store, route, redirect, isDev }) => {
     // userが存在する && refresh-tokenの有効期限が切れた場合に処理を実行する
     // catch -> access-tokenも期限が切れている場合
     if ($auth.isExistUserAndExpired()) {
-        if (isDev) {
-            console.log('Execute silent refresh!!')
-        }
+        // if (isDev) {
+        //     console.log('Execute silent refresh!!')
+        // }
         await $axios.$post('/api/v1/auth_token/refresh')
             .then(response => $auth.login(response))
             .catch(() => {
@@ -24,10 +24,6 @@ export default async ({ $auth, $axios, store, route, redirect, isDev }) => {
 
                     // トースター出力
                     store.dispatch('modules/toast/getToast', { status, msg, color })
-                    // アクセスルート記憶
-                    // store.dispatch('modules/remember/getRememberPath', route)
-                    // return redirect('/auth/signin')
-                    // return redirect(`/auth/signin?redirect=${route.fullPath}`)
                 }
             })
     }

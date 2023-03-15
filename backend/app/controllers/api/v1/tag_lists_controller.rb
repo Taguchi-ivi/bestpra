@@ -3,7 +3,6 @@ class Api::V1::TagListsController < ApplicationController
 
     def index
         # nameでソート
-        # tag_list = TagList.where(delete_flg: false).order(:name).as_json(only: [:id, :name])
         tag_list = TagList.left_joins(:tag_maps)
                             .select('tag_lists.id, tag_lists.name, count(tag_maps.tag_list_id) as tag_count')
                             .group('id')
@@ -17,12 +16,6 @@ class Api::V1::TagListsController < ApplicationController
         tag_id = params[:tag_list_id]
         return render json: :bad_request unless TagList.exists?(id: tag_id, delete_flg: false)
 
-        # N + 1問題
-        # render json: TagList.find(tag_id).articles.order(created_at: :desc).as_json(include: [
-        #                                                 {user: { only: [:id, :nickname, :avatar]}},
-        #                                                 {level_list: { only: [:id, :name]}},
-        #                                                 {tag_list: { only: [:name]}}
-        #                                             ])
         render json: TagList.find(tag_id).articles
                                             .includes(:user, :level_list, :tag_list, :comments)
                                             .order(created_at: :desc)

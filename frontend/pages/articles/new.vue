@@ -3,7 +3,7 @@
         <MainTitle title="練習メニュ作成" />
         <v-form
             ref="form"
-            v-model="valid"
+            v-model="isValid"
         >
             <v-card
                 width="100%"
@@ -51,13 +51,13 @@
                 />
             </v-card>
             <div
-                class="mt-5 d-flex justify-end"
+                class="mt-5 text-right"
             >
                 <v-btn
-                    :disabled="!valid"
+                    :disabled="!isValid || loading"
                     :loading="loading"
                     color="primary"
-                    dark
+                    class="white--text"
                     @click="createArticle"
                 >
                     投稿
@@ -68,6 +68,7 @@
 </template>
 
 <script>
+import { mapActions, mapMutations } from 'vuex'
 import MainTitle from '~/components/Atom/App/AppMainTitle.vue'
 import ArticleTitle from '~/components/Atom/Article/ArticleTitle.vue'
 import ArticleLevel from '~/components/Atom/Article/ArticleLevel.vue'
@@ -83,7 +84,7 @@ export default {
     },
     data() {
         return {
-            valid: true,
+            isValid: false,
             level: {},
             title: '',
             imageUrl: '',
@@ -99,6 +100,12 @@ export default {
         }
     },
     methods: {
+        ...mapActions({
+            dispatchCurrentUser: 'modules/user/getCurrentUser',
+        }),
+        ...mapMutations({
+            commitAllLike: 'modules/like/setAddAllLike',
+        }),
         fileClick() {
             this.imageUrl = window.URL.createObjectURL(this.selectFile)
         },
@@ -125,6 +132,10 @@ export default {
             })
         },
         async createArticle() {
+            if(!this.isValid || !this.text) {
+                this.$vuetify.goTo(0)
+                return this.$my.dispatchToast(true, 'タイトル・ラベル・内容は必須です', 'error')
+            }
             this.loading = true
             const formData = new FormData()
             formData.append('article[title]', this.title)
@@ -136,20 +147,16 @@ export default {
             formData.append('article[tag_list]', appendChips)
             await this.$axios.$post('/api/v1/articles', formData )
                 .then((res) => {
-                    this.$store.dispatch('modules/toast/getToast', {
-                        status: true,
-                        msg: '素敵な練習メニュをありがとう!!',
-                        color: 'success',
+                    this.commitAllLike({
+                        id: res.id,
+                        likes: []
                     })
+                    this.$my.dispatchToast(true, '素敵な練習メニュをありがとう!!', 'success')
                     this.$router.push('/articles/' + res.id)
                 })
                 .catch((err) => {
                     console.log(err)
-                    this.$store.dispatch('modules/toast/getToast', {
-                        status: true,
-                        msg: '新規作成に失敗しました',
-                        color: 'error'
-                    })
+                    this.$my.dispatchToast(true, '作成に失敗しました', 'error')
                 })
             this.loading = false
         }

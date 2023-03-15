@@ -30,7 +30,6 @@ class Api::V1::RelationshipsController < ApplicationController
     def followers
         return render json: :bad_request unless User.exists?(id: params[:user_id])
         follower_ids = User.find(params[:user_id]).followers.pluck(:id)
-        # render json: User.where(id: follower_ids).as_json(only: [:id, :nickname, :avatar,:introduction])
         render json: User.includes(:active_relationships)
                             .where(id: follower_ids)
                             .order("relationships.created_at DESC")

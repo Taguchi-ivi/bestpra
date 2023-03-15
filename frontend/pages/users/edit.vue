@@ -40,7 +40,9 @@
                             color="transparent"
                             flat
                         >
-                            <v-form>
+                            <v-form
+                                v-model="isValidProfile"
+                            >
                                 <v-row
                                     no-gutters
                                 >
@@ -111,7 +113,8 @@
                                     >
                                         <v-text-field
                                             v-model="user.nickname"
-                                            :counter="20"
+                                            :rules="nicknameRules"
+                                            :counter="max"
                                             label="ニックネーム"
                                             required
                                         >
@@ -169,9 +172,10 @@
                                     class="d-flex justify-end"
                                 >
                                     <v-btn
-                                        dark
+                                        :disabled="!isValidProfile || profileLoading"
+                                        :loading="profileLoading"
                                         color="primary"
-                                        class="mr-4"
+                                        class="white--text mr-4"
                                         @click="updateProfile"
                                     >
                                         保存
@@ -193,20 +197,18 @@
                             color="transparent"
                             flat
                         >
-                            <v-form>
-                                <v-text-field
-                                    v-model="email"
-                                    label="E-mail"
-                                    required
-                                >
-                                </v-text-field>
+                            <v-form v-model="isValidEmail">
+                                <user-form-email
+                                    :email.sync="email"
+                                />
                                 <div
                                     class="d-flex justify-end"
                                 >
                                     <v-btn
-                                        dark
+                                        :disabled="!isValidEmail || EmailLoading"
+                                        :loading="EmailLoading"
                                         color="primary"
-                                        class="mr-4"
+                                        class="white--text mr-4"
                                         @click="updateEmail"
                                     >
                                         保存
@@ -228,7 +230,7 @@
                             color="transparent"
                             flat
                         >
-                            <v-form>
+                            <v-form v-model="isValidPassword">
                                 <user-form-password
                                     :password.sync="password"
                                     set-validation
@@ -240,9 +242,10 @@
                                     class="d-flex justify-end"
                                 >
                                     <v-btn
-                                        dark
+                                        :disabled="!isValidPassword || passwordLoading"
+                                        :loading="passwordLoading"
                                         color="primary"
-                                        class="mr-4"
+                                        class="white--text mr-4"
                                         @click="updatePassword"
                                     >
                                         保存
@@ -258,7 +261,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import UserFormEmail from '~/components/Atom/UserForm/UserFormEmail.vue'
 import UserFormPassword from '~/components/Atom/UserForm/UserFormPassword'
 import UserFormPasswordAgain from '~/components/Atom/UserForm/UserFormPasswordAgain'
 import AvatarImg from '~/components/Atom/App/AppAvatarImg.vue'
@@ -266,6 +270,7 @@ import AvatarImg from '~/components/Atom/App/AppAvatarImg.vue'
 export default {
     name: 'UsersEdit',
     components: {
+        UserFormEmail,
         UserFormPassword,
         UserFormPasswordAgain,
         AvatarImg,
@@ -285,6 +290,7 @@ export default {
         }
     },
     data() {
+        const max = 30;
         return {
             tab: null,
             activePicker: null,
@@ -306,63 +312,77 @@ export default {
             },
             imgFile: {},
             updateAvatarLoading: false,
+            isValidProfile: false,
+            profileLoading: false,
+            isValidEmail: false,
+            EmailLoading: false,
+            isValidPassword: false,
+            passwordLoading: false,
+            max,
+            nicknameRules: [
+                // 入力必須
+                // v => 正しい式 || 'エラーメッセージ'
+                v => !!v || '',
+                // 30文字まで
+                v => (!!v && max >= v.length) || `${max}文字以内で入力してください`
+            ],
         }
     },
     computed: {
         ...mapGetters({
             currentUser: 'modules/user/getUser',
         }),
-        dateFormat() {
-            return (birthday) => {
-                const dateTimeFormat = new Intl.DateTimeFormat(
-                    'ja', { dateStyle: 'medium', timeStyle: 'short'}
-                )
-                return dateTimeFormat.format(new Date(birthday))
-            }
-        }
     },
     watch: {
         menu (val) {
             val && setTimeout(() => (this.activePicker = 'YEAR'))
         },
     },
-    beforeDestroy () {
-        this.resetVuex()
-    },
+    // beforeDestroy () {
+    //     this.resetVuex()
+    // },
     methods: {
+        ...mapActions({
+            dispatchCurrentUser: 'modules/user/getCurrentUser',
+        }),
         async updateProfile() {
-            console.log('ok')
-            console.log(this.user)
+            if( !this.isValidProfile || !this.user.nickname ) {
+                return this.$my.dispatchToast(true, 'ニックネームは必須です', 'error')
+            }
+            this.profileLoading = true
             await this.$axios.$patch('/api/v1/users', this.user )
                 .then(res => {
-                    this.$store.dispatch('modules/user/getCurrentUser', {
+                    this.dispatchCurrentUser({
                         id: this.currentUser.id,
                         nickname: this.user.nickname,
                         avatar: this.currentUser.avatar,
                         admin: this.currentUser.admin,
                         sub: this.currentUser.sub,
                     })
-                    this.$store.dispatch('modules/toast/getToast', {
-                        status: true,
-                        msg: 'プロフィールを更新しました',
-                        color: 'info'
-                    })
+                    this.$my.dispatchToast(true, 'プロフィールを更新しました', 'success')
+
                 })
                 .catch(err => {
                     console.log(err)
+                    this.$my.dispatchToast(true, '更新に失敗しました', 'error')
                 })
+            this.profileLoading = false
         },
         save (date) {
             this.$refs.menu.save(date)
         },
-        resetVuex() {
-            this.$store.dispatch('modules/toast/getToast',{
-                status: false,
-                msg: null,
-                color: null,
-            })
-        },
+        // resetVuex() {
+        //     this.$store.dispatch('modules/toast/getToast',{
+        //         status: false,
+        //         msg: null,
+        //         color: null,
+        //     })
+        // },
         async updateEmail() {
+            if(!this.isValidEmail || !this.email) {
+                return this.$my.dispatchToast(true, 'メールアドレスは必須です', 'error')
+            }
+            this.EmailLoading = true
             const params = {
                 user: {
                     email: this.email,
@@ -371,30 +391,23 @@ export default {
             await this.$axios.$patch('/api/v1/auth_token/update_email', params)
                 .then(res => {
                     this.$auth.login(res)
-                    this.$store.dispatch('modules/toast/getToast', {
-                        status: true,
-                        msg: 'メールアドレスの更新しました',
-                        color: 'info'
-                    })
+                    this.$my.dispatchToast(true, 'メールアドレスの更新しました', 'success')
                 })
                 .catch( err => {
                     console.log(err)
-                    this.$store.dispatch('modules/toast/getToast', {
-                        status: true,
-                        msg: 'メールアドレスの更新に失敗しました',
-                        color: 'error'
-                    })
+                    this.$my.dispatchToast(true, 'メールアドレスの更新に失敗しました', 'error')
                 })
+            this.EmailLoading = false
         },
         async updatePassword() {
+            if(!this.isValidPassword) {
+                return this.$my.dispatchToast(true, 'パスワードは必須です', 'error')
+            }
             const password = this.password
             if(password !== this.passwordAgain) {
-                return this.$store.dispatch('modules/toast/getToast', {
-                    status: true,
-                    msg: 'パスワードと確認用パスワードが一致しません',
-                    color: 'error'
-                })
+                return this.$my.dispatchToast(true, 'パスワードと確認用パスワードが一致しません', 'error')
             }
+            this.passwordLoading = true
             const params = {
                 user: {
                     password,
@@ -404,20 +417,13 @@ export default {
                 .then(res => {
                     console.log(res)
                     this.$auth.login(res)
-                    this.$store.dispatch('modules/toast/getToast', {
-                        status: true,
-                        msg: 'パスワードの更新しました',
-                        color: 'info'
-                    })
+                    this.$my.dispatchToast(true, 'パスワードの更新しました', 'info')
                 })
                 .catch( err => {
                     console.log(err)
-                    this.$store.dispatch('modules/toast/getToast', {
-                        status: true,
-                        msg: 'パスワードの更新に失敗しました',
-                        color: 'error'
-                    })
+                    this.$my.dispatchToast(true, 'パスワードの更新に失敗しました', 'error')
                 })
+            this.passwordLoading = false
         },
         fileChange() {
             this.preview.flg = true
@@ -426,18 +432,14 @@ export default {
         },
         async updateAvatar() {
             if(!this.preview.flg) {
-                return this.$store.dispatch('modules/toast/getToast', {
-                        status: true,
-                        msg: 'アイコンが更新されてません',
-                        color: 'error'
-                    })
+                return this.$my.dispatchToast(true, 'アイコン画像が更新されてません', 'error')
             }
             this.updateAvatarLoading = true
             const formData = new FormData()
             formData.append('user[avatar]', this.preview.img)
             await this.$axios.$patch('/api/v1/users/update_avatar', formData)
                 .then(res => {
-                    this.$store.dispatch('modules/user/getCurrentUser', {
+                    this.dispatchCurrentUser({
                         id: this.currentUser.id,
                         nickname: this.currentUser.nickname,
                         avatar: res.avatar,
@@ -449,19 +451,11 @@ export default {
                     this.preview.flg = false
                     this.preview.url = null
                     this.preview.img = {}
-                    this.$store.dispatch('modules/toast/getToast', {
-                        status: true,
-                        msg: 'アイコンを更新しました',
-                        color: 'info'
-                    })
+                    this.$my.dispatchToast(true, 'アイコンを更新しました', 'success')
                 })
                 .catch( err => {
                     console.log(err)
-                    this.$store.dispatch('modules/toast/getToast',{
-                        status: true,
-                        msg: 'アイコンの更新に失敗しました',
-                        color: 'error'
-                    })
+                    this.$my.dispatchToast(true, 'アイコンの更新に失敗しました', 'error')
                 })
             this.updateAvatarLoading = false
         },

@@ -1,5 +1,4 @@
 
-// 元ファイル名:nuxt-client-init
 // ログイン状態を維持する
 // 401エラー許容する
 // export default ({ $auth, $axios }) => {

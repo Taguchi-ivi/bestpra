@@ -1,9 +1,4 @@
 <template>
-    <!-- TODO  -->
-    <!-- avatarが存在しない場合はiconを -->
-    <!-- flgがtrueなら押下時に下に値を表示 -->
-    <!-- trueではない場合はシンプルにlinkを作成してその人のprofileページへ -->
-    <!-- <h1>avatarのcomponentを作成したい</h1> -->
     <div>
         <div v-if="headerFlg">
             <v-menu
@@ -20,9 +15,6 @@
                         icon
                         v-on="on"
                     >
-                        <!-- <v-icon size="30">
-                            mdi-account-circle
-                        </v-icon> -->
                         <AvatarImg
                             :size="size"
                             :avatar-url="avatarUrl"
@@ -46,7 +38,6 @@
                         </v-list-item-content>
                     </v-list-item>
 
-                    <!-- <v-divider /> -->
                     <div
                         v-for="(menu, i) in Menus"
                         :key="`menu-divider-${i}`"
@@ -72,7 +63,6 @@
                                 </v-list-item-icon>
                                 <v-list-item-title>
                                     {{ menu.name }}
-                                    <!-- {{ $my.pageTitle(menu.name) }} -->
                                 </v-list-item-title>
                             </v-list-item>
                         </template>
@@ -110,7 +100,6 @@
                             </v-card-text>
                             <v-card-actions>
                             <v-spacer />
-                            <!-- color="green darken-1" -->
                             <v-btn
                                 color="blue"
                                 text
@@ -153,7 +142,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 import AvatarImg from '~/components/Atom/App/AppAvatarImg.vue'
 
 export default {
@@ -184,7 +172,7 @@ export default {
             on: false,
             dialog: false,
             Menus: [
-                { title: 'アカウント', name: '編集', icon: 'mdi-account-cog', divider: true, path: '/users/edit' },
+                { title: '練習メニュー', name: '投稿する', icon: 'mdi-pencil', divider: true, path: '/articles/new' },
                 { title: '探す', name: '検索', icon: 'mdi-magnify', divider: true, path: '/search' },
                 { title: '', name: 'ラベル', icon: 'mdi-label', divider: false, path: '/levels/0' },
                 { title: '', name: 'タグ', icon: 'mdi-tag-multiple', divider: false, path: '/tags/0' },
@@ -192,14 +180,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions({
-            logout: 'modules/user/logout',
-        }),
         async appLogout() {
-            // const userInfo = this.$store.getters['modules/user/getUser']
-            // console.log(userInfo)
-            // this.logout(userInfo)
-            // this.$auth.login(res)
             await this.$auth.logout()
             this.$router.push('/about')
         }

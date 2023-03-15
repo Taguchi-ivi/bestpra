@@ -38,7 +38,7 @@ class Authentication {
 
     // ログイン業務
     login (response) {
-        console.log('auth-login処理', response)
+        // console.log('auth-login処理', response)
         this.setAuth(response)
     }
 
@@ -82,9 +82,9 @@ class Authentication {
 
     // ユーザーが存在し、かつ有効期限内の場合にtrueを返す
     loggedIn () {
-        // ※原因はここなのか？
-        console.log('ユーザが存在しているか', this.isExistUser())
-        console.log('有効期限はどうか', this.isAuthenticated())
+        // ※TODO 原因はここなのか？
+        // console.log('ユーザが存在しているか', this.isExistUser())
+        // console.log('有効期限はどうか', this.isAuthenticated())
         return this.isExistUser() && this.isAuthenticated()
     }
 }

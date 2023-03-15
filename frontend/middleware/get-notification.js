@@ -5,7 +5,6 @@ export default async ({ $auth, store, $axios }) => {
         // ページ遷移の度に通知を受け取る
         await $axios.$get('/api/v1/notifications/read')
             .then((res => {
-                console.log('返却データhello->',res)
                 store.commit('modules/notification/setNotificationHeader', res)
             }))
             .catch(err => console.log(err))

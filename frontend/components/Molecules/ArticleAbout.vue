@@ -1,5 +1,4 @@
 <template>
-    <!-- height="480" -->
     <v-card
         width="300"
         rounded
@@ -54,7 +53,6 @@
                         <v-icon>
                             mdi-comment-text-outline
                         </v-icon>
-                        <!-- <span class="subheading">45</span> -->
                         <span v-if="0 < article.comments.length" class="subheading">{{ article.comments.length }}</span>
                     </nuxt-link>
                 </div>
@@ -64,7 +62,6 @@
 </template>
 
 <script>
-// import { mapActions, mapGetters } from 'vuex'
 import ArticleUserCardTag from '~/components/Atom/Article/ArticleUserCardTag.vue'
 import AppImg from '~/components/Atom/App/AppNoImg.vue'
 
@@ -79,17 +76,6 @@ export default {
             default: () => {}
         },
     },
-    // computed: {
-    //     ...mapGetters({
-    //         articles: 'modules/article/getArticles',
-    //         AllLike: 'modules/like/getAllLike',
-    //     })
-    // },
-    // methods: {
-    //     ...mapActions({
-    //         getArticles: 'modules/article/getArticles'
-    //     }),
-    // },
 }
 
 </script>

@@ -1,29 +1,13 @@
 class Api::V1::UsersController < ApplicationController
-    # skip_before_action :authenticate
-    # createメソッドのみログイン済みかどうかの判定をスキップする
     before_action :authenticate_user
     before_action :set_user, only: [:update, :destroy]
 
-    # current_userで値を取得できる
-
     def index
-        # TODO 全件取得する際に、項目を絞ること
         users = User.all
-        #avatar必要
-        # as_json => ハッシュの形でJSONデータを返す {"id" => 1, "nickname" => "test", ...}
-        # render json: users.as_json(only: [:id, :nickname, :email, :created_at])
-        # render json: current_user.as_json(only: [:id, :nickname, :email, :created_at])
         render json: users
     end
 
     def show
-        # current_userか判定
-        # flg = current_user.id == @user.id ? true : false
-        # render json: 'Usersshow'
-        # render json: @user.as_json(only: [:id, :nickname, :avatar, :introduction])
-        # render json: {user: user_data, articles: articles}
-        # render json: User.find(params[:id]).as_json(only: [:id, :nickname, :avatar, :introduction])
-        # render json: {user: user_data, articles: article_count, following: following_count, followers: followers_count}
         return render json: :bad_request unless User.exists?(id: params[:id])
         user_data =  User.find(params[:id]).as_json(only: [:id, :nickname, :avatar, :introduction])
         article_count = Article.where(user_id: params[:id]).count
@@ -33,6 +17,7 @@ class Api::V1::UsersController < ApplicationController
                                 .with_indifferent_access
     end
 
+    # 対象のユーザの執筆した記事を取得
     def written_articles
         return render json: :bad_request unless User.exists?(id: params[:user_id])
         user = User.find(params[:user_id])
@@ -48,8 +33,8 @@ class Api::V1::UsersController < ApplicationController
                                             ])
     end
 
+    # 対象のユーザのいいね一覧を取得
     def likes
-        # 対象のユーザのいいね一覧を取得
         return render json: :bad_request unless User.exists?(id: params[:user_id])
         user = User.find(params[:user_id])
         render json: user.likes.includes(article: [:user, :level_list, :tag_list, :comments])
@@ -64,7 +49,7 @@ class Api::V1::UsersController < ApplicationController
                                     }})
     end
 
-    # フォローしているIDを取得する
+    # 自身のフォローしているIDを取得する
     def current_following
         render json: current_user.following.pluck(:id)
     end
@@ -78,9 +63,6 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def edit
-        # @user = User.find(params[:id])
-        # render json: 'Usersedit'
-        # render json: @user.as_json(only: [:id, :nickname, :avatar, :email, :introduction, :birthday])
         render json: current_user.as_json(only: [:id, :nickname, :avatar, :email, :introduction, :birthday])
     end
 
@@ -88,13 +70,12 @@ class Api::V1::UsersController < ApplicationController
         if current_user.update(user_params)
             render status: :ok
         else
-            render status: :bad_request
+            # render status: :bad_request
+            render json: { errors: current_user.errors }, status: :unprocessable_entity
         end
     end
 
-    # TODO S3にアップロードする
     def update_avatar
-        # @user = current_user
         if current_user.update!(avatar: params[:user][:avatar])
             render json: current_user
         else

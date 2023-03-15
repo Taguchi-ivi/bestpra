@@ -6,7 +6,7 @@
             class="mt-10"
             chips
             clearable
-            label="タグを選択(3つまで)"
+            label="タグを選択"
             multiple
             prepend-icon="mdi-tag-multiple"
             solo
@@ -26,7 +26,6 @@
                 </v-chip>
             </template>
         </v-combobox>
-        <!-- <p>{{ setChips }}</p> -->
     </div>
 </template>
 
@@ -40,10 +39,6 @@ export default {
     },
     data() {
         return {
-            // TODO マスタデータ追加&&存在するお項目以外は選べないようにする
-            // TODO chipsの値は受け取る
-            // TODO 選択肢の色を変える
-            // chips: ['Programming', 'Playing video games', 'Watching movies', 'Sleeping'],
             setChips: this.tags,
             items: [],
             chips: [],
@@ -51,7 +46,7 @@ export default {
         }
     },
     computed: {
-        // get,setでの子コンポーネントでのデータ参照難しいのでやめた
+        // get,setでの子コンポーネントでデータ参照難しいので部rつ方法で対応
         // setChips: {
         //     get() { return this.chips },
         //     set(newVal) { this.$emit('update:chips', newVal) }
@@ -74,8 +69,6 @@ export default {
     },
     methods: {
         remove (item) {
-            // console.log(item)
-            // console.log(this.setChips)
             // this.chips.splice(this.chips.indexOf(item.name), 1)
             this.setChips.splice(this.setChips.indexOf(item.name), 1)
         },

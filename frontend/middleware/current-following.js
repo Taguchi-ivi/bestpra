@@ -7,7 +7,6 @@ export default async ({ $auth, store, $axios }) => {
         if (currentFollowing.includes('nothing')) {
             await $axios.$get('/api/v1/users/current_following')
                 .then((res => {
-                    // console.log('返却データhello',res)
                     store.commit('modules/follow/setCurrentFollow', res)
                 }))
                 .catch(err => console.log(err))

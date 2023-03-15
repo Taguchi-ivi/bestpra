@@ -44,8 +44,6 @@ class Api::V1::AuthTokenController < ApplicationController
         render json: login_response
     end
 
-    # ログアウト => logout
-    # def destroy
     def logout
         delete_session if session_user.forget
         cookies[session_key].nil? ?
@@ -54,13 +52,6 @@ class Api::V1::AuthTokenController < ApplicationController
 
     # メールアドレス更新
     def update_email
-        # if current_user.update(user_params)
-        #     render json: status: 'ok'
-        # else
-        #     render json
-        # end
-        # render update_email_password
-        # update_email_password
         @user = current_user
         if @user.update!(email: params[:user][:email])
             update_email_password
@@ -71,7 +62,6 @@ class Api::V1::AuthTokenController < ApplicationController
 
     # パスワード更新
     def update_password
-        # update_email_password
         @user = current_user
         if @user.update!(password: params[:user][:password])
             update_email_password
@@ -185,15 +175,6 @@ class Api::V1::AuthTokenController < ApplicationController
         def user_params
             params.require(:user).permit(:nickname, :email, :password, :avatar, :introduction, :birthday , :basecolor_id, :activated, :admin)
         end
-
-        # def user_params_email
-        #     params.require(:user).permit(:email)
-        #     # params.permit(:email)
-        # end
-
-        # def user_params_password
-        #     params.require(:user).permit(:password)
-        # end
 
         # 一度cookieの情報を削除して、新しい情報に変える
         def update_email_password

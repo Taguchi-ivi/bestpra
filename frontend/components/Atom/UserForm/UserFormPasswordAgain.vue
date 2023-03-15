@@ -1,5 +1,4 @@
 <template>
-    <!-- clearable toString() -->
     <v-text-field
         v-model="setPasswordAgain"
         label="確認用パスワード"
