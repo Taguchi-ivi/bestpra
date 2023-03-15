@@ -1,19 +1,12 @@
 class Api::V1::CommentsController < ApplicationController
     before_action :authenticate_user
 
-    # before_action :set_article, only: [:edit, :update]
-
     def create
         article = Article.find(params[:article_id])
         comment = article.comments.new(comment_params)
         comment.user_id = current_user.id
         if comment.save
             article.create_notification_comment!(current_user, comment.id)
-            # render json: @comment.as_json(include: [
-            #                                 {user: { only: [:id, :nickname, :avatar]}},
-            #                                 {level_list: { only: [:id, :name]}},
-            #                                 {tag_list: { only: [:name]}}
-            #                             ]), status: :ok
             render json: comment.as_json(), status: :ok
         else
             render json: comment.errors.full_messages, status: :unprocessable_entity
