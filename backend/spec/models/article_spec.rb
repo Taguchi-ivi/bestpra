@@ -27,32 +27,32 @@ RSpec.describe Article, type: :model do
 
   describe 'associations' do
     context 'テーブルと正しく紐づいているか' do
-      it "Userテーブル" do
+      it 'Userテーブル' do
         rel = described_class.reflect_on_association(:user)
         expect(rel.macro).to eq :belongs_to
       end
 
-      it "Level_listテーブル" do
+      it 'Level_listテーブル' do
         rel = described_class.reflect_on_association(:level_list)
         expect(rel.macro).to eq :belongs_to
       end
 
-      it "Tagテーブル" do
+      it 'Tagテーブル' do
         rel = described_class.reflect_on_association(:tag_list)
         expect(rel.macro).to eq :has_many
       end
 
-      it "Commentテーブル" do
+      it 'Commentテーブル' do
         rel = described_class.reflect_on_association(:comments)
         expect(rel.macro).to eq :has_many
       end
 
-      it "Likeテーブル" do
+      it 'Likeテーブル' do
         rel = described_class.reflect_on_association(:likes)
         expect(rel.macro).to eq :has_many
       end
 
-      it "Notificationテーブル" do
+      it 'Notificationテーブル' do
         rel = described_class.reflect_on_association(:notifications)
         expect(rel.macro).to eq :has_many
       end

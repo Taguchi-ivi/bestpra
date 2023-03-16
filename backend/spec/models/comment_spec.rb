@@ -22,5 +22,24 @@
 require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'associations' do
+    context 'テーブルと正しく紐づいているか' do
+      it "Userテーブル" do
+        rel = described_class.reflect_on_association(:user)
+        expect(rel.macro).to eq :belongs_to
+      end
+
+      it "Articleテーブル" do
+        rel = described_class.reflect_on_association(:article)
+        expect(rel.macro).to eq :belongs_to
+      end
+    end
+
+    context 'コメントを削除した場合' do
+      it  "Notificationテーブル" do
+
+    end
+  end
+
+  
 end

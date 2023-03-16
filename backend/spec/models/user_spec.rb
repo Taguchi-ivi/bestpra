@@ -143,8 +143,8 @@ RSpec.describe User, type: :model do
     context 'emailが255文字の場合' do
       it 'ユーザーが作成できる' do
         max = 255
-        domain = "@example.com"
-        email = "a" * (max - domain.length) + domain
+        domain = '@example.com'
+        email = 'a' * (max - domain.length) + domain
         user = build(:user, email: email)
         user.valid?
         expect(user).to be_valid
@@ -154,8 +154,8 @@ RSpec.describe User, type: :model do
     context 'emailが255文字を超えている場合' do
       it 'ユーザーが作成できない' do
         max = 255
-        domain = "@example.com"
-        email = "a" * (max + 1 - domain.length) + domain
+        domain = '@example.com'
+        email = 'a' * (max + 1 - domain.length) + domain
         user = build(:user, email: email)
         user.valid?
         expect(user).to be_invalid
