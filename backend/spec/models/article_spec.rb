@@ -25,10 +25,6 @@ require 'rails_helper'
 
 RSpec.describe Article, type: :model do
 
-  # let!(:user) { create(:user, email: 'test@example.com') }
-  # let!(:user) { create(:user) }
-  # let!(:level_list) { create(:level_list) }
-
   describe 'associations' do
     context 'テーブルと正しく紐づいているか' do
       it "Userテーブル" do
@@ -108,7 +104,14 @@ RSpec.describe Article, type: :model do
   end
 
   describe 'validate_length' do
-    context 'titleが80文字以上の場合' do
+    context 'titleが80文字の場合' do
+      let!(:article) { build(:article, title: 'a' * 80) }
+      it '記事が作成できる' do
+        expect(article).to be_valid
+      end
+    end
+
+    context 'titleが81文字以上の場合' do
       let!(:article) { build(:article, title: 'a' * 81) }
       it '記事が作成できない' do
         expect(article).to be_invalid
