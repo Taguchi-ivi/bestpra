@@ -328,7 +328,7 @@ import ArticleAbout from '~/components/Molecules/ArticleAbout.vue'
         height: 5px;
         content: '';
         border-radius: 3px;
-        background-color: var(--v-info-base);
+        background-color: #B5EAEA;
     }
 }
 

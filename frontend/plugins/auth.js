@@ -46,7 +46,6 @@ class Authentication {
     resetVuex () {
         this.setAuth({ token: null, expires: 0, user: null })
         this.store.dispatch('modules/user/getCurrentUser', null)
-        this.store.dispatch('getProjectList', [])
     }
 
     // axiosのレスポンス401を許容する

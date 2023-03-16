@@ -11,5 +11,18 @@
 require 'rails_helper'
 
 RSpec.describe LevelList, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  describe 'associations' do
+    context 'テーブルと正しく紐づいているか' do
+      it 'articleテーブル' do
+        rel = described_class.reflect_on_association(:articles)
+        expect(rel.macro).to eq :has_many
+      end
+
+      it 'notificationsテーブル' do
+        rel = described_class.reflect_on_association(:notifications)
+        expect(rel.macro).to eq :has_many
+      end
+    end
+  end
 end
