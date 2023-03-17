@@ -189,8 +189,6 @@ RSpec.describe Api::V1::ArticlesController, type: :request do
     describe 'PATCH update' do
         subject(:call_api) { patch api("/articles/#{@article_id}"), xhr: true, headers: auth(@check_token),
                             params: { article: { title: 'new title', content: 'new content', tag_list: [] } } }
-        # let!(:user) { create(:user) }
-        # let!(:article) { create(:article, user: user, title: 'aaa', content: 'bbb')}
 
         context '成功' do
             it '変更されることを確認' do
@@ -231,5 +229,64 @@ RSpec.describe Api::V1::ArticlesController, type: :request do
         end
     end
 
+    describe 'POST create' do
+        subject(:call_api) { post api("/articles"), xhr: true, headers: auth(@check_token),
+                            params: { article: { title: 'new title', content: 'new content', level_list_id: level.id, tag_list: [] } } }
+        let!(:level) { create(:level_list) }
 
+        context '成功' do
+            it '記事が作成されることを確認' do
+                user = create(:user)
+                level = create(:level_list)
+                @check_token = login({ auth: { email: user.email, password: "password" } })
+                call_api
+                expect(res_body['title']).to eq 'new title'
+                expect(res_body['content']).to eq 'new content'
+            end
+        end
+    end
+
+    describe 'DELETE destroy' do
+        subject(:call_api) { delete api("/articles/#{@article_id}"), xhr: true, headers: auth(@check_token) }
+        # let!(:user) { create(:user) }
+        # let!(:article) { create(:article, user: user, title: 'aaa', content: 'bbb')}
+
+        context '成功' do
+            it '記事が削除されることを確認' do
+                user = create(:user)
+                article = create(:article, user: user)
+                @article_id = article.id
+                @check_token = login({ auth: { email: user.email, password: "password" } })
+                call_api
+                expect(Article.find_by(id: @article_id)).to be_nil
+            end
+        end
+
+        context '失敗' do
+            it 'header情報がないと403が返ってくることを確認' do
+                article = create(:article)
+                @check_token = login({ auth: { email: article.user.email, password: "password" } })
+                delete api("/articles/#{article.id}")
+                expect(response.status).to eq 403
+            end
+
+            it '存在しない記事は削除できないことを確認' do
+                @article_id = 'aa'
+                user = create(:user)
+                @check_token = login({ auth: { email: user.email, password: "password" } })
+                call_api
+                expect(res_body).to eq 'bad_request'
+            end
+
+            it '作成したユーザーではないと削除できないことを確認' do
+                user = User.create(nickname: "test siro", email: "example44@example.com", password: "password", activated: true)
+                article = create(:article, user: user)
+                @article_id = article.id
+                other_user = User.create(nickname: "test sabro", email: "example33@example.com", password: "password", activated: true)
+                @check_token = login({ auth: { email: other_user.email, password: "password" } })
+                call_api
+                expect(res_body).to eq 'bad_request'
+            end
+        end
+    end
 end
