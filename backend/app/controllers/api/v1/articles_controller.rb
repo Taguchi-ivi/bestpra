@@ -77,9 +77,11 @@ class Api::V1::ArticlesController < ApplicationController
 
     # 作成者本人か確認
     def edit
-        return render json: :bad_request unless Article.exists?(id: params[:id])
+        # return render json: :bad_request unless Article.exists?(id: params[:id])
+        # article = Article.find(params[:id])
+        # return render json: :bad_request unless article.user_id == current_user.id
+        return render status: :bad_request if not_current_user_for_article(params[:id])
         article = Article.find(params[:id])
-        return render json: :bad_request unless article.user_id == current_user.id
 
         render json:  article.as_json(include: [
                                 {tag_list: { only: [:name]}}
@@ -87,9 +89,12 @@ class Api::V1::ArticlesController < ApplicationController
     end
 
     def update
-        render json: :bad_request if current_user_for_article
-
-        article = current_user.articles.find(params[:id])
+        # return render json: :bad_request unless Article.exists?(id: params[:id])
+        # return render json: :bad_request unless article.user_id == current_user.id
+        # article = Article.find(params[:id])
+        return render status: :bad_request if not_current_user_for_article(params[:id])
+        article = Article.find(params[:id])
+        # article = current_user.articles.find(params[:id])
         if article.update!(article_params)
 
             # 人が多くなったら不要になったタグを削除する ※ロジックの記載場所は考えること
@@ -123,7 +128,7 @@ class Api::V1::ArticlesController < ApplicationController
     end
 
     def destroy
-        return if current_user_for_article
+        return render status: :bad_request if not_current_user_for_article(params[:id])
         article = current_user.articles.find(params[:id])
         if article.destroy!
             render status: :ok
@@ -138,8 +143,9 @@ class Api::V1::ArticlesController < ApplicationController
             params.require(:article).permit(:title, :content, :image, :level_list_id)
         end
 
-        def current_user_for_article
-            current_user.id != Article.find(params[:id]).user_id
+        def not_current_user_for_article(id)
+            return true unless Article.exists?(id)
+            return true unless current_user.id == Article.find(id).user_id
         end
 
         # 不要になったタグは削除する

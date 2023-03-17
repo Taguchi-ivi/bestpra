@@ -9,7 +9,7 @@ class Api::V1::LevelListsController < ApplicationController
     # level_idに紐づくarticleデータを全件取得
     def article_level
         level_id = params[:level_list_id]
-        return render json: :bad_request unless LevelList.exists?(id: level_id, delete_flg: false)
+        return render status: :bad_request  unless LevelList.exists?(id: level_id, delete_flg: false)
 
         render json: Article.includes(:user, :level_list, :tag_list, :comments)
                                 .where(level_list_id: level_id)

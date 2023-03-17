@@ -18,7 +18,7 @@ class Api::V1::RelationshipsController < ApplicationController
 
     # フォローしているユーザー一覧を取得する
     def following
-        return render json: :bad_request unless User.exists?(id: params[:user_id])
+        return render status: :bad_request  unless User.exists?(id: params[:user_id])
         follow_ids = User.find(params[:user_id]).following.pluck(:id)
         render json: User.includes(:passive_relationships)
                             .where(id: follow_ids)
@@ -28,7 +28,7 @@ class Api::V1::RelationshipsController < ApplicationController
 
     # フォロワー一覧を取得する
     def followers
-        return render json: :bad_request unless User.exists?(id: params[:user_id])
+        return render status: :bad_request  unless User.exists?(id: params[:user_id])
         follower_ids = User.find(params[:user_id]).followers.pluck(:id)
         render json: User.includes(:active_relationships)
                             .where(id: follower_ids)
