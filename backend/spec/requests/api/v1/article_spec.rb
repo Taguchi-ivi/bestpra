@@ -216,7 +216,7 @@ RSpec.describe Api::V1::ArticlesController, type: :request do
                 user = create(:user)
                 @check_token = login({ auth: { email: user.email, password: "password" } })
                 call_api
-                expect(response.status).to eq 400
+                expect(res_body).to eq 'bad_request'
             end
 
             it '作成したユーザーではないと変更できないことを確認' do
@@ -226,7 +226,7 @@ RSpec.describe Api::V1::ArticlesController, type: :request do
                 other_user = User.create(nickname: "test sabro", email: "example33@example.com", password: "password", activated: true)
                 @check_token = login({ auth: { email: other_user.email, password: "password" } })
                 call_api
-                expect(response.status).to eq 400
+                expect(res_body).to eq 'bad_request'
             end
         end
     end

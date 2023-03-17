@@ -77,10 +77,8 @@ class Api::V1::ArticlesController < ApplicationController
 
     # 作成者本人か確認
     def edit
-        # return render json: :bad_request unless Article.exists?(id: params[:id])
-        # article = Article.find(params[:id])
-        # return render json: :bad_request unless article.user_id == current_user.id
-        return render status: :bad_request if not_current_user_for_article(params[:id])
+        # return render status: :bad_request if not_current_user_for_article(params[:id])
+        return render json: :bad_request if not_current_user_for_article(params[:id])
         article = Article.find(params[:id])
 
         render json:  article.as_json(include: [
@@ -89,12 +87,9 @@ class Api::V1::ArticlesController < ApplicationController
     end
 
     def update
-        # return render json: :bad_request unless Article.exists?(id: params[:id])
-        # return render json: :bad_request unless article.user_id == current_user.id
-        # article = Article.find(params[:id])
-        return render status: :bad_request if not_current_user_for_article(params[:id])
+        # return render status: :bad_request if not_current_user_for_article(params[:id])
+        return render json: :bad_request if not_current_user_for_article(params[:id])
         article = Article.find(params[:id])
-        # article = current_user.articles.find(params[:id])
         if article.update!(article_params)
 
             # 人が多くなったら不要になったタグを削除する ※ロジックの記載場所は考えること
@@ -128,7 +123,8 @@ class Api::V1::ArticlesController < ApplicationController
     end
 
     def destroy
-        return render status: :bad_request if not_current_user_for_article(params[:id])
+        # return render status: :bad_request if not_current_user_for_article(params[:id])
+        return render json: :bad_request if not_current_user_for_article(params[:id])
         article = current_user.articles.find(params[:id])
         if article.destroy!
             render status: :ok

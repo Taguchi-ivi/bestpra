@@ -17,7 +17,8 @@ class Api::V1::CommentsController < ApplicationController
 
         comment = Comment.find(params[:id])
         article = comment.article
-        return render status: :bad_request  unless comment.user_id == current_user.id
+        # return render status: :bad_request  unless comment.user_id == current_user.id
+        return render json: :bad_request  unless comment.user_id == current_user.id
         if comment.destroy!
             article.delete_notification_comment!(current_user, comment.id)
             render json: {message: 'コメントを削除しました'}, status: :ok
