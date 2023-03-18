@@ -10,11 +10,11 @@ module CommonSupport
     end
 
     # 引数のparamsでログインを行う
-    def login(params)
+    def login(params, returnFlg = true)
         # post api("/auth_token"), xhr: true, params: params
         post api("/auth_token/login"), xhr: true, params: params
         # request.headers['Authorization'] = "Bearer #{res_body['token']}"
-        return res_body['token']
+        return res_body['token'] if returnFlg
     end
 
     # ログアウトapi

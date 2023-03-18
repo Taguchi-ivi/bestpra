@@ -6,12 +6,6 @@ RSpec.describe Api::V1::ArticlesController, type: :request do
         @login_user = User.create(nickname: "test taro", email: "example@example.com", password: "password", activated: true)
         @params = { auth: { email: @login_user.email, password: "password" } }
         @token = login(@params)
-        # @level = LevelList.create(name: "level1")
-        # @article = Article.create(title: "title1", content: "body1", user_id: @login_user.id, level_list_id: @level.id)
-        # @access_lifetime = UserAuth.access_token_lifetime
-        # @refresh_lifetime = UserAuth.refresh_token_lifetime
-        # @session_key = UserAuth.session_key.to_s
-        # @access_token_key = "token"
     end
 
     describe 'GET articles' do
