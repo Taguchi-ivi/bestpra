@@ -42,8 +42,9 @@ RSpec.describe Api::V1::ArticlesController, type: :request do
 
     describe 'GET articles/:id' do
         subject(:call_api) { get api("/articles/#{article.id}"), xhr: true, headers: auth(@token)}
+        let!(:user) { create(:user) }
         let!(:level) { create(:level_list) }
-        let!(:article) { create(:article, level_list_id: level.id) }
+        let!(:article) { create(:article, user_id: user.id, level_list_id: level.id) }
 
         context '成功' do
             it '200ステータスが返ってくることを確認' do
