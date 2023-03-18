@@ -20,7 +20,8 @@ require 'rspec/rails'
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-# Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
+Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
+# config.include  CommonSupport, type: :request #type: :requestのときにRequestHelperをinclude
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
@@ -60,4 +61,14 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  config.include ActiveSupport::Testing::TimeHelpers
+  # config.before do
+  #   travel_to Time.zone.now
+  # end
+
+  # config.after do
+  #   Timecop.return
+  # end
+  config.include FactoryBot::Syntax::Methods
 end

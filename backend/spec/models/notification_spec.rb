@@ -26,5 +26,60 @@
 require 'rails_helper'
 
 RSpec.describe Notification, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  describe 'associations' do
+    context 'テーブルと正しく紐づいているか' do
+      it 'articleテーブル' do
+        rel = described_class.reflect_on_association(:article)
+        expect(rel.macro).to eq :belongs_to
+      end
+
+      it 'commentテーブル' do
+        rel = described_class.reflect_on_association(:comment)
+        expect(rel.macro).to eq :belongs_to
+      end
+
+      it 'level_listテーブル' do
+        rel = described_class.reflect_on_association(:level_list)
+        expect(rel.macro).to eq :belongs_to
+      end
+
+      it 'visitedテーブル' do
+        rel = described_class.reflect_on_association(:visited)
+        expect(rel.macro).to eq :belongs_to
+      end
+
+      it 'visitorテーブル' do
+        rel = described_class.reflect_on_association(:visitor)
+        expect(rel.macro).to eq :belongs_to
+      end
+    end
+  end
+
+  describe 'correct_notification' do
+    context '正しい値の場合' do
+      it 'notificationが作成されること' do
+        notification = build(:notification, action: 'like')
+        expect(notification).to be_valid
+      end
+    end
+  end
+
+  describe 'validate_presence' do
+    context 'visitorが存在しない場合' do
+      it 'notificationが作成されないこと' do
+        notification = build(:notification, visitor_id: nil, action: 'like')
+        expect(notification).not_to be_valid
+      end
+    end
+
+    context 'visitedが存在しない場合' do
+      it 'notificationが作成されないこと' do
+        notification = build(:notification, visited_id: nil, action: 'like')
+        expect(notification).not_to be_valid
+      end
+    end
+  end
+
+
 end

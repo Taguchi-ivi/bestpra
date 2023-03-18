@@ -1,4 +1,5 @@
 module.exports = {
+  setupFiles: ['./test/setup.js'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
     '^~/(.*)$': '<rootDir>/$1',
@@ -13,6 +14,9 @@ module.exports = {
   collectCoverageFrom: [
     '<rootDir>/components/**/*.vue',
     '<rootDir>/pages/**/*.vue',
+    '<rootDir>/layouts/**/*.vue',
+    '<rootDir>/plugins/**/*.vue',
+    '<rootDir>/store/**/*.vue',
   ],
   testEnvironment: 'jsdom',
 }

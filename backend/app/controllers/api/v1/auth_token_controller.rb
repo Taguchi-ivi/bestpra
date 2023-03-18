@@ -13,7 +13,7 @@ class Api::V1::AuthTokenController < ApplicationController
     before_action :delete_session, only: [:login]
     # session_userを取得、存在しない場合は401を返す
     # before_action :sessionize_user, only: [:refresh, :destroy]
-    before_action :sessionize_user, only: [:refresh, :destroy, :logout,:update_email, :update_password]
+    before_action :sessionize_user, only: [:refresh, :destroy, :logout, :update_email, :update_password]
 
     # 新規作成
     def create

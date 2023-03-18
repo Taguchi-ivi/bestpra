@@ -14,6 +14,7 @@ class Api::V1::TagListsController < ApplicationController
     # tag_idに紐づくarticleデータを全件取得
     def article_tag
         tag_id = params[:tag_list_id]
+        # return render status: :bad_request unless TagList.exists?(id: tag_id, delete_flg: false)
         return render json: :bad_request unless TagList.exists?(id: tag_id, delete_flg: false)
 
         render json: TagList.find(tag_id).articles

@@ -31,7 +31,6 @@ class Notification < ApplicationRecord
     # validates
     validates :visitor_id, presence: true
     validates :visited_id, presence: true
-    validates :action, presence: true
     # validates :checked, presence: true
     # validates :admin, presence: true
 

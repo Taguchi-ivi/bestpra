@@ -79,6 +79,7 @@ group :development, :test do
   # rspec
   # bundle exec rspec
   gem 'rspec-rails'
+  gem 'factory_bot_rails'
 
   # add
   # faker

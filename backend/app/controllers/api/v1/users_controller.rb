@@ -8,6 +8,7 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def show
+        # return render status: :bad_request unless User.exists?(id: params[:id])
         return render json: :bad_request unless User.exists?(id: params[:id])
         user_data =  User.find(params[:id]).as_json(only: [:id, :nickname, :avatar, :introduction])
         article_count = Article.where(user_id: params[:id]).count
@@ -19,6 +20,7 @@ class Api::V1::UsersController < ApplicationController
 
     # 対象のユーザの執筆した記事を取得
     def written_articles
+        # return render status: :bad_request unless User.exists?(id: params[:user_id])
         return render json: :bad_request unless User.exists?(id: params[:user_id])
         user = User.find(params[:user_id])
         render json:  user.articles.includes(:likes, :level_list, :tag_list, comments: :user)
@@ -35,6 +37,7 @@ class Api::V1::UsersController < ApplicationController
 
     # 対象のユーザのいいね一覧を取得
     def likes
+        # return render status: :bad_request unless User.exists?(id: params[:user_id])
         return render json: :bad_request unless User.exists?(id: params[:user_id])
         user = User.find(params[:user_id])
         render json: user.likes.includes(article: [:user, :level_list, :tag_list, :comments])
