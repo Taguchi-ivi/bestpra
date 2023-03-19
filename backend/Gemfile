@@ -45,7 +45,8 @@ gem 'annotate'
 
 # add
 # jwt
-gem 'jwt', '~> 2.7'
+# gem 'jwt', '~> 2.7'
+gem 'jwt', '~> 2.4', '>= 2.4.1'
 
 # add
 # コンソールの出力結果を見やすく表示する (日本語翻訳用gemも)
