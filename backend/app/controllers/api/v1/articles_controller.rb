@@ -23,7 +23,7 @@ class Api::V1::ArticlesController < ApplicationController
                                         {user: { only: [:id, :nickname, :avatar]}},
                                         {likes: { only: [:user_id]}},
                                         {level_list: { only: [:id, :name]}},
-                                        {tag_list: { only: [:name]}},
+                                        {tag_list: { only: [:id, :name]}},
                                         {comments: { include: [
                                             user: { only: [:id, :nickname, :avatar] },]}},
                                     ])
@@ -54,7 +54,7 @@ class Api::V1::ArticlesController < ApplicationController
                                         {user: { only: [:id, :nickname, :avatar]}},
                                         {likes: { only: [:user_id]}},
                                         {level_list: { only: [:id, :name]}},
-                                        {tag_list: { only: [:name]}},
+                                        {tag_list: { only: [:id, :name]}},
                                         {comments: { only: [:id]}},
                             ])
         render json: articles
@@ -69,7 +69,7 @@ class Api::V1::ArticlesController < ApplicationController
                                         {user: { only: [:id, :nickname, :avatar]}},
                                         {likes: { only: [:user_id]}},
                                         {level_list: { only: [:id, :name]}},
-                                        {tag_list: { only: [:name]}},
+                                        {tag_list: { only: [:id, :name]}},
                                         {comments: { only: [:id]}},
                             ])
         render json: articles
