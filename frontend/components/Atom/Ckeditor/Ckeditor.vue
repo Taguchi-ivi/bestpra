@@ -1,5 +1,5 @@
 <template>
-    <div class="ckeditor">
+    <div class="ckeditor ck-content-a">
         <!-- TODO 綺麗にする -->
         <!-- placeholder="本文を入力してください(範囲選択でテキストを変更できます)" -->
         <ckeditor
