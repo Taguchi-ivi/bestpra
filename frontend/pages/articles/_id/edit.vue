@@ -168,7 +168,6 @@ export default {
 
             await this.$axios.$patch('/api/v1/articles/' + this.$route.params.id, formData)
                 .then((res) => {
-                    console.log(res)
                     this.$router.push('/articles/' + res.id)
                     this.$my.dispatchToast(true, '素敵な練習メニュをありがとう!!', 'success')
                 })

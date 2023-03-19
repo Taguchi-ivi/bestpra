@@ -83,7 +83,6 @@ class MyInject {
                             userId: this.user.id,
                     })
                 }
-                console.log('userHomeFlg', userHomeFlg)
                 if(userHomeFlg) {
                     this.store.commit('modules/article/setDeleteLikesArticle', article.id)
                 }

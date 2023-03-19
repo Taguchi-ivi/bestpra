@@ -237,7 +237,7 @@
 
 <script>
 
-import { mapActions, mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import ErrorCard from '~/components/Molecules/ErrorCard.vue'
 import AvatarImg from '~/components/Atom/App/AppAvatarImg.vue'
 
@@ -249,7 +249,6 @@ export default {
     },
     async asyncData({$axios, $my, params, store, route}) {
         const res = await $axios.$get(`/api/v1/users/${params.id}`)
-        console.log('res', res)
         if(res === 'bad_request') {
             store.dispatch('modules/toast/getToast', {
                         status: true,
