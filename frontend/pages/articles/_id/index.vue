@@ -159,7 +159,7 @@
                             <p :class="$vuetify.breakpoint.xs ? '' : 'ml-3'">更新日:{{ $my.dataFormat(currentArticleData.updated_at) }}</p>
                         </div>
                         <div
-                            class="mt-15"
+                            class="mt-15 ck-content ck-content-a"
                         >
                             <!-- eslint-disable-next-line vue/no-v-html -->
                             <div v-html="currentArticleData.content" />

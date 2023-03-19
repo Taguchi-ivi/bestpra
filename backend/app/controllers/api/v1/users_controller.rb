@@ -47,7 +47,7 @@ class Api::V1::UsersController < ApplicationController
                                     { include: [
                                         {user: { only: [:id, :nickname, :avatar]}},
                                         {level_list: { only: [:id, :name]}},
-                                        {tag_list: { only: [:name]}},
+                                        {tag_list: { only: [:id, :name]}},
                                         {comments: { only: [:user_id]}}]
                                     }})
     end

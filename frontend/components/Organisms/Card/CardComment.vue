@@ -126,8 +126,6 @@ export default {
             commitDeleteArticleComment: 'modules/comment/setDeleteArticleComment'
         }),
         async commentDelete(commentId) {
-            console.log('commentのIDになっていますか？', commentId)
-            // await this.$axios.$delete(`/api/v1/articles/${this.articleComments[0].article_id}/comments/${commentId}`)
             await this.$axios.$delete(`/api/v1/articles/${this.$route.params.id}/comments/${commentId}`)
                 .then(res => {
                     this.commitDeleteArticleComment(commentId)

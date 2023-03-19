@@ -277,7 +277,6 @@ export default {
     },
     async asyncData({ $axios, store}) {
         const res = await $axios.$get('/api/v1/users/edit')
-        console.log(res)
         return {
             user: {
                 id: res.id,
@@ -415,7 +414,6 @@ export default {
             }
             await this.$axios.$patch('/api/v1/auth_token/update_password',params)
                 .then(res => {
-                    console.log(res)
                     this.$auth.login(res)
                     this.$my.dispatchToast(true, 'パスワードの更新しました', 'info')
                 })

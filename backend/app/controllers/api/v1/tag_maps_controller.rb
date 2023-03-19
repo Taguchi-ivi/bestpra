@@ -1,10 +1,6 @@
 class Api::V1::TagMapsController < ApplicationController
     before_action :authenticate_user
 
-    def update
-        if tag_map.exisxt?(article_id: params[:article_id], tag_list_id: params[:tag_list_id])
-    end
-
     def create
 
         level_list = LevelList.new(level_list_params)

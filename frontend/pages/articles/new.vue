@@ -46,6 +46,7 @@
                 <client-only>
                     <Ckeditor :text.sync="text" />
                 </client-only>
+                <!-- <div>{{ text }}</div> -->
                 <ArticleTag
                     v-model="chips"
                 />

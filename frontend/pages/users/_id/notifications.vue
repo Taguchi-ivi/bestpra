@@ -68,7 +68,7 @@ export default {
             this.commitHeaderUpdate()
             await this.$axios.$patch('/api/v1/notifications/all_update')
                 .then(res => {
-                    console.log(res)
+                    // console.log(res)
                 })
                 .catch(err => {
                     console.log(err)

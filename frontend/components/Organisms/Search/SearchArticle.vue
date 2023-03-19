@@ -86,7 +86,6 @@ export default {
                 }
             })
                 .then(res => {
-                    console.log('res',res)
                     res.data.length > 0 ? this.dispatchArticles(res.data) : this.dispatchResetArticles()
                 })
                 .catch(err => {

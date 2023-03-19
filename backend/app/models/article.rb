@@ -46,6 +46,13 @@ class Article < ApplicationRecord
     #     super(options.merge(include: [:user, :level_list, {tag_list: {only: :name}}]))
     # end
 
+    # xss対策
+    def sanitize_content
+        # self.content = Sanitize.clean(self.content, Sanitize::Config::RELAXED)
+        # self.content = sanitize self.content, tags: %w(strong em u p h1 h2 h3 h4 h5 ul ol li a blockquote), attributes: %w(href)
+        self.content = Sanitize.clean(self.content, Sanitize::Config::CUSTOM)
+    end
+
     # 一度tag_mapの情報を削除する
     def delete_tag_map
         return unless TagMap.exists?(article_id: self.id)

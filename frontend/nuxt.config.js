@@ -35,7 +35,7 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '~/assets/main.scss'
+    '~/assets/main.scss',
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -152,25 +152,5 @@ export default {
     transpile: [
       'lodash-es'
     ],
-    // CkEditor
-    plugins: [
-      // If you set ssr: true that will cause the following error. This error does not affect the operation.
-      // ERROR  [CKEditorWebpackPlugin] Error: No translation has been found for the zh language.
-      new CKEditorWebpackPlugin({
-        // See https://ckeditor.com/docs/ckeditor5/latest/features/ui-language.html
-        // language: "ja",
-        additionalLanguages: 'all',
-        addMainLanguageTranslationsToAllAssets: true,
-      })
-    ],
-
-    // If you don't add postcss, the CKEditor css will not work.
-    postcss: CKEditorStyles.getPostCssConfig({
-      themeImporter: {
-        themePath: require.resolve("@ckeditor/ckeditor5-theme-lark")
-      },
-      minify: true
-    }),
-
   },
 }

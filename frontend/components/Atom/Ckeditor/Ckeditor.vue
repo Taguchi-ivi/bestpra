@@ -1,5 +1,5 @@
 <template>
-    <div class="ckeditor">
+    <div class="ckeditor ck-content-a">
         <!-- TODO 綺麗にする -->
         <!-- placeholder="本文を入力してください(範囲選択でテキストを変更できます)" -->
         <ckeditor
@@ -13,30 +13,10 @@
 </template>
 
 <script>
-// --
 import CKEditor from '@ckeditor/ckeditor5-vue2'
-// import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor'
-// import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold'
-// import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic.js'
-// import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline'
-// import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough'
-// // less Heading + Essentials plugin can't input the text
-// import Heading from '@ckeditor/ckeditor5-heading/src/heading'
-// import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials'
-// import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload'
-// import ImageInsert from '@ckeditor/ckeditor5-image/src/imageinsert'
-// import AutoImage from '@ckeditor/ckeditor5-image/src/autoimage'
-// import Image from '@ckeditor/ckeditor5-image/src/image'
-// import ImageResizeEditing from '@ckeditor/ckeditor5-image/src/imageresize/imageresizeediting'
-// import ImageResizeHandles from '@ckeditor/ckeditor5-image/src/imageresize/imageresizehandles'
-// import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter'
-
-// --
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import ClassicEditor from '@ckeditor/ckeditor5-build-balloon';
 
-// import CKeditor from '@ckeditor/ckeditor5-build-classic';
-// import "@ckeditor/ckeditor5-build-classic/build/translations/ja.js";
 
 export default {
     name: 'CkEditor',
@@ -52,9 +32,6 @@ export default {
 
         // return { ckeditorValue, ckeditorConfig, ckeditorReady };
         return {
-            // editor: CKeditor,
-            // editorData: '<p>Content of the editor.</p>',
-            // editorConfig: {}
             editor: ClassicEditor,
             editorData: '<p>Content of the editor.</p>',
             editorConfig: {
