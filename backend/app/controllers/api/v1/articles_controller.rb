@@ -89,9 +89,12 @@ class Api::V1::ArticlesController < ApplicationController
     def update
         # return render status: :bad_request if not_current_user_for_article(params[:id])
         return render json: :bad_request if not_current_user_for_article(params[:id])
+        # article = Article.find(params[:id])
+        # if article.update!(article_params)
         article = Article.find(params[:id])
-        if article.update!(article_params)
-
+        article.assign_attributes(article_params)
+        article.sanitize_content
+        if article.save
             # 人が多くなったら不要になったタグを削除する ※ロジックの記載場所は考えること
             # old_tag_list = @article.tag_list
             # delete_tag_list(old_tag_list) unless old_tag_list.empty?
@@ -109,6 +112,7 @@ class Api::V1::ArticlesController < ApplicationController
     def create
         # tag情報も作成する
         article = current_user.articles.build(article_params)
+        article.sanitize_content
         if article.save!
 
             # タグ情報も作成する
