@@ -2,8 +2,7 @@ name: build-and-test
 on:
   push:
     branches:
-      - rich-text-action
-      # - main
+      - main
 
 env:
   AWS_REGION: ap-northeast-1
@@ -39,8 +38,6 @@ jobs:
           BIND-ADDRESS: 0.0.0.0
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
-      # - name: Install OpenSSL # 固定する
-      #   run: sudo apt-get install openssl=1.1.1
       - uses: actions/checkout@v3
       - name: set up ruby
         uses: ruby/setup-ruby@v1
