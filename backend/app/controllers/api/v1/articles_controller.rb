@@ -1,5 +1,6 @@
 class Api::V1::ArticlesController < ApplicationController
-    before_action :authenticate_user, except: [:article_about]
+    # before_action :authenticate_user, except: [:article_about]
+    before_action :authenticate_active_user, except: [:article_about]
 
     def index
         articles = Article.includes(:user, :likes, :level_list, :tag_list, comments: :user)

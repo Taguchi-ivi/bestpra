@@ -1,5 +1,6 @@
 class Api::V1::NotificationsController < ApplicationController
-    before_action :authenticate_user
+    # before_action :authenticate_user
+    before_action :authenticate_active_user
 
     def index
         notifications = current_user.passive_notifications

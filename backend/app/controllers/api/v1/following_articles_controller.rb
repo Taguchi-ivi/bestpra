@@ -1,5 +1,6 @@
 class Api::V1::FollowingArticlesController < ApplicationController
-    before_action :authenticate_user
+    # before_action :authenticate_user
+    before_action :authenticate_active_user
 
     # フォローしているユーザーの記事一覧を取得
     def index

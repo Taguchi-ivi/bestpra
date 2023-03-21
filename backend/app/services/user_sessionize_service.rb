@@ -3,7 +3,7 @@
 
 module UserSessionizeService
 
-    # セッションユーザーが居ればtrue、存在しない場合は401を返す
+    # セッションユーザーが居ればtrue、存在しない場合は401を返すfrom_refresh_token
     def sessionize_user
         session_user.present? || unauthorized_user
     end
@@ -22,6 +22,7 @@ module UserSessionizeService
 
         # cookieのtokenを取得
         def token_from_cookies
+            puts "token_from_cookies => #{cookies[session_key]}"
             cookies[session_key]
         end
 

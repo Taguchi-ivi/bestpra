@@ -1,5 +1,6 @@
 class Api::V1::RelationshipsController < ApplicationController
-    before_action :authenticate_user
+    # before_action :authenticate_user
+    before_action :authenticate_active_user
 
     def create
         user = User.find(params[:user_id])

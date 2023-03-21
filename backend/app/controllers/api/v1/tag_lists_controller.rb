@@ -1,5 +1,6 @@
 class Api::V1::TagListsController < ApplicationController
-    before_action :authenticate_user
+    # before_action :authenticate_user
+    before_action :authenticate_active_user
 
     def index
         # nameでソート

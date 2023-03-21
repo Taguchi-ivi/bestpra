@@ -1,5 +1,6 @@
 class Api::V1::CommentsController < ApplicationController
-    before_action :authenticate_user
+    # before_action :authenticate_user
+    before_action :authenticate_active_user
 
     def create
         article = Article.find(params[:article_id])
