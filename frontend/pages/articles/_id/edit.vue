@@ -130,7 +130,8 @@ export default {
             selectFile: [],
             loading: false,
             error: false,
-            tag_list: []
+            tag_list: [],
+            deleteFlg : false,
         }
     },
     head(){
@@ -145,8 +146,10 @@ export default {
         },
         deleteView() {
             this.imageUrl = ''
+            this.deleteFlg = true
             URL.revokeObjectURL(this.imageUrl)
         },
+        // async updateArticle() {
         async updateArticle() {
             if(!this.isValid || !this.text) {
                 this.$vuetify.goTo(0)
@@ -162,8 +165,8 @@ export default {
             formData.append('article[title]', this.title)
             formData.append('article[level]', this.level.id)
             formData.append('article[content]', this.text)
-            formData.append('article[image]', this.selectFile)
-            const appendChips = this.chips.length === 0 ? [] : this.chips
+            if (this.deleteFlg) formData.append('article[image]', this.selectFile)
+            const appendChips = this.chips.length === 0 ? this.tag_list : this.chips
             formData.append('article[tag_list]', appendChips)
 
             await this.$axios.$patch('/api/v1/articles/' + this.$route.params.id, formData)
