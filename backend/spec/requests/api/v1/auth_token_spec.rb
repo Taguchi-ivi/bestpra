@@ -25,7 +25,6 @@ RSpec.describe Api::V1::AuthTokenController, type: :request do
                 expect(response.body).to be_blank
             end
 
-            # TODO 確認
             it "does not save the refresh_jti" do
                 user.reload
                 expect(user.refresh_jti).to be_nil
@@ -67,7 +66,7 @@ RSpec.describe Api::V1::AuthTokenController, type: :request do
                 user.reload
                 refresh_token = User.decode_refresh_token(cookies[session_key])
                 expect(refresh_token.entity_for_user).to eq(user)
-                # TODO 確認
+
                 expect(refresh_token.payload["jti"]).to eq(user.refresh_jti)
                 # 誤差1秒を許容する
                 expect(refresh_token.payload["exp"]).to be_within(1.second).of(refresh_lifetime.from_now.to_i)
@@ -128,7 +127,7 @@ RSpec.describe Api::V1::AuthTokenController, type: :request do
                 expect(new_refresh_token).to_not be_nil
                 expect(new_user_jti).to_not be_nil
 
-                # tokenとjtiが新しく発行されているか #TODO sessionのjtiは新しく発行されているかを確認する
+                # tokenとjtiが新しく発行されているか
                 expect(old_access_token).to_not eq(new_access_token)
                 expect(old_refresh_token).to_not eq(new_refresh_token)
                 expect(old_user_jti).to_not eq(new_user_jti)

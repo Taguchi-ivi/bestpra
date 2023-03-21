@@ -77,6 +77,7 @@ resource "aws_ecs_task_definition" "frontend" {
     ])
 }
 
+    # enable_execute_command   = true
 resource "aws_ecs_task_definition" "backend" {
     family                   = local.backend_task_name
     requires_compatibilities = ["FARGATE"]
@@ -126,6 +127,10 @@ resource "aws_ecs_task_definition" "backend" {
                 {
                     name: "AWS_SECRET_ACCESS_KEY"
                     valueFrom: data.aws_ssm_parameter.secret_access_key.arn
+                },
+                {
+                    name: "BASE_URL"
+                    valueFrom: "https://${local.app_domain_name}"
                 },
                 {
                     name: "DB_DATABASE"

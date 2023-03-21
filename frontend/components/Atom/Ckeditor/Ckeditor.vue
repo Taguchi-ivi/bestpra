@@ -1,7 +1,5 @@
 <template>
     <div class="ckeditor ck-content-a">
-        <!-- TODO 綺麗にする -->
-        <!-- placeholder="本文を入力してください(範囲選択でテキストを変更できます)" -->
         <ckeditor
             v-model="setRichText"
             :editor="editor"
@@ -35,15 +33,6 @@ export default {
             editor: ClassicEditor,
             editorData: '<p>Content of the editor.</p>',
             editorConfig: {
-                // htmlSupport: {
-				// 		disallow: [
-				// 			{
-				// 				name: /.*/,
-				// 				style: /.*/
-				// 			}
-				// 		]
-				// 	},
-                // extraPlugins: [ HtmlSupport ],
                 toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
                 heading: {
                     options: [
