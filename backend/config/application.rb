@@ -31,7 +31,7 @@ module App
     config.i18n.default_locale = :ja
 
     # fakerを日本語仕様に変更する
-    Faker::Config.locale = :ja unless Rails.env.production
+    Faker::Config.locale = :ja unless Rails.env.production?
 
     # $LOAD_PATHにautoload pathを追加しない(Zeitwerk有効時false推奨)
     config.add_autoload_paths_to_load_path = false
