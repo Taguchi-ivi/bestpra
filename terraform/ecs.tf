@@ -23,6 +23,10 @@ data "aws_ssm_parameter" "secret_access_key" {
     name = "${local.ssm_parameter_store_base}/secret_access_key"
 }
 
+data "aws_ssm_parameter" "base_url" {
+    name = "${local.ssm_parameter_store_base}/base_url"
+}
+
 
 ####################################################
 # ECS cluster
@@ -130,7 +134,7 @@ resource "aws_ecs_task_definition" "backend" {
                 },
                 {
                     name: "BASE_URL"
-                    valueFrom: "https://${local.app_domain_name}"
+                    valueFrom: data.aws_ssm_parameter.base_url.arn
                 },
                 {
                     name: "DB_DATABASE"
