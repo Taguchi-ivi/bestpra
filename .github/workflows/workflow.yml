@@ -2,7 +2,8 @@ name: build-and-test
 on:
   push:
     branches:
-      - main
+      - v1-deploy
+      # - main
 
 env:
   AWS_REGION: ap-northeast-1
@@ -250,30 +251,30 @@ jobs:
           wait-for-service-stability: true
 
   # slack
-  send-slack:
-    needs: [ecs_update_backend, ecs_update_frontend]
-    name: Slack Notification
-    if: always()
-    env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-      SLACK_USERNAME: DeployBot
-      SLACK_CHANNEL: sendbox
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      # 成功
-      - name: Slack Notification on Success
-        if: ${{ success() }}
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_TITLE: Deploy Success
-          SLACK_COLOR: good
+  # send-slack:
+  #   needs: [ecs_update_backend, ecs_update_frontend]
+  #   name: Slack Notification
+  #   if: always()
+  #   env:
+  #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+  #     SLACK_USERNAME: DeployBot
+  #     SLACK_CHANNEL: sendbox
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     # 成功
+  #     - name: Slack Notification on Success
+  #       if: ${{ success() }}
+  #       uses: rtCamp/action-slack-notify@v2
+  #       env:
+  #         SLACK_TITLE: Deploy Success
+  #         SLACK_COLOR: good
 
-      # 失敗
-      - name: Slack Notification on Failure
-        if: ${{ failure() }}
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_TITLE: Deploy Failure
-          SLACK_COLOR: danger
+  #     # 失敗
+  #     - name: Slack Notification on Failure
+  #       if: ${{ failure() }}
+  #       uses: rtCamp/action-slack-notify@v2
+  #       env:
+  #         SLACK_TITLE: Deploy Failure
+  #         SLACK_COLOR: danger
