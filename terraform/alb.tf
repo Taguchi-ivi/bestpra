@@ -75,9 +75,9 @@ resource "aws_lb_target_group" "frontend" {
     port                 = "80"
     protocol             = "HTTP"
     deregistration_delay = "60"
-    health_check { path = "/"}
     # add
     # depends_on = [aws_lb.this]
+    # health_check { path = "/"}
     health_check {
         enabled             = true
         path                = "/"
