@@ -7,7 +7,9 @@ class ApplicationController < ActionController::API
 
     # CSRF対策
     # TODO 検証環境ではコメントアウトするとデータの取得可能 ※最後必ずコメントアウトを外す
-    before_action :xhr_request?
+    # ヘルスチェック時はスキップ
+    # before_action :xhr_request?
+    before_action :xhr_request?, if: :check_xhr_request?
 
     private
 
