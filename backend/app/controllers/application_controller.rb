@@ -25,4 +25,8 @@ class ApplicationController < ActionController::API
             render status: 500, json: { status: 500, error: msg }
         end
 
+        def check_xhr_request?
+            true
+        end
+
 end
