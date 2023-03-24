@@ -17,13 +17,16 @@ ENV HOME=/$HOMEDIR \
 WORKDIR $HOMEDIR
 
 # COPY ./ ./
-COPY package.json .
+COPY package*.json ./
+COPY  .yarnrc ./
+
+RUN apk update && \
+    apk upgrade && \
+    npm install -g n && \
+    yarn install &&\
+    rm -rf /var/cache/apk/*
+
 COPY . .
-
-RUN apk update && apk add bash
-
-RUN yarn install
-RUN yarn run build
 
 # EXPOSE 3000
 EXPOSE 8080

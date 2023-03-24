@@ -13,10 +13,16 @@ ENV HOME=/$HOMEDIR \
 # RUN echo $CONTAINER_PORT
 
 WORKDIR $HOMEDIR
-COPY ./ ./
-RUN apk update && apk add bash
+COPY package*.json ./
+COPY  .yarnrc ./
 
-RUN yarn install
+RUN apk update && \
+    apk upgrade && \
+    npm install -g n && \
+    yarn install &&\
+    rm -rf /var/cache/apk/*
+
+COPY ./ ./
 
 # EXPOSE 3000
-CMD ["yarn", "run", "dev"]
+# CMD ["yarn", "run", "dev"]

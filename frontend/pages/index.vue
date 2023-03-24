@@ -1,3 +1,4 @@
+<!-- health check -->
 <template>
   <div class="ma-16">
     <div class="my-2">
@@ -24,6 +25,11 @@
 
 <script>
 export default {
+  name: 'PageIndex',
+  // ページをレンダリングする前に実行
+  // middleware ({ redirect }) {
+  //       return redirect('/about')
+  // },
   data () {
     return {
       msgs: []
