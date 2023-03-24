@@ -96,9 +96,10 @@ export default {
   },
 
   // localでの作業効率化のため、defultの3000から変更
-  server: {
-    port: 8080
-  },
+  // TODO local本番環境の場合は下記をコメントアウト
+  // server: {
+  //   port: 8080
+  // },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
