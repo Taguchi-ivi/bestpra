@@ -56,10 +56,6 @@ test:
 production:
   <<: *default
   database: <%= ENV['DB_DATABASE'] %>
-  charset: utf8mb4
-  collation: utf8mb4_general_ci
   username: <%= ENV['DB_USERNAME'] %>
   password: <%= ENV['DB_PASSWORD'] %>
-  host: <%= ENV['DB_HOSTNAME'] %>
-  pool: 20
-  timeout: 1000
+  host: <%= ENV['DB_HOST'] %>
