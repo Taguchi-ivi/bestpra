@@ -27,9 +27,9 @@
 export default {
   name: 'PageIndex',
   // ページをレンダリングする前に実行
-  // middleware ({ redirect }) {
-  //       return redirect('/about')
-  // },
+  middleware ({ redirect }) {
+        return redirect('/about')
+  },
   data () {
     return {
       msgs: []

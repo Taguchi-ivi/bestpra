@@ -22,7 +22,7 @@ module UserSessionizeService
 
         # cookieのtokenを取得
         def token_from_cookies
-            puts "token_from_cookies => #{cookies[session_key]}"
+            # puts "token_from_cookies => #{cookies[session_key]}"
             cookies[session_key]
         end
 

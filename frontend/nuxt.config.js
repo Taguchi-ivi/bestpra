@@ -34,8 +34,8 @@ export default {
       { hid: 'og:url', property: 'og:url', content: 'https://app.best-pra.com' },
       { hid: 'og:title', property: 'og:title', content: 'bestpra(ベストプラ)' },
       { hid: 'og:description', property: 'og:description', content: 'あなたにあったサッカーの練習メニューが見つかる。それがbestpra' },
-      { hid: 'og:image', property: 'og:image', content: 'https://app.best-pra.com/assets/img/ogp/ogp-image.png' },
-      { name: 'twitter:card', content: 'summary' }//　twitterの画像サイズ
+      { hid: 'og:image', property: 'og:image', content: 'https://app.best-pra.com/ogp/ogp-image.png' },
+      { name: 'twitter:card', content: 'summary' }// twitterの画像サイズ
     ],
     // link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     link: [{ rel: 'icon', type: 'image/png', href: '/favicon.png' }],
@@ -53,14 +53,10 @@ export default {
     { src: '~/plugins/nuxt-server-init.js', mode: 'server'},
     { src: '~/plugins/my-inject.js'},
     { src: '~/plugins/ckeditor.js', mode: 'client'},
-    // { src: '~/plugins/firebase.js', mode: 'client'},
-    // { src: '~/plugins/authentication.js'},
-    // 'plugins/my-inject'
   ],
 
   // middleware
   router: {
-    // middleware: ['silent-refresh-token','get-auth-state']
     middleware: ['silent-refresh-token']
   },
 
@@ -97,9 +93,9 @@ export default {
 
   // localでの作業効率化のため、defultの3000から変更
   // TODO local本番環境の場合は下記をコメントアウト
-  // server: {
-  //   port: 8080
-  // },
+  server: {
+    port: process.env.NODE_ENV === 'production' ? 3000 : 8080,
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
