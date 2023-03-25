@@ -21,7 +21,8 @@ data "aws_ssm_parameter" "database_password" {
 resource "aws_ssm_parameter" "database_url" {
     name  = "${local.ssm_parameter_store_base}/database_url"
     type  = "String"
-    value = aws_db_instance.this.endpoint
+    value = replace(aws_db_instance.this.endpoint, ":3306", "")
+    # value = aws_db_instance.this.endpoint
 }
 
 ####################################################
