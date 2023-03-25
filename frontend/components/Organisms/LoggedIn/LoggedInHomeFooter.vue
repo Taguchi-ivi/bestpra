@@ -39,24 +39,28 @@
         </v-footer>
     </div>
 </template>
+
 <script>
+
 export default {
-    data: () => ({
-        icons: [
-            {name: 'mdi-home', path: '/home/all'},
-            {name: 'mdi-account-cog', path: `/users/edit`},
-            {name: 'mdi-magnify', path: '/search'},
-            {name: 'mdi-pencil', path: '/articles/new'},
-        ],
-        items: [
-            'default',
-            'absolute',
-            'fixed',
-        ],
-        padless: false,
-        variant: 'default',
-        drawer: false,
-        group: null,
-    }),
+    data() {
+        return {
+            icons: [
+                {name: 'mdi-home', path: '/home/all'},
+                {name: 'mdi-account-cog', path: `/users/edit`},
+                {name: 'mdi-magnify', path: '/search'},
+                {name: 'mdi-pencil', path: '/articles/new'},
+            ],
+            items: [
+                'default',
+                'absolute',
+                'fixed',
+            ],
+            padless: false,
+            variant: 'default',
+            drawer: false,
+            group: null,
+        }
+    }
 }
 </script>

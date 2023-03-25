@@ -1,52 +1,54 @@
 <template>
-<v-app-bar
-    fixed
-    :color="toolbarStyle.color"
-    :elevation="toolbarStyle.elevation"
-    class="z-500"
->
-    <nuxt-link to="/about">
-        <v-img
-            :width="$vuetify.breakpoint.xs ? 35 : 50"
-            src="/header-logo.png"
-        >
-    </v-img>
-    </nuxt-link>
-    <v-toolbar-title class="ml-3 hidden-mobile-and-down">bestpra</v-toolbar-title>
-
-    <v-spacer></v-spacer>
-
-    <div
-        class="mr-2"
+    <v-app-bar
+        fixed
+        :color="toolbarStyle.color"
+        :elevation="toolbarStyle.elevation"
+        class="z-500"
     >
-        <v-btn
-            elevation="4"
-            outlined
-            :small="$vuetify.breakpoint.xs ? true : false"
-            color="primary"
-            to="/auth/signup" nuxt
+        <nuxt-link to="/about">
+            <v-img
+                :width="$vuetify.breakpoint.xs ? 35 : 50"
+                :src="headerLogo"
+            >
+        </v-img>
+        </nuxt-link>
+        <v-toolbar-title class="ml-3 hidden-mobile-and-down">bestpra</v-toolbar-title>
+
+        <v-spacer></v-spacer>
+
+        <div
+            class="mr-2"
         >
-            会員登録
-        </v-btn>
-    </div>
-    <div>
-        <v-btn
-            text
-            color="primary"
-            :small="$vuetify.breakpoint.xs ? true : false"
-            to="/auth/signin" nuxt
-        >
-            ログイン
-        </v-btn>
-    </div>
-</v-app-bar>
+            <v-btn
+                elevation="4"
+                outlined
+                :small="$vuetify.breakpoint.xs ? true : false"
+                color="primary"
+                to="/auth/signup" nuxt
+            >
+                会員登録
+            </v-btn>
+        </div>
+        <div>
+            <v-btn
+                text
+                color="primary"
+                :small="$vuetify.breakpoint.xs ? true : false"
+                to="/auth/signin" nuxt
+            >
+                ログイン
+            </v-btn>
+        </div>
+    </v-app-bar>
 </template>
 
 <script>
+import headerLogo from '~/assets/img/header/header-logo.png'
 
 export default {
     data () {
         return {
+            headerLogo,
             scrollY: 0,
         }
     },
