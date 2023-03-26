@@ -23,4 +23,4 @@ names.length.times do |i|
 end
 
 puts "追加分の件数 => #{LevelList.count - level_count}"
-puts "トータル件数 => #{LevelList.coun}"
+puts "トータル件数 => #{LevelList.count}"
