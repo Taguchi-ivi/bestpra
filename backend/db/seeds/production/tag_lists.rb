@@ -70,4 +70,5 @@ names.length.times do |i|
     end
 end
 
-puts "tag_lists = #{TagList.count - tag_count}"
+puts "追加分の件数 => #{TagList.count - tag_count}"
+puts "トータル件数 => #{TagList.count}"

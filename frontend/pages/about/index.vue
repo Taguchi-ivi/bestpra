@@ -11,7 +11,7 @@
                 <div
                     class="my-12"
                 >
-                    <span :class="$vuetify.breakpoint.xs ? '' : 'text-h5'">
+                    <span>
                         あなたにあった練習が見つかる<br />
                         それがbestpra
                     </span>
@@ -33,7 +33,7 @@
                                     class="mb-5"
                                     contain
                                     max-height="auto"
-                                    :width="$vuetify.breakpoint.xs ? 100 :150"
+                                    :width="$vuetify.breakpoint.xs ? 80 :150"
                                     :src="aboutImg01"
                                     alt="サッカー風景"
                                 >
@@ -43,7 +43,7 @@
                                 <v-img
                                     contain
                                     max-height="auto"
-                                    :width="$vuetify.breakpoint.xs ? 100 :150"
+                                    :width="$vuetify.breakpoint.xs ? 80 :150"
                                     :src="aboutImg02"
                                     alt="サッカー風景"
                                 >
@@ -74,7 +74,7 @@
                                     class="mb-5 ml-auto"
                                     contain
                                     max-height="auto"
-                                    :width="$vuetify.breakpoint.xs ? 80 :150"
+                                    :width="$vuetify.breakpoint.xs ? 60 :150"
                                     :src="aboutImg03"
                                     alt="サッカー風景"
                                 >
@@ -85,7 +85,7 @@
                                     class="ml-auto"
                                     contain
                                     max-height="auto"
-                                    :width="$vuetify.breakpoint.xs ? 100 :150"
+                                    :width="$vuetify.breakpoint.xs ? 80 :150"
                                     :src="aboutImg04"
                                     alt="サッカー風景"
                                 >
@@ -292,24 +292,31 @@ import ArticleAbout from '~/components/Molecules/ArticleAbout.vue'
         top: 30%;
         left: 60%;
         transform: translate(-50%,-50%);
-        @media only screen and (max-width: 560px) {
-            top: 40%;
+        @media only screen and (max-width: 840px) {
             left: 55%;
         }
-        @media only screen and (max-width: 320px) {
-            top: 50%;
+        @media only screen and (max-width: 750px) {
             left: 50%;
+        }
+        @media only screen and (max-width:680px) {
+            left: 45%;
+        }
+        @media only screen and (max-width: 600px) {
+            top: 50%;
+        }
+        @media only screen and (max-width: 510px) {
+            left: 40%;
         }
 
         span {
             font-size: 20px;
             font-weight: bold;
             background:linear-gradient(transparent 60%, var(--v-secondary-base) 60%);
-            @media only screen and (max-width: 560px) {
-                font-size: 10px;
+            @media only screen and (max-width: 470px) {
+                font-size: 16px;
             }
-            @media only screen and (max-width: 430px) {
-                font-size: 8px;
+            @media only screen and (max-width: 380px) {
+                font-size: 12px;
             }
         }
     }
