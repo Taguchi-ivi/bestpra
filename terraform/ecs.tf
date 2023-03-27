@@ -27,6 +27,10 @@ data "aws_ssm_parameter" "base_url" {
     name = "${local.ssm_parameter_store_base}/base_url"
 }
 
+data "aws_ssm_parameter" "cookies_same_site" {
+    name = "${local.ssm_parameter_store_base}/cookies_same_site"
+}
+
 
 ####################################################
 # ECS cluster
@@ -151,6 +155,10 @@ resource "aws_ecs_task_definition" "backend" {
                 {
                     name: "DB_HOST"
                     valueFrom: aws_ssm_parameter.database_url.arn
+                },
+                {
+                    name: "COOKIES_SAME_SITE"
+                    valueFrom: data.aws_ssm_parameter.cookies_same_site.arn
                 }
             ]
             logConfiguration = {
