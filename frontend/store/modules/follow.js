@@ -16,7 +16,7 @@ export const getters = {
 
 export const actions = {
     getCurrentFollow({ commit }, currentFollow ) {
-        commit('setErrorStatus', currentFollow )
+        commit('setCurrentFollow', currentFollow )
     },
 
     getOtherFollower({ commit }, otherFollower ) {

@@ -38,6 +38,7 @@ class Authentication {
 
     // ログイン業務
     login (response) {
+        this.resetVuex()
         this.setAuth(response)
     }
 
@@ -45,6 +46,10 @@ class Authentication {
     resetVuex () {
         this.setAuth({ token: null, expires: 0, user: null })
         this.store.dispatch('modules/user/getCurrentUser', null)
+        this.store.dispatch('modules/follow/getCurrentFollow', ['nothing'])
+        this.store.dispatch('modules/like/getCurrentLike', ['nothing'])
+        this.store.dispatch('modules/notification/getNotificationHeader', [])
+        this.store.dispatch('modules/notification/getNotifications', [])
     }
 
     // axiosのレスポンス401を許容する
