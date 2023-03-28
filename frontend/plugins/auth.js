@@ -38,7 +38,7 @@ class Authentication {
 
     // ログイン業務
     login (response) {
-        this.resetVuex()
+        // this.resetVuex()
         this.setAuth(response)
     }
 
