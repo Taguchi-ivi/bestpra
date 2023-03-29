@@ -10,7 +10,7 @@ const CKEditorStyles = require("@ckeditor/ckeditor5-dev-utils").styles
 // const envSet = require(`./env.${environment}.js`);
 
 export default {
-
+  ssr: false,
   // env: envSet,
   env: {
 
@@ -50,9 +50,9 @@ export default {
   plugins: [
     { src: '~/plugins/auth.js'},
     { src: '~/plugins/axios.js'},
-    { src: '~/plugins/nuxt-server-init.js', mode: 'server'},
     { src: '~/plugins/my-inject.js'},
     { src: '~/plugins/ckeditor.js', mode: 'client'},
+    // { src: '~/plugins/nuxt-server-init.js'},
   ],
 
   // middleware

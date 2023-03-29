@@ -3,6 +3,7 @@
 // 401エラー許容する
 // export default ({ $auth, $axios }) => {
 export default async ({ $auth, $axios }) => {
+    console.log('nuxt-server-init')
     await $axios.$post(
             '/api/v1/auth_token/refresh',
             {},

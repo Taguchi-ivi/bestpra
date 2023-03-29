@@ -30,6 +30,7 @@ export default {
         AppToaster,
         PageTop
     },
+    middleware: ['nuxt-server-init'],
     data: () => ({
       // icons: [
       //   'mdi-home',

@@ -32,6 +32,6 @@ export default {
     AppToaster,
     PageTop,
   },
-  middleware: ['authentication','get-notification','current-liked', 'current-following'],
+  middleware: ['nuxt-server-init','authentication','get-notification','current-liked', 'current-following'],
 }
 </script>
