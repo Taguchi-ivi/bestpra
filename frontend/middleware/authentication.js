@@ -9,10 +9,8 @@ export default async ({ $auth, store, route, redirect }) => {
         return false
     }
 
-    console.log('authentication login前')
     // ログイン前ユーザー処理
     if (!$auth.loggedIn()) {
-        console.log('authentication login後')
         // ユーザー以外の値が存在する可能性があるので全てを削除する
         await $auth.logout()
 

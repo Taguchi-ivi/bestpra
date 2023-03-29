@@ -39,7 +39,6 @@ class Authentication {
     // ログイン業務
     login (response) {
         // this.resetVuex()
-        console.log('auth login')
         this.setAuth(response)
     }
 
@@ -62,7 +61,6 @@ class Authentication {
     // logoutのみ401エラーを許容して、vuexの値をリセットする
     // '/api/v1/auth_token',
     async logout() {
-        console.log('auth logout')
         await this.$axios.$delete(
             '/api/v1/auth_token/logout',
             { validateStatus: status => this.resolveUnauthorized(status)}

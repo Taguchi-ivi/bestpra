@@ -7,7 +7,6 @@ export default async ({ $auth, $axios, store, route, redirect, isDev }) => {
         // if (isDev) {
         //     console.log('Execute silent refresh!!')
         // }
-        console.log('silent-refresh-token')
         await $axios.$post('/api/v1/auth_token/refresh')
             .then(response => $auth.login(response))
             .catch(() => {
