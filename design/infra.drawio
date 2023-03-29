@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="n-I4YXkVn4wm5LCXJ67a" name="ページ1">
-        <mxGraphModel dx="278" dy="2014" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="#ffffff" math="0" shadow="0">
+        <mxGraphModel dx="865" dy="2452" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="#ffffff" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -34,8 +34,8 @@
                 <mxCell id="44" value="&lt;font color=&quot;#d86613&quot; style=&quot;font-size: 13px;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; ECS Fargate&lt;/font&gt;" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_ec2_instance_contents;strokeColor=#b46504;fillColor=#FFE6CC;verticalAlign=top;align=left;spacingLeft=30;dashed=0;shadow=0;" parent="43" vertex="1">
                     <mxGeometry x="55" y="47" width="231.8" height="198.5" as="geometry"/>
                 </mxCell>
-                <mxCell id="113" value="&lt;font color=&quot;#2f495e&quot; style=&quot;font-size: 13px;&quot;&gt;Frontend&lt;/font&gt;&lt;font color=&quot;#2f495e&quot; style=&quot;font-size: 13px;&quot;&gt;(&lt;/font&gt;&lt;font color=&quot;#04c58e&quot; style=&quot;font-size: 13px;&quot;&gt;SSR&lt;/font&gt;&lt;font color=&quot;#2f495e&quot; style=&quot;font-size: 13px;&quot;&gt;)&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=9;fontColor=#000000;" parent="44" vertex="1">
-                    <mxGeometry y="168.99999999999997" width="105" height="28" as="geometry"/>
+                <mxCell id="113" value="&lt;font color=&quot;#2f495e&quot; style=&quot;font-size: 13px;&quot;&gt;Frontend&lt;/font&gt;&lt;font color=&quot;#2f495e&quot; style=&quot;font-size: 13px;&quot;&gt;(&lt;/font&gt;&lt;font color=&quot;#04c58e&quot; style=&quot;font-size: 13px;&quot;&gt;SPA&lt;/font&gt;&lt;font color=&quot;#2f495e&quot; style=&quot;font-size: 13px;&quot;&gt;)&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=9;fontColor=#000000;" parent="44" vertex="1">
+                    <mxGeometry x="1" y="168.99999999999997" width="104" height="28" as="geometry"/>
                 </mxCell>
                 <mxCell id="46" value="" style="points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.fargate;shadow=0;" parent="44" vertex="1">
                     <mxGeometry x="-2" width="48" height="48" as="geometry"/>
@@ -167,10 +167,10 @@
                 <mxCell id="94" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;ECR&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=9;fontColor=#000000;" parent="153" vertex="1">
                     <mxGeometry x="6.5" y="58" width="45" height="28" as="geometry"/>
                 </mxCell>
-                <mxCell id="162" value="" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;gradientColor=#60A337;gradientDirection=north;fillColor=#277116;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;" vertex="1" parent="38">
+                <mxCell id="162" value="" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;gradientColor=#60A337;gradientDirection=north;fillColor=#277116;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;" parent="38" vertex="1">
                     <mxGeometry x="889.68" y="151" width="59.32" height="59.32" as="geometry"/>
                 </mxCell>
-                <mxCell id="161" style="edgeStyle=none;rounded=0;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;strokeColor=#007FFF;fontSize=12;fontColor=#D86613;startArrow=classic;startFill=1;endSize=6;spacing=0;" edge="1" parent="38" source="48" target="162">
+                <mxCell id="161" style="edgeStyle=none;rounded=0;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;strokeColor=#007FFF;fontSize=12;fontColor=#D86613;startArrow=classic;startFill=1;endSize=6;spacing=0;" parent="38" source="48" target="162" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="789.9999999999999" y="205" as="sourcePoint"/>
                         <mxPoint x="909.32" y="205.7990892043931" as="targetPoint"/>
