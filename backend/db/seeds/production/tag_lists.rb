@@ -5,11 +5,14 @@ tag_count = TagList.count
 names = [
     'シュート',
     'ドリブル',
+    'パス',
     'パス回し',
     'ボールコントロール',
     'ゲーム',
     'アジリティ',
+    'フットワーク',
     'ボールフィーリング',
+    '道具',
     '突破',
     'ボールを失わない',
     'ボールを奪う',
@@ -39,6 +42,7 @@ names = [
     'プレッシング',
     '攻撃練習',
     'パターンプレー',
+    'セットプレー',
     'オーバーラップ',
     'クロス',
     'チェンジオブペース',
@@ -66,4 +70,5 @@ names.length.times do |i|
     end
 end
 
-puts "tag_lists = #{TagList.count - tag_count}"
+puts "追加分の件数 => #{TagList.count - tag_count}"
+puts "トータル件数 => #{TagList.count}"

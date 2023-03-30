@@ -23,6 +23,14 @@ data "aws_ssm_parameter" "secret_access_key" {
     name = "${local.ssm_parameter_store_base}/secret_access_key"
 }
 
+data "aws_ssm_parameter" "base_url" {
+    name = "${local.ssm_parameter_store_base}/base_url"
+}
+
+data "aws_ssm_parameter" "cookies_same_site" {
+    name = "${local.ssm_parameter_store_base}/cookies_same_site"
+}
+
 
 ####################################################
 # ECS cluster
@@ -56,8 +64,8 @@ resource "aws_ecs_task_definition" "frontend" {
     family                   = local.frontend_task_name
     requires_compatibilities = ["FARGATE"]
     network_mode             = "awsvpc"
-    cpu                      = "256"
-    memory                   = "512"
+    cpu                      = "512"
+    memory                   = "1024"
     execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
     task_role_arn            = aws_iam_role.ecs_task_execution_role.arn
     container_definitions    = jsonencode([
@@ -77,6 +85,7 @@ resource "aws_ecs_task_definition" "frontend" {
     ])
 }
 
+    # enable_execute_command   = true
 resource "aws_ecs_task_definition" "backend" {
     family                   = local.backend_task_name
     requires_compatibilities = ["FARGATE"]
@@ -128,6 +137,10 @@ resource "aws_ecs_task_definition" "backend" {
                     valueFrom: data.aws_ssm_parameter.secret_access_key.arn
                 },
                 {
+                    name: "BASE_URL"
+                    valueFrom: data.aws_ssm_parameter.base_url.arn
+                },
+                {
                     name: "DB_DATABASE"
                     valueFrom: data.aws_ssm_parameter.database_name.arn
                 },
@@ -142,6 +155,10 @@ resource "aws_ecs_task_definition" "backend" {
                 {
                     name: "DB_HOST"
                     valueFrom: aws_ssm_parameter.database_url.arn
+                },
+                {
+                    name: "COOKIES_SAME_SITE"
+                    valueFrom: data.aws_ssm_parameter.cookies_same_site.arn
                 }
             ]
             logConfiguration = {

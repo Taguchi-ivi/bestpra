@@ -7,8 +7,8 @@ services:
             context: .
         # command: yarn run dev
         # 下記から修正 動かなくなるかも
-        # command: bash -c " yarn install && yarn run dev"
         command: bash -c "yarn run dev"
+        # command: bash -c " yarn install && yarn run dev"
         volumes:
             - .:/app
         ports:

@@ -40,7 +40,7 @@ class Api::V1::AuthTokenController < ApplicationController
         # 自動更新しない  => リフレッシュトークンの有効期限で再ログインを強制する場合は下記をコメントアウト
         # 自動更新する => 下記を実装して都度リフレッシュトークンを更新する
         # TODO テストがうまくいっている時点でNuxt側に問題あり？
-        # set_refresh_token_to_cookie
+        set_refresh_token_to_cookie
         render json: login_response
     end
 
@@ -92,8 +92,11 @@ class Api::V1::AuthTokenController < ApplicationController
 
         # ログインユーザーが居ない、もしくはpasswordが一致しない場合404を返す
         def authenticate
-            unless login_user.present? &&
-                    login_user.authenticate(auth_params[:password])
+            # unless login_user.present? &&
+            #         login_user.authenticate(auth_params[:password])
+            #     raise UserAuth.not_found_exception_class
+            # end
+            if !login_user.present? || !login_user.authenticate(auth_params[:password])
                 raise UserAuth.not_found_exception_class
             end
         end

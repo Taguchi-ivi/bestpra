@@ -75,9 +75,18 @@ resource "aws_lb_target_group" "frontend" {
     port                 = "80"
     protocol             = "HTTP"
     deregistration_delay = "60"
-    health_check { path = "/"}
     # add
-    depends_on = [aws_lb.this]
+    # depends_on = [aws_lb.this]
+    # health_check { path = "/"}
+    health_check {
+        enabled             = true
+        path                = "/"
+        healthy_threshold   = 2
+        unhealthy_threshold = 2
+        timeout             = 120
+        interval            = 150
+        matcher             = 200
+    }
 }
 
 resource "aws_lb_listener_rule" "frontend" {
@@ -105,7 +114,16 @@ resource "aws_lb_target_group" "backend" {
     port                 = "80"
     protocol             = "HTTP"
     deregistration_delay = "60"
-    health_check { path = "/api/health_check" }
+    # health_check { path = "/api/health_check" }
+    health_check {
+        enabled             = true
+        path                = "/api/health_check"
+        healthy_threshold   = 5
+        unhealthy_threshold = 2
+        timeout             = 50
+        interval            = 60
+        matcher             = 200
+    }
     # add
     depends_on = [aws_lb.this]
 }

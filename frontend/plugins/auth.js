@@ -38,7 +38,7 @@ class Authentication {
 
     // ログイン業務
     login (response) {
-        // console.log('auth-login処理', response)
+        // this.resetVuex()
         this.setAuth(response)
     }
 
@@ -46,6 +46,10 @@ class Authentication {
     resetVuex () {
         this.setAuth({ token: null, expires: 0, user: null })
         this.store.dispatch('modules/user/getCurrentUser', null)
+        this.store.dispatch('modules/follow/getCurrentFollow', ['nothing'])
+        this.store.dispatch('modules/like/getCurrentLike', ['nothing'])
+        this.store.dispatch('modules/notification/getNotificationHeader', [])
+        this.store.dispatch('modules/notification/getNotifications', [])
     }
 
     // axiosのレスポンス401を許容する
@@ -81,9 +85,6 @@ class Authentication {
 
     // ユーザーが存在し、かつ有効期限内の場合にtrueを返す
     loggedIn () {
-        // ※TODO 原因はここなのか？
-        // console.log('ユーザが存在しているか', this.isExistUser())
-        // console.log('有効期限はどうか', this.isAuthenticated())
         return this.isExistUser() && this.isAuthenticated()
     }
 }

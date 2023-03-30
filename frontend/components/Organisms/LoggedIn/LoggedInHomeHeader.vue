@@ -7,7 +7,7 @@
         <nuxt-link to="/home/all">
             <v-img
                 :width="$vuetify.breakpoint.xs ? 35 : 50"
-                src="/header-logo.png"
+                :src="headerLogo"
             >
             </v-img>
         </nuxt-link>
@@ -98,6 +98,7 @@
 <script>
 
 import { mapGetters } from 'vuex'
+import headerLogo from '~/assets/img/header/header-logo.png'
 import AvatarSwitch from '~/components/Molecules/AvatarSwitch.vue'
 import NotificationMain from '~/components/Molecules/NotificationMain.vue'
 
@@ -108,6 +109,7 @@ export default {
     },
     data() {
         return {
+            headerLogo,
             on: false,
         }
     },

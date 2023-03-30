@@ -53,6 +53,7 @@ import SearchArticle from '~/components/Organisms/Search/SearchArticle.vue'
 import SearchUser from '~/components/Organisms/Search/SearchUser.vue'
 
 export default {
+    name: 'Search',
     components: {
         SearchArticle,
         SearchUser,

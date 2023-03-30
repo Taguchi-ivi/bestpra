@@ -237,6 +237,7 @@
                                 />
                                 <user-form-password-again
                                     :password-again.sync="passwordAgain"
+                                    set-validation
                                 />
                                 <div
                                     class="d-flex justify-end"

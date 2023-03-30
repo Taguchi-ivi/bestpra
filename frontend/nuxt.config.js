@@ -10,7 +10,7 @@ const CKEditorStyles = require("@ckeditor/ckeditor5-dev-utils").styles
 // const envSet = require(`./env.${environment}.js`);
 
 export default {
-
+  ssr: false,
   // env: envSet,
   env: {
 
@@ -22,12 +22,20 @@ export default {
     htmlAttrs: {
       // lang: 'en',
       lang: 'ja',
+      prefix: 'og: http://ogp.me/ns#'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'あなたにあった練習が見つかる。それがbestpra' },
+      { hid: 'description', name: 'description', content: 'あなたにあったサッカーの練習メニューが見つかる。それがbestpra' },
       { name: 'format-detection', content: 'telephone=no' },
+      { hid: 'og:site_name', property: 'og:site_name', content: 'bestpra(ベストプラ)' },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      { hid: 'og:url', property: 'og:url', content: 'https://app.best-pra.com' },
+      { hid: 'og:title', property: 'og:title', content: 'bestpra(ベストプラ)' },
+      { hid: 'og:description', property: 'og:description', content: 'あなたにあったサッカーの練習メニューが見つかる。それがbestpra' },
+      { hid: 'og:image', property: 'og:image', content: 'https://app.best-pra.com/ogp/ogp-image.png' },
+      { name: 'twitter:card', content: 'summary' }// twitterの画像サイズ
     ],
     // link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     link: [{ rel: 'icon', type: 'image/png', href: '/favicon.png' }],
@@ -42,17 +50,13 @@ export default {
   plugins: [
     { src: '~/plugins/auth.js'},
     { src: '~/plugins/axios.js'},
-    { src: '~/plugins/nuxt-server-init.js', mode: 'server'},
     { src: '~/plugins/my-inject.js'},
     { src: '~/plugins/ckeditor.js', mode: 'client'},
-    // { src: '~/plugins/firebase.js', mode: 'client'},
-    // { src: '~/plugins/authentication.js'},
-    // 'plugins/my-inject'
+    // { src: '~/plugins/nuxt-server-init.js'},
   ],
 
   // middleware
   router: {
-    // middleware: ['silent-refresh-token','get-auth-state']
     middleware: ['silent-refresh-token']
   },
 
@@ -88,8 +92,9 @@ export default {
   },
 
   // localでの作業効率化のため、defultの3000から変更
+  // TODO local本番環境の場合は下記をコメントアウト
   server: {
-    port: 8080
+    port: process.env.NODE_ENV === 'production' ? 3000 : 8080,
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
