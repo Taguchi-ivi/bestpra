@@ -58,7 +58,8 @@ export default {
         return {
             isValid: false,
             loading: false,
-            params: { auth: { email: 'user0@example.com', password: 'password'} },
+            // params: { auth: { email: 'user0@example.com', password: 'password'} },
+            params: { auth: { email: '', password: ''} },
         }
     },
     head(){

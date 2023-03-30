@@ -2,8 +2,7 @@ name: build-and-test
 on:
   push:
     branches:
-      - v1-deploy
-      # - main
+      - main
 
 env:
   AWS_REGION: ap-northeast-1
