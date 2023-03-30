@@ -132,6 +132,7 @@ export default {
             error: false,
             tag_list: [],
             deleteFlg : false,
+            fileChangeFlg: false,
         }
     },
     head(){
@@ -143,6 +144,7 @@ export default {
         fileClick() {
             // preview作成
             this.imageUrl = window.URL.createObjectURL(this.selectFile)
+            this.fileChangeFlg = true
         },
         deleteView() {
             this.imageUrl = ''
@@ -166,6 +168,7 @@ export default {
             formData.append('article[level]', this.level.id)
             formData.append('article[content]', this.text)
             if (this.deleteFlg) formData.append('article[image]', this.selectFile)
+            if (this.fileChangeFlg) formData.append('article[image]', this.selectFile)
             const appendChips = this.chips.length === 0 ? this.tag_list : this.chips
             formData.append('article[tag_list]', appendChips)
 
