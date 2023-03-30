@@ -19,17 +19,22 @@
                 />
                 <user-form-password-again
                     :password-again.sync="passwordAgain"
+                    set-validation
                 />
-                <v-btn
-                    type="submit"
-                    :disabled="!isValid || loading"
-                    :loading="loading"
-                    block
-                    class="white--text"
-                    color="primary"
+                <div
+                    class="mt-5"
                 >
-                    登録
-                </v-btn>
+                    <v-btn
+                        type="submit"
+                        :disabled="!isValid || loading"
+                        :loading="loading"
+                        block
+                        class="white--text"
+                        color="primary"
+                    >
+                        登録
+                    </v-btn>
+                </div>
             </v-form>
         </template>
     </user-form-card>
