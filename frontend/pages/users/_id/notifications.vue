@@ -3,26 +3,28 @@
         <MainTitle
             title="通知一覧"
         />
-        <v-card
-            width="80%"
-            class="mx-auto pa-3"
-            elevation="8"
-        >
-            <v-list
-                three-line
+        <div v-if="notifications.length > 0">
+            <v-card
+                width="80%"
+                class="mx-auto pa-3"
+                elevation="8"
             >
-                <div
-                    v-for="(notification, index) in notifications"
-                    :key="index"
+                <v-list
+                    three-line
                 >
-                    <NotificationMain
-                        :notification="notification"
-                        :divider-flg="index + 1 !== notifications.length"
-                    />
-                </div>
-            </v-list>
-        </v-card>
-    </div>
+                    <div
+                        v-for="(notification, index) in notifications"
+                        :key="index"
+                    >
+                        <NotificationMain
+                            :notification="notification"
+                            :divider-flg="index + 1 !== notifications.length"
+                        />
+                    </div>
+                </v-list>
+            </v-card>
+        </div>
+        </div>
 </template>
 
 <script>
