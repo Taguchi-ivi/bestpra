@@ -124,6 +124,10 @@ RSpec.describe Api::V1::ArticlesController, type: :request do
         let!(:user) { create(:user) }
         let!(:level) { create(:level_list) }
         let!(:articles) { create_list(:article, 4, user_id: user.id, level_list_id: level.id) }
+        let!(:like1) { create(:like, user_id: user.id, article_id: articles[0].id) }
+        let!(:like2) { create(:like, user_id: user.id, article_id: articles[1].id) }
+        let!(:like3) { create(:like, user_id: user.id, article_id: articles[2].id) }
+        let!(:like4) { create(:like, user_id: user.id, article_id: articles[3].id) }
 
         context '成功' do
             it '200ステータスが返ってくることを確認' do
