@@ -43,10 +43,12 @@ class Api::V1::ArticlesController < ApplicationController
     end
 
     # aboutページ用の3件のarticleを取得
+    # いいねの多い記事3件を取得 ※ default_scopeでいいねの多い順が正しく反映されない為、ここだけスキップするunscoped
     def article_about
-        likes_id = Article.joins(:likes)
-                            .group(:article_id)
-                            .order('COUNT(likes.article_id) DESC')
+        likes_id = Article.unscoped
+                            .joins(:likes)
+                            .group('articles.id')
+                            .order('COUNT(likes.id) DESC')
                             .limit(3)
                             .pluck(:id)
         articles = Article.includes(:user, :likes, :level_list, :tag_list, :comments)
