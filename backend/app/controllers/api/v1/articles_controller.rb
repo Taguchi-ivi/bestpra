@@ -44,11 +44,11 @@ class Api::V1::ArticlesController < ApplicationController
 
     # aboutページ用の3件のarticleを取得
     def article_about
-        likes_id = Article.left_outer_joins(:likes)
-                                .group(:id)
-                                .order('COUNT(likes.id) DESC')
-                                .limit(3)
-                                .pluck(:id)
+        likes_id = Article.joins(:likes)
+                            .group(:article_id)
+                            .order('COUNT(likes.article_id) DESC')
+                            .limit(3)
+                            .pluck(:id)
         articles = Article.includes(:user, :likes, :level_list, :tag_list, :comments)
                             .where(id: likes_id)
                             .as_json(include: [
