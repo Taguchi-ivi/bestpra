@@ -8,6 +8,7 @@
 #  avatar          :string(255)
 #  birthday        :date
 #  email           :string(255)      not null
+#  guest_flg       :boolean          default(FALSE), not null
 #  introduction    :text(65535)
 #  nickname        :string(255)      not null
 #  password_digest :string(255)      not null

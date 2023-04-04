@@ -104,7 +104,7 @@ class Authentication {
 
     // ゲストユーザーでログイン
     async guestUserLogin() {
-        if (this.guestUser() || !this.loggedIn()) {
+        if (this.guestUser() || this.loggedIn()) {
             const msg = 'ログイン済みです!!'
             const type = 'info'
         } else {

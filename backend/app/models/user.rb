@@ -8,6 +8,7 @@
 #  avatar          :string(255)
 #  birthday        :date
 #  email           :string(255)      not null
+#  guest_flg       :boolean          default(FALSE), not null
 #  introduction    :text(65535)
 #  nickname        :string(255)      not null
 #  password_digest :string(255)      not null
@@ -16,7 +17,6 @@
 #  updated_at      :datetime         not null
 #  basecolor_id    :integer          default(0)
 #
-# lib以下のものは自動では読み込まれない
 require "validator/email_validator"
 
 class User < ApplicationRecord
@@ -93,7 +93,7 @@ class User < ApplicationRecord
             email: email,
             password: SecureRandom.urlsafe_base64,
             nickname: "ゲストユーザー",
-            activated: true
+            activated: true,
             guest_flg: true
         )
     end
