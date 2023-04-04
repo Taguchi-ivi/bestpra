@@ -197,6 +197,9 @@
                             color="transparent"
                             flat
                         >
+                            <AppGuestUserErrMsg
+                                err-msg="※ゲストユーザーは変更できません"
+                            />
                             <v-form v-model="isValidEmail">
                                 <user-form-email
                                     :email.sync="email"
@@ -230,6 +233,9 @@
                             color="transparent"
                             flat
                         >
+                            <AppGuestUserErrMsg
+                                err-msg="※ゲストユーザーは変更できません"
+                            />
                             <v-form v-model="isValidPassword">
                                 <user-form-password
                                     :password.sync="password"
@@ -267,6 +273,7 @@ import UserFormEmail from '~/components/Atom/UserForm/UserFormEmail.vue'
 import UserFormPassword from '~/components/Atom/UserForm/UserFormPassword'
 import UserFormPasswordAgain from '~/components/Atom/UserForm/UserFormPasswordAgain'
 import AvatarImg from '~/components/Atom/App/AppAvatarImg.vue'
+import AppGuestUserErrMsg from '~/components/Atom/App/AppGuestUserErrMsg.vue'
 
 export default {
     name: 'UsersEdit',
@@ -275,6 +282,7 @@ export default {
         UserFormPassword,
         UserFormPasswordAgain,
         AvatarImg,
+        AppGuestUserErrMsg
     },
     async asyncData({ $axios, store}) {
         const res = await $axios.$get('/api/v1/users/edit')
@@ -379,6 +387,7 @@ export default {
         //     })
         // },
         async updateEmail() {
+            if ($auth.guestErrMsg('ゲストユーザーは変更できません')) return
             if(!this.isValidEmail || !this.email) {
                 return this.$my.dispatchToast(true, 'メールアドレスは必須です', 'error')
             }
@@ -400,6 +409,7 @@ export default {
             this.EmailLoading = false
         },
         async updatePassword() {
+            if ($auth.guestErrMsg('ゲストユーザーは変更できません')) return
             if(!this.isValidPassword) {
                 return this.$my.dispatchToast(true, 'パスワードは必須です', 'error')
             }

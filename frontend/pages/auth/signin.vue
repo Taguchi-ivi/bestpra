@@ -1,5 +1,26 @@
 <template>
     <user-form-card >
+        <div class="text-center">
+            <v-btn
+                :loading="guestLoading"
+                block
+                class="white--text"
+                color="primary"
+                outlined
+                @click="$auth.guestUserLogin()"
+            >
+                まずはお試し(ゲストログイン)
+            </v-btn>
+        </div>
+
+        <div
+            class="my-5"
+            style="width: 80%;"
+        >
+            <v-divider />
+        </div>
+
+
         <template #user-form-card-content>
             <v-form
                 ref="form"
@@ -58,6 +79,7 @@ export default {
         return {
             isValid: false,
             loading: false,
+            guestLoading: false,
             // params: { auth: { email: 'user0@example.com', password: 'password'} },
             params: { auth: { email: '', password: ''} },
         }

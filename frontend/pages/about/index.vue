@@ -16,6 +16,43 @@
                         それがbestpra
                     </span>
                 </div>
+                <div
+                    class="main-button text-center mobile-and-down"
+                >
+                    <v-row
+                        align="center"
+                        justify="space-around"
+                    >
+                        <v-btn
+                            v-if="!$auth.loggedIn()"
+                            color="accent"
+                            class="px-8"
+                            large
+                            elevation="13"
+                            rounded
+                            @click="$auth.guestUserLogin()"
+                        >
+                            ゲストログイン!!
+                            <v-icon right>
+                                mdi-account-arrow-right
+                            </v-icon>
+                        </v-btn>
+                        <v-btn
+                            v-if="$auth.loggedIn()"
+                            color="accent"
+                            class="pl-8"
+                            large
+                            elevation="13"
+                            rounded
+                            to="/home/all" nuxt
+                        >
+                            練習メニュを開く
+                            <v-icon right>
+                                mdi-book-open-variant
+                            </v-icon>
+                        </v-btn>
+                    </v-row>
+                </div>
             </div>
         </div>
         <v-container

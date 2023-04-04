@@ -83,6 +83,20 @@ class User < ApplicationRecord
     # scope
     # default_scope -> { order(created_at: :desc) }
 
+    # ゲストユーザー作成
+    def self.guest
+        email = "aaa#{rand(1..1000)}@aaa.com"
+        while User.exists?(email: email)
+            email = "aaa#{rand(1..1000)}@aaa.com"
+        end
+        user = User.new(
+            email: email,
+            password: SecureRandom.urlsafe_base64,
+            nickname: "ゲストユーザー",
+            activated: true
+            guest_flg: true
+        )
+    end
 
     # ユーザをフォローする
     def follow(other_user)
@@ -152,7 +166,7 @@ class User < ApplicationRecord
     # 呼び出し元でカスタムできるようにmergeを指定 => merge(sub: "sub")とするとHashにsubが追加される
     # with_indifferent_access => Railsのメソッド => hashのキーをシンボルでも文字列でも取得できるようにする
     def response_json(payload = {})
-        as_json(only: [:id, :nickname, :avatar, :admin, :introduction]).merge(payload).with_indifferent_access
+        as_json(only: [:id, :nickname, :avatar, :admin, :introduction, :guest_flg]).merge(payload).with_indifferent_access
     end
 
     # 自身で書いた記事か判定
