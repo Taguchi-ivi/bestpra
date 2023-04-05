@@ -69,6 +69,7 @@ export default {
                     email: '',
                     password: '',
                     activated: true,
+                    guest_flg: false,
                 }
             },
             passwordAgain: '',

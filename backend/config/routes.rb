@@ -41,6 +41,7 @@ Rails.application.routes.draw do
       resources :auth_token, only:[:create, :destroy] do
         # delete :destroy, on: :collection
         post :login, on: :collection
+        post :guest, on: :collection
         post :refresh, on: :collection
         delete :logout, on: :collection
         patch :update_email, on: :collection

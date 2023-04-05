@@ -1,6 +1,24 @@
 <template>
     <user-form-card >
+
         <template #user-form-card-content>
+            <div class="text-center">
+                <v-btn
+                    :loading="guestLoading"
+                    block
+                    class="white--text"
+                    color="primary"
+                    @click="guestLogin"
+                >
+                    まずはお試し(ゲストログイン)
+                </v-btn>
+            </div>
+
+            <div
+                class="my-8"
+            >
+                <v-divider />
+            </div>
             <v-form
                 ref="form"
                 v-model="isValid"
@@ -58,6 +76,7 @@ export default {
         return {
             isValid: false,
             loading: false,
+            guestLoading: false,
             // params: { auth: { email: 'user0@example.com', password: 'password'} },
             params: { auth: { email: '', password: ''} },
         }
@@ -91,6 +110,12 @@ export default {
             }
             // エラー処理
             return this.$my.apiErrorHandler(response)
+        },
+        async guestLogin() {
+            this.guestLoading = true
+            await this.$auth.guestUserLogin()
+            this.guestLoading = false
+            this.$router.push('/home/all')
         }
     },
 }

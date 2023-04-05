@@ -87,6 +87,40 @@ class Authentication {
     loggedIn () {
         return this.isExistUser() && this.isAuthenticated()
     }
+
+    // ゲストユーザーか判定
+    guestUser() {
+        return this.user.guest_flg === true
+    }
+
+    // ゲストユーザーで対応できない処理の場合、エラー内容を返す
+    guestErrMsg(msg) {
+        if(this.guestUser()){
+            const status = true
+            const color = 'error'
+            this.store.dispatch('modules/toast/getToast', { status, msg, color })
+            return true
+        }
+        return false
+    }
+
+    // ゲストユーザーでログイン
+    async guestUserLogin() {
+        const status = true
+        let msg = ''
+        let color = ''
+        if (this.guestUser() || this.loggedIn()) {
+            msg = 'ログイン済みです!!'
+            color = 'info'
+        } else {
+            const response = await this.$axios.$post('/api/v1/auth_token/guest')
+            this.setAuth(response)
+            msg = 'ゲストユーザーでログインしました!!'
+            color = 'success'
+        }
+        // this.$router.push('/home/all')
+        return this.store.dispatch('modules/toast/getToast', { status, msg, color })
+    }
 }
 
 export default ({ store, $axios }, inject) => {

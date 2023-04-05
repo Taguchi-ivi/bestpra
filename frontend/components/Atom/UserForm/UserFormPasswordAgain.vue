@@ -2,6 +2,7 @@
     <v-text-field
         v-model="setPasswordAgain"
         :rules="form.rules"
+        :disabled="disabled"
         label="確認用パスワード"
         color="blue"
         :append-icon="toggle.icon"
@@ -22,6 +23,10 @@ export default {
             default: ''
         },
         setValidation: {
+            type: Boolean,
+            default: false
+        },
+        disabled: {
             type: Boolean,
             default: false
         }

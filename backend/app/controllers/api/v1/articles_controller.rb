@@ -48,7 +48,7 @@ class Api::V1::ArticlesController < ApplicationController
         likes_id = Article.unscoped
                             .joins(:likes)
                             .group('articles.id')
-                            .order('COUNT(likes.id) DESC')
+                            .order('COUNT(likes.id) DESC,articles.created_at DESC')
                             .limit(3)
                             .pluck(:id)
         articles = Article.includes(:user, :likes, :level_list, :tag_list, :comments)

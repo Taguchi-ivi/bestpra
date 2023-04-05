@@ -34,13 +34,26 @@ class Api::V1::AuthTokenController < ApplicationController
         render json: login_response
     end
 
+    # ゲストログイン
+    def guest
+        @user = User.guest
+        if @user.save!
+            set_refresh_token_to_cookie
+            render json: login_response
+        else
+            render @user.errors.full_messages
+        end
+    end
+
     # リフレッシュ
     def refresh
         @user = session_user
         # 自動更新しない  => リフレッシュトークンの有効期限で再ログインを強制する場合は下記をコメントアウト
         # 自動更新する => 下記を実装して都度リフレッシュトークンを更新する
-        # TODO テストがうまくいっている時点でNuxt側に問題あり？
-        set_refresh_token_to_cookie
+        # ゲストユーザーはリフレッシュトークンを更新しない
+        if @user && @user.guest_flg == false
+            set_refresh_token_to_cookie
+        end
         render json: login_response
     end
 

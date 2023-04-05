@@ -8,6 +8,7 @@
 #  avatar          :string(255)
 #  birthday        :date
 #  email           :string(255)      not null
+#  guest_flg       :boolean          default(FALSE), not null
 #  introduction    :text(65535)
 #  nickname        :string(255)      not null
 #  password_digest :string(255)      not null
@@ -16,7 +17,6 @@
 #  updated_at      :datetime         not null
 #  basecolor_id    :integer          default(0)
 #
-# lib以下のものは自動では読み込まれない
 require "validator/email_validator"
 
 class User < ApplicationRecord
@@ -83,6 +83,20 @@ class User < ApplicationRecord
     # scope
     # default_scope -> { order(created_at: :desc) }
 
+    # ゲストユーザー作成
+    def self.guest
+        email = "guest#{rand(1..1000)}@guestguest.com"
+        while User.exists?(email: email)
+            email = "guest#{rand(1..1000)}@aaa.com"
+        end
+        user = User.new(
+            email: email,
+            password: SecureRandom.urlsafe_base64,
+            nickname: "ゲストユーザー",
+            activated: true,
+            guest_flg: true
+        )
+    end
 
     # ユーザをフォローする
     def follow(other_user)
@@ -152,7 +166,7 @@ class User < ApplicationRecord
     # 呼び出し元でカスタムできるようにmergeを指定 => merge(sub: "sub")とするとHashにsubが追加される
     # with_indifferent_access => Railsのメソッド => hashのキーをシンボルでも文字列でも取得できるようにする
     def response_json(payload = {})
-        as_json(only: [:id, :nickname, :avatar, :admin, :introduction]).merge(payload).with_indifferent_access
+        as_json(only: [:id, :nickname, :avatar, :admin, :introduction, :guest_flg]).merge(payload).with_indifferent_access
     end
 
     # 自身で書いた記事か判定

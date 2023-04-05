@@ -2,6 +2,7 @@
     <v-text-field
         v-model="setEmail"
         :rules="rules"
+        :disabled="disabled"
         label="メールアドレスを入力"
         :placeholder="placeholder ? 'your@email.com' : undefined"
         outlined
@@ -18,6 +19,10 @@ export default {
             default: ''
         },
         placeholder: {
+            type: Boolean,
+            default: false
+        },
+        disabled: {
             type: Boolean,
             default: false
         }

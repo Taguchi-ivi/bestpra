@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_09_052425) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_04_162933) do
   create_table "articles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "level_list_id", null: false
@@ -108,6 +108,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_09_052425) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "refresh_jti"
+    t.boolean "guest_flg", default: false, null: false
   end
 
   add_foreign_key "articles", "level_lists"
