@@ -85,9 +85,9 @@ class User < ApplicationRecord
 
     # ゲストユーザー作成
     def self.guest
-        email = "aaa#{rand(1..1000)}@aaa.com"
+        email = "guest#{rand(1..1000)}@guestguest.com"
         while User.exists?(email: email)
-            email = "aaa#{rand(1..1000)}@aaa.com"
+            email = "guest#{rand(1..1000)}@aaa.com"
         end
         user = User.new(
             email: email,

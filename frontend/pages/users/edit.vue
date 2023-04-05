@@ -198,13 +198,15 @@
                             flat
                         >
                             <AppGuestUserErrMsg
-                                err-msg="※ゲストユーザーは変更できません"
+                                err-msg="ゲストユーザーは変更できません"
                             />
                             <v-form v-model="isValidEmail">
                                 <user-form-email
                                     :email.sync="email"
+                                    :disabled="$auth.guestUser()"
                                 />
                                 <div
+                                    v-if="!$auth.guestUser()"
                                     class="d-flex justify-end"
                                 >
                                     <v-btn
@@ -234,18 +236,21 @@
                             flat
                         >
                             <AppGuestUserErrMsg
-                                err-msg="※ゲストユーザーは変更できません"
+                                err-msg="ゲストユーザーは変更できません"
                             />
                             <v-form v-model="isValidPassword">
                                 <user-form-password
                                     :password.sync="password"
                                     set-validation
+                                    :disabled="$auth.guestUser()"
                                 />
                                 <user-form-password-again
                                     :password-again.sync="passwordAgain"
                                     set-validation
+                                    :disabled="$auth.guestUser()"
                                 />
                                 <div
+                                    v-if="!$auth.guestUser()"
                                     class="d-flex justify-end"
                                 >
                                     <v-btn
@@ -286,6 +291,7 @@ export default {
     },
     async asyncData({ $axios, store}) {
         const res = await $axios.$get('/api/v1/users/edit')
+        const email = res.guest_flg === true ? '' : res.email
         return {
             user: {
                 id: res.id,
@@ -294,7 +300,8 @@ export default {
                 birthday: res.birthday
             },
             avatar: res.avatar,
-            email: res.email,
+            // email: res.email,
+            email
         }
     },
     data() {
@@ -387,7 +394,7 @@ export default {
         //     })
         // },
         async updateEmail() {
-            if ($auth.guestErrMsg('ゲストユーザーは変更できません')) return
+            if (this.$auth.guestErrMsg('ゲストユーザーは変更できません')) return
             if(!this.isValidEmail || !this.email) {
                 return this.$my.dispatchToast(true, 'メールアドレスは必須です', 'error')
             }
@@ -409,7 +416,7 @@ export default {
             this.EmailLoading = false
         },
         async updatePassword() {
-            if ($auth.guestErrMsg('ゲストユーザーは変更できません')) return
+            if (this.$auth.guestErrMsg('ゲストユーザーは変更できません')) return
             if(!this.isValidPassword) {
                 return this.$my.dispatchToast(true, 'パスワードは必須です', 'error')
             }

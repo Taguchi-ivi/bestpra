@@ -90,13 +90,15 @@ class Authentication {
 
     // ゲストユーザーか判定
     guestUser() {
-        return this.user.guestFlg === true
+        return this.user.guest_flg === true
     }
 
     // ゲストユーザーで対応できない処理の場合、エラー内容を返す
     guestErrMsg(msg) {
         if(this.guestUser()){
-            this.$my.dispatchToast(true, msg, 'error')
+            const status = true
+            const color = 'error'
+            this.store.dispatch('modules/toast/getToast', { status, msg, color })
             return true
         }
         return false
@@ -104,19 +106,20 @@ class Authentication {
 
     // ゲストユーザーでログイン
     async guestUserLogin() {
+        const status = true
+        let msg = ''
+        let color = ''
         if (this.guestUser() || this.loggedIn()) {
-            const msg = 'ログイン済みです!!'
-            const type = 'info'
+            msg = 'ログイン済みです!!'
+            color = 'info'
         } else {
-            await this.$axios.$post(
-                '/api/v1/auth_token/ç',
-                { validateStatus: status => this.resolveUnauthorized(status)}
-            )
-            const msg = 'ゲストユーザーでログインしました!!'
-            const type = 'success'
+            const response = await this.$axios.$post('/api/v1/auth_token/guest')
+            this.setAuth(response)
+            msg = 'ゲストユーザーでログインしました!!'
+            color = 'success'
         }
-        this.$router.push('/home/all')
-        return this.$my.dispatchToast(true, msg, type)
+        // this.$router.push('/home/all')
+        return this.store.dispatch('modules/toast/getToast', { status, msg, color })
     }
 }
 

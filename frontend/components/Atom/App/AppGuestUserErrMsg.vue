@@ -1,9 +1,9 @@
 <template>
     <p v-if="$auth.guestUser()">
+        <!-- color="pink darken-1" -->
         <v-alert
-            border="left"
-            color="pink darken-1"
-            dark
+            dense
+            type="error"
         >
             {{ errMsg }}
         </v-alert>

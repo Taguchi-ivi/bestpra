@@ -25,14 +25,15 @@
                     >
                         <v-btn
                             v-if="!$auth.loggedIn()"
+                            :loading="guestLoading"
                             color="accent"
                             class="px-8"
-                            large
                             elevation="13"
                             rounded
-                            @click="$auth.guestUserLogin()"
+                            :small="$vuetify.breakpoint.xs ? true : false"
+                            @click="guestLogin"
                         >
-                            ゲストログイン!!
+                            ゲストログイン
                             <v-icon right>
                                 mdi-account-arrow-right
                             </v-icon>
@@ -41,9 +42,9 @@
                             v-if="$auth.loggedIn()"
                             color="accent"
                             class="pl-8"
-                            large
                             elevation="13"
                             rounded
+                            :small="$vuetify.breakpoint.xs ? true : false"
                             to="/home/all" nuxt
                         >
                             練習メニュを開く
@@ -58,7 +59,7 @@
         <v-container
             class="mb-30"
         >
-            <div class="about pt-10 mb-8">
+            <div class="about pt-10 mb-10">
                 <h2 class="subtitle mb-5">bestpraとは</h2>
                 <v-row class="about-container d-flex justify-space-between">
                     <v-col
@@ -70,7 +71,7 @@
                                     class="mb-5"
                                     contain
                                     max-height="auto"
-                                    :width="$vuetify.breakpoint.xs ? 80 :150"
+                                    :width="$vuetify.breakpoint.xs ? 100 :150"
                                     :src="aboutImg01"
                                     alt="サッカー風景"
                                 >
@@ -80,7 +81,7 @@
                                 <v-img
                                     contain
                                     max-height="auto"
-                                    :width="$vuetify.breakpoint.xs ? 80 :150"
+                                    :width="$vuetify.breakpoint.xs ? 100 :150"
                                     :src="aboutImg02"
                                     alt="サッカー風景"
                                 >
@@ -111,7 +112,7 @@
                                     class="mb-5 ml-auto"
                                     contain
                                     max-height="auto"
-                                    :width="$vuetify.breakpoint.xs ? 60 :150"
+                                    :width="$vuetify.breakpoint.xs ? 80 :150"
                                     :src="aboutImg03"
                                     alt="サッカー風景"
                                 >
@@ -122,7 +123,7 @@
                                     class="ml-auto"
                                     contain
                                     max-height="auto"
-                                    :width="$vuetify.breakpoint.xs ? 80 :150"
+                                    :width="$vuetify.breakpoint.xs ? 100 :150"
                                     :src="aboutImg04"
                                     alt="サッカー風景"
                                 >
@@ -132,12 +133,12 @@
                     </v-col>
                 </v-row>
             </div>
-            <div class="example">
-                <h2 class="subtitle mb-8">例えば....</h2>
+            <div class="example mt-5">
                 <v-sheet
                     class="mx-auto"
                     max-width="800"
                 >
+                    <h2 class="subtitle m5-8">例えば....</h2>
                     <v-slide-group
                         show-arrows
                     >
@@ -305,6 +306,7 @@ import ArticleAbout from '~/components/Molecules/ArticleAbout.vue'
                 memoImg,
                 articleImg,
                 model: null,
+                guestLoading: false,
             }
         },
         head(){
@@ -312,6 +314,14 @@ import ArticleAbout from '~/components/Molecules/ArticleAbout.vue'
                 title: 'About Page',
             }
         },
+        methods: {
+            async guestLogin() {
+                this.guestLoading = true
+                await this.$auth.guestUserLogin()
+                this.guestLoading = false
+                this.$router.push('/home/all')
+            }
+        }
     }
 </script>
 

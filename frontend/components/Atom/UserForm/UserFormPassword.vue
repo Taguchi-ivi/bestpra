@@ -3,6 +3,7 @@
         v-model="setPassword"
         :rules="form.rules"
         :hint="form.hint"
+        :disabled="disabled"
         label="パスワードを入力"
         :placeholder="form.placeholder"
         :hide-details="!setValidation"
@@ -24,6 +25,10 @@ export default {
             default: ''
         },
         setValidation: {
+            type: Boolean,
+            default: false
+        },
+        disabled: {
             type: Boolean,
             default: false
         }

@@ -67,7 +67,7 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def edit
-        render json: current_user.as_json(only: [:id, :nickname, :avatar, :email, :introduction, :birthday])
+        render json: current_user.as_json(only: [:id, :nickname, :avatar, :email, :introduction, :birthday, :guest_flg])
     end
 
     def update
