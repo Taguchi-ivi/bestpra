@@ -67,8 +67,8 @@ bestpraとは、**サッカーの練習メニューを共有するサービス�
 | インフラ
 ----|
 | docker / docker-compose  |
-| Circleci(デプロイ完成後GithubActionsへ移行) |
-| GithubActions |
+| Circle CI(デプロイ完成後GitHub Actionsへ移行) |
+| GitHub Actions |
 | AWS (Route53,ALB,VPC,subnet,ECR,ECS,RDS,ACM,SSM,cloudWatch) |
 | terraform(インフラをコード化) |
 <br />
@@ -133,7 +133,8 @@ bestpraとは、**サッカーの練習メニューを共有するサービス�
 ## インフラ
 - Dockerを採用することで複数人でも同じ環境を構築できるように
 - Dockerと相性の良いAWS(ECS Fargate)を採用
-- Github Actionsを用いてCI/CDパイプラインを構築
+- Circle CIにてCI/CDパイプラインを構築したがセキュリティリスクを考慮しGitHub Actionsへ移行
+- GitHub Actionsを用いてCI/CDパイプラインを構築
 - terraformによるインフラのコード化
 
 
