@@ -21,7 +21,7 @@ bestpraとは、**サッカーの練習メニューを共有するサービス�
 <!-- こちらからご覧ください(作成中)   -->
 <!-- URL添付 -->
 サイトはこちらから<br />
-[https://app.bestpra.com/about](https://app.bestpra.com/about)
+[https://app.best-pra.com](https://app.best-pra.com)
 
 <br />
 
