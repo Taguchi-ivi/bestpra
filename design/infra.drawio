@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="n-I4YXkVn4wm5LCXJ67a" name="ページ1">
-        <mxGraphModel dx="162" dy="1803" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="#ffffff" math="0" shadow="0">
+        <mxGraphModel dx="378" dy="2138" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="#ffffff" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -172,6 +172,9 @@
                         <mxPoint x="789.9999999999999" y="205" as="sourcePoint"/>
                         <mxPoint x="909.32" y="205.7990892043931" as="targetPoint"/>
                     </mxGeometry>
+                </mxCell>
+                <mxCell id="163" value="&lt;span style=&quot;font-size: 13px;&quot;&gt;S3&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=9;fontColor=#000000;" vertex="1" parent="38">
+                    <mxGeometry x="902.5" y="210" width="34" height="28" as="geometry"/>
                 </mxCell>
                 <mxCell id="34" value="&lt;font color=&quot;#000000&quot; style=&quot;font-size: 13px;&quot;&gt;users&lt;/font&gt;" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.illustration_users;pointerEvents=1;shadow=0;portConstraintRotation=0;fillColor=#000000;" parent="1" vertex="1">
                     <mxGeometry x="107" y="-1609" width="69" height="69" as="geometry"/>
